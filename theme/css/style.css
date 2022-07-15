@@ -813,7 +813,8 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
-    margin: 2.5em auto
+    margin: 2.5em auto;
+    filter: drop-shadow(5px 10px 10px rgba(0,0,0,.5));
 }
 
 .clear {
@@ -1482,7 +1483,14 @@ img {
     color: #f26a3d
 }
 
-.post-content img,
+.post-content img {
+    max-width: none;
+    width: 80%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .post-content .fluid-width-video-wrapper {
     max-width: none;
     width: 110%;

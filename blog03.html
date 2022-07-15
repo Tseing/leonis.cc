@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>将OneDrive作为博客图床</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.4" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="/blog03.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+          <link href="/feeds/{slug}.atom.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Categories Atom Feed" />
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.lug.ustc.edu.cn/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato" rel="stylesheet" type="text/css" />
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300&family=Noto+Serif+SC&family=Ubuntu+Mono&display=swap');
+  </style> 
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+    <meta name="description" content="在Linux上使用ZFile同步管理OneDrive文件，通过Microsoft官方API生成图片链接">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="blog">
+    <meta name="tags" content="OneDrive">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="将OneDrive作为博客图床"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="在Linux上使用ZFile同步管理OneDrive文件，通过Microsoft官方API生成图片链接"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="/blog03.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-07-14 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="posts"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="OneDrive"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "将OneDrive作为博客图床",
+  "headline": "将OneDrive作为博客图床",
+  "datePublished": "2022-07-14 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content",
+  "url": "/blog03.html",
+  "description": "在Linux上使用ZFile同步管理OneDrive文件，通过Microsoft官方API生成图片链接"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">将OneDrive作为博客图床</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/leo.html">Leo</a>
+            | <time datetime="2022年 7月14日">2022年 7月14日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <p>在个人博客中，图片是不可或缺的，而生成图片的直链后才能在<code>.md</code>文件中使用，因此通常又需要图床等额外工具。由于国外市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅Microsoft Office时附赠了1 TB的OneDrive容量，正好可以利用起来。使用OneDrive作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad和Android）都有OneDrive应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须“绕道通行”。</p>
+<p>Windows系统自带OneDrive应用，可以直接使用桌面应用进行文件同步，借助<a href="https://github.com/Richasy/Img-Share">Img Share</a>生成图片链接。Img Share后来被<a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;gl=US">Picture Share</a>代替，在Microsoft Store中就可以直接下载到。Picture Share十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考<a href="https://wzblog.fun/posts/b036879a/">这篇文章</a>。</p>
+<p>但是写博客的工作环境是Linux系统，Linux系统中没有OneDrive应用和上述UWP应用，也就不能使用上面的方法。本文就将介绍如何在Linux系统下使用OneDrive作为个人博客的图床并使用ZFile同步云盘文件。</p>
+<h3>OneDrive文件链接的生成方式</h3>
+<p>OneDrive的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问OneDrive网页，但OneDrive在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了<a href="https://github.com/harrisoff/onedrive-image-hosting">相关项目</a>，点开项目右侧的链接登录自己的OneDrive后直接插入<code>.md</code>就可以啦。</p>
+<div class="highlight"><pre><span></span><code>![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
+</code></pre></div>
+
+<h3>安装ZFile</h3>
+<p><a href="https://github.com/zhaojun1998/zfile">ZFile</a>是一款在线网盘程序，支持包括OneDrive在内的多种存储源。ZFile可以代替其他平台的OneDrive应用来管理云盘中的文件，实现同步、上传、下载等功能。ZFile也能生成文件直链插入文章，但是这个功能需要云服务器，抱着能省则省的态度，就等以后再折腾，这里仅使用ZFile来管理OneDrive。</p>
+<p>在Linux系统使用ZFile首先需要安装依赖：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Debian 10</span>
+apt update <span class="o">&amp;&amp;</span> apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public <span class="p">|</span> apt-key add -
+add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+apt update <span class="o">&amp;&amp;</span> apt install -y adoptopenjdk-8-hotspot-jre
+</code></pre></div>
+
+<p>下载ZFile:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">ZFILE_INSTALL_PATH</span><span class="o">=~/</span><span class="n">zfile</span><span class="w"></span>
+<span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="w"></span>
+<span class="n">wget</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">c</span><span class="o">.</span><span class="n">jun6</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">ZFILE</span><span class="o">/</span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"></span>
+<span class="n">unzip</span><span class="w"> </span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">rf</span><span class="w"> </span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"></span>
+<span class="n">chmod</span><span class="w"> </span><span class="o">+</span><span class="n">x</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="o">/</span><span class="n">bin</span><span class="o">/*.</span><span class="n">sh</span><span class="w"></span>
+</code></pre></div>
+
+<p><code>ZFILE_INSTALL_PATH</code>指定了安装路径，可以自行修改。</p>
+<h3>启动并配置ZFile</h3>
+<div class="highlight"><pre><span></span><code> ~/zfile/bin/start.sh       # 启动项目
+ ~/zfile/bin/stop.sh        # 停止项目
+ ~/zfile/bin/restart.sh     # 重启项目
+</code></pre></div>
+
+<p>启动项目后，默认开放在8080端口，使用<code>localhost:8080</code>进入ZFile：
+<img alt="注册/登录界面" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content">首次开启时需要注册管理员账号，登录进入系统后，首先配置存储源，选择存储策略为<code>OneDrive</code>，启用文件操作。
+<img alt="配置存储源" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content">点击链接登录OneDrive账号获取令牌，填写完成后即可保存设置。<img alt="获取令牌" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content">设置成功后在存储源中就可以看见OneDrive标志，并且显示刷新成功，这样ZFile就已经正常工作了。<img alt="存储源列表" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"></p>
+<h3>使用ZFile管理OneDrive</h3>
+<p>在地址栏中输入<code>localhost:8080</code>进入存储界面，在这里就理应能够看到OneDrive中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。</p>
+<p>如果有一台VPS，在VPS上启动ZFile后，通过<code>vps-ip:[port]</code>也能进入同样的管理界面。只需要将图片文件上传至OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在<code>.md</code>中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件“直链”并不是真正的直链，而是经过一次转发，可能会影响访问速度。<img alt="ZFile获取直链流程" src="">因为ZFile向OneDrive请求得到是预览链接或临时下载链接<code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链<code>vps-ip:[port]/...</code>时，实际得到的都是ZFile转发得到的OneDrive临时链接。</p>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=将OneDrive作为博客图床&amp;url=/blog03.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/blog03.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/blog03.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="/tag/blog.html">blog</a><a href="/tag/onedrive.html">OneDrive</a>                </aside>
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing" rel="nofollow"><b>Github</b></a> &bull; <b>RSS</b></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
