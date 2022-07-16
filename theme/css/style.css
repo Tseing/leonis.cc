@@ -697,7 +697,7 @@ tt {
     margin: 0 0.333em;
     padding: 0.333em 0.666em;
     font-family: 'Ubuntu Mono', monospace, sans-serif;
-    font-size: 0.8em;
+    font-size: 18px;
     white-space: pre;
     background: #faf9f7;
     border: 1px solid #e5e4e1;
@@ -747,7 +747,7 @@ pre tt {
     margin: -1.333em -1.333em -1.333em 1.333em;
     padding: 1.333em;
     overflow: scroll;
-    font-size: 0.9em;
+    font-size: 18px;
     line-height: 2em;
     white-space: pre;
     background: transparent;
@@ -1558,6 +1558,7 @@ img {
 .post-content{
     margin-left: 140px;
     margin-right: 140px;
+    text-align: justify;
 }
 
 .post-tags {
