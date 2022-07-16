@@ -154,28 +154,28 @@
 <h3>撰写文章</h3>
 <h4>Jupyter Notebook 方式</h4>
 <p>Jupyter Notebook 能够保存下代码的输入与输出信息，特别适合用于展示程序输出的图形。首先在<code>content</code>目录中创建<code>.nbdata</code>与<code>.ipynb</code>的同名文件。<code>.nbdata</code>文件中保存了文章的结构信息，而<code>.ipynb</code>使用 Jupyter Notebook 保存了文章的具体内容。</p>
-<div class="highlight"><pre><span></span><code>Title: #文章标题
-Slug: #文章地址
-Date: #时间
-Category: #类别
-Tags: #标签
-Author: #作者
-Summary: #概要
+<div class="highlight"><pre><span></span><code>Title: # 文章标题
+Slug: # 文章地址
+Date: # 时间
+Category: # 类别
+Tags: # 标签
+Author: # 作者
+Summary: # 概要
 
-#其他不常用信息
-Modified: #修改时间
-Keywords: #仅用于html内容
-Authors: #多作者
-Lang: #语言
-Translation: #是否属于译文
-Status: #draft, hidden, or published
+# 其他不常用信息
+Modified: # 修改时间
+Keywords: # 仅用于html内容
+Authors: # 多作者
+Lang: # 语言
+Translation: # 是否属于译文
+Status: # draft, hidden, or published
 </code></pre></div>
 
 <h4>Markdown 方式</h4>
 <p>使用Markdown 语言是写博客最为简单普遍的方式，在<code>content</code>文件夹中创建<code>.md</code>文件，在开始部分首先输入与<code>.nbdata</code>相同的文章信息后，就可以直接开始撰写正文。</p>
 <h3>生成静态网页</h3>
 <p>在撰写文章后，进入虚拟环境，在<code>blog</code>文件夹中使用<code>Pelican</code>生成<code>.html</code>文件。</p>
-<div class="highlight"><pre><span></span><code>ource ./venv/bin/activate
+<div class="highlight"><pre><span></span><code>source ./venv/bin/activate
 pelican content -s publishconf.py
 </code></pre></div>
 
@@ -212,6 +212,23 @@ git push
 
                 <div class="clear"></div>
 
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">This is the place for a small biography with max 200 characters. Well, now 100 are left. Cool, hugh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
 
                 </section>
 

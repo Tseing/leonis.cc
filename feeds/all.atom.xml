@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2022-07-14T00:00:00+08:00</updated><entry><title>将 OneDrive 作为博客图床</title><link href="/blog03.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:None,2022-07-14:/blog03.html</id><summary type="html">&lt;p&gt;在 Linux 使用 ZFile 同步管理 OneDrive 文件，通过 Microsoft 官方API生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2022-07-16T00:00:00+08:00</updated><entry><title>测试页面</title><link href="/blog03.html" rel="alternate"></link><published>2022-07-16T00:00:00+08:00</published><updated>2022-07-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:None,2022-07-16:/blog03.html</id><summary type="html">&lt;p&gt;测试页面&lt;/p&gt;</summary><content type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;测试页面&lt;/h2&gt;
+&lt;p&gt;测试页面&lt;/p&gt;
+&lt;h3&gt;测试页面&lt;/h3&gt;
+&lt;p&gt;测试页面&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;测试页面测试页面
+test page
+test page&lt;/p&gt;
+&lt;/blockquote&gt;</content><category term="碎碎念"></category><category term="blog"></category><category term="OneDrive"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:None,2022-07-14:/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 使用 ZFile 同步管理 OneDrive 文件，通过 Microsoft 官方API生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。&lt;/p&gt;
 &lt;h3&gt;OneDrive 文件链接的生成方式&lt;/h3&gt;
@@ -46,28 +55,28 @@ apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install -y 
 &lt;h3&gt;撰写文章&lt;/h3&gt;
 &lt;h4&gt;Jupyter Notebook 方式&lt;/h4&gt;
 &lt;p&gt;Jupyter Notebook 能够保存下代码的输入与输出信息，特别适合用于展示程序输出的图形。首先在&lt;code&gt;content&lt;/code&gt;目录中创建&lt;code&gt;.nbdata&lt;/code&gt;与&lt;code&gt;.ipynb&lt;/code&gt;的同名文件。&lt;code&gt;.nbdata&lt;/code&gt;文件中保存了文章的结构信息，而&lt;code&gt;.ipynb&lt;/code&gt;使用 Jupyter Notebook 保存了文章的具体内容。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Title: #文章标题
-Slug: #文章地址
-Date: #时间
-Category: #类别
-Tags: #标签
-Author: #作者
-Summary: #概要
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Title: # 文章标题
+Slug: # 文章地址
+Date: # 时间
+Category: # 类别
+Tags: # 标签
+Author: # 作者
+Summary: # 概要
 
-#其他不常用信息
-Modified: #修改时间
-Keywords: #仅用于html内容
-Authors: #多作者
-Lang: #语言
-Translation: #是否属于译文
-Status: #draft, hidden, or published
+# 其他不常用信息
+Modified: # 修改时间
+Keywords: # 仅用于html内容
+Authors: # 多作者
+Lang: # 语言
+Translation: # 是否属于译文
+Status: # draft, hidden, or published
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;Markdown 方式&lt;/h4&gt;
 &lt;p&gt;使用Markdown 语言是写博客最为简单普遍的方式，在&lt;code&gt;content&lt;/code&gt;文件夹中创建&lt;code&gt;.md&lt;/code&gt;文件，在开始部分首先输入与&lt;code&gt;.nbdata&lt;/code&gt;相同的文章信息后，就可以直接开始撰写正文。&lt;/p&gt;
 &lt;h3&gt;生成静态网页&lt;/h3&gt;
 &lt;p&gt;在撰写文章后，进入虚拟环境，在&lt;code&gt;blog&lt;/code&gt;文件夹中使用&lt;code&gt;Pelican&lt;/code&gt;生成&lt;code&gt;.html&lt;/code&gt;文件。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ource ./venv/bin/activate
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source ./venv/bin/activate
 pelican content -s publishconf.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
