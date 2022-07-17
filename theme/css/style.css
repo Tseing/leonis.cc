@@ -1291,7 +1291,7 @@ img {
 } */
 
 #blog-author .post-author {
-    margin-top: -5em;
+    margin-top: -120px;
     padding-bottom: 3em;
     border: 0
 }
@@ -1310,13 +1310,13 @@ img {
 }
 
 #blog-author .post-author-name {
-    padding: 0.333em 0 0;
+    padding: 40px 0 0;
     font-size: 2em;
     line-height: 1em
 }
 
 #blog-author.has-cover .post-author-name {
-    padding: 0.333em 0;
+    padding: 40px 0 0;
     font-weight: 500;
     letter-spacing: 0.025em;
     line-height: 1.333em;
@@ -1639,7 +1639,10 @@ img {
 }
 
 .post-author-about {
-    margin: 0.666em 0
+    margin-bottom: 0.666em;
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .post-author-bio span {
