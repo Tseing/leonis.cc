@@ -5,29 +5,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2022-07-17T16:02:41-00:00</lastmod>
+<lastmod>2022-07-17T17:08:16-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about.html</loc>
-<lastmod>2022-07-17T16:02:41-00:00</lastmod>
+<lastmod>2022-07-17T17:08:16-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-07-17T16:02:41-00:00</lastmod>
+<lastmod>2022-07-17T17:08:16-00:00</lastmod>
 <changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>/blog03.html</loc>
-<lastmod>2022-07-16T00:00:00+08:00</lastmod>
-<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -47,21 +40,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/sui-sui-nian.html</loc>
-<lastmod>2022-07-16T00:00:00+08:06</lastmod>
+<lastmod>2022-07-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tag/blog.html</loc>
-<lastmod>2022-07-16T00:00:00+08:06</lastmod>
+<lastmod>2022-07-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tag/onedrive.html</loc>
-<lastmod>2022-07-16T00:00:00+08:06</lastmod>
+<lastmod>2022-07-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -75,7 +68,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/leo.html</loc>
-<lastmod>2022-07-16T00:00:00+08:06</lastmod>
+<lastmod>2022-07-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
