@@ -642,7 +642,8 @@ blockquote p:last-child {
 em,
 i {
     font-style: italic;
-    color: #212226
+    /* color: #212226 */
+    color: inherit
 }
 
 strong,
@@ -1589,6 +1590,10 @@ img {
 .post-tags a:focus {
     background: #f26a3d;
     color: #fff
+}
+
+#post-title-icon {
+    color: white;
 }
 
 .post-author {
