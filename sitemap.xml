@@ -4,42 +4,42 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>/</loc>
-<lastmod>2022-07-17T19:44:05-00:00</lastmod>
+<loc>https://tseing.github.io/</loc>
+<lastmod>2022-07-17T20:36:57-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/pages/about.html</loc>
-<lastmod>2022-07-17T19:44:05-00:00</lastmod>
+<loc>https://tseing.github.io/pages/about.html</loc>
+<lastmod>2022-07-17T20:36:57-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-07-17T19:44:05-00:00</lastmod>
+<loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
+<lastmod>2022-07-17T20:36:57-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/blog02.html</loc>
+<loc>https://tseing.github.io/blog02.html</loc>
 <lastmod>2022-07-14T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/blog01.html</loc>
+<loc>https://tseing.github.io/blog01.html</loc>
 <lastmod>2022-07-12T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/author/leo.html</loc>
+<loc>https://tseing.github.io/author/leo.html</loc>
 <lastmod>2022-07-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
