@@ -175,7 +175,7 @@ status: # draft, hidden, or published
 <p>使用 Markdown 语言是写博客最为简单普遍的方式，在<code>content</code>文件夹中创建<code>.md</code>文件，在开始部分首先输入与<code>.nbdata</code>相同的文章信息后，就可以直接开始撰写正文。</p>
 <h3>生成静态网页</h3>
 <p>在撰写文章后，进入虚拟环境，在<code>blog</code>文件夹中使用<code>Pelican</code>生成<code>.html</code>文件。</p>
-<div class="highlight"><pre><span></span><code>source ./venv/bin/activate
+<div class="highlight"><pre><span></span><code><span class="nb">source</span> ./venv/bin/activate
 pelican content -s publishconf.py
 </code></pre></div>
 

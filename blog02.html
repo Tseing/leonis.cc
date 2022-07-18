@@ -67,7 +67,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="OneDrive"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content">
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
 
 <!-- Twitter Card -->
 
@@ -84,7 +84,7 @@
     "name": "Leo",
     "url": "https://tseing.github.io/author/leo.html"
   },
-  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content",
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
   "url": "https://tseing.github.io/blog02.html",
   "description": "在个人博客中，图片是不可或缺的，而生成图片的直链后才能在.md文件中使用，因此通常又需要图床等额外工具。由于国内 …"
 }
@@ -133,7 +133,7 @@
             | <time datetime="2022年 7月14日">2022年 7月14日</time>
         </span>
         <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content')">
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
       </div>
     </header>
 
@@ -163,19 +163,20 @@ add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 apt update <span class="o">&amp;&amp;</span> apt install -y adoptopenjdk-8-hotspot-jre
 </code></pre></div>
 
-<p>下载 ZFile:</p>
-<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">ZFILE_INSTALL_PATH</span><span class="o">=~/</span><span class="n">zfile</span><span class="w"></span>
-<span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="w"></span>
-<span class="n">wget</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">c</span><span class="o">.</span><span class="n">jun6</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">ZFILE</span><span class="o">/</span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"></span>
-<span class="n">unzip</span><span class="w"> </span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">rf</span><span class="w"> </span><span class="n">zfile</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">war</span><span class="w"></span>
-<span class="n">chmod</span><span class="w"> </span><span class="o">+</span><span class="n">x</span><span class="w"> </span><span class="o">$</span><span class="n">ZFILE_INSTALL_PATH</span><span class="o">/</span><span class="n">bin</span><span class="o">/*.</span><span class="n">sh</span><span class="w"></span>
+<p>下载 ZFile：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">ZFILE_INSTALL_PATH</span><span class="o">=</span>~/zfile
+mkdir -p <span class="nv">$ZFILE_INSTALL_PATH</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$ZFILE_INSTALL_PATH</span>
+wget https://c.jun6.net/ZFILE/zfile-release.war
+unzip zfile-release.war <span class="o">&amp;&amp;</span> rm -rf zfile-release.war
+chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
 </code></pre></div>
 
 <p><code>ZFILE_INSTALL_PATH</code>指定了安装路径，可以自行修改。</p>
 <h3>启动并配置 ZFile</h3>
-<div class="highlight"><pre><span></span><code> ~/zfile/bin/start.sh       # 启动项目
- ~/zfile/bin/stop.sh        # 停止项目
- ~/zfile/bin/restart.sh     # 重启项目
+<p>通过以下命令启动 ZFile：</p>
+<div class="highlight"><pre><span></span><code> ~/zfile/bin/start.sh       <span class="c1"># 启动项目</span>
+ ~/zfile/bin/stop.sh        <span class="c1"># 停止项目</span>
+ ~/zfile/bin/restart.sh     <span class="c1"># 重启项目</span>
 </code></pre></div>
 
 <p>启动项目后，默认开放在 8080 端口，使用<code>localhost:8080</code>进入 ZFile：
