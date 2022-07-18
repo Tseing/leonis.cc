@@ -639,9 +639,14 @@ blockquote p:last-child {
     margin-bottom: 0
 }
 
+em {
+    text-emphasis: dot;
+    text-emphasis-position: under right;
+}
+
 em,
 i {
-    font-style: italic;
+    font-style: normal;
     /* color: #212226 */
     color: inherit
 }
@@ -955,7 +960,8 @@ img {
     margin: 0.25em 0;
     padding: 0;
     font-size: 1em;
-    line-height: 1.5em
+    line-height: 1.5em;
+    font-family: "Cardo";
 }
 
 .home-template .blog-description {
@@ -1255,7 +1261,7 @@ img {
     line-height: 1em;
     padding: 1.1em 0;
     overflow: auto;
-    opacity: 0.5
+    opacity: 0.5;
 }
 
 .credits a {
