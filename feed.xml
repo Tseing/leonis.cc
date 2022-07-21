@@ -1,5 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-07-14T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-07-21T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第一章</title><link href="https://tseing.github.io/blog03.html" rel="alternate"></link><published>2022-07-21T00:00:00+08:00</published><updated>2022-07-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-21:/blog03.html</id><summary type="html">&lt;p&gt;统计学习及监督学习概论&lt;/p&gt;</summary><content type="html">&lt;h2&gt;基本概念&lt;/h2&gt;
+&lt;h3&gt;统计学习过程&lt;/h3&gt;
+&lt;p&gt;统计学习主要基于数据概率构建概率统计模型并运用模型分析和预测数据，统计学习的主要过程可以归纳为：&lt;/p&gt;
+&lt;div class="math"&gt;$$\boxed{\frac{训练数据集}{T=\{(x_i,y_i)\}}}\stackrel{学习}{\Longrightarrow}\boxed{\frac{模型}{P(Y|X)\ \mathrm{or}\ Y=f(X)}}\stackrel{预测}{\Longrightarrow}y_{N+1}$$&lt;/div&gt;
+&lt;p&gt;其中，训练集表示为：&lt;/p&gt;
+&lt;div class="math"&gt;$$
+T=\{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N) \}
+$$&lt;/div&gt;
+&lt;p&gt;其中输入变量 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 的取值 &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 为特征向量：&lt;/p&gt;
+&lt;div class="math"&gt;$$
+x_i=(x^{(1)}_i,x^{(2)}_i,\cdots,x^{(n)}_i)^\mathrm{T}
+$$&lt;/div&gt;
+&lt;p&gt;输入变量 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 与输出变量 &lt;span class="math"&gt;\(Y\)&lt;/span&gt; 遵循联合概率分布 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt;，经过学习得到的模型可以是概率模型 &lt;span class="math"&gt;\(P(Y|X)\)&lt;/span&gt;，也可以是非概率模型 &lt;span class="math"&gt;\(Y=f(X)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3&gt;概率模型与非概率模型&lt;/h3&gt;
+&lt;p&gt;在监督学习中，概率模型为条件概率分布形式 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt;，非概率模型为决策函数形式 &lt;span class="math"&gt;\(y=f(x)\)&lt;/span&gt;；在无监督学习中，概率模型为 &lt;span class="math"&gt;\(P(z|x)\)&lt;/span&gt; 或 &lt;span class="math"&gt;\(P(x|z)\)&lt;/span&gt;，非概率模型为隐函数形式 &lt;span class="math"&gt;\(z=g(x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;div class="math"&gt;$$P(y|x)\underset{归一化}{\overset{最大化}{\rightleftharpoons}} y=f(x)$$&lt;/div&gt;
+&lt;p&gt;由于 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(y=f(x)\)&lt;/span&gt; 可以按照上述过程转化，所以概率模型与非概率模型不仅仅是在表现形式存在差异，更为重要的是在内部结构上，概率模型的变量、参数符合一定的联合概率分布，这也决定了概率模型符合以下基本概率公式：&lt;/p&gt;
+&lt;div class="math"&gt;$$P(x)=\sum_y P(x,y)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$P(x,y)=P(x)P(y|x)$$&lt;/div&gt;
+&lt;h2&gt;统计学习方法三要素&lt;/h2&gt;
+&lt;h3&gt;模型&lt;/h3&gt;
+&lt;p&gt;模型就是需要学习的条件分布概率或决策函数，由假设模型构成的集合称为假设空间，可以表示为：&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{F}=\{f|Y=f_\theta(X),\theta\in\mathbf{R}^n\}$$&lt;/div&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{F}=\{P|P_\theta(Y|X),\theta\in\mathbf{R}^n\}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; 为模型的参数向量，&lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 称为参数空间。&lt;/p&gt;
+&lt;h3&gt;策略&lt;/h3&gt;
+&lt;p&gt;在假设空间中选择最优模型的方法称之为策略。&lt;/p&gt;
+&lt;h4&gt;损失函数和风险函数&lt;/h4&gt;
+&lt;p&gt;用损失函数能够衡量模型预测值 &lt;span class="math"&gt;\(f(X)\)&lt;/span&gt; 与真实值 &lt;span class="math"&gt;\(Y\)&lt;/span&gt; 的差距，从而评估模型的优劣。损失函数记作 &lt;span class="math"&gt;\(L(Y,f(X))\)&lt;/span&gt;，例如常见的平方损失函数定义为：&lt;/p&gt;
+&lt;div class="math"&gt;$$L(Y,f(X))=(Y-f(X))^2$$&lt;/div&gt;
+&lt;p&gt;输入变量 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 与输出变量 &lt;span class="math"&gt;\(Y\)&lt;/span&gt; 遵循联合概率分布 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt;，损失函数的期望为：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    R_{\mathrm{exp}}(f)&amp;amp;=E_P[L(Y,f(X))]\\
+    &amp;amp;= \int_{\mathcal{X}\times\mathcal{Y}}L(y,f(x))P(x,y)\mathrm{d}x\mathrm{d}y\\
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;该期望就是模型 &lt;span class="math"&gt;\(f(X)\)&lt;/span&gt; 在联合分布 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt; 平均意义下的损失，称为风险函数。但由于 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt; 无法确定，风险函数也无法计算，因此定义了能够确定的经验风险。经验风险是模型 &lt;span class="math"&gt;\(f(X)\)&lt;/span&gt; 在训练集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 中的平均损失：&lt;/p&gt;
+&lt;div class="math"&gt;$$R_{\mathrm{rmp}}(f)=\frac{1}{N}\sum_{i=1}^NL(y_i,f(x_i))$$&lt;/div&gt;
+&lt;p&gt;当样本容量 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 趋向于无穷时，经验风险 &lt;span class="math"&gt;\(R_{\mathrm{rmp}}\)&lt;/span&gt; 趋于期望风险 &lt;span class="math"&gt;\(R_{\mathrm{exp}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h4&gt;经验风险最小化与结构风险最小化&lt;/h4&gt;
+&lt;p&gt;经验风险最小化策略通过寻找经验风险最小的模型作为最优模型，经验风险最小化策略需要足够大的样本容量，否则容易出现过拟合。经验风险最小化策本质为求解最优化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{f\in\mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$&lt;/div&gt;
+&lt;p&gt;结构风险最小化策略是防止过拟合的策略，其本质为求解最优化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{f\in\mathcal{F}}\frac{1}{N}L(y_i,f(x_i))+\lambda J(f)$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(J(f)\)&lt;/span&gt; 是模型的复杂度，表示对复杂模型的惩罚，&lt;span class="math"&gt;\(\lambda\)&lt;/span&gt; 为系数。&lt;/p&gt;
+&lt;h3&gt;算法&lt;/h3&gt;
+&lt;p&gt;算法是学习模型的具体计算方法。&lt;/p&gt;
+&lt;h2&gt;泛化&lt;/h2&gt;
+&lt;h3&gt;泛化误差&lt;/h3&gt;
+&lt;p&gt;泛化能力是学习得到的模型对未知数据的预测能力，学习得到的模型对未知项进行预测的误差称为泛化误差，泛化误差等同于模型 &lt;span class="math"&gt;\(\hat{f}\)&lt;/span&gt; 的期望风险：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    R_{\mathrm{exp}}(\hat{f})&amp;amp;=E_P[L(Y,\hat{f}(X))]\\
+    &amp;amp;= \int_{\mathcal{X}\times\mathcal{Y}}L(y,\hat{f}(x))P(x,y)\mathrm{d}x\mathrm{d}y\\
+\end{align}$$&lt;/div&gt;
+&lt;h3&gt;二分类问题的泛化误差上界&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理 1.1&lt;/strong&gt; 对于二分类问题，当假设空间是有限个函数的集合
+ &lt;span class="math"&gt;\(\mathcal{F}=\{ f_1,f_2,\cdots,f_d\}\)&lt;/span&gt; 时，对任意一个函数 &lt;span class="math"&gt;\(f\in \mathcal{F}\)&lt;/span&gt;，至少以概率 &lt;span class="math"&gt;\(1-\delta\)&lt;/span&gt;，&lt;span class="math"&gt;\(0&amp;lt;\delta&amp;lt;1\)&lt;/span&gt;，以下不等式成立（证明见参考）：&lt;/p&gt;
+&lt;div class="math"&gt;$$R(f)\leq\hat{R}(f)+\varepsilon(d,N,\delta)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\varepsilon(d,N\delta)=\sqrt{\frac{1}{2N}(\log d+\log\frac{1}{\delta})}$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(R(f)\)&lt;/span&gt; 为泛化误差，&lt;span class="math"&gt;\(\hat{R}(f)\)&lt;/span&gt; 为训练误差。&lt;/p&gt;
+&lt;p&gt;泛化误差上界的性质：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;样本容量增加，泛化上界趋于0；&lt;/li&gt;
+&lt;li&gt;假设空间越大，泛化上界越大。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;监督学习的应用&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;输入变量 X&lt;/th&gt;
+&lt;th&gt;输出变量 Y&lt;/th&gt;
+&lt;th&gt;问题&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;离散变量&lt;/td&gt;
+&lt;td&gt;分类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;变量序列&lt;/td&gt;
+&lt;td&gt;变量序列&lt;/td&gt;
+&lt;td&gt;标注&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;连续变量&lt;/td&gt;
+&lt;td&gt;连续变量&lt;/td&gt;
+&lt;td&gt;回归&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.cnblogs.com/pastispast/p/12589078.html"&gt;二分类问题泛化误差上界的详细证明 - p_is_p - 博客园&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。&lt;/p&gt;
 &lt;h3&gt;OneDrive 文件链接的生成方式&lt;/h3&gt;

@@ -538,7 +538,8 @@ h2 {
 h3 {
     font-size: 1.5em;
     line-height: 1.333em;
-    margin: 2em 0 0em
+    margin: 2em 0 0em;
+    margin-top: 30px;
 }
 
 h4 {
