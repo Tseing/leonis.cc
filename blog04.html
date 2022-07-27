@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>《统计学习方法》第二章</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.4" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/blog04.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.lug.ustc.edu.cn/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato" rel="stylesheet" type="text/css" />
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300&family=Noto+Serif+SC&family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <meta name="description" content="感知机">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="《统计学习方法》">
+    <meta name="tags" content="机器学习">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第二章"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="感知机"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/blog04.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-07-27 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="《统计学习方法》"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="机器学习"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "《统计学习方法》第二章",
+  "headline": "《统计学习方法》第二章",
+  "datePublished": "2022-07-27 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/blog04.html",
+  "description": "感知机"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About me</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">《统计学习方法》第二章</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 7月27日">2022年 7月27日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h2>感知机模型</h2>
+<h3>定义</h3>
+<p>感知机是<em>二分类</em>的<em>线性</em>分类模型，感知机定义为</p>
+<div class="math">$$f(x)=\mathrm{sign}(w\cdot x+b)$$</div>
+<div class="math">$$\begin{equation}
+    \mathrm{sign}(x)=
+    \begin{cases}
+        +1, &amp;x\geqslant 0\\
+        -1, &amp;x&lt;0
+    \end{cases}
+\end{equation}$$</div>
+<p>其中输入 <span class="math">\(x\in \mathbf{R}^n\)</span> 表示实例的特征向量，输出 <span class="math">\(y\in \{+1,-1\}\)</span>表示实例的类别。模型参数 <span class="math">\(w\)</span> 称为权值，参数 <span class="math">\(b\)</span> 称为偏置。</p>
+<h3>感知机的几何模型</h3>
+<p>若 <span class="math">\(x\in \mathbf{R}^2\)</span>,</p>
+<div class="math">$$\begin{align}
+    w\cdot x+b&amp;=0\\
+    (w^{(1)},w^{(2)})^\mathrm{T}\cdot (x^{(1)},x^{(2)})^\mathrm{T}+b&amp;=0\\
+\end{align}$$</div>
+<p>该形式满足平面中的直线方程：</p>
+<div class="math">$$\begin{align}
+    (i,j)^\mathrm{T}\cdot (x^{(1)},x^{(2)})^\mathrm{T}+b&amp;=0\\
+    ix^{(1)}+jx^{(2)}+b&amp;=0
+\end{align}$$</div>
+<p>其中 <span class="math">\(w=(i,j)^\mathrm{T}\)</span> 为直线法向量。</p>
+<p>类似地，当 <span class="math">\(x\in \mathbf{R}^3\)</span> 时，感知机模型满足空间中的平面方程：</p>
+<div class="math">$$ix^{(1)}+jx^{(2)}+kx^{(3)}+b=0$$</div>
+<p>且 <span class="math">\(w=(i,j,k)^\mathrm{T}\)</span> 为平面法向量。</p>
+<p>因此，感知机在模型本质上是在特征空间 <span class="math">\(\mathbf{R}^n\)</span> 中的一个超平面 <span class="math">\(S\)</span>，代表特征向量的点被超平面 <span class="math">\(S\)</span> 分隔成两部分，其中参数 <span class="math">\(w\)</span> 为超平面法向量。</p>
+<p><img alt="感知机的几何模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7509?authkey=ALYpzW-ZQ_VBXTU"></p>
+<p>超平面 <span class="math">\(S\)</span> 也应符合 <span class="math">\(\mathbf{R}^n\)</span> 空间中的几何关系，所以在 <span class="math">\(\mathbf{R}^n\)</span> 空间中的任意一点 <span class="math">\(x_0\)</span> 到超平面的距离为</p>
+<div class="math">$$d=\frac{1}{||w||}|w\cdot x_0+b|$$</div>
+<p><span class="math">\(||w||\)</span> 是 <span class="math">\(w\)</span> 的 <span class="math">\(L_2\)</span> 范数：</p>
+<div class="math">$$||w||=\sqrt{\sum(w_i)^2}$$</div>
+<p>即法向量长度。</p>
+<h4>点到超平面距离公式的推导</h4>
+<p>以 <span class="math">\(x\in \mathbf{R}^2\)</span> 为例，将超平面 <span class="math">\(S\)</span> 方程转化为截距式：</p>
+<div class="math">$$\begin{align}
+     ix^{(1)}+jx^{(2)}+b&amp;=0\\
+     \frac{x^{(1)}}{-\frac{b}{i}}+\frac{x^{(2)}}{-\frac{b}{j}}&amp;=1
+\end{align}$$</div>
+<p>超平面 <span class="math">\(S\)</span> 在 <span class="math">\(x^{(2)}\)</span> 轴上的截距就为 <span class="math">\(-\frac{b}{j}\)</span>。过点 <span class="math">\(x_0\)</span> 作平行于 <span class="math">\(S\)</span> 的超平面 <span class="math">\(S_0\)</span>，同样得到截距式：</p>
+<div class="math">$$\frac{x^{(1)}}{-\frac{b_0}{i}}+\frac{x^{(2)}}{-\frac{b_0}{j}}=1$$</div>
+<p>超平面 <span class="math">\(S_0\)</span> 在 <span class="math">\(x^{(2)}\)</span> 轴上的截距为 <span class="math">\(-\frac{b_0}{j}\)</span>。</p>
+<p><img alt="示意图" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7517?authkey=ALYpzW-ZQ_VBXTU"></p>
+<p>将 <span class="math">\(d\)</span> 平移至蓝色三角形中，<span class="math">\(\boldsymbol{w}\)</span> 是超平面的法向量，<span class="math">\(\boldsymbol{w}=w=(i,j)^\mathrm{T}\)</span>，根据向量夹角余弦公式</p>
+<div class="math">$$\begin{align}
+    \cos\theta&amp;=|\cos(\boldsymbol{w},\boldsymbol{j})|\\
+    &amp;=\frac{|\boldsymbol{w}\cdot\boldsymbol{j}|}{|\boldsymbol{w}||\boldsymbol{j}|}
+\end{align}$$</div>
+<p><span class="math">\(\boldsymbol{j}\)</span> 为 <span class="math">\(x^{(2)}\)</span> 方向的单位向量，因此有</p>
+<div class="math">$$\begin{align}
+    \cos\theta&amp;=\frac{|(i,j)^\mathrm{T}\cdot(0,1)^\mathrm{T}|}{|\boldsymbol{w}|}\\
+    &amp;=\frac{|j|}{|\boldsymbol{w}|}
+\end{align}$$</div>
+<p>在蓝色三角形中，</p>
+<div class="math">$$\begin{align}
+    d&amp;=\left|\frac{b}{j}-\frac{b_0}{j}\right|\cos\theta\\
+    &amp;=\frac{|b-b_0|}{|j|}\frac{|j|}{|\boldsymbol{w}|}\\
+    &amp;=\frac{|b-b_0|}{|\boldsymbol{w}|}\\
+\end{align}$$</div>
+<p>由 <span class="math">\(w\cdot x_0+b_0=0\)</span> 得到 <span class="math">\(b_0=-w\cdot x_0\)</span>，代入就可以证得</p>
+<div class="math">$$d=\frac{|w\cdot x_0+b|}{||w||}$$</div>
+<h2>感知机学习策略</h2>
+<p>感知机的分类情况可以归为以下几类：</p>
+<ul>
+<li><span class="math">\(w\cdot x_i+b\geqslant0\)</span>,<span class="math">\(\ y_i=+1\)</span>，分类正确；</li>
+<li><span class="math">\(w\cdot x_i+b\geqslant0\)</span>,<span class="math">\(\ y_i=-1\)</span>，分类错误；</li>
+<li><span class="math">\(w\cdot x_i+b&lt;0\)</span>,<span class="math">\(\ y_i=-1\)</span>，分类正确；</li>
+<li><span class="math">\(w\cdot x_i+b&lt;0\)</span>,<span class="math">\(\ y_i=+1\)</span>，分类错误。</li>
+</ul>
+<p>因此分类错误的数据点 <span class="math">\((x_i,y_i)\)</span> 满足</p>
+<div class="math">$$-y_i(w\cdot x_i+b)&gt;0$$</div>
+<p>若超平面 <span class="math">\(S\)</span> 误分类的点的集合为 <span class="math">\(M\)</span>，那么误分类点到超平面的距离之和为</p>
+<div class="math">$$\sum_{x_i\in M}\left[-\frac{1}{||w||}y_i(w\cdot x_i+b)\right]$$</div>
+<p>略去 <span class="math">\(\frac{1}{||w||}\)</span>（见第七章），得到<em>经验风险函数</em>：</p>
+<div class="math">$$L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$</div>
+<p>感知机的学习策略就是在假设空间中选取 <span class="math">\(L(w,b)\)</span> 最小的模型参数 <span class="math">\(w\)</span> 和 <span class="math">\(b\)</span>。</p>
+<h2>感知机学习算法</h2>
+<p>感知机的学习算法就是求解以下最优化问题的算法：</p>
+<div class="math">$$\min_{w,b}L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$</div>
+<h3>随机梯度下降法</h3>
+<ol>
+<li>任意选取超平面 <span class="math">\(w_0\cdot x+b_0=0\)</span>;</li>
+<li>随机选取误分类点使 <span class="math">\(L(w,b)\)</span> 梯度下降；</li>
+<li>不断更新 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span>，直至 <span class="math">\(L(w,b)=0\)</span>。</li>
+</ol>
+<p>二元函数 <span class="math">\(f(x,y)\)</span> 在 <span class="math">\((x_0,y_0)\)</span> 处的梯度定义为</p>
+<div class="math">$$\mathbf{grad}\ f(x_0,y_0)=\nabla f(x_0,y_0)=f_x(x_0,y_0)\boldsymbol{i}+f_y(x_0,y_0)\boldsymbol{j}$$</div>
+<p>因此损失函数 <span class="math">\(L(w,b)\)</span> 的梯度为</p>
+<div class="math">$$\nabla_wL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{teal}{y_i}(w\cdot \color{teal}{x_i}+b)\right]}{\partial w}=-\sum_{x_i\in M}\color{teal}{y_ix_i}$$</div>
+<div class="math">$$\nabla_bL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{teal}{y_i}(w\cdot x_i+b)\right]}{\partial b}=-\sum_{x_i\in M}\color{teal}{y_i}$$</div>
+<p>随机选择误分类点 <span class="math">\((x_i,y_i)\)</span> 更新 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span>，使 <span class="math">\(L(w,b)\)</span> 沿梯度方向下降：</p>
+<div class="math">$$w\leftarrow w+\eta y_ix_i$$</div>
+<div class="math">$$b\leftarrow b+\eta y_i$$</div>
+<p>其中 <span class="math">\(\eta\ (0&lt;\eta\leqslant1)\)</span> 称为步长，不断迭代至 <span class="math">\(L(w,b)=0\)</span>。</p>
+<h3>感知机原始形式算法</h3>
+<p><strong>算法2.1</strong></p>
+<ol>
+<li>设定步长 <span class="math">\(\eta\)</span>，选取初值 <span class="math">\(w_0\)</span> 与 <span class="math">\(b_0\)</span>，一般为 <span class="math">\(w_0=0\)</span>，<span class="math">\(b_0=0\)</span>；</li>
+<li>选取点 <span class="math">\((x_i,y_i)\)</span>；</li>
+<li>若 <span class="math">\(y_i(w\cdot x_i+b)\leqslant0\)</span>，<div class="math">$$w\leftarrow w+\eta y_ix_i$$</div>
+<div class="math">$$b\leftarrow b+\eta y_i$$</div>
+</li>
+<li>重复步骤（2），直至没有误分类点，即 <span class="math">\(L(w,b)=0\)</span>。</li>
+</ol>
+<h3>感知机对偶形式算法</h3>
+<p>经过数次以下迭代步骤：</p>
+<div class="math">$$w\leftarrow w+\eta y_ix_i$$</div>
+<div class="math">$$b\leftarrow b+\eta y_i$$</div>
+<p><em>最终的</em> <span class="math">\(w\)</span> 和 <span class="math">\(b\)</span> 可以表示为</p>
+<div class="math">$$w=\sum_{i=1}^N \alpha_iy_ix_i$$</div>
+<div class="math">$$b=\sum_{i=1}^N\alpha_iy_i$$</div>
+<p>其中 <span class="math">\(\alpha_i=n_i\eta\)</span>，<span class="math">\(n_i\)</span> 表示点 <span class="math">\((x_i,y_i)\)</span> 被误分类的次数。也就是说，在迭代的每一次过程中，被误分类的点 <span class="math">\((x_i,y_i)\)</span> 都不断向超平面靠近，直至位于超平面的另一侧。</p>
+<p>最后得到的感知机模型应为</p>
+<div class="math">$$f(x)=\mathrm{sign}\left(\sum_{i=1}^N\alpha_iy_ix_i\cdot x+b\right)$$</div>
+<p>为了与 <span class="math">\(x=x_i\)</span> 代入后的模型相区别，表示为</p>
+<div class="math">$$f(x)=\mathrm{sign}\left(\sum_{j=1}^N\alpha_jy_jx_j\cdot x+b\right)$$</div>
+<p><strong>算法2.2</strong></p>
+<ol>
+<li>设定步长 <span class="math">\(\eta\)</span>，选取初值 <span class="math">\(\alpha\)</span> 与 <span class="math">\(b_0\)</span>，一般为 <span class="math">\(\alpha=(\alpha_1,\alpha_2,\cdots,\alpha_N)^\mathrm{T}=0\)</span>，<span class="math">\(b_0=0\)</span>；</li>
+<li>选取点 <span class="math">\((x_i,y_i)\)</span>；</li>
+<li>若<span class="math">\(y_i\left(\sum_{j=1}^N\alpha_jy_jx_j\cdot x_i+b\right)\leqslant0\)</span>，<div class="math">$$\alpha_i\leftarrow\alpha_i+\eta$$</div>
+<div class="math">$$b\leftarrow b+\eta y_i$$</div>
+</li>
+<li>重复步骤（2），直至没有误分类点。</li>
+</ol>
+<p>考虑迭代的判断条件</p>
+<div class="math">$$y_i\left(\sum_{j=1}^N\alpha_jy_j\vec{x_j}\cdot \vec{x_i}+b\right)\leqslant0$$</div>
+<p>每次判断都需要计算</p>
+<div class="math">$$\sum_{j=1}^N\alpha_jy_j\color{teal}{\vec{x_j}\cdot \vec{x_i}}=\alpha_1y_1\color{teal}{\vec{x_1}\cdot\vec{x_i}}+\alpha_2y_2\color{teal}{\vec{x_2}\cdot\vec{x_i}}+\cdots+\alpha_Ny_N\color{teal}{\vec{x_N}\cdot\vec{x_i}}$$</div>
+<p>因此可以将内积以矩阵形式存放，即 Gram 矩阵：</p>
+<div class="math">$$\boldsymbol{G}=[x_i\cdot x_j]_{N\times N}=\begin{bmatrix}
+    x_1\cdot x_1 &amp;\cdots &amp;x_1\cdot x_N\\
+    \vdots       &amp;\ddots &amp;\vdots\\
+    x_N\cdot x_1 &amp;\cdots &amp;x_N\cdot x_N
+\end{bmatrix}$$</div>
+<p>由于内积的性质，Gram 矩阵实际上是一个对称矩阵。</p>
+<hr>
+<h2>References</h2>
+<ul>
+<li><a href="https://book.douban.com/subject/33437381/">李航, 2019. 统计学习方法（第2版）. 清华大学出版社.</a></li>
+</ul>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第二章&amp;url=https://tseing.github.io/blog04.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/blog04.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/blog04.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/tong-ji-xue-xi-fang-fa.html">《统计学习方法》</a><a href="https://tseing.github.io/tag/ji-qi-xue-xi.html">机器学习</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">This is the place for a small biography with max 200 characters. Well, now 100 are left. Cool, hugh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+
+</body>
+</html>

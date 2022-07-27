@@ -145,14 +145,14 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <h3>Articles or pages?</h3>
+                <h2>Articles or pages?</h2>
 <p>Pelican 中有 articles 与 pages 的概念，在创建页面时应当首先区分二者。</p>
 <ul>
 <li><strong>articles</strong> 指具有时间戳的内容，例如博客文章等，直接创建在<code>content</code>文件夹中。</li>
 <li><strong>pages</strong> 指与时间无关、展示固定内容的页面，需要创建在<code>content/pages</code>文件夹下</li>
 </ul>
-<h3>撰写文章</h3>
-<h4>Jupyter Notebook 方式</h4>
+<h2>撰写文章</h2>
+<h3>Jupyter Notebook 方式</h3>
 <p>Jupyter Notebook 能够保存下代码的输入与输出信息，特别适合用于展示程序输出的图形。首先在<code>content</code>目录中创建<code>.nbdata</code>与<code>.ipynb</code>的同名文件。<code>.nbdata</code>文件中保存了文章的结构信息，而<code>.ipynb</code>使用 Jupyter Notebook 保存了文章的具体内容。</p>
 <div class="highlight"><pre><span></span><code>title: # 文章标题
 slug: # 文章地址
@@ -171,16 +171,16 @@ translation: # 是否属于译文
 status: # draft, hidden, or published
 </code></pre></div>
 
-<h4>Markdown 方式</h4>
+<h3>Markdown 方式</h3>
 <p>使用 Markdown 语言是写博客最为简单普遍的方式，在<code>content</code>文件夹中创建<code>.md</code>文件，在开始部分首先输入与<code>.nbdata</code>相同的文章信息后，就可以直接开始撰写正文。</p>
-<h3>生成静态网页</h3>
+<h2>生成静态网页</h2>
 <p>在撰写文章后，进入虚拟环境，在<code>blog</code>文件夹中使用<code>Pelican</code>生成<code>.html</code>文件。</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span> ./venv/bin/activate
 pelican content -s publishconf.py
 </code></pre></div>
 
 <p>最后将<code>output</code>文件夹同步至 Github 中<code>&lt;username&gt;.github.io</code>仓库即完成文章的发布。</p>
-<h3>发布</h3>
+<h2>发布</h2>
 <p>使用终端在<code>output</code>文件夹中输入<code>python -m pelican.server</code>可以开启本地服务器，默认端口为 8000，通过<code>localhost:8000</code>访问。</p>
 <p>测试完成后将内容推送至 Github:</p>
 <div class="highlight"><pre><span></span><code>git add .
@@ -188,11 +188,11 @@ git commit
 git push
 </code></pre></div>
 
-<h3>克隆与同步</h3>
+<h2>克隆与同步</h2>
 <p>由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。</p>
 <p>在终端中使用<code>git clone --recursive</code>命令克隆仓库，<code>git clone</code>命令只会克隆主仓库，导致子模块失效，<code>--recursive</code>能递归地克隆包括子模块在内的整个仓库。使用<code>git pull --recurse-submodules</code>命令能够拉取包含子模块在内的全部更新，即可完成同步。</p>
 <hr>
-<h4>References</h4>
+<h3>References</h3>
 <ul>
 <li><a href="https://docs.getpelican.com/en/latest/settings.html">Pelican Settings Document</a></li>
 <li><a href="https://zodiac911.github.io/blog/static-blog.html#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82">Pelican + GitHubPages 搭建个人博客 · Zodiac Wang</a></li>

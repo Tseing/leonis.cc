@@ -597,7 +597,9 @@ ol {
 
 ol>li:before {
     content: counter(item) ". " !important;
-    counter-increment: item
+    counter-increment: item;
+    position: inherit;
+    margin-left: -20px;
 }
 
 ol ol,
