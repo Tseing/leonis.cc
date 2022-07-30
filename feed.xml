@@ -1,85 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="http://localhost:8000/" rel="alternate"></link><link href="http://localhost:8000/feed.xml" rel="self"></link><id>http://localhost:8000/</id><updated>2022-07-29T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第三章</title><link href="http://localhost:8000/blog05.html" rel="alternate"></link><published>2022-07-29T00:00:00+08:00</published><updated>2022-07-29T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-29:/blog05.html</id><summary type="html">&lt;p&gt;k 近邻法&lt;/p&gt;</summary><content type="html">&lt;h2 id="k-jin-lin-mo-xing"&gt;k 近邻模型&lt;/h2&gt;
-&lt;p&gt;k 近邻法将输入实例的特征空间划分为若干子空间，子空间中的若干实例 &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 同属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。具体来说，k 近邻法通过在训练集中找到与新输入实例最邻近的 k 个实例，这 k 个实例大部分属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别，就也将新输入实例归属为 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="k近邻模型" src=""/&gt;&lt;/p&gt;
-&lt;p&gt;训练集数据为&lt;/p&gt;
-&lt;div class="math"&gt;$$
-T=\{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N) \}
-$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(x_i\in\mathbf{R}^n\)&lt;/span&gt; 为特征向量，&lt;span class="math"&gt;\(y_i\in\{c_1,c_2,\cdots,c_K\}\)&lt;/span&gt; 为实例类别。k 近邻法根据&lt;em&gt;距离度量&lt;/em&gt;，在包括最邻近的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个点的邻域 &lt;span class="math"&gt;\(N_k(x)\)&lt;/span&gt; 中确定 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的 类别 &lt;span class="math"&gt;\(y\)&lt;/span&gt;：&lt;/p&gt;
-&lt;div class="math"&gt;$$y=\arg \max_{c_j}\sum_{x_i\in N_k(x)}I(y_i=c_i),\qquad i=1,2,\cdots,N;\ j=1,2,3,\cdots,K$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(I\)&lt;/span&gt; 为指示函数，条件为真时为 &lt;span class="math"&gt;\(1\)&lt;/span&gt;，条件为假时为 &lt;span class="math"&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
-&lt;h2 id="ce-lue"&gt;策略&lt;/h2&gt;
-&lt;h3 id="ju-chi-du-liang"&gt;距离度量&lt;/h3&gt;
-&lt;p&gt;在二维、三维空间中通常使用欧氏距离来衡量两点间的远近关系（相似程度）：&lt;/p&gt;
-&lt;div class="math"&gt;$$d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$$&lt;/div&gt;
-&lt;div class="math"&gt;$$d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}$$&lt;/div&gt;
-&lt;p&gt;在 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中，更通常的距离度量是 &lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离，&lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离是由距离度量的概念通过推广得到的，因此同样具有衡量两点间远近关系（相似程度）的作用。&lt;/p&gt;
-&lt;p&gt;设 &lt;span class="math"&gt;\(x_i,x_j\in\mathbf{R}^n\)&lt;/span&gt;，&lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(x_j\)&lt;/span&gt; 的 &lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离由下式给出：&lt;/p&gt;
-&lt;div class="math"&gt;$$L_p(x_i,x_j)=\left(\sum_{l=1}^n|x_i^{(l)}-x_j^{(l)}|^p\right)^{\frac{1}{p}}$$&lt;/div&gt;
-&lt;h3 id="fen-lei-ce-lue"&gt;分类策略&lt;/h3&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第二章</title><link href="http://localhost:8000/blog04.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-27:/blog04.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="gan-zhi-ji-mo-xing"&gt;感知机模型&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-07-27T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第二章</title><link href="https://tseing.github.io/sui-sui-nian/blog04.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/blog04.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="ding-yi"&gt;定义&lt;/h3&gt;
 &lt;p&gt;感知机是&lt;em&gt;二分类&lt;/em&gt;的&lt;em&gt;线性&lt;/em&gt;分类模型，感知机定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w\cdot x+b)$$&lt;/div&gt;
@@ -91,7 +11,7 @@ $$&lt;/div&gt;
     \end{cases}
 \end{equation}$$&lt;/div&gt;
 &lt;p&gt;其中输入 &lt;span class="math"&gt;\(x\in \mathbf{R}^n\)&lt;/span&gt; 表示实例的特征向量，输出 &lt;span class="math"&gt;\(y\in \{+1,-1\}\)&lt;/span&gt;表示实例的类别。模型参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 称为权值，参数 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 称为偏置。&lt;/p&gt;
-&lt;h3 id="gan-zhi-ji-de-ji-he-mo-xing"&gt;感知机的几何模型&lt;/h3&gt;
+&lt;h3 id="ji-he-mo-xing"&gt;几何模型&lt;/h3&gt;
 &lt;p&gt;若 &lt;span class="math"&gt;\(x\in \mathbf{R}^2\)&lt;/span&gt;,&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
     w\cdot x+b&amp;amp;=0\\
@@ -113,7 +33,7 @@ $$&lt;/div&gt;
 &lt;p&gt;&lt;span class="math"&gt;\(||w||\)&lt;/span&gt; 是 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 的 &lt;span class="math"&gt;\(L_2\)&lt;/span&gt; 范数：&lt;/p&gt;
 &lt;div class="math"&gt;$$||w||=\sqrt{\sum(w_i)^2}$$&lt;/div&gt;
 &lt;p&gt;即法向量长度。&lt;/p&gt;
-&lt;h4&gt;点到超平面距离公式的推导&lt;/h4&gt;
+&lt;h4&gt;点到超平面距离&lt;/h4&gt;
 &lt;p&gt;以 &lt;span class="math"&gt;\(x\in \mathbf{R}^2\)&lt;/span&gt; 为例，将超平面 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 方程转化为截距式：&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
      ix^{(1)}+jx^{(2)}+b&amp;amp;=0\\
@@ -141,7 +61,7 @@ $$&lt;/div&gt;
 \end{align}$$&lt;/div&gt;
 &lt;p&gt;由 &lt;span class="math"&gt;\(w\cdot x_0+b_0=0\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\(b_0=-w\cdot x_0\)&lt;/span&gt;，代入就可以证得&lt;/p&gt;
 &lt;div class="math"&gt;$$d=\frac{|w\cdot x_0+b|}{||w||}$$&lt;/div&gt;
-&lt;h2 id="gan-zhi-ji-xue-xi-ce-lue_1"&gt;感知机学习策略&lt;/h2&gt;
+&lt;h2 id="ce-lue_1"&gt;策略&lt;/h2&gt;
 &lt;p&gt;感知机的分类情况可以归为以下几类：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span class="math"&gt;\(w\cdot x_i+b\geqslant0\)&lt;/span&gt;,&lt;span class="math"&gt;\(\ y_i=+1\)&lt;/span&gt;，分类正确；&lt;/li&gt;
@@ -156,7 +76,7 @@ $$&lt;/div&gt;
 &lt;p&gt;略去 &lt;span class="math"&gt;\(\frac{1}{||w||}\)&lt;/span&gt;（见第七章），得到&lt;em&gt;经验风险函数&lt;/em&gt;：&lt;/p&gt;
 &lt;div class="math"&gt;$$L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$&lt;/div&gt;
 &lt;p&gt;感知机的学习策略就是在假设空间中选取 &lt;span class="math"&gt;\(L(w,b)\)&lt;/span&gt; 最小的模型参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(b\)&lt;/span&gt;。&lt;/p&gt;
-&lt;h2 id="gan-zhi-ji-xue-xi-suan-fa"&gt;感知机学习算法&lt;/h2&gt;
+&lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
 &lt;p&gt;感知机的学习算法就是求解以下最优化问题的算法：&lt;/p&gt;
 &lt;div class="math"&gt;$$\min_{w,b}L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$&lt;/div&gt;
 &lt;h3 id="sui-ji-ti-du-xia-jiang-fa"&gt;随机梯度下降法&lt;/h3&gt;
@@ -174,7 +94,7 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$w\leftarrow w+\eta y_ix_i$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b\leftarrow b+\eta y_i$$&lt;/div&gt;
 &lt;p&gt;其中 &lt;span class="math"&gt;\(\eta\ (0&amp;lt;\eta\leqslant1)\)&lt;/span&gt; 称为步长，不断迭代至 &lt;span class="math"&gt;\(L(w,b)=0\)&lt;/span&gt;。&lt;/p&gt;
-&lt;h3 id="gan-zhi-ji-yuan-shi-xing-shi-suan-fa"&gt;感知机原始形式算法&lt;/h3&gt;
+&lt;h3 id="yuan-shi-xing-shi-suan-fa"&gt;原始形式算法&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;算法2.1&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;设定步长 &lt;span class="math"&gt;\(\eta\)&lt;/span&gt;，选取初值 &lt;span class="math"&gt;\(w_0\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b_0\)&lt;/span&gt;，一般为 &lt;span class="math"&gt;\(w_0=0\)&lt;/span&gt;，&lt;span class="math"&gt;\(b_0=0\)&lt;/span&gt;；&lt;/li&gt;
@@ -184,7 +104,7 @@ $$&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;重复步骤（2），直至没有误分类点，即 &lt;span class="math"&gt;\(L(w,b)=0\)&lt;/span&gt;。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id="gan-zhi-ji-dui-ou-xing-shi-suan-fa"&gt;感知机对偶形式算法&lt;/h3&gt;
+&lt;h3 id="dui-ou-xing-shi-suan-fa"&gt;对偶形式算法&lt;/h3&gt;
 &lt;p&gt;经过数次以下迭代步骤：&lt;/p&gt;
 &lt;div class="math"&gt;$$w\leftarrow w+\eta y_ix_i$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b\leftarrow b+\eta y_i$$&lt;/div&gt;
@@ -282,7 +202,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第一章</title><link href="http://localhost:8000/blog03.html" rel="alternate"></link><published>2022-07-21T00:00:00+08:00</published><updated>2022-07-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-21:/blog03.html</id><summary type="html">&lt;p&gt;统计学习及监督学习概论&lt;/p&gt;</summary><content type="html">&lt;h2 id="ji-ben-gai-nian"&gt;基本概念&lt;/h2&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第一章</title><link href="https://tseing.github.io/sui-sui-nian/blog03.html" rel="alternate"></link><published>2022-07-21T00:00:00+08:00</published><updated>2022-07-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-21:/sui-sui-nian/blog03.html</id><summary type="html">&lt;p&gt;统计学习及监督学习概论&lt;/p&gt;</summary><content type="html">&lt;h2 id="ji-ben-gai-nian"&gt;基本概念&lt;/h2&gt;
 &lt;h3 id="tong-ji-xue-xi-guo-cheng"&gt;统计学习过程&lt;/h3&gt;
 &lt;p&gt;统计学习主要基于数据概率构建概率统计模型并运用模型分析和预测数据，统计学习的主要过程可以归纳为：&lt;/p&gt;
 &lt;div class="math"&gt;$$\boxed{\frac{训练数据集}{T=\{(x_i,y_i)\}}}\stackrel{学习}{\Longrightarrow}\boxed{\frac{模型}{P(Y|X)\ \mathrm{or}\ Y=f(X)}}\stackrel{预测}{\Longrightarrow}y_{N+1}$$&lt;/div&gt;
@@ -441,7 +361,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="http://localhost:8000/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-14:/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/sui-sui-nian/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/sui-sui-nian/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。&lt;/p&gt;
 &lt;h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi"&gt;OneDrive 文件链接的生成方式&lt;/h2&gt;
@@ -476,7 +396,7 @@ chmod +x &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt;/bin/*.sh
 &lt;img alt="配置存储源" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content"/&gt;点击链接登录 OneDrive 账号获取令牌，填写完成后即可保存设置。&lt;img alt="获取令牌" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content"/&gt;设置成功后在存储源中就可以看见 OneDrive 标志，并且显示刷新成功，这样 ZFile 就已经正常工作了。&lt;img alt="存储源列表" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"/&gt;&lt;/p&gt;
 &lt;h2 id="shi-yong-zfile-guan-li-onedrive"&gt;使用 ZFile 管理 OneDrive&lt;/h2&gt;
 &lt;p&gt;在地址栏中输入&lt;code&gt;localhost:8080&lt;/code&gt;进入存储界面，在这里就理应能够看到 OneDrive 中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。&lt;/p&gt;
-&lt;p&gt;如果有一台 VPS，在 VPS 上启动 ZFile 后，通过&lt;code&gt;vps-ip:[port]&lt;/code&gt;也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在&lt;code&gt;.md&lt;/code&gt;中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件『直链』并不是真正的直链，而是经过一次转发，可能会影响访问速度。&lt;img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接&lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链&lt;code&gt;vps-ip:[port]/...&lt;/code&gt;时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。&lt;/p&gt;</content><category term="碎碎念"></category><category term="blog"></category><category term="OneDrive"></category></entry><entry><title>使用 Pelican 发布文章的流程</title><link href="http://localhost:8000/blog01.html" rel="alternate"></link><published>2022-07-12T00:00:00+08:00</published><updated>2022-07-12T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-12:/blog01.html</id><summary type="html">&lt;p&gt;如何使用 Pelican 在搭建在 Github Pages 上的博客发布文章&lt;/p&gt;</summary><content type="html">&lt;h2 id="articles-or-pages"&gt;Articles or pages?&lt;/h2&gt;
+&lt;p&gt;如果有一台 VPS，在 VPS 上启动 ZFile 后，通过&lt;code&gt;vps-ip:[port]&lt;/code&gt;也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在&lt;code&gt;.md&lt;/code&gt;中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件『直链』并不是真正的直链，而是经过一次转发，可能会影响访问速度。&lt;img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接&lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链&lt;code&gt;vps-ip:[port]/...&lt;/code&gt;时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。&lt;/p&gt;</content><category term="碎碎念"></category><category term="blog"></category><category term="OneDrive"></category></entry><entry><title>使用 Pelican 发布文章的流程</title><link href="https://tseing.github.io/sui-sui-nian/blog01.html" rel="alternate"></link><published>2022-07-12T00:00:00+08:00</published><updated>2022-07-12T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-12:/sui-sui-nian/blog01.html</id><summary type="html">&lt;p&gt;如何使用 Pelican 在搭建在 Github Pages 上的博客发布文章&lt;/p&gt;</summary><content type="html">&lt;h2 id="articles-or-pages"&gt;Articles or Pages?&lt;/h2&gt;
 &lt;p&gt;Pelican 中有 articles 与 pages 的概念，在创建页面时应当首先区分二者。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;articles&lt;/strong&gt; 指具有时间戳的内容，例如博客文章等，直接创建在&lt;code&gt;content&lt;/code&gt;文件夹中。&lt;/li&gt;
@@ -520,7 +440,7 @@ git push
 &lt;p&gt;由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。&lt;/p&gt;
 &lt;p&gt;在终端中使用&lt;code&gt;git clone --recursive&lt;/code&gt;命令克隆仓库，&lt;code&gt;git clone&lt;/code&gt;命令只会克隆主仓库，导致子模块失效，&lt;code&gt;--recursive&lt;/code&gt;能递归地克隆包括子模块在内的整个仓库。使用&lt;code&gt;git pull --recurse-submodules&lt;/code&gt;命令能够拉取包含子模块在内的全部更新，即可完成同步。&lt;/p&gt;
 &lt;hr/&gt;
-&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.getpelican.com/en/latest/settings.html"&gt;Pelican Settings Document&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://zodiac911.github.io/blog/static-blog.html#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82"&gt;Pelican + GitHubPages 搭建个人博客 &amp;middot; Zodiac Wang&lt;/a&gt;&lt;/li&gt;

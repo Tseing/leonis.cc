@@ -1232,6 +1232,10 @@ img {
     color: #8c8c8c;
 }
 
+#toc ul{
+    margin: 0px;
+}
+
 #toc li > a{
     color: #8c8c8c;
 }
@@ -1586,7 +1590,7 @@ img {
     float: left;
     width: 15%;
     margin-left: 2%;
-    font-size: 17px;
+    font-size: 16px;
     top:80px;
 }
 
@@ -1596,8 +1600,8 @@ img {
 }
 
 .post-content{
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 17%;
+    margin-right: 17%;
     text-align: justify;
 }
 
@@ -1606,6 +1610,8 @@ img {
     float: left; */
     font-family: 'Fira Sans', sans-serif;
     text-align: center;
+    margin-left: 17%;
+    margin-right: 17%;
 }
 
 .post-tags a {
@@ -1643,8 +1649,8 @@ img {
     border-top: 1px solid #e5e4e1;
     /* border-bottom: 1px solid #e5e4e1; */
     clear: both;
-    margin-left: 140px;
-    margin-right: 140px;
+    margin-left: 17%;
+    margin-right: 17%;
     margin-top: 0px;
 }
 
