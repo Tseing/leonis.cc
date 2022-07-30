@@ -45,7 +45,16 @@ jQuery(function($) {
 				'-webkit-transform' : 'translate3d(0, ' + coverPosition + 'px, 0)',
 				'transform' : 'translate3d(0, ' + coverPosition + 'px, 0)'
 			});
-			(viewport.scrollTop() < cover.height()) ? html.addClass('cover-active') : html.removeClass('cover-active');
+			if(viewport.scrollTop() < cover.height()){
+				html.addClass('cover-active');
+				html.removeClass('cover-inactive');
+			}
+			else{
+				html.removeClass('cover-active');
+				html.addClass('cover-inactive');
+			}
+			// (viewport.scrollTop() < cover.height()) ? html.addClass('cover-active') : html.removeClass('cover-active');
+			// (viewport.scrollTop() > cover.height()) ? html.addClass('cover-inactive') : html.removeClass('cover-inactive');
 		}
 	}
 	prlx();
