@@ -587,7 +587,8 @@ ol>li:before {
 
 ul>li:before {
     margin-top: 0.25em;
-    content: '*'
+    content: '*';
+    color: #B6321C;
 }
 
 ol {
@@ -600,6 +601,7 @@ ol>li:before {
     counter-increment: item;
     position: inherit;
     margin-left: -20px;
+    color: #B6321C;
 }
 
 ol ol,
@@ -644,6 +646,7 @@ blockquote p:last-child {
 
 em {
     text-emphasis: dot;
+    text-emphasis-color: #B6321C;
     text-emphasis-position: under right;
 }
 
