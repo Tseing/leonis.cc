@@ -4,56 +4,56 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://localhost:8000/</loc>
-<lastmod>2022-07-31T23:30:59-00:00</lastmod>
+<loc>https://tseing.github.io/</loc>
+<lastmod>2022-07-31T23:40:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/pages/about.html</loc>
-<lastmod>2022-07-31T23:30:59-00:00</lastmod>
+<loc>https://tseing.github.io/pages/about.html</loc>
+<lastmod>2022-07-31T23:40:39-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-07-31T23:30:59-00:00</lastmod>
+<loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
+<lastmod>2022-07-31T23:40:39-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/blog04.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/blog04.html</loc>
 <lastmod>2022-07-27T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/blog03.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/blog03.html</loc>
 <lastmod>2022-07-21T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/blog02.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/blog02.html</loc>
 <lastmod>2022-07-14T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/blog01.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/blog01.html</loc>
 <lastmod>2022-07-12T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/author/leo.html</loc>
+<loc>https://tseing.github.io/author/leo.html</loc>
 <lastmod>2022-07-27T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
