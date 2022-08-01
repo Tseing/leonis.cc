@@ -167,14 +167,14 @@ $$</div>
 <div class="math">$$L_p(x_i,x_j)=\left(\sum_{l=1}^n|x_i^{(l)}-x_j^{(l)}|^p\right)^{\frac{1}{p}}$$</div>
 <h3 id="fen-lei-ce-lue">分类策略</h3>
 <p>k 近邻法的分类遵循多数表决规则，即输入实例附近 <span class="math">\(k\)</span> 个邻近的训练实例的大多数类决定了预测结果。</p>
-<p>因此 k 近邻法中的 <span class="math">\(k\)</span> 值决定了在一定的距离度量内选取分类『参考点』的数量，可以想知，若选取的 <span class="math">\(k\)</span> 值太小，分类结果会对最近邻的几个点敏感，模型就趋于复杂，更容易发生过拟合。</p>
+<p>因此 k 近邻法中的 <span class="math">\(k\)</span> 值决定了在一定的距离度量内选取分类「参考点」的数量，可以想知，若选取的 <span class="math">\(k\)</span> 值太小，分类结果会对最近邻的几个点敏感，模型就趋于复杂，更容易发生过拟合。</p>
 <h2 id="suan-fa_1">算法</h2>
 <h3 id="gou-zao-kd-shu">构造 kd 树</h3>
 <p>kd 树是一种二叉树，kd 树通过对 <span class="math">\(\mathbf{R}^n\)</span> 空间中每一个维度<em>逐次地</em>二分，最终将整个特征空间划分为若干超矩形，kd 树的每一个结点（训练实例）对应于一个超矩形。</p>
 <p><strong>算法 3.2</strong></p>
 <blockquote>
-<p>输入：数据集 <span class="math">\(T\)</span>
-输出：kd 树</p>
+<p>输入：数据集 <span class="math">\(T\)</span></p>
+<p>输出：kd 树</p>
 </blockquote>
 <ol>
 <li>选择 <span class="math">\(x^{(1)}\)</span> 为坐标轴，以所有实例的 <span class="math">\(x_i^{(1)}\)</span> 坐标中位数（若中位有两个数则取其中之一）为切分点，将 <span class="math">\(x^{(1)}\)</span> 切分为两部分；</li>
@@ -185,9 +185,12 @@ $$</div>
 <h3 id="sou-suo-kd-shu">搜索 kd 树</h3>
 <p><strong>算法 3.3</strong></p>
 <blockquote>
-<p>输入：kd 树，目标点 <span class="math">\(x\)</span>
-输出：<span class="math">\(x\)</span> 的最近邻</p>
+<p>输入：kd 树，目标点 <span class="math">\(x\)</span></p>
+<p>输出：<span class="math">\(x\)</span> 的最近邻</p>
 </blockquote>
+<video controls="">
+<source src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNumKI-2A9UTX-DXZs/root/content" type="video/mp4"/>
+</video>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

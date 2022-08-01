@@ -88,8 +88,8 @@
 &lt;p&gt;二元函数 &lt;span class="math"&gt;\(f(x,y)\)&lt;/span&gt; 在 &lt;span class="math"&gt;\((x_0,y_0)\)&lt;/span&gt; 处的梯度定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$\mathbf{grad}\ f(x_0,y_0)=\nabla f(x_0,y_0)=f_x(x_0,y_0)\boldsymbol{i}+f_y(x_0,y_0)\boldsymbol{j}$$&lt;/div&gt;
 &lt;p&gt;因此损失函数 &lt;span class="math"&gt;\(L(w,b)\)&lt;/span&gt; 的梯度为&lt;/p&gt;
-&lt;div class="math"&gt;$$\nabla_wL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{Teal}{y_i}(w\cdot \color{Teal}{x_i}+b)\right]}{\partial w}=-\sum_{x_i\in M}\color{Teal}{y_ix_i}$$&lt;/div&gt;
-&lt;div class="math"&gt;$$\nabla_bL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{Teal}{y_i}(w\cdot x_i+b)\right]}{\partial b}=-\sum_{x_i\in M}\color{Teal}{y_i}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\nabla_wL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{orangered}{y_i}(w\cdot \color{orangered}{x_i}+b)\right]}{\partial w}=-\sum_{x_i\in M}\color{orangered}{y_ix_i}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\nabla_bL(w,b)=\frac{\partial\left[-\sum_{x_i\in M}\color{orangered}{y_i}(w\cdot x_i+b)\right]}{\partial b}=-\sum_{x_i\in M}\color{orangered}{y_i}$$&lt;/div&gt;
 &lt;p&gt;随机选择误分类点 &lt;span class="math"&gt;\((x_i,y_i)\)&lt;/span&gt; 更新 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt;，使 &lt;span class="math"&gt;\(L(w,b)\)&lt;/span&gt; 沿梯度方向下降：&lt;/p&gt;
 &lt;div class="math"&gt;$$w\leftarrow w+\eta y_ix_i$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b\leftarrow b+\eta y_i$$&lt;/div&gt;
@@ -128,7 +128,7 @@
 &lt;p&gt;考虑迭代的判断条件&lt;/p&gt;
 &lt;div class="math"&gt;$$y_i\left(\sum_{j=1}^N\alpha_jy_j\vec{x_j}\cdot \vec{x_i}+b\right)\leqslant0$$&lt;/div&gt;
 &lt;p&gt;每次判断都需要计算&lt;/p&gt;
-&lt;div class="math"&gt;$$\sum_{j=1}^N\alpha_jy_j\color{Teal}{\vec{x_j}\cdot \vec{x_i}}=\alpha_1y_1\color{Teal}{\vec{x_1}\cdot\vec{x_i}}+\alpha_2y_2\color{Teal}{\vec{x_2}\cdot\vec{x_i}}+\cdots+\alpha_Ny_N\color{Teal}{\vec{x_N}\cdot\vec{x_i}}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\sum_{j=1}^N\alpha_jy_j\color{orangered}{\vec{x_j}\cdot \vec{x_i}}=\alpha_1y_1\color{orangered}{\vec{x_1}\cdot\vec{x_i}}+\alpha_2y_2\color{orangered}{\vec{x_2}\cdot\vec{x_i}}+\cdots+\alpha_Ny_N\color{orangered}{\vec{x_N}\cdot\vec{x_i}}$$&lt;/div&gt;
 &lt;p&gt;因此可以将内积以矩阵形式存放，即 Gram 矩阵：&lt;/p&gt;
 &lt;div class="math"&gt;$$\boldsymbol{G}=[x_i\cdot x_j]_{N\times N}=\begin{bmatrix}
     x_1\cdot x_1 &amp;amp;\cdots &amp;amp;x_1\cdot x_N\\
@@ -361,7 +361,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/sui-sui-nian/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/sui-sui-nian/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须『绕道通行』。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/sui-sui-nian/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/sui-sui-nian/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须「绕道通行」。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。&lt;/p&gt;
 &lt;h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi"&gt;OneDrive 文件链接的生成方式&lt;/h2&gt;
