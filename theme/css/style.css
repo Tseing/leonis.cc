@@ -597,7 +597,7 @@ ol>li:before {
 ul>li:before {
     margin-top: 0.25em;
     content: '*';
-    color: #B6321C;
+    color: #f26a3d;
 }
 
 ol {
@@ -610,7 +610,12 @@ ol>li:before {
     counter-increment: item;
     position: inherit;
     margin-left: -20px;
-    color: #B6321C;
+    color: #f26a3d;
+}
+
+ol>li>ol>li::before {
+    content: "("counter(item)") " !important;
+    font-size: 0.9em;
 }
 
 ol ol,
@@ -638,7 +643,9 @@ blockquote {
     font-style: italic;
     font-weight: 400;
     color: #45484d;
-    background: #faf9f7
+    background: #faf9f7;
+    font-family: "Cardo","Noto Sans SC";
+    font-size: 18px;
 }
 
 blockquote p {

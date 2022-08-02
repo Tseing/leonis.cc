@@ -1,5 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-07-27T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第二章</title><link href="https://tseing.github.io/sui-sui-nian/blog04.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/blog04.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-02T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第三章</title><link href="https://tseing.github.io/sui-sui-nian/blog05.html" rel="alternate"></link><published>2022-08-02T00:00:00+08:00</published><updated>2022-08-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-02:/sui-sui-nian/blog05.html</id><summary type="html">&lt;p&gt;k 近邻法&lt;/p&gt;</summary><content type="html">&lt;h2 id="k-jin-lin-mo-xing"&gt;k 近邻模型&lt;/h2&gt;
+&lt;p&gt;k 近邻法将输入实例的特征空间划分为若干子空间，子空间中的若干实例 &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 同属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。具体来说，k 近邻法通过在训练集中找到与新输入实例最邻近的 k 个实例，这 k 个实例大部分属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别，就也将新输入实例归属为 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="k近邻模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7519?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;训练集数据为&lt;/p&gt;
+&lt;div class="math"&gt;$$
+T=\{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N) \}
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(x_i\in\mathbf{R}^n\)&lt;/span&gt; 为特征向量，&lt;span class="math"&gt;\(y_i\in\{c_1,c_2,\cdots,c_K\}\)&lt;/span&gt; 为实例类别。k 近邻法根据&lt;em&gt;距离度量&lt;/em&gt;，在包括最邻近的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个点的邻域 &lt;span class="math"&gt;\(N_k(x)\)&lt;/span&gt; 中确定 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的 类别 &lt;span class="math"&gt;\(y\)&lt;/span&gt;：&lt;/p&gt;
+&lt;div class="math"&gt;$$y=\arg \max_{c_j}\sum_{x_i\in N_k(x)}I(y_i=c_i),\qquad i=1,2,\cdots,N;\ j=1,2,3,\cdots,K$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(I\)&lt;/span&gt; 为指示函数，条件为真时为 &lt;span class="math"&gt;\(1\)&lt;/span&gt;，条件为假时为 &lt;span class="math"&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id="ce-lue"&gt;策略&lt;/h2&gt;
+&lt;h3 id="ju-chi-du-liang"&gt;距离度量&lt;/h3&gt;
+&lt;p&gt;在二维、三维空间中通常使用欧氏距离来衡量两点间的远近关系（相似程度）：&lt;/p&gt;
+&lt;div class="math"&gt;$$d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}$$&lt;/div&gt;
+&lt;p&gt;在 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中，更通常的距离度量是 &lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离，&lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离是由距离度量的概念通过推广得到的，因此同样具有衡量两点间远近关系（相似程度）的作用。&lt;/p&gt;
+&lt;p&gt;设 &lt;span class="math"&gt;\(x_i,x_j\in\mathbf{R}^n\)&lt;/span&gt;，&lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(x_j\)&lt;/span&gt; 的 &lt;span class="math"&gt;\(L_p\)&lt;/span&gt; 距离由下式给出：&lt;/p&gt;
+&lt;div class="math"&gt;$$L_p(x_i,x_j)=\left(\sum_{l=1}^n|x_i^{(l)}-x_j^{(l)}|^p\right)^{\frac{1}{p}}$$&lt;/div&gt;
+&lt;h3 id="fen-lei-ce-lue"&gt;分类策略&lt;/h3&gt;
+&lt;p&gt;k 近邻法的分类遵循多数表决规则，即输入实例附近 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个邻近的训练实例的大多数类决定了预测结果。因此 k 近邻法中的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 值决定了在一定的距离度量内选取分类「参考点」的数量，可以想知，若选取的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 值太小，分类结果会对最近邻的几个点敏感，模型就趋于复杂，更容易发生过拟合。&lt;/p&gt;
+&lt;h2 id="suan-fa_1"&gt;算法&lt;/h2&gt;
+&lt;h3 id="gou-zao-kd-shu"&gt;构造 kd 树&lt;/h3&gt;
+&lt;p&gt;kd 树是一种二叉树，kd 树通过对 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中每一个维度&lt;em&gt;逐次地&lt;/em&gt;二分，最终将整个特征空间划分为若干超矩形，kd 树的每一个结点（训练实例）对应于一个超矩形。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 3.2&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;输出：kd 树&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;选择 &lt;span class="math"&gt;\(x^{(1)}\)&lt;/span&gt; 为坐标轴，以所有实例的 &lt;span class="math"&gt;\(x_i^{(1)}\)&lt;/span&gt; 坐标中位数（若中位有两个数则取其中之一）为切分点，将 &lt;span class="math"&gt;\(x^{(1)}\)&lt;/span&gt; 切分为两部分。&lt;/li&gt;
+&lt;li&gt;重复切分：深度为 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 的结点，选择 &lt;span class="math"&gt;\(x^{(l)}\)&lt;/span&gt; 为切分坐标轴，&lt;span class="math"&gt;\(l=j\ \mathrm{mod}\ k+1\)&lt;/span&gt;。简单来说，&lt;ul&gt;
+&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^2\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(3)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;直至将所有实例点切分完成。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img alt="构造kd树" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7521?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;h3 id="sou-suo-kd-shu"&gt;搜索 kd 树&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;算法 3.3&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：kd 树，目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;输出：&lt;span class="math"&gt;\(S\)&lt;/span&gt; 的最近邻&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;首先在 kd 树中找出目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 所属的区域，具体来说就是从根结点 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 开始逐层向下访问，直到目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt;。在访问过程的具体算法方面，可以通过判断点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 的坐标与切分点的大小关系来快速准确地确定访问路径。&lt;/li&gt;
+&lt;li&gt;到达点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 的父结点，以此结点作为 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 的「当前最近点」。&lt;/li&gt;
+&lt;li&gt;递归向上层访问，每次访问进行两个操作：&lt;ol&gt;
+&lt;li&gt;如果该点距离 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 更近，将其作为新的「当前最近点」。&lt;/li&gt;
+&lt;li&gt;因为 kd 为二叉树，该点必然存在另一分支子结点，那么就需要检查分支下是否存在更近的点。具体做法是判断分支子结点的区域是否与以点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 为圆心、以点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 与「当前最近点」距离为半径的圆相交。&lt;ul&gt;
+&lt;li&gt;若相交，则访问分支子结点并进行（3）步骤；&lt;/li&gt;
+&lt;li&gt;若不相交，回退到上一层。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;最终回到根结点时，搜索结束。最后的「当前最近点」即为 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 的最近邻。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;video controls=""&gt;
+&lt;source src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNumKI-2A9UTX-DXZs/root/content" type="video/mp4"/&gt;
+&lt;/video&gt;
+&lt;hr/&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/33437381/"&gt;李航, 2019. 统计学习方法（第2版）. 清华大学出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.bilibili.com/video/BV1GM4y1c78K?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651"&gt;向量的【范数】：模长的推广，柯西不等式&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第二章</title><link href="https://tseing.github.io/sui-sui-nian/blog04.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/blog04.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="ding-yi"&gt;定义&lt;/h3&gt;
 &lt;p&gt;感知机是&lt;em&gt;二分类&lt;/em&gt;的&lt;em&gt;线性&lt;/em&gt;分类模型，感知机定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w\cdot x+b)$$&lt;/div&gt;
