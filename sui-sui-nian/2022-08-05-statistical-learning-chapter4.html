@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>《统计学习方法》第三章</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.4" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="http://localhost:8000/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="http://localhost:8000/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="http://localhost:8000/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.lug.ustc.edu.cn/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato" rel="stylesheet" type="text/css" />
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300;400&&family=Noto+Serif+SC&family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <meta name="description" content="朴素贝叶斯法">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="《统计学习方法》">
+    <meta name="tags" content="Machine Learning">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第三章"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="朴素贝叶斯法"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-08-05 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="http://localhost:8000/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="《统计学习方法》"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Machine Learning"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://localhost:8000/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "《统计学习方法》第三章",
+  "headline": "《统计学习方法》第三章",
+  "datePublished": "2022-08-05 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "http://localhost:8000/author/leo.html"
+  },
+  "image": "http://localhost:8000/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html",
+  "description": "朴素贝叶斯法"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="http://localhost:8000/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="http://localhost:8000/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="http://localhost:8000/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="http://localhost:8000/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="http://localhost:8000/tags.html" role="presentation">Tags</a></li>
+          <li><a href="http://localhost:8000/pages/about.html" role="presentation">About me</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="http://localhost:8000/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">《统计学习方法》第三章</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="http://localhost:8000/author/leo.html">Leo</a>
+            | <time datetime="2022年 8月05日">2022年 8月05日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a><ul><li><a class="toc-href" href="#tiao-jian-gai-lu" title="条件概率">条件概率</a></li><li><a class="toc-href" href="#po-su-bei-xie-si-fa-mo-xing" title="朴素贝叶斯法模型">朴素贝叶斯法模型</a></li></ul></li><li><a class="toc-href" href="#ce-lue_1" title="策略">策略</a></li><li><a class="toc-href" href="#suan-fa" title="算法">算法</a><ul><li><a class="toc-href" href="#ji-da-si-ran-gu-ji" title="极大似然估计">极大似然估计</a></li><li><a class="toc-href" href="#bei-xie-si-gu-ji" title="贝叶斯估计">贝叶斯估计</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <h2 id="mo-xing">模型</h2>
+<h3 id="tiao-jian-gai-lu">条件概率</h3>
+<p>引入贝叶斯法模型前，首先回顾一下条件概率的基本公式。所谓条件概率，就是在某事件 <span class="math">\(B\)</span> 发生的条件下，求另一事件 <span class="math">\(A\)</span> 发生的概率，条件概率可以通过下式计算：</p>
+<div class="math">$$P(A|B)=\frac{P(AB)}{P(B)}$$</div>
+<h4>乘法公式</h4>
+<p>根据条件概率定义，可以得到</p>
+<div class="math">$$P(A|B)=\frac{P(AB)}{P(B)}$$</div>
+<div class="math">$$P(B|A)=\frac{P(AB)}{P(A)}$$</div>
+<p>显然有</p>
+<div class="math">$$P(AB)=P(A)P(B|A)=P(B)P(A|B)$$</div>
+<p>该式就称为乘法公式。</p>
+<h4>全概率公式</h4>
+<p>若将<em>样本空间</em> <span class="math">\(\Omega\)</span> 可以分割为<em>互不相容</em>的各事件 <span class="math">\(B_1,B_2,\cdots B_n\)</span>，那么 <span class="math">\(A\)</span> 事件的概率就应当是 <span class="math">\(A\)</span> 的<em>所有</em>条件概率与相应条件发生概率乘积之和：</p>
+<div class="math">$$P(A)=\sum_{i=1}^nP(B_i)P(A|B_i)$$</div>
+<p>考虑 <span class="math">\(A\)</span> 与 <span class="math">\(B\)</span> 两个事件，利用全概系公式可以将事件 <span class="math">\(A\)</span> 发生的概率写为</p>
+<div class="math">$$P(A)=P(B)P(A|B)+P(\bar{B})P(A|\bar{B})$$</div>
+<h4>贝叶斯公式</h4>
+<p>假设 <span class="math">\(Y_1,Y_2,\cdots Y_n\)</span> 是对样本空间的划分，<span class="math">\(X\)</span> 为样本空间中的一个事件，那么根据条件概率的定义，有</p>
+<div class="math">$$P(Y_i|X)=\frac{P(XY_i)}{P(X)}$$</div>
+<p>利用乘法公式，该式可以写为</p>
+<div class="math">$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{P(X)}$$</div>
+<p>利用全概率公式，得到</p>
+<div class="math">$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{\sum_{j=1}^nP(X|Y_j)P(Y_j)}$$</div>
+<p>该式即为贝叶斯公式。</p>
+<h3 id="po-su-bei-xie-si-fa-mo-xing">朴素贝叶斯法模型</h3>
+<p>假设训练集 <span class="math">\(T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}\)</span> 是由 <span class="math">\(P(X,Y)\)</span> <em>独立同分布</em>产生，其中输入为特征向量，输出为类标记。</p>
+<p>先验概率分布为</p>
+<div class="math">$$P(Y=c_k),\qquad k=1,2,\cdots,K$$</div>
+<p>条件概率分布为</p>
+<div class="math">$$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)$$</div>
+<p>对条件概率分布作<em>条件独立性</em>的假设，即认为某特征向量事件的各分量事件相互独立，因此该向量代表事件的发生概率为该向量的各分量概率乘积：</p>
+<div class="math">$$\begin{align}
+    P(X=x|Y=c_k)&amp;=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)\\
+    &amp;=\prod_{j=1}^nP(X^{j}=x^{(j)}|Y=c_k)
+\end{align}$$</div>
+<p>朴素贝叶斯法的目的在于通过模型计算输入 <span class="math">\(x\)</span> 后的后验概率分布 <span class="math">\(P(Y=c_k|X=x)\)</span> 并输出后验概率最大的 <span class="math">\(c_k\)</span> 作为 <span class="math">\(x\)</span> 的类。</p>
+<p>类比推导得到的贝叶斯公式</p>
+<div class="math">$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{\sum_{j=1}^nP(X|Y_j)P(Y_j)}$$</div>
+<p>后验概率分布可以表示为</p>
+<div class="math">$$P(Y=c_k|X=x)=\frac{P(X=x|Y=c_k)P(Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}$$</div>
+<p>代入条件独立性假设，即有</p>
+<div class="math">$$P(Y=c_k|X=x)=\frac{\color{orangered}{P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)}}{\sum_k P(Y=c_k)\prod_j P(X^{(j)}=x^{(j)}|Y=c_k)}$$</div>
+<p>其中不论 <span class="math">\(c_k\)</span> 为何值时，分母部分都是不变的，不影响发生概率大小的比较，因此朴素贝叶斯方法的模型可以表示为</p>
+<div class="math">$$y=\arg \max_{c_k}\color{orangered}{P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)}$$</div>
+<h2 id="ce-lue_1">策略</h2>
+<p>损失函数可以表示为</p>
+<div class="math">$$\begin{equation}
+    L(Y,f(X))=
+    \begin{cases}
+        1, &amp;Y\neq f(X)\\
+        0, &amp;Y=f(X)
+    \end{cases}
+\end{equation}$$</div>
+<p>期望风险函数为条件期望</p>
+<div class="math">$$R_{\mathrm{exp}}(f)=E[L(Y,f(X))]=E_X\sum_{k=1}^K[L(c_k,f(X))]P(c_k|X)$$</div>
+<p>最小化期望风险就需要对 <span class="math">\(X=x\)</span> 逐个最小化：</p>
+<div class="math">$$\begin{align}
+    f(x)&amp;=\arg \min_{y\in\mathcal{Y}}\sum_{k=1}^KL(c_k,y)P(c_k|X=x)\\
+    &amp;=\arg \min_{y\in\mathcal{Y}}\sum_{k=1}^KP(y\neq c_k|X=x)\\
+    &amp;=\arg \min_{y\in\mathcal{Y}}(1-P(y=c_k|X=x))\\
+    &amp;=\arg \max_{y\in\mathcal{Y}}P(y=c_k|X=x)\\
+\end{align}$$</div>
+<p>也就是说后验概率最大的情况下期望风险就最小，这正是朴素贝叶斯法决定输出类别的方法。</p>
+<h2 id="suan-fa">算法</h2>
+<h3 id="ji-da-si-ran-gu-ji">极大似然估计</h3>
+<p>使用频率估计概率，先验概率为</p>
+<div class="math">$$\color{teal}{P(Y=c_k)}=\frac{\sum_{i=1}^NI(y_i=c_k)}{N}$$</div>
+<p>特征向量的第 <span class="math">\(j\)</span> 个分量 <span class="math">\(x^{(j)}\)</span> 可能取的值构成了集合 <span class="math">\(\{a_{j1},a_{j2},\cdots,a_{jS_j}\}\)</span>，那么条件概率为</p>
+<div class="math">$$\color{steelblue}{P(X^{(j)}=a_{jl}|Y=c_k)}=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum_{i=1}^NI(y_i=c_k)}$$</div>
+<p><strong>算法 4.1</strong></p>
+<blockquote>
+<p>输入：训练集 <span class="math">\(T\)</span> 与实例 <span class="math">\(x\)</span><br/>
+输出：<span class="math">\(x\)</span> 的类别</p>
+</blockquote>
+<ol>
+<li>计算先验概率 <span class="math">\(\color{teal}{P(Y=c_k)}\)</span> 与条件概率 <span class="math">\(\color{steelblue}{P(X^{(j)}=a_{jl}|Y=c_k)}\)</span>；</li>
+<li>应用条件独立性假设，计算 <span class="math">\(P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)\)</span>；</li>
+<li>确定 <span class="math">\(x\)</span> 的类别，<span class="math">\(y=\arg \max_{c_k}P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)\)</span>。</li>
+</ol>
+<h3 id="bei-xie-si-gu-ji">贝叶斯估计</h3>
+<p>在极大似然估计中可能会出现估计的概率为零，从而导致整个特征向量的估计概率也为零，影响估计结果。贝叶斯估计通过在频数上引入正数 <span class="math">\(\lambda\)</span> 从而避免了这种偏差：</p>
+<div class="math">$$\color{teal}{P(Y=c_k)}=\frac{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{\lambda}}{N+\color{orangered}{K\lambda}}$$</div>
+<div class="math">$$\color{steelblue}{P_{\lambda}(X^{j}=a_{jl}|Y=c_k)}=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)+\color{orangered}{\lambda}}{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{S_j\lambda}}$$</div>
+<p>若取 <span class="math">\(\lambda=0\)</span> 时就是极大似然估计，常取 <span class="math">\(\lambda=1\)</span>，称为拉普拉斯平滑。</p>
+<h2 id="references_1">References</h2>
+<ul>
+<li><a href="https://book.douban.com/subject/33437381/">李航, 2019. 统计学习方法（第2版）. 清华大学出版社.</a></li>
+<li><a href="https://book.douban.com/subject/5998092/">茆诗松, 程依明, 濮晓龙, 2011. 概率论与数理统计教程. 高等教育出版社.</a></li>
+</ul>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第三章&amp;url=http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="http://localhost:8000/tag/tong-ji-xue-xi-fang-fa.html">《统计学习方法》</a><a href="http://localhost:8000/tag/machine-learning.html">Machine Learning</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="http://localhost:8000/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="http://localhost:8000/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">This is the place for a small biography with max 200 characters. Well, now 100 are left. Cool, hugh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="http://localhost:8000"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8000/theme/js/script.js"></script>
+
+</body>
+</html>

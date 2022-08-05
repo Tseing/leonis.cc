@@ -1,5 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-02T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第三章</title><link href="https://tseing.github.io/sui-sui-nian/blog05.html" rel="alternate"></link><published>2022-08-02T00:00:00+08:00</published><updated>2022-08-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-02:/sui-sui-nian/blog05.html</id><summary type="html">&lt;p&gt;k 近邻法&lt;/p&gt;</summary><content type="html">&lt;h2 id="k-jin-lin-mo-xing"&gt;k 近邻模型&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="http://localhost:8000/" rel="alternate"></link><link href="http://localhost:8000/feed.xml" rel="self"></link><id>http://localhost:8000/</id><updated>2022-08-05T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第三章</title><link href="http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" rel="alternate"></link><published>2022-08-05T00:00:00+08:00</published><updated>2022-08-05T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-08-05:/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html</id><summary type="html">&lt;p&gt;朴素贝叶斯法&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;h3 id="tiao-jian-gai-lu"&gt;条件概率&lt;/h3&gt;
+&lt;p&gt;引入贝叶斯法模型前，首先回顾一下条件概率的基本公式。所谓条件概率，就是在某事件 &lt;span class="math"&gt;\(B\)&lt;/span&gt; 发生的条件下，求另一事件 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 发生的概率，条件概率可以通过下式计算：&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A|B)=\frac{P(AB)}{P(B)}$$&lt;/div&gt;
+&lt;h4&gt;乘法公式&lt;/h4&gt;
+&lt;p&gt;根据条件概率定义，可以得到&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A|B)=\frac{P(AB)}{P(B)}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$P(B|A)=\frac{P(AB)}{P(A)}$$&lt;/div&gt;
+&lt;p&gt;显然有&lt;/p&gt;
+&lt;div class="math"&gt;$$P(AB)=P(A)P(B|A)=P(B)P(A|B)$$&lt;/div&gt;
+&lt;p&gt;该式就称为乘法公式。&lt;/p&gt;
+&lt;h4&gt;全概率公式&lt;/h4&gt;
+&lt;p&gt;若将&lt;em&gt;样本空间&lt;/em&gt; &lt;span class="math"&gt;\(\Omega\)&lt;/span&gt; 可以分割为&lt;em&gt;互不相容&lt;/em&gt;的各事件 &lt;span class="math"&gt;\(B_1,B_2,\cdots B_n\)&lt;/span&gt;，那么 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 事件的概率就应当是 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的&lt;em&gt;所有&lt;/em&gt;条件概率与相应条件发生概率乘积之和：&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A)=\sum_{i=1}^nP(B_i)P(A|B_i)$$&lt;/div&gt;
+&lt;p&gt;考虑 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(B\)&lt;/span&gt; 两个事件，利用全概系公式可以将事件 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 发生的概率写为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A)=P(B)P(A|B)+P(\bar{B})P(A|\bar{B})$$&lt;/div&gt;
+&lt;h4&gt;贝叶斯公式&lt;/h4&gt;
+&lt;p&gt;假设 &lt;span class="math"&gt;\(Y_1,Y_2,\cdots Y_n\)&lt;/span&gt; 是对样本空间的划分，&lt;span class="math"&gt;\(X\)&lt;/span&gt; 为样本空间中的一个事件，那么根据条件概率的定义，有&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y_i|X)=\frac{P(XY_i)}{P(X)}$$&lt;/div&gt;
+&lt;p&gt;利用乘法公式，该式可以写为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{P(X)}$$&lt;/div&gt;
+&lt;p&gt;利用全概率公式，得到&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{\sum_{j=1}^nP(X|Y_j)P(Y_j)}$$&lt;/div&gt;
+&lt;p&gt;该式即为贝叶斯公式。&lt;/p&gt;
+&lt;h3 id="po-su-bei-xie-si-fa-mo-xing"&gt;朴素贝叶斯法模型&lt;/h3&gt;
+&lt;p&gt;假设训练集 &lt;span class="math"&gt;\(T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}\)&lt;/span&gt; 是由 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt; &lt;em&gt;独立同分布&lt;/em&gt;产生，其中输入为特征向量，输出为类标记。&lt;/p&gt;
+&lt;p&gt;先验概率分布为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y=c_k),\qquad k=1,2,\cdots,K$$&lt;/div&gt;
+&lt;p&gt;条件概率分布为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)$$&lt;/div&gt;
+&lt;p&gt;对条件概率分布作&lt;em&gt;条件独立性&lt;/em&gt;的假设，即认为某特征向量事件的各分量事件相互独立，因此该向量代表事件的发生概率为该向量的各分量概率乘积：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    P(X=x|Y=c_k)&amp;amp;=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)\\
+    &amp;amp;=\prod_{j=1}^nP(X^{j}=x^{(j)}|Y=c_k)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;朴素贝叶斯法的目的在于通过模型计算输入 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 后的后验概率分布 &lt;span class="math"&gt;\(P(Y=c_k|X=x)\)&lt;/span&gt; 并输出后验概率最大的 &lt;span class="math"&gt;\(c_k\)&lt;/span&gt; 作为 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的类。&lt;/p&gt;
+&lt;p&gt;类比推导得到的贝叶斯公式&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{\sum_{j=1}^nP(X|Y_j)P(Y_j)}$$&lt;/div&gt;
+&lt;p&gt;后验概率分布可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y=c_k|X=x)=\frac{P(X=x|Y=c_k)P(Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}$$&lt;/div&gt;
+&lt;p&gt;代入条件独立性假设，即有&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y=c_k|X=x)=\frac{\color{orangered}{P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)}}{\sum_k P(Y=c_k)\prod_j P(X^{(j)}=x^{(j)}|Y=c_k)}$$&lt;/div&gt;
+&lt;p&gt;其中不论 &lt;span class="math"&gt;\(c_k\)&lt;/span&gt; 为何值时，分母部分都是不变的，不影响发生概率大小的比较，因此朴素贝叶斯方法的模型可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$y=\arg \max_{c_k}\color{orangered}{P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)}$$&lt;/div&gt;
+&lt;h2 id="ce-lue_1"&gt;策略&lt;/h2&gt;
+&lt;p&gt;损失函数可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    L(Y,f(X))=
+    \begin{cases}
+        1, &amp;amp;Y\neq f(X)\\
+        0, &amp;amp;Y=f(X)
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;期望风险函数为条件期望&lt;/p&gt;
+&lt;div class="math"&gt;$$R_{\mathrm{exp}}(f)=E[L(Y,f(X))]=E_X\sum_{k=1}^K[L(c_k,f(X))]P(c_k|X)$$&lt;/div&gt;
+&lt;p&gt;最小化期望风险就需要对 &lt;span class="math"&gt;\(X=x\)&lt;/span&gt; 逐个最小化：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    f(x)&amp;amp;=\arg \min_{y\in\mathcal{Y}}\sum_{k=1}^KL(c_k,y)P(c_k|X=x)\\
+    &amp;amp;=\arg \min_{y\in\mathcal{Y}}\sum_{k=1}^KP(y\neq c_k|X=x)\\
+    &amp;amp;=\arg \min_{y\in\mathcal{Y}}(1-P(y=c_k|X=x))\\
+    &amp;amp;=\arg \max_{y\in\mathcal{Y}}P(y=c_k|X=x)\\
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;也就是说后验概率最大的情况下期望风险就最小，这正是朴素贝叶斯法决定输出类别的方法。&lt;/p&gt;
+&lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
+&lt;h3 id="ji-da-si-ran-gu-ji"&gt;极大似然估计&lt;/h3&gt;
+&lt;p&gt;使用频率估计概率，先验概率为&lt;/p&gt;
+&lt;div class="math"&gt;$$\color{teal}{P(Y=c_k)}=\frac{\sum_{i=1}^NI(y_i=c_k)}{N}$$&lt;/div&gt;
+&lt;p&gt;特征向量的第 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 个分量 &lt;span class="math"&gt;\(x^{(j)}\)&lt;/span&gt; 可能取的值构成了集合 &lt;span class="math"&gt;\(\{a_{j1},a_{j2},\cdots,a_{jS_j}\}\)&lt;/span&gt;，那么条件概率为&lt;/p&gt;
+&lt;div class="math"&gt;$$\color{steelblue}{P(X^{(j)}=a_{jl}|Y=c_k)}=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum_{i=1}^NI(y_i=c_k)}$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;算法 4.1&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 与实例 &lt;span class="math"&gt;\(x\)&lt;/span&gt;&lt;br/&gt;
+输出：&lt;span class="math"&gt;\(x\)&lt;/span&gt; 的类别&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;计算先验概率 &lt;span class="math"&gt;\(\color{teal}{P(Y=c_k)}\)&lt;/span&gt; 与条件概率 &lt;span class="math"&gt;\(\color{steelblue}{P(X^{(j)}=a_{jl}|Y=c_k)}\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;应用条件独立性假设，计算 &lt;span class="math"&gt;\(P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;确定 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的类别，&lt;span class="math"&gt;\(y=\arg \max_{c_k}P(Y=c_k)\prod_jP(X^{(j)}=x^{(j)}|Y=c_k)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="bei-xie-si-gu-ji"&gt;贝叶斯估计&lt;/h3&gt;
+&lt;p&gt;在极大似然估计中可能会出现估计的概率为零，从而导致整个特征向量的估计概率也为零，影响估计结果。贝叶斯估计通过在频数上引入正数 &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt; 从而避免了这种偏差：&lt;/p&gt;
+&lt;div class="math"&gt;$$\color{teal}{P(Y=c_k)}=\frac{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{\lambda}}{N+\color{orangered}{K\lambda}}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\color{steelblue}{P_{\lambda}(X^{j}=a_{jl}|Y=c_k)}=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)+\color{orangered}{\lambda}}{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{S_j\lambda}}$$&lt;/div&gt;
+&lt;p&gt;若取 &lt;span class="math"&gt;\(\lambda=0\)&lt;/span&gt; 时就是极大似然估计，常取 &lt;span class="math"&gt;\(\lambda=1\)&lt;/span&gt;，称为拉普拉斯平滑。&lt;/p&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/33437381/"&gt;李航, 2019. 统计学习方法（第2版）. 清华大学出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/5998092/"&gt;茆诗松, 程依明, 濮晓龙, 2011. 概率论与数理统计教程. 高等教育出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="Machine Learning"></category></entry><entry><title>《统计学习方法》第三章</title><link href="http://localhost:8000/sui-sui-nian/2022-08-02-statistical-learning-chapter3.html" rel="alternate"></link><published>2022-08-02T00:00:00+08:00</published><updated>2022-08-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-08-02:/sui-sui-nian/2022-08-02-statistical-learning-chapter3.html</id><summary type="html">&lt;p&gt;k 近邻法&lt;/p&gt;</summary><content type="html">&lt;h2 id="k-jin-lin-mo-xing"&gt;k 近邻模型&lt;/h2&gt;
 &lt;p&gt;k 近邻法将输入实例的特征空间划分为若干子空间，子空间中的若干实例 &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 同属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。具体来说，k 近邻法通过在训练集中找到与新输入实例最邻近的 k 个实例，这 k 个实例大部分属于 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别，就也将新输入实例归属为 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 类别。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="k近邻模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7519?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;训练集数据为&lt;/p&gt;
@@ -24,24 +174,24 @@ $$&lt;/div&gt;
 &lt;p&gt;kd 树是一种二叉树，kd 树通过对 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中每一个维度&lt;em&gt;逐次地&lt;/em&gt;二分，最终将整个特征空间划分为若干超矩形，kd 树的每一个结点（训练实例）对应于一个超矩形。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;算法 3.2&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;输入：数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;输出：kd 树&lt;/p&gt;
+&lt;p&gt;输入：数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;br/&gt;
+输出：kd 树&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;选择 &lt;span class="math"&gt;\(x^{(1)}\)&lt;/span&gt; 为坐标轴，以所有实例的 &lt;span class="math"&gt;\(x_i^{(1)}\)&lt;/span&gt; 坐标中位数（若中位有两个数则取其中之一）为切分点，将 &lt;span class="math"&gt;\(x^{(1)}\)&lt;/span&gt; 切分为两部分。&lt;/li&gt;
 &lt;li&gt;重复切分：深度为 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 的结点，选择 &lt;span class="math"&gt;\(x^{(l)}\)&lt;/span&gt; 为切分坐标轴，&lt;span class="math"&gt;\(l=j\ \mathrm{mod}\ k+1\)&lt;/span&gt;。简单来说，&lt;ul&gt;
-&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^2\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;；&lt;/li&gt;
-&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(3)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^2\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于 &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; 空间，步骤为 &lt;span class="math"&gt;\(x^{(1)}\rightarrow x^{(2)}\rightarrow x^{(3)}\rightarrow x^{(1)}\rightarrow\cdots\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;直至将所有实例点切分完成。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img alt="构造kd树" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7521?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="构造kd树" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7523?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;h3 id="sou-suo-kd-shu"&gt;搜索 kd 树&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;算法 3.3&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;输入：kd 树，目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;输出：&lt;span class="math"&gt;\(S\)&lt;/span&gt; 的最近邻&lt;/p&gt;
+&lt;p&gt;输入：kd 树，目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt;&lt;br/&gt;
+输出：&lt;span class="math"&gt;\(S\)&lt;/span&gt; 的最近邻&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;首先在 kd 树中找出目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 所属的区域，具体来说就是从根结点 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 开始逐层向下访问，直到目标点 &lt;span class="math"&gt;\(S\)&lt;/span&gt;。在访问过程的具体算法方面，可以通过判断点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 的坐标与切分点的大小关系来快速准确地确定访问路径。&lt;/li&gt;
@@ -127,7 +277,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第二章</title><link href="https://tseing.github.io/sui-sui-nian/blog04.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/blog04.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="Machine Learning"></category></entry><entry><title>《统计学习方法》第二章</title><link href="http://localhost:8000/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-27:/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</id><summary type="html">&lt;p&gt;感知机&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="ding-yi"&gt;定义&lt;/h3&gt;
 &lt;p&gt;感知机是&lt;em&gt;二分类&lt;/em&gt;的&lt;em&gt;线性&lt;/em&gt;分类模型，感知机定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w\cdot x+b)$$&lt;/div&gt;
@@ -224,6 +374,10 @@ $$&lt;/div&gt;
 &lt;p&gt;其中 &lt;span class="math"&gt;\(\eta\ (0&amp;lt;\eta\leqslant1)\)&lt;/span&gt; 称为步长，不断迭代至 &lt;span class="math"&gt;\(L(w,b)=0\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h3 id="yuan-shi-xing-shi-suan-fa"&gt;原始形式算法&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;算法2.1&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;，学习率 &lt;span class="math"&gt;\(\eta\)&lt;/span&gt;&lt;br/&gt;
+输出：&lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; ，感知机模型 &lt;span class="math"&gt;\(f(x)=\mathrm{sign}(w\cdot x+b)\)&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;设定步长 &lt;span class="math"&gt;\(\eta\)&lt;/span&gt;，选取初值 &lt;span class="math"&gt;\(w_0\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b_0\)&lt;/span&gt;，一般为 &lt;span class="math"&gt;\(w_0=0\)&lt;/span&gt;，&lt;span class="math"&gt;\(b_0=0\)&lt;/span&gt;；&lt;/li&gt;
 &lt;li&gt;选取点 &lt;span class="math"&gt;\((x_i,y_i)\)&lt;/span&gt;；&lt;/li&gt;
@@ -245,6 +399,10 @@ $$&lt;/div&gt;
 &lt;p&gt;为了与 &lt;span class="math"&gt;\(x=x_i\)&lt;/span&gt; 代入后的模型相区别，表示为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}\left(\sum_{j=1}^N\alpha_jy_jx_j\cdot x+b\right)$$&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;算法2.2&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;，学习率 &lt;span class="math"&gt;\(\eta\)&lt;/span&gt;&lt;br/&gt;
+输出：&lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; ，感知机模型 &lt;span class="math"&gt;\(f(x)=\mathrm{sign}\left(\sum_{j=1}^N\alpha_iy_jx_j\cdot x+b\right)\)&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;设定步长 &lt;span class="math"&gt;\(\eta\)&lt;/span&gt;，选取初值 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b_0\)&lt;/span&gt;，一般为 &lt;span class="math"&gt;\(\alpha=(\alpha_1,\alpha_2,\cdots,\alpha_N)^\mathrm{T}=0\)&lt;/span&gt;，&lt;span class="math"&gt;\(b_0=0\)&lt;/span&gt;；&lt;/li&gt;
 &lt;li&gt;选取点 &lt;span class="math"&gt;\((x_i,y_i)\)&lt;/span&gt;；&lt;/li&gt;
@@ -330,7 +488,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>《统计学习方法》第一章</title><link href="https://tseing.github.io/sui-sui-nian/blog03.html" rel="alternate"></link><published>2022-07-21T00:00:00+08:00</published><updated>2022-07-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-21:/sui-sui-nian/blog03.html</id><summary type="html">&lt;p&gt;统计学习及监督学习概论&lt;/p&gt;</summary><content type="html">&lt;h2 id="ji-ben-gai-nian"&gt;基本概念&lt;/h2&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="Machine Learning"></category></entry><entry><title>《统计学习方法》第一章</title><link href="http://localhost:8000/sui-sui-nian/2022-07-21-statistical-learning-chapter1.html" rel="alternate"></link><published>2022-07-21T00:00:00+08:00</published><updated>2022-07-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-21:/sui-sui-nian/2022-07-21-statistical-learning-chapter1.html</id><summary type="html">&lt;p&gt;统计学习及监督学习概论&lt;/p&gt;</summary><content type="html">&lt;h2 id="ji-ben-gai-nian"&gt;基本概念&lt;/h2&gt;
 &lt;h3 id="tong-ji-xue-xi-guo-cheng"&gt;统计学习过程&lt;/h3&gt;
 &lt;p&gt;统计学习主要基于数据概率构建概率统计模型并运用模型分析和预测数据，统计学习的主要过程可以归纳为：&lt;/p&gt;
 &lt;div class="math"&gt;$$\boxed{\frac{训练数据集}{T=\{(x_i,y_i)\}}}\stackrel{学习}{\Longrightarrow}\boxed{\frac{模型}{P(Y|X)\ \mathrm{or}\ Y=f(X)}}\stackrel{预测}{\Longrightarrow}y_{N+1}$$&lt;/div&gt;
@@ -489,7 +647,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="机器学习"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="https://tseing.github.io/sui-sui-nian/blog02.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/sui-sui-nian/blog02.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须「绕道通行」。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="《统计学习方法》"></category><category term="Machine Learning"></category></entry><entry><title>将 OneDrive 作为博客图床</title><link href="http://localhost:8000/sui-sui-nian/2022-07-14-onedrive-as-image-host.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-14:/sui-sui-nian/2022-07-14-onedrive-as-image-host.html</id><summary type="html">&lt;p&gt;在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而生成图片的直链后才能在&lt;code&gt;.md&lt;/code&gt;文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须「绕道通行」。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。&lt;/p&gt;
 &lt;h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi"&gt;OneDrive 文件链接的生成方式&lt;/h2&gt;
@@ -524,7 +682,7 @@ chmod +x &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt;/bin/*.sh
 &lt;img alt="配置存储源" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content"/&gt;点击链接登录 OneDrive 账号获取令牌，填写完成后即可保存设置。&lt;img alt="获取令牌" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content"/&gt;设置成功后在存储源中就可以看见 OneDrive 标志，并且显示刷新成功，这样 ZFile 就已经正常工作了。&lt;img alt="存储源列表" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"/&gt;&lt;/p&gt;
 &lt;h2 id="shi-yong-zfile-guan-li-onedrive"&gt;使用 ZFile 管理 OneDrive&lt;/h2&gt;
 &lt;p&gt;在地址栏中输入&lt;code&gt;localhost:8080&lt;/code&gt;进入存储界面，在这里就理应能够看到 OneDrive 中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。&lt;/p&gt;
-&lt;p&gt;如果有一台 VPS，在 VPS 上启动 ZFile 后，通过&lt;code&gt;vps-ip:[port]&lt;/code&gt;也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在&lt;code&gt;.md&lt;/code&gt;中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件『直链』并不是真正的直链，而是经过一次转发，可能会影响访问速度。&lt;img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接&lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链&lt;code&gt;vps-ip:[port]/...&lt;/code&gt;时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。&lt;/p&gt;</content><category term="碎碎念"></category><category term="blog"></category><category term="OneDrive"></category></entry><entry><title>使用 Pelican 发布文章的流程</title><link href="https://tseing.github.io/sui-sui-nian/blog01.html" rel="alternate"></link><published>2022-07-12T00:00:00+08:00</published><updated>2022-07-12T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-12:/sui-sui-nian/blog01.html</id><summary type="html">&lt;p&gt;如何使用 Pelican 在搭建在 Github Pages 上的博客发布文章&lt;/p&gt;</summary><content type="html">&lt;h2 id="articles-or-pages"&gt;Articles or Pages?&lt;/h2&gt;
+&lt;p&gt;如果有一台 VPS，在 VPS 上启动 ZFile 后，通过&lt;code&gt;vps-ip:[port]&lt;/code&gt;也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在&lt;code&gt;.md&lt;/code&gt;中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。&lt;img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接&lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链&lt;code&gt;vps-ip:[port]/...&lt;/code&gt;时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。&lt;/p&gt;</content><category term="碎碎念"></category><category term="blog"></category><category term="OneDrive"></category></entry><entry><title>使用 Pelican 发布文章的流程</title><link href="http://localhost:8000/sui-sui-nian/2022-07-12-pelican-to-publish.html" rel="alternate"></link><published>2022-07-12T00:00:00+08:00</published><updated>2022-07-12T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:localhost,2022-07-12:/sui-sui-nian/2022-07-12-pelican-to-publish.html</id><summary type="html">&lt;p&gt;如何使用 Pelican 在搭建在 Github Pages 上的博客发布文章&lt;/p&gt;</summary><content type="html">&lt;h2 id="articles-or-pages"&gt;Articles or Pages?&lt;/h2&gt;
 &lt;p&gt;Pelican 中有 articles 与 pages 的概念，在创建页面时应当首先区分二者。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;articles&lt;/strong&gt; 指具有时间戳的内容，例如博客文章等，直接创建在&lt;code&gt;content&lt;/code&gt;文件夹中。&lt;/li&gt;
