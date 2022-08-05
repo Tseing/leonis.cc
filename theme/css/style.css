@@ -640,12 +640,14 @@ blockquote {
     padding: 1em;
     box-sizing: border-box;
     border-left: 0.25em solid #e5e4e1;
-    font-style: italic;
+    /* font-style: italic; */
     font-weight: 400;
     color: #45484d;
     background: #faf9f7;
-    font-family: "Cardo","Noto Sans SC";
+    font-family: "Noto Sans SC";
     font-size: 18px;
+    margin-left: 11%;
+    margin-right: 11%;
 }
 
 blockquote p {
@@ -658,6 +660,20 @@ blockquote p:first-child {
 
 blockquote p:last-child {
     margin-bottom: 0
+}
+
+blockquote::before {
+    content: "“";
+    font-size: 60px;
+    right: 75%;
+    position: absolute;
+}
+
+blockquote::after {
+    content: "”";
+    font-size: 60px;
+    position: absolute;
+    left: 75%;
 }
 
 em {
@@ -1520,7 +1536,7 @@ img {
     width: 750px;
     margin-left: auto;
     margin-right: auto;
-    font-family: "Cardo", "Noto Serif SC", serif;
+    font-family: "Fira Sans", "Noto Sans SC";
     word-break: normal;
 }
 
