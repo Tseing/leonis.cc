@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>《统计学习方法》第三章</title>
+  <title>《统计学习方法》第四章</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -28,7 +28,7 @@
   <link href='https://fonts.lug.ustc.edu.cn/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
   <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato" rel="stylesheet" type="text/css" />
   <style>
-    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300;400&&family=Noto+Serif+SC&family=Ubuntu+Mono&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300;400&family=Livvic&display=swap&family=Ubuntu+Mono&display=swap');
   </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -47,15 +47,16 @@
 
     <meta name="author" content="Leo">
 
-    <meta name="tags" content="《统计学习方法》">
+    <meta name="tags" content="统计学习方法">
     <meta name="tags" content="Machine Learning">
+    <meta name="tags" content="Algorithm">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第三章"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第四章"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:description" content="朴素贝叶斯法"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html"/>
@@ -64,8 +65,9 @@
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="《统计学习方法》"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="统计学习方法"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Machine Learning"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Algorithm"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
 
 <!-- Twitter Card -->
@@ -74,8 +76,8 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "《统计学习方法》第三章",
-  "headline": "《统计学习方法》第三章",
+  "name": "《统计学习方法》第四章",
+  "headline": "《统计学习方法》第四章",
   "datePublished": "2022-08-05 00:00:00+08:00",
   "dateModified": "",
   "author": {
@@ -102,7 +104,7 @@
           <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
           <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
           <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
-          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About me</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
 
 
     </ul>
@@ -125,7 +127,7 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">《统计学习方法》第三章</h1>
+        <h1 class="post-title">《统计学习方法》第四章</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
@@ -231,6 +233,7 @@
 <div class="math">$$\color{teal}{P(Y=c_k)}=\frac{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{\lambda}}{N+\color{orangered}{K\lambda}}$$</div>
 <div class="math">$$\color{steelblue}{P_{\lambda}(X^{j}=a_{jl}|Y=c_k)}=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)+\color{orangered}{\lambda}}{\sum_{i=1}^NI(y_i=c_k)+\color{orangered}{S_j\lambda}}$$</div>
 <p>若取 <span class="math">\(\lambda=0\)</span> 时就是极大似然估计，常取 <span class="math">\(\lambda=1\)</span>，称为拉普拉斯平滑。</p>
+<hr/>
 <h2 id="references_1">References</h2>
 <ul>
 <li><a href="https://book.douban.com/subject/33437381/">李航, 2019. 统计学习方法（第2版）. 清华大学出版社.</a></li>
@@ -302,7 +305,7 @@
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第三章&amp;url=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第四章&amp;url=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
                     <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
@@ -315,7 +318,7 @@
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://tseing.github.io/tag/tong-ji-xue-xi-fang-fa.html">《统计学习方法》</a><a href="https://tseing.github.io/tag/machine-learning.html">Machine Learning</a>                </aside>
+<a href="https://tseing.github.io/tag/tong-ji-xue-xi-fang-fa.html">统计学习方法</a><a href="https://tseing.github.io/tag/machine-learning.html">Machine Learning</a><a href="https://tseing.github.io/tag/algorithm.html">Algorithm</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -327,7 +330,7 @@
                         </figure>
                     <div class="post-author-bio">
                         <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
-                            <p class="post-author-about">This is the place for a small biography with max 200 characters. Well, now 100 are left. Cool, hugh?</p>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
                             <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->

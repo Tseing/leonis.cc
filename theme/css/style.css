@@ -1394,13 +1394,15 @@ img {
 }
 
 .container {
-    position: relative
-}
-
-.container .post{
+    position: relative;
     padding-bottom: 80px;
     padding-top: 80px;
 }
+
+/* .container .post{
+    padding-bottom: 80px;
+    padding-top: 80px;
+} */
 
 .container .post:after {
     position: absolute;
@@ -1470,7 +1472,9 @@ img {
 .post {
     position: relative;
     padding-top: 2em;
-    z-index: 10
+    z-index: 10;
+    padding-bottom: 40px;
+    padding-top: 80px;
 }
 
 .post-title {
@@ -1540,13 +1544,33 @@ img {
     word-break: normal;
 }
 
+.index-tags {
+    margin: 20px 30% 0px 30%;
+    text-align: center;
+    opacity: 0.6;
+    font-size: 16px;
+    font-family: "Fira Sans", "Noto Sans SC";
+}
+
+.index-tags a {
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.index-tags a:hover{
+    opacity: 1.0;
+    bottom: 1px;
+    transition: all .2s;
+}
 .post-content a {
     border-bottom: 1px solid #f26a3d
 }
 
 .post-content a:hover,
 .post-content a:focus {
-    color: #f26a3d
+    color: #f26a3d;
+    transition: color .2s;
 }
 
 .post-content img {
@@ -1974,15 +1998,32 @@ img {
 .tag-cloud {
     text-align: center;
     margin-bottom: 3em;
+    text-align: left;
+    margin-bottom: 10em;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .tag {
     display: inline-block;
-    padding: 0.2em 0.15em;
     vertical-align: middle;
+    font-size: 20px;
+    background: #f0f0ed;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    margin-right: 6px;
+    padding: 7px 1.25em;
+    font-family: "Livvic", "Noto Sans SC";
 }
 
-.tag-weight-1  { font-size: 100%; }
+.tag:focus,
+.tag:hover {
+    background: #dddcd9;
+    transition: background .2s;
+}
+
+
+/* .tag-weight-1  { font-size: 100%; }
 .tag-weight-2  { font-size: 120%; }
 .tag-weight-3  { font-size: 140%; }
 .tag-weight-4  { font-size: 160%; }
@@ -1991,7 +2032,7 @@ img {
 .tag-weight-7  { font-size: 220%; }
 .tag-weight-8  { font-size: 240%; }
 .tag-weight-9  { font-size: 260%; }
-.tag-weight-10 { font-size: 280%; }
+.tag-weight-10 { font-size: 280%; } */
 
 /* @media only screen and (max-width: 960px) {
     #wrapper, #blog-header, #post-header {
