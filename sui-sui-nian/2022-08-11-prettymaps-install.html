@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>在 Windows 安装 prettymaps 的踩坑实录</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.4" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.lug.ustc.edu.cn/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato" rel="stylesheet" type="text/css" />
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@300;400&family=Livvic&display=swap&family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <meta name="description" content="prettymaps 是一个 Python 地图绘图包，在 matplotlib 绘图包的助力下能够绘制出十分精美的地图。但是 prettymaps 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="prettymaps">
+    <meta name="tags" content="Python">
+    <meta name="tags" content="Windows">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="在 Windows 安装 prettymaps 的踩坑实录"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="prettymaps 是一个 Python 地图绘图包，在 matplotlib 绘图包的助力下能够绘制出十分精美的地图。但是 prettymaps 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-08-11 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="prettymaps"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Python"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Windows"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "在 Windows 安装 prettymaps 的踩坑实录",
+  "headline": "在 Windows 安装 prettymaps 的踩坑实录",
+  "datePublished": "2022-08-11 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html",
+  "description": "prettymaps 是一个 Python 地图绘图包，在 matplotlib 绘图包的助力下能够绘制出十分精美的地图。但是 prettymaps 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">在 Windows 安装 prettymaps 的踩坑实录</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 8月11日">2022年 8月11日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#chang-shi-zhi-jie-shi-yong-pip-an-zhuang" title="尝试直接使用 pip 安装">尝试直接使用 pip 安装</a><ul><li><a class="toc-href" href="#an-zhuang-gdal-corebu-tui-jian" title="安装 GDAL core（不推荐）">安装 GDAL core（不推荐）</a></li><li><a class="toc-href" href="#shi-yong-whl-wen-jian-an-zhuang-tui-jian" title="使用 .whl 文件安装（推荐）">使用 .whl 文件安装（推荐）</a></li></ul></li><li><a class="toc-href" href="#zong-jie_1" title="总结">总结</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><code>prettymaps</code>是一个 Python 地图绘图包，能够使用 OpenStreetMap 的地图数据，在<code>matplotlib</code>绘图包的助力下能够绘制出十分精美、极具艺术感的地图。但是<code>prettymaps</code>在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。</p>
+<h2 id="chang-shi-zhi-jie-shi-yong-pip-an-zhuang">尝试直接使用 pip 安装</h2>
+<p>在项目的 <a href="https://github.com/marceloprates/prettymaps">Github 仓库</a>中，作者提供的方法是直接通过<code>pip install prettymaps</code>安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装<code>Fiona</code>时发生错误，错误信息如下：</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">Using</span><span class="w"> </span><span class="n">cached</span><span class="w"> </span><span class="n">Fiona</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">21.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="n">MB</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">Preparing</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="p">(</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span><span class="p">)</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="n">error</span><span class="w"></span>
+<span class="w">  </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">subprocess</span><span class="o">-</span><span class="n">exited</span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">error</span><span class="w"></span>
+
+<span class="w">  </span><span class="err">&times;</span><span class="w"> </span><span class="n">python</span><span class="w"> </span><span class="n">setup</span><span class="o">.</span><span class="n">py</span><span class="w"> </span><span class="n">egg_info</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">successfully</span><span class="o">.</span><span class="w"></span>
+<span class="w">  </span><span class="err">&boxv;</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">code</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">  </span><span class="err">╰&boxh;</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">output</span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="n">A</span><span class="w"> </span><span class="n">GDAL</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">specified</span><span class="o">.</span><span class="w"> </span><span class="n">Provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">gdal</span><span class="o">-</span><span class="n">config</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">GDAL_CONFIG</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">GDAL_VERSION</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">output</span><span class="p">]</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">note</span><span class="p">:</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">originates</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">subprocess</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">likely</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">pip</span><span class="o">.</span><span class="w"></span>
+<span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">metadata</span><span class="o">-</span><span class="n">generation</span><span class="o">-</span><span class="n">failed</span><span class="w"></span>
+
+<span class="err">&times;</span><span class="w"> </span><span class="n">Encountered</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">generating</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">metadata</span><span class="o">.</span><span class="w"></span>
+<span class="err">╰&boxh;</span><span class="o">&gt;</span><span class="w"> </span><span class="n">See</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">output</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">note</span><span class="p">:</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">mentioned</span><span class="w"> </span><span class="n">above</span><span class="p">,</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">pip</span><span class="o">.</span><span class="w"></span>
+<span class="n">hint</span><span class="p">:</span><span class="w"> </span><span class="n">See</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">details</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+<p>这里我们需要先明确一下<code>prettymaps</code>的依赖：</p>
+<div class="highlight"><pre><span></span><code>- prettymaps
+╰&boxh;&gt; - Fiona
+    ╰&boxh;&gt; - GDAL
+</code></pre></div>
+<p>再根据错误信息，也就是在安装<code>Fiona</code>依赖时调用的<code>GDAL</code>未正确配置，我的设备上没有安装<code>GDAL</code>，所以需要先安装<code>GDAL</code>。</p>
+<h3 id="an-zhuang-gdal-corebu-tui-jian">安装 GDAL core（不推荐）</h3>
+<p>可以先尝试直接<code>pip install gdal</code>，不出意外的话会有以下错误：</p>
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="o">/</span><span class="n">gdalconst_wrap</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="mi">2703</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+<span class="n">extensions</span><span class="o">/</span><span class="n">gdal_array_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2829</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+<span class="n">extensions</span><span class="o">/</span><span class="n">gnm_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2820</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+<span class="n">extensions</span><span class="o">/</span><span class="n">ogr_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2838</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+<span class="n">extensions</span><span class="o">/</span><span class="n">osr_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2879</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">cpl_string</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+<span class="n">extensions</span><span class="o">/</span><span class="n">gdal_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2883</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">cpl_port</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+</code></pre></div>
+<p>这是因为 Windows 缺少 Linux 自带的 GDAL core，一个解决方法就是在 Windows 上安装 GDAL core。因为这个过程无比繁琐，而且我不是 GIS 从业者，没有使用其他依赖于 GDAL core 软件的需要，所以我最后没有采取这种方法。</p>
+<p>但一开始我并未意识到安装 GDAL core 如此麻烦，以至于我也折腾了半天 GDAL core 的安装，我把这一解决方案的整个流程总结如下：</p>
+<p><code>安装 GDAL core</code> ⇨ <code>安装 GDAL bindings</code> ⇨ <code>设置 GDAL core 环境变量</code> ⇨ <code>安装 Fiona</code></p>
+<p>安装 GDAL core 与 bindings，可以前往 <a href="https://www.gisinternals.com/release.php">GISInternals</a> 下载安装文件。因为我的设备上安装了 Visual Studio 2017，我就选择了 MSVC 2017 x64 版本。</p>
+<p><img alt="GISInternals首页" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7531?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>要下载 GDAL core 和 bindings 两个安装文件，其中 bindings 需要与自己的 Python 版本匹配，下载完成后先安装 core 再安装 bindings。</p>
+<p><img alt="GISInternals下载文件" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7533?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>安装完成后，使用 pip 可以查询到<code>GDAL</code>的安装信息：</p>
+<div class="highlight"><pre><span></span><code>&gt; pip list
+Package           Version
+----------------- -------
+GDAL              3.5.1
+</code></pre></div>
+<p>此时已经在 Python 中安装了<code>GDAL</code>，但还需要配置环境变量后才能安装<code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948">这篇文章</a>。</p>
+<h3 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian">使用 .whl 文件安装（推荐）</h3>
+<p><code>GDAL</code> 与 <code>Fiona</code> 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 <code>.whl</code> 安装这两个依赖。UCI 的 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal">Python 拓展包仓库</a>提供了这两个依赖的 <code>.whl</code> 文件。</p>
+<p><img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是<code>GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl</code>。</p>
+<p>将下载文件移入 Python 安装目录下的<code>Scripts</code>文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：</p>
+<div class="highlight"><pre><span></span><code>&gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
+ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
+</code></pre></div>
+<p>出现这个错误时我寻找了大量解决方法，当然，这个错误也没法解决，这纯粹是安装文件的问题。这个隐藏的坑浪费我大量时间，后来我发现将安装文件换成<code>3.3.3</code>版本，就能成功安装了。</p>
+<p>但这还没结束，同样在 UCI 提供的仓库中下载<code>Fiona</code>，用同样的方法安装，这时就会发现<code>Fiona</code>尝试卸载<code>GDAL</code>并使用 pip 直接安装其他版本的<code>GDAL</code>。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上<code>GDAL</code>的。这是因为这里还有一个隐藏的大坑，就是<code>GDAL</code>与<code>Fiona</code>的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为<code>3.9.10</code>的条件下，可以使用<code>GDAL==3.3.2</code>与<code>Fiona==1.8.20</code>，这里个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。</p>
+<p>安装好这两个依赖后，就可以直接使用<code>pip install prettymaps</code>安装<code>prettymaps</code>了。在 Python 交互模式下输入<code>import prettymaps</code>，若无错误信息，就成功安装好<code>prettymaps</code>了。</p>
+<h2 id="zong-jie_1">总结</h2>
+<p>Windows 下安装<code>prettymaps</code>的错误是<code>GDAL</code>与<code>Fiona</code>两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。</p>
+<p>由于以上原因在 Windows 下未能成功安装<code>prettymaps</code>的推荐解决步骤如下：</p>
+<ol>
+<li>安装 <a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunGGuDYayQdVADT3?e=RAJEsi">GDAL-3.3.2-cp39-cp39-win_amd64.whl</a></li>
+<li>安装 <a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunAkPiG4AOb9V8yi?e=fAgNhp">Fiona-1.8.20-cp39-cp39-win_amd64.whl</a></li>
+<li><code>pip install prettymaps</code></li>
+</ol>
+<div class="warn-info">
+<p><i class="fa fa-exclamation-circle"></i> <b>Warning: </b>本文最后更新于 2022年08月11日，请确定内容是否过时。</p>
+</div>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/32224877">Python中GDAL的安装 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/141226948">windows10 环境中安装GDAL及其python绑定 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/389235808">window 操作系统安装python的第三方包Fiona报错时解决方法 - 知乎</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=在 Windows 安装 prettymaps 的踩坑实录&amp;url=https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/prettymaps.html">prettymaps</a><a href="https://tseing.github.io/tag/python.html">Python</a><a href="https://tseing.github.io/tag/windows.html">Windows</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+
+</body>
+</html>
