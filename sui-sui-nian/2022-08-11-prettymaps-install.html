@@ -145,7 +145,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#chang-shi-zhi-jie-shi-yong-pip-an-zhuang" title="尝试直接使用 pip 安装">尝试直接使用 pip 安装</a><ul><li><a class="toc-href" href="#an-zhuang-gdal-corebu-tui-jian" title="安装 GDAL core（不推荐）">安装 GDAL core（不推荐）</a></li><li><a class="toc-href" href="#shi-yong-whl-wen-jian-an-zhuang-tui-jian" title="使用 .whl 文件安装（推荐）">使用 .whl 文件安装（推荐）</a></li></ul></li><li><a class="toc-href" href="#zong-jie_1" title="总结">总结</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#chang-shi-zhi-jie-shi-yong-pip-an-zhuang" title="尝试直接使用 pip 安装">尝试直接使用 pip 安装</a></li><li><a class="toc-href" href="#an-zhuang-gdal-corebu-tui-jian" title="安装 GDAL core（不推荐）">安装 GDAL core（不推荐）</a></li><li><a class="toc-href" href="#shi-yong-whl-wen-jian-an-zhuang-tui-jian" title="使用 .whl 文件安装（推荐）">使用 .whl 文件安装（推荐）</a></li><li><a class="toc-href" href="#zong-jie" title="总结">总结</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -177,7 +177,7 @@
     ╰&boxh;&gt; - GDAL
 </code></pre></div>
 <p>再根据错误信息，也就是在安装<code>Fiona</code>依赖时调用的<code>GDAL</code>未正确配置，我的设备上没有安装<code>GDAL</code>，所以需要先安装<code>GDAL</code>。</p>
-<h3 id="an-zhuang-gdal-corebu-tui-jian">安装 GDAL core（不推荐）</h3>
+<h2 id="an-zhuang-gdal-corebu-tui-jian">安装 GDAL core（不推荐）</h2>
 <p>可以先尝试直接<code>pip install gdal</code>，不出意外的话会有以下错误：</p>
 <div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="o">/</span><span class="n">gdalconst_wrap</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="mi">2703</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
 <span class="n">extensions</span><span class="o">/</span><span class="n">gdal_array_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2829</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
@@ -200,7 +200,7 @@ Package           Version
 GDAL              3.5.1
 </code></pre></div>
 <p>此时已经在 Python 中安装了<code>GDAL</code>，但还需要配置环境变量后才能安装<code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948">这篇文章</a>。</p>
-<h3 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian">使用 .whl 文件安装（推荐）</h3>
+<h2 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian">使用 .whl 文件安装（推荐）</h2>
 <p><code>GDAL</code> 与 <code>Fiona</code> 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 <code>.whl</code> 安装这两个依赖。UCI 的 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal">Python 拓展包仓库</a>提供了这两个依赖的 <code>.whl</code> 文件。</p>
 <p><img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是<code>GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl</code>。</p>
@@ -209,9 +209,10 @@ GDAL              3.5.1
 ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 </code></pre></div>
 <p>出现这个错误时我寻找了大量解决方法，当然，这个错误也没法解决，这纯粹是安装文件的问题。这个隐藏的坑浪费我大量时间，后来我发现将安装文件换成<code>3.3.3</code>版本，就能成功安装了。</p>
-<p>但这还没结束，同样在 UCI 提供的仓库中下载<code>Fiona</code>，用同样的方法安装，这时就会发现<code>Fiona</code>尝试卸载<code>GDAL</code>并使用 pip 直接安装其他版本的<code>GDAL</code>。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上<code>GDAL</code>的。这是因为这里还有一个隐藏的大坑，就是<code>GDAL</code>与<code>Fiona</code>的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为<code>3.9.10</code>的条件下，可以使用<code>GDAL==3.3.2</code>与<code>Fiona==1.8.20</code>，这里个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。</p>
+<p>但这还没结束，同样在 UCI 提供的仓库中下载<code>Fiona</code>，用同样的方法安装，这时就会发现<code>Fiona</code>尝试卸载<code>GDAL</code>并使用 pip 直接安装其他版本的<code>GDAL</code>。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上<code>GDAL</code>的。</p>
+<p>这是因为这里还有一个隐藏的大坑，就是<code>GDAL</code>与<code>Fiona</code>的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为<code>3.9.10</code>的条件下，可以使用<code>GDAL==3.3.2</code>与<code>Fiona==1.8.20</code>，这两个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。</p>
 <p>安装好这两个依赖后，就可以直接使用<code>pip install prettymaps</code>安装<code>prettymaps</code>了。在 Python 交互模式下输入<code>import prettymaps</code>，若无错误信息，就成功安装好<code>prettymaps</code>了。</p>
-<h2 id="zong-jie_1">总结</h2>
+<h2 id="zong-jie">总结</h2>
 <p>Windows 下安装<code>prettymaps</code>的错误是<code>GDAL</code>与<code>Fiona</code>两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。</p>
 <p>由于以上原因在 Windows 下未能成功安装<code>prettymaps</code>的推荐解决步骤如下：</p>
 <ol>

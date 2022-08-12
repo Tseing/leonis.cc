@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>将 OneDrive 作为博客图床</title>
+  <title>在 Linux 上使用 OneDrive 作为博客图床</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -43,20 +43,21 @@
 
 
 
-    <meta name="description" content="在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接">
+    <meta name="description" content="在博客中插入图片一直是一件头疼事，互联网上的各类图床工具都难令人完全满意。使用 OneDrive 作为图床或是一个很好的选择，这在 Windows 上已经有了成熟的方案，而在 Linux 上就有些麻烦，需要借助些额外的工具。">
 
     <meta name="author" content="Leo">
 
     <meta name="tags" content="Blog">
     <meta name="tags" content="OneDrive">
+    <meta name="tags" content="Linux">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="将 OneDrive 作为博客图床"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="在 Linux 上使用 OneDrive 作为博客图床"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="在博客中插入图片一直是一件头疼事，互联网上的各类图床工具都难令人完全满意。使用 OneDrive 作为图床或是一个很好的选择，这在 Windows 上已经有了成熟的方案，而在 Linux 上就有些麻烦，需要借助些额外的工具。"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -66,6 +67,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="OneDrive"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
 
 <!-- Twitter Card -->
@@ -74,8 +76,8 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "将 OneDrive 作为博客图床",
-  "headline": "将 OneDrive 作为博客图床",
+  "name": "在 Linux 上使用 OneDrive 作为博客图床",
+  "headline": "在 Linux 上使用 OneDrive 作为博客图床",
   "datePublished": "2022-07-14 00:00:00+08:00",
   "dateModified": "",
   "author": {
@@ -85,7 +87,7 @@
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
   "url": "https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html",
-  "description": "在 Linux 上使用 ZFile 管理 OneDrive 文件，利用 Microsoft API 生成图片链接"
+  "description": "在博客中插入图片一直是一件头疼事，互联网上的各类图床工具都难令人完全满意。使用 OneDrive 作为图床或是一个很好的选择，这在 Windows 上已经有了成熟的方案，而在 Linux 上就有些麻烦，需要借助些额外的工具。"
 }
 </script>
 </head>
@@ -125,7 +127,7 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">将 OneDrive 作为博客图床</h1>
+        <h1 class="post-title">在 Linux 上使用 OneDrive 作为博客图床</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
@@ -187,7 +189,7 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=将 OneDrive 作为博客图床&amp;url=https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=在 Linux 上使用 OneDrive 作为博客图床&amp;url=https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
                     <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
@@ -200,7 +202,7 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://tseing.github.io/tag/blog.html">Blog</a><a href="https://tseing.github.io/tag/onedrive.html">OneDrive</a>                </aside>
+<a href="https://tseing.github.io/tag/blog.html">Blog</a><a href="https://tseing.github.io/tag/onedrive.html">OneDrive</a><a href="https://tseing.github.io/tag/linux.html">Linux</a>                </aside>
 
                 <div class="clear"></div>
 
