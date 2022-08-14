@@ -149,9 +149,9 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><code>prettymaps</code>是一个 Python 地图绘图包，能够使用 OpenStreetMap 的地图数据，在<code>matplotlib</code>绘图包的助力下能够绘制出十分精美、极具艺术感的地图。但是<code>prettymaps</code>在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。</p>
+                <p><code>prettymaps</code> 是一个 Python 地图绘图包，能够使用 OpenStreetMap 的地图数据，在 <code>matplotlib</code> 绘图包的助力下能够绘制出十分精美、极具艺术感的地图。但是 <code>prettymaps</code> 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。</p>
 <h2 id="chang-shi-zhi-jie-shi-yong-pip-an-zhuang">尝试直接使用 pip 安装</h2>
-<p>在项目的 <a href="https://github.com/marceloprates/prettymaps">Github 仓库</a>中，作者提供的方法是直接通过<code>pip install prettymaps</code>安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装<code>Fiona</code>时发生错误，错误信息如下：</p>
+<p>在项目的 <a href="https://github.com/marceloprates/prettymaps">Github 仓库</a>中，作者提供的方法是直接通过 <code>pip install prettymaps</code> 安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装 <code>Fiona</code> 时发生错误，错误信息如下：</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">Using</span><span class="w"> </span><span class="n">cached</span><span class="w"> </span><span class="n">Fiona</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">21.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="n">MB</span><span class="p">)</span><span class="w"></span>
 <span class="w">  </span><span class="n">Preparing</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="p">(</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span><span class="p">)</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="n">error</span><span class="w"></span>
 <span class="w">  </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">subprocess</span><span class="o">-</span><span class="n">exited</span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">error</span><span class="w"></span>
@@ -171,14 +171,14 @@
 <span class="n">note</span><span class="p">:</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">mentioned</span><span class="w"> </span><span class="n">above</span><span class="p">,</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">pip</span><span class="o">.</span><span class="w"></span>
 <span class="n">hint</span><span class="p">:</span><span class="w"> </span><span class="n">See</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">details</span><span class="o">.</span><span class="w"></span>
 </code></pre></div>
-<p>这里我们需要先明确一下<code>prettymaps</code>的依赖：</p>
+<p>这里我们需要先明确一下 <code>prettymaps</code> 的依赖：</p>
 <div class="highlight"><pre><span></span><code>- prettymaps
 ╰&boxh;&gt; - Fiona
     ╰&boxh;&gt; - GDAL
 </code></pre></div>
-<p>再根据错误信息，也就是在安装<code>Fiona</code>依赖时调用的<code>GDAL</code>未正确配置，我的设备上没有安装<code>GDAL</code>，所以需要先安装<code>GDAL</code>。</p>
+<p>再根据错误信息，也就是在安装 <code>Fiona</code> 依赖时调用的 <code>GDAL</code> 未正确配置，我的设备上没有安装 <code>GDAL</code>，所以需要先安装 <code>GDAL</code>。</p>
 <h2 id="an-zhuang-gdal-corebu-tui-jian">安装 GDAL core（不推荐）</h2>
-<p>可以先尝试直接<code>pip install gdal</code>，不出意外的话会有以下错误：</p>
+<p>可以先尝试直接 <code>pip install gdal</code>，不出意外的话会有以下错误：</p>
 <div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="o">/</span><span class="n">gdalconst_wrap</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="mi">2703</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
 <span class="n">extensions</span><span class="o">/</span><span class="n">gdal_array_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2829</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
 <span class="n">extensions</span><span class="o">/</span><span class="n">gnm_wrap</span><span class="o">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">2820</span><span class="p">):</span><span class="w"> </span><span class="n">fatal</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">C1083</span><span class="p">:</span><span class="w"> </span><span class="err">无法打开包括文件</span><span class="p">:</span><span class="w"> </span><span class="err">&ldquo;</span><span class="n">gdal</span><span class="o">.</span><span class="n">h</span><span class="err">&rdquo;</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
@@ -193,28 +193,28 @@
 <p><img alt="GISInternals首页" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7531?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>要下载 GDAL core 和 bindings 两个安装文件，其中 bindings 需要与自己的 Python 版本匹配，下载完成后先安装 core 再安装 bindings。</p>
 <p><img alt="GISInternals下载文件" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7533?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>安装完成后，使用 pip 可以查询到<code>GDAL</code>的安装信息：</p>
+<p>安装完成后，使用 pip 可以查询到 <code>GDAL</code> 的安装信息：</p>
 <div class="highlight"><pre><span></span><code>&gt; pip list
 Package           Version
 ----------------- -------
 GDAL              3.5.1
 </code></pre></div>
-<p>此时已经在 Python 中安装了<code>GDAL</code>，但还需要配置环境变量后才能安装<code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948">这篇文章</a>。</p>
+<p>此时已经在 Python 中安装了 <code>GDAL</code>，但还需要配置环境变量后才能安装 <code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948">这篇文章</a>。</p>
 <h2 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian">使用 .whl 文件安装（推荐）</h2>
 <p><code>GDAL</code> 与 <code>Fiona</code> 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 <code>.whl</code> 安装这两个依赖。UCI 的 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal">Python 拓展包仓库</a>提供了这两个依赖的 <code>.whl</code> 文件。</p>
 <p><img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是<code>GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl</code>。</p>
-<p>将下载文件移入 Python 安装目录下的<code>Scripts</code>文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：</p>
+<p>要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是 <code>GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl</code>。</p>
+<p>将下载文件移入 Python 安装目录下的 <code>Scripts</code> 文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：</p>
 <div class="highlight"><pre><span></span><code>&gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
 ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 </code></pre></div>
 <p>出现这个错误时我寻找了大量解决方法，当然，这个错误也没法解决，这纯粹是安装文件的问题。这个隐藏的坑浪费我大量时间，后来我发现将安装文件换成<code>3.3.3</code>版本，就能成功安装了。</p>
-<p>但这还没结束，同样在 UCI 提供的仓库中下载<code>Fiona</code>，用同样的方法安装，这时就会发现<code>Fiona</code>尝试卸载<code>GDAL</code>并使用 pip 直接安装其他版本的<code>GDAL</code>。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上<code>GDAL</code>的。</p>
-<p>这是因为这里还有一个隐藏的大坑，就是<code>GDAL</code>与<code>Fiona</code>的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为<code>3.9.10</code>的条件下，可以使用<code>GDAL==3.3.2</code>与<code>Fiona==1.8.20</code>，这两个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。</p>
-<p>安装好这两个依赖后，就可以直接使用<code>pip install prettymaps</code>安装<code>prettymaps</code>了。在 Python 交互模式下输入<code>import prettymaps</code>，若无错误信息，就成功安装好<code>prettymaps</code>了。</p>
+<p>但这还没结束，同样在 UCI 提供的仓库中下载 <code>Fiona</code>，用同样的方法安装，这时就会发现 <code>Fiona</code> 尝试卸载 <code>GDAL</code> 并使用 pip 直接安装其他版本的 <code>GDAL</code>。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上 <code>GDAL</code> 的。</p>
+<p>这是因为这里还有一个隐藏的大坑，就是 <code>GDAL</code> 与 <code>Fiona</code> 的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为 <code>3.9.10</code> 的条件下，可以使用 <code>GDAL==3.3.2</code> 与 <code>Fiona==1.8.20</code>，这两个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。</p>
+<p>安装好这两个依赖后，就可以直接使用 <code>pip install prettymaps</code> 安装 <code>prettymaps</code> 了。在 Python 交互模式下输入 <code>import prettymaps</code>，若无错误信息，就成功安装好 <code>prettymaps</code> 了。</p>
 <h2 id="zong-jie">总结</h2>
-<p>Windows 下安装<code>prettymaps</code>的错误是<code>GDAL</code>与<code>Fiona</code>两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。</p>
-<p>由于以上原因在 Windows 下未能成功安装<code>prettymaps</code>的推荐解决步骤如下：</p>
+<p>Windows 下安装 <code>prettymaps</code> 的错误是 <code>GDAL</code> 与 <code>Fiona</code> 两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。</p>
+<p>由于以上原因在 Windows 下未能成功安装 <code>prettymaps</code> 的推荐解决步骤如下：</p>
 <ol>
 <li>安装 <a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunGGuDYayQdVADT3?e=RAJEsi">GDAL-3.3.2-cp39-cp39-win_amd64.whl</a></li>
 <li>安装 <a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunAkPiG4AOb9V8yi?e=fAgNhp">Fiona-1.8.20-cp39-cp39-win_amd64.whl</a></li>
