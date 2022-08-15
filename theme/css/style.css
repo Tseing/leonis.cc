@@ -680,6 +680,7 @@ blockquote::after {
 }
 
 em {
+    font-style: normal;
     text-emphasis: dot;
     text-emphasis-color: #B6321C;
     text-emphasis-position: under right;
@@ -687,8 +688,6 @@ em {
 
 em,
 i {
-    font-style: normal;
-    /* color: #212226 */
     color: inherit
 }
 
@@ -2054,15 +2053,36 @@ img {
 }
 
 .warn-info {
-    margin-right: 5%;
-    margin-left: 5%;
     border: 2px solid;
-    background: #e5f7ff;
+    background: #fff4e5;
     border-radius: 5px;
 }
 
 .warn-info p{
     margin: 15px 15px 15px 15px;
+}
+
+.warn-info .fa {
+    color: #ff9100
+}
+
+.note-info {
+    border: 2px solid;
+    background: #e5f7ff;
+    border-radius: 5px;
+}
+
+.note-info p{
+    margin: 15px 15px 15px 15px;
+}
+
+.note-info .fa {
+    color: #00b0ff
+}
+
+/* location icon */
+i.fa.fa-map-marker.fa-stack-1x {
+    bottom: 10px;
 }
 
 /* .tag-weight-1  { font-size: 100%; }
