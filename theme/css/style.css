@@ -740,8 +740,8 @@ mark {
 code,
 tt {
     position: relative;
-    margin: 0 0.333em;
-    padding: 0.3em 0.666em;
+    margin: 0 0;
+    padding: 0.3em 5px;
     font-family: 'Ubuntu Mono', monospace, sans-serif;
     font-size: 18px;
     white-space: pre;
@@ -794,7 +794,7 @@ pre tt {
     padding: 1.333em;
     overflow: scroll;
     font-size: 18px;
-    line-height: 2em;
+    line-height: 0;
     white-space: pre;
     background: transparent;
     border: none;
@@ -977,7 +977,8 @@ img {
     font-weight: 700;
     font-size: 2em;
     line-height: 1em;
-    text-decoration: none
+    text-decoration: none;
+    user-select: none;
 }
 
 .home-template .blog-name {
@@ -1003,6 +1004,7 @@ img {
     font-size: 1em;
     line-height: 1.5em;
     font-family: "Cardo";
+    user-select: none;
 }
 
 .home-template .blog-description {
@@ -1353,6 +1355,7 @@ img {
     padding: 1.1em 0;
     overflow: auto;
     opacity: 0.5;
+    user-select: none;
 }
 
 .credits a {

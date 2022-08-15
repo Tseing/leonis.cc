@@ -4,84 +4,84 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://localhost:8000/</loc>
-<lastmod>2022-08-15T16:20:05-00:00</lastmod>
+<loc>https://tseing.github.io/</loc>
+<lastmod>2022-08-15T17:13:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/pages/about.html</loc>
-<lastmod>2022-08-15T16:20:05-00:00</lastmod>
+<loc>https://tseing.github.io/pages/about.html</loc>
+<lastmod>2022-08-15T17:13:39-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-08-15T16:20:05-00:00</lastmod>
+<loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
+<lastmod>2022-08-15T17:13:39-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html</loc>
 <lastmod>2022-08-14T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-08-11-prettymaps-install.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html</loc>
 <lastmod>2022-08-11T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html</loc>
 <lastmod>2022-08-05T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-08-02-statistical-learning-chapter3.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-08-02-statistical-learning-chapter3.html</loc>
 <lastmod>2022-08-02T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</loc>
 <lastmod>2022-07-27T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-07-21-statistical-learning-chapter1.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-07-21-statistical-learning-chapter1.html</loc>
 <lastmod>2022-07-21T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-07-14-onedrive-as-image-host.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html</loc>
 <lastmod>2022-07-14T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/sui-sui-nian/2022-07-12-pelican-to-publish.html</loc>
+<loc>https://tseing.github.io/sui-sui-nian/2022-07-12-pelican-to-publish.html</loc>
 <lastmod>2022-07-12T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://localhost:8000/author/leo.html</loc>
+<loc>https://tseing.github.io/author/leo.html</loc>
 <lastmod>2022-08-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
