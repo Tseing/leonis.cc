@@ -19,6 +19,7 @@
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
   <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
@@ -149,9 +150,10 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>在个人博客中，图片是不可或缺的，而生成图片的直链后才能在 <code>.md</code> 文件中使用，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，还有就是把数据交在他们的手中多少有些不放心。想到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，还有就是在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须「绕道通行」。</p>
+                <p>在个人博客中，图片是不可或缺的，而在 <code>.md</code> 文件中插入图片必须使用图片的直链，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，再就是把数据交付给第三方手中多少有些不放心。想</p>
+<p>到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，同时在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步数据。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须采用「绕道通行」的方法生成直链。</p>
 <p>Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 <a href="https://github.com/Richasy/Img-Share">Img Share</a> 生成图片链接。Img Share 后来被 <a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;gl=US">Picture Share</a> 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考<a href="https://wzblog.fun/posts/b036879a/">这篇文章</a>。</p>
-<p>但是写博客的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用ZFile同步云盘文件。</p>
+<p>我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 同步云盘文件。</p>
 <h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi">OneDrive 文件链接的生成方式</h2>
 <p>OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了<a href="https://github.com/harrisoff/onedrive-image-hosting">相关项目</a>，点开项目右侧的链接登录自己的OneDrive后直接插入 <code>.md</code> 就可以啦。</p>
 <div class="highlight"><pre><span></span><code>![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
@@ -179,12 +181,20 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
  ~/zfile/bin/stop.sh        <span class="c1"># 停止项目</span>
  ~/zfile/bin/restart.sh     <span class="c1"># 重启项目</span>
 </code></pre></div>
-<p>启动项目后，默认开放在 8080 端口，使用 <code>localhost:8080</code> 进入 ZFile：
-<img alt="注册/登录界面" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/>首次开启时需要注册管理员账号，登录进入系统后，首先配置存储源，选择存储策略为 <code>OneDrive</code>，启用文件操作。
-<img alt="配置存储源" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content"/>点击链接登录 OneDrive 账号获取令牌，填写完成后即可保存设置。<img alt="获取令牌" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content"/>设置成功后在存储源中就可以看见 OneDrive 标志，并且显示刷新成功，这样 ZFile 就已经正常工作了。<img alt="存储源列表" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"/></p>
+<p>启动项目后，默认开放在 8080 端口，使用 <code>localhost:8080</code> 进入 ZFile：</p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/></a></div></p>
+<p>首次开启时需要注册管理员账号，登录进入系统后，首先配置存储源，选择存储策略为 <code>OneDrive</code>，启用文件操作。</p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUUBsSGYxpEV6Frp/root/content"/></a></div></p>
+<p>点击链接登录 OneDrive 账号获取令牌，填写完成后即可保存设置。</p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUPS4i5g5F_-nR4T/root/content"/></a></div></p>
+<p>设置成功后在存储源中就可以看见 OneDrive 标志，并且显示刷新成功，这样 ZFile 就已经正常工作了。</p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUSMlwPi40T-1Um4/root/content"/></a></div></p>
 <h2 id="shi-yong-zfile-guan-li-onedrive">使用 ZFile 管理 OneDrive</h2>
 <p>在地址栏中输入 <code>localhost:8080</code> 进入存储界面，在这里就理应能够看到 OneDrive 中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。</p>
-<p>如果有一台 VPS，在 VPS 上启动 ZFile 后，通过 <code>vps-ip:[port]</code> 也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在 <code>.md</code> 中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。<img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/>因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 <code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链 <code>vps-ip:[port]/...</code> 时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。</p>
+<p>如果有一台 VPS，在 VPS 上启动 ZFile 后，通过 <code>vps-ip:[port]</code> 也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在 <code>.md</code> 中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。</p>
+<p><img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 <code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链 <code>vps-ip:[port]/...</code> 时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。</p>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 07 月 14 日，请确定内容是否过时。</p></div></p>
             </section>
 
             <section class="post-info">
@@ -242,9 +252,9 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
                <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -253,6 +263,17 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>

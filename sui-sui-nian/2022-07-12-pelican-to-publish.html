@@ -19,6 +19,7 @@
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
   <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
@@ -190,6 +191,7 @@ git push
 <h2 id="ke-long-yu-tong-bu">克隆与同步</h2>
 <p>由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。</p>
 <p>在终端中使用 <code>git clone --recursive</code> 命令克隆仓库，<code>git clone</code> 命令只会克隆主仓库，导致子模块失效，<code>--recursive</code> 能递归地克隆包括子模块在内的整个仓库。使用 <code>git pull --recurse-submodules</code> 命令能够拉取包含子模块在内的全部更新，即可完成同步。</p>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 14 日，请确定内容是否过时。</p></div></p>
 <hr/>
 <h2 id="references">References</h2>
 <ul>
@@ -253,9 +255,9 @@ git push
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
                <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -264,6 +266,17 @@ git push
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>

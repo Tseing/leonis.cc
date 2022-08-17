@@ -747,7 +747,8 @@ tt {
     white-space: pre;
     background: #faf9f7;
     border: 1px solid #e5e4e1;
-    top: -2px
+    top: -2px;
+    word-break: break-all;
 }
 
 pre {

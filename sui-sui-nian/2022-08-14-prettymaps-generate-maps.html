@@ -19,6 +19,7 @@
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
   <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
@@ -218,8 +219,8 @@
 </code></pre></div>
 <h2 id="yuan-xing-mo-shi">圆形模式</h2>
 <p>与示例代码相同，只要将 <code>perimeter</code> 留空，默认的绘图模式就是圆形模式。</p>
-<p><img alt="上海外滩" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>&emsp;&emsp;&emsp;&emsp;<span class="fa-stack fa-1x"><i class="fa fa-map-o fa-stack-1x"></i><i class="fa fa-map-marker fa-stack-1x"></i></span><i>外滩  The Bund, Shanghai</i></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>外滩  The Bund, Shanghai</i></p>
 <h2 id="yuan-jiao-ju-xing-mo-shi">圆角矩形模式</h2>
 <p>圆角矩形模式下，需要新建一个变量 <code>dilate</code> 用于控制圆角半径，并在每一个图层的参数中添加 <code>'circle': False</code> 与 <code>'dilate': dilate</code> 就能生成圆角矩形地图。</p>
 <p>在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。</p>
@@ -299,8 +300,8 @@
         <span class="n">osm_credit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">}</span>
 <span class="p">)</span>
 </code></pre></div>
-<p><img alt="三坊七巷" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>&emsp;&emsp;&emsp;&emsp;<span class="fa-stack fa-1x"><i class="fa fa-map-o fa-stack-1x"></i><i class="fa fa-map-marker fa-stack-1x"></i></span><i>三坊七巷  Sanfang Qixiang, Fuzhou</i></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>三坊七巷  Sanfang Qixiang, Fuzhou</i></p>
 <h2 id="fang-xing-mo-shi">方形模式</h2>
 <p>欲使地图布满整个方形画面，需要使用 <code>matplotlib</code> 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：</p>
 <div class="highlight"><pre><span></span><code><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">layers</span><span class="p">[</span><span class="s1">'perimeter'</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
@@ -310,8 +311,8 @@
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">dy</span><span class="p">,</span> <span class="n">ymax</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">dy</span><span class="p">)</span>
 </code></pre></div>
 <p>变量 <code>a</code> 表示裁去的四周比例。</p>
-<p><img alt="闽江" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>&emsp;&emsp;&emsp;&emsp;<span class="fa-stack fa-1x"><i class="fa fa-map-o fa-stack-1x"></i><i class="fa fa-map-marker fa-stack-1x"></i></span><i>闽江  Min River, Fuzhou</i></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>闽江  Min River, Fuzhou</i></p>
 <h2 id="jin-jie-cao-zuo">进阶操作</h2>
 <p>但不止如此，我想讨论一些进阶的操作。<code>layers</code> 参数指定了绘制的图层，在 <code>drawing_kwargs</code> 中可以指定图层的样式，由底至上常见以下几个图层：</p>
 <ul>
@@ -403,8 +404,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'pku.png'</span><span class="p">)</span>
 </code></pre></div>
 <p>由于 <code>prettymaps</code> 的封闭边界太过于靠近建筑，可以使用 <code>buffer()</code> 将边界向外扩张一部分，能获得更好的视觉效果。</p>
-<p><img alt="北京大学" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>&emsp;&emsp;&emsp;&emsp;<span class="fa-stack fa-1x"><i class="fa fa-map-o fa-stack-1x"></i><i class="fa fa-map-marker fa-stack-1x"></i></span><i>北京大学  Peking University, Beijing</i></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>北京大学  Peking University, Beijing</i></p>
 <p>调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：</p>
 <div class="highlight"><pre><span></span><code><span class="s1">'railway'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">'custom_filter'</span><span class="p">:</span> <span class="s1">'["railway"~"rail"]'</span><span class="p">,</span>
@@ -427,15 +428,15 @@
     <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><img alt="天津站" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>&emsp;&emsp;&emsp;&emsp;<span class="fa-stack fa-1x"><i class="fa fa-map-o fa-stack-1x"></i><i class="fa fa-map-marker fa-stack-1x"></i></span><i>天津站  Tianjin Railway Station, Tianjin</i></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>天津站  Tianjin Railway Station, Tianjin</i></p>
 <h2 id="zi-ji-de-hua">自己的话</h2>
 <p>不得不说，<code>prettymaps</code> 是一款十分优秀的 Python 绘图包，它的操作十分简单，足以让我这样不了解 GIS 的用户迅速入门，绘制出十分惊艳的地图。但在实际使用中，<code>prettymaps</code> 还是存在着这样那样的问题，使得它的定位可能只能止步于一个发挥创意的工具，而不能成为一个合适的创作工具。</p>
 <p>譬如说，各种各样的用户因为各种各样的需求接触到 <code>prettymaps</code>，其中不乏有些用户想为某些场所、学校绘制导览地图，但 <code>prettymaps</code> 添加元素的方式不够灵活，这会让这些用户使用起来相当费劲。</p>
 <p><code>prettymaps</code> 的数据基于 OpenStreetMap，因为国内这样那样的相关法律法规，注定了 OpenStreetMap 的国内贡献者特别少，这对于开源项目来说几乎是致命的。由于 OpenStreetMap 缺少国内数据，使用 <code>prettymaps</code> 绘制国内城市的地图是相当力不从心的。</p>
 <p>这方面具体表现为大面积缺失建筑，绘制的地图上十分空旷；缺少海洋、海岸线数据，绘制近海区域时呈现为大片空白等等。</p>
 <p>OpenStreetMap 的封闭边界是非常亮眼的功能，在 <code>prettymaps</code> 中用字符描述地点就能绘制出行政区、建筑群等等。但从另一个方面考虑，OpenStreetMap 的封闭边界是由用户贡献的，所以在涉边境线、涉敏感地区时务必小心。</p>
-<p>总而言之，<code>prettymaps</code> 为我们提供了另一个视角，让我们俯瞰日常生活的这座城市。而 OpenStreetMap 则是一个伟大的项目，它借助所有人的力量去描绘我们所生活的这个世界，这个理念闪耀着国际主义与理想主义的光芒。</p>
+<p>总而言之，<code>prettymaps</code> 为我们提供了另一个视角，让我们俯瞰日常生活的这座城市，感受建筑布局的美。而 OpenStreetMap 可以说是一个伟大的项目，它借助所有人的力量去描绘我们所生活的这个世界的经纬，这个理念闪耀着国际主义与理想主义的光芒。</p>
 <p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 14 日，请确定内容是否过时。</p></div></p>
             </section>
 
@@ -494,9 +495,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
                <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -505,6 +506,17 @@
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>

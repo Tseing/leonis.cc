@@ -19,6 +19,7 @@
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
   <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
@@ -139,7 +140,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#zhu-yin-de-ce-shi" title="注音的测试">注音的测试</a></li><li><a class="toc-href" href="#qiang-diao-de-ce-shi_1" title="强调的测试">强调的测试</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#zhu-yin-de-ce-shi" title="注音的测试">注音的测试</a></li><li><a class="toc-href" href="#qiang-diao-de-ce-shi_1" title="强调的测试">强调的测试</a></li><li><a class="toc-href" href="#lightbox" title="lightbox">lightbox</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -150,6 +151,8 @@
 </ruby>正文正文正文正文正文正文正文正文正文正文正文正文正文</p>
 <h2 id="qiang-diao-de-ce-shi_1">强调的测试</h2>
 <p>正文正文正文正文正文正文正文正文正文正文正文正文正文<em>此地无银三百两</em>正文正文正文正文正文正文正文正文正文正文正文正文正文</p>
+<h2 id="lightbox">lightbox</h2>
+<p><div class="lightgallery"><a data-sub-html="None" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"><img alt="None" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
             </section>
 
             <section class="post-info">
@@ -205,9 +208,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Github</b></a> &bull;
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
                <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>sitemap</b></a></span>
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -216,6 +219,17 @@
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>
