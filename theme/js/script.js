@@ -120,22 +120,22 @@ jQuery(function($) {
 	   Style code blocks with highlight and numbered lines
 	   ========================================================================== */
 
-	function codestyling() {
-		$('pre code').each(function(i, e) {
-			hljs.highlightBlock(e);
+	// function codestyling() {
+	// 	$('pre code').each(function(i, e) {
+	// 		hljs.highlightBlock(e);
 
-			if(!$(this).hasClass('language-text')) {
-				var code = $(this);
-				var lines = code.html().split(/\n/).length;
-				var numbers = [];
-				for (i = 1; i < lines; i++) {
-					numbers += '<span class="line">' + i + '</span>';
-				}
-				code.parent().append('<div class="lines">' + numbers + '</div>');
-			}
-		});
-	}
-	codestyling();
+	// 		if(!$(this).hasClass('language-text')) {
+	// 			var code = $(this);
+	// 			var lines = code.html().split(/\n/).length;
+	// 			var numbers = [];
+	// 			for (i = 1; i < lines; i++) {
+	// 				numbers += '<span class="line">' + i + '</span>';
+	// 			}
+	// 			code.parent().append('<div class="lines">' + numbers + '</div>');
+	// 		}
+	// 	});
+	// }
+	// codestyling();
 
 	/* ==========================================================================
 	   Initialize and load Disqus

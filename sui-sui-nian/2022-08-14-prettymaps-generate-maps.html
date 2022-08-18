@@ -22,7 +22,7 @@
   <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
-      <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
 
   <!-- Custom fonts -->
@@ -40,7 +40,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 
@@ -155,68 +155,68 @@
                 <p>经过<a href="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html">上次</a>的屡次踩坑，终于艰难地在 Windows 上安装好了 prettymaps。看着 <code>pip list</code> 中的 <code>prettymaps</code>，我迫不及待地想试着用 <code>prettymaps</code> 生成一些地图，那么就开始吧。</p>
 <h2 id="attributeerror-cuo-wu">AttributeError 错误</h2>
 <p>先运行作者给出的示例代码试验一下：</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">prettymaps</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">constrained_layout</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">layers</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span>
-    <span class="s1">'Pra&ccedil;a Ferreira do Amaral, Macau'</span><span class="p">,</span> <span class="n">radius</span> <span class="o">=</span> <span class="mi">1100</span><span class="p">,</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'custom_filter'</span><span class="p">:</span> <span class="s1">'["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]'</span><span class="p">,</span>
-                <span class="s1">'width'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'motorway'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s1">'trunk'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s1">'primary'</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
-                    <span class="s1">'secondary'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">'tertiary'</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
-                    <span class="s1">'residential'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">'service'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">'unclassified'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">'pedestrian'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">'footway'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'building'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'construction'</span><span class="p">},</span> <span class="s1">'union'</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'water'</span><span class="p">,</span> <span class="s1">'bay'</span><span class="p">]}},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'grass'</span><span class="p">,</span> <span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'island'</span><span class="p">,</span> <span class="s1">'wood'</span><span class="p">],</span> <span class="s1">'leisure'</span><span class="p">:</span> <span class="s1">'park'</span><span class="p">}},</span>
-            <span class="s1">'forest'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'forest'</span><span class="p">}},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'amenity'</span><span class="p">:</span> <span class="s1">'parking'</span><span class="p">,</span> <span class="s1">'highway'</span><span class="p">:</span> <span class="s1">'pedestrian'</span><span class="p">,</span> <span class="s1">'man_made'</span><span class="p">:</span> <span class="s1">'pier'</span><span class="p">}}</span>
-        <span class="p">},</span>
-        <span class="n">drawing_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'background'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#dadbc1'</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#dadbc1'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span>  <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#D0F1BF'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'forest'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#64B96A'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#a1e3ff'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span> <span class="s1">'hatch_c'</span><span class="p">:</span> <span class="s1">'#85c9e6'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#475657'</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'palette'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'#FFC857'</span><span class="p">,</span> <span class="s1">'#E9724C'</span><span class="p">,</span> <span class="s1">'#C5283D'</span><span class="p">],</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
-        <span class="p">},</span>
-        <span class="n">osm_credit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">}</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'macao.png'</span><span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-py">from prettymaps import *
+from matplotlib import pyplot as plt
+fig, ax = plt.subplots(figsize = (12, 12), constrained_layout = True)
+layers = plot(
+    'Pra&ccedil;a Ferreira do Amaral, Macau', radius = 1100,
+    ax = ax,
+    layers = {
+            'perimeter': {},
+            'streets': {
+                'custom_filter': '["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'motorway': 5,
+                    'trunk': 5,
+                    'primary': 4.5,
+                    'secondary': 4,
+                    'tertiary': 3.5,
+                    'residential': 3,
+                    'service': 2,
+                    'unclassified': 2,
+                    'pedestrian': 2,
+                    'footway': 1,
+                }
+            },
+            'building': {'tags': {'building': True, 'landuse': 'construction'}, 'union': False},
+            'water': {'tags': {'natural': ['water', 'bay']}},
+            'green': {'tags': {'landuse': 'grass', 'natural': ['island', 'wood'], 'leisure': 'park'}},
+            'forest': {'tags': {'landuse': 'forest'}},
+            'parking': {'tags': {'amenity': 'parking', 'highway': 'pedestrian', 'man_made': 'pier'}}
+        },
+        drawing_kwargs = {
+            'background': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'hatch': 'ooo...', 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'lw': 0, 'hatch': 'ooo...',  'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'forest': {'fc': '#64B96A', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'hatch': 'ooo...', 'hatch_c': '#85c9e6', 'lw': 1, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 3},
+            'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+plt.savefig('macao.png')
+</code></pre>
 <p>但是拋出了错误，提示 <code>AttributeError: 'DataFrame' object has no attribute 'crs'</code>。在 <a href="https://github.com/marceloprates/prettymaps/issues/88">Github</a> 上有人给出了解决方案，原因是 <code>osmnx</code> 的版本过低，直接 <code>pip install osmnx==1.2.1</code> 就可以解决。</p>
 <p>需要注意的是，pip 可能会给出错误信息提示 <code>osmnx==1.2.1</code> 与 <code>prettymaps</code> 不兼容。但同样给出了已成功安装 <code>osmnx==1.2.1</code> 的信息。经过我的尝试，<code>prettymaps</code> 是可以正常工作的，所以这条错误信息可能没有什么影响。</p>
 <h2 id="chu-kui-prettymapsplot-han-shu">初窥 prettymaps.plot() 函数</h2>
 <p><code>prettymaps</code> 是在 <code>matplotlib</code> 画布上绘制地图的，所以主要参数与 <code>matplotlib</code> 的写法相同，用于调整颜色或文本，不甚重要。而用于生成地图的 <code>prettymaps.plot()</code> 函数就比较关键，比较常用参数的就以下几项：</p>
-<div class="highlight"><pre><span></span><code><span class="n">plot</span><span class="p">(</span>
-    <span class="c1"># 地图的中心点，可以是地名的字符串，也可以经纬度的元组</span>
-    <span class="s1">'query'</span><span class="p">,</span>
-    <span class="c1"># 地图半径，单位为米</span>
-    <span class="n">radius</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="c1"># 将 x 轴绑定至画布 x 轴</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span>
-    <span class="c1"># OpenStreetMap 地图层信息，若不了解复制示例代码即可</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{}},</span>
-    <span class="c1"># 图层样式，如颜色等</span>
-    <span class="n">drawing_kwargs</span> <span class="o">=</span> <span class="p">{},</span>
-    <span class="c1"># 版权信息</span>
-    <span class="n">osm_credit</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-py">plot(
+    # 地图的中心点，可以是地名的字符串，也可以经纬度的元组
+    'query',
+    # 地图半径，单位为米
+    radius = 100,
+    # 将 x 轴绑定至画布 x 轴
+    ax = ax,
+    # OpenStreetMap 地图层信息，若不了解复制示例代码即可
+    layers = {'perimeter': {}},
+    # 图层样式，如颜色等
+    drawing_kwargs = {},
+    # 版权信息
+    osm_credit = {}
+)
+</code></pre>
 <h2 id="yuan-xing-mo-shi">圆形模式</h2>
 <p>与示例代码相同，只要将 <code>perimeter</code> 留空，默认的绘图模式就是圆形模式。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
@@ -224,92 +224,92 @@
 <h2 id="yuan-jiao-ju-xing-mo-shi">圆角矩形模式</h2>
 <p>圆角矩形模式下，需要新建一个变量 <code>dilate</code> 用于控制圆角半径，并在每一个图层的参数中添加 <code>'circle': False</code> 与 <code>'dilate': dilate</code> 就能生成圆角矩形地图。</p>
 <p>在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。</p>
-<div class="highlight"><pre><span></span><code><span class="n">dilate</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">'#F4A460'</span><span class="p">,</span> <span class="s1">'#FA8072'</span><span class="p">]</span>
-<span class="n">layers</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span>
-    <span class="p">(</span><span class="mf">26.08594</span><span class="p">,</span><span class="mf">119.29199</span><span class="p">),</span> <span class="n">radius</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"circle"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"dilate"</span><span class="p">:</span> <span class="n">dilate</span><span class="p">},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'custom_filter'</span><span class="p">:</span> <span class="s1">'["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]'</span><span class="p">,</span>
-                <span class="s1">'width'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'motorway'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s1">'trunk'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s1">'primary'</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
-                    <span class="s1">'secondary'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">'tertiary'</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
-                    <span class="s1">'residential'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">'service'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">'unclassified'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">'pedestrian'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">'footway'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                <span class="p">},</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'building'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                    <span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'construction'</span>
-                <span class="p">},</span>
-                <span class="s1">'union'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span>
-            <span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'water'</span><span class="p">,</span> <span class="s1">'bay'</span><span class="p">]</span>
-                <span class="p">},</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span>
-            <span class="p">},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'grass'</span><span class="p">,</span>
-                    <span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'island'</span><span class="p">,</span> <span class="s1">'wood'</span><span class="p">],</span>
-                    <span class="s1">'leisure'</span><span class="p">:</span> <span class="s1">'park'</span>
-                <span class="p">},</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="s1">'forest'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'forest'</span><span class="p">},</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'amenity'</span><span class="p">:</span> <span class="s1">'parking'</span><span class="p">,</span>
-                    <span class="s1">'highway'</span><span class="p">:</span> <span class="s1">'pedestrian'</span><span class="p">,</span>
-                    <span class="s1">'man_made'</span><span class="p">:</span> <span class="s1">'pier'</span><span class="p">},</span>
-                <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span>
-            <span class="p">},</span>
-    <span class="p">},</span>
-        <span class="n">drawing_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'background'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#dadbc1'</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#dadbc1'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span>  <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#D0F1BF'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'forest'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#64B96A'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#a1e3ff'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'hatch'</span><span class="p">:</span> <span class="s1">'ooo...'</span><span class="p">,</span> <span class="s1">'hatch_c'</span><span class="p">:</span> <span class="s1">'#85c9e6'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#475657'</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'palette'</span><span class="p">:</span> <span class="n">palette</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
-        <span class="p">},</span>
-        <span class="n">osm_credit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-py">dilate = 100
+palette=['#F4A460', '#FA8072']
+layers = plot(
+    (26.08594,119.29199), radius = 400,
+    ax = ax,
+    layers = {
+            'perimeter': {"circle": False, "dilate": dilate},
+            'streets': {
+                'custom_filter': '["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'motorway': 5,
+                    'trunk': 5,
+                    'primary': 4.5,
+                    'secondary': 4,
+                    'tertiary': 3.5,
+                    'residential': 3,
+                    'service': 3,
+                    'unclassified': 3,
+                    'pedestrian': 3,
+                    'footway': 3,
+                },
+                'circle': False,
+                'dilate': dilate,
+            },
+            'building': {
+                'tags': {
+                    'building': True,
+                    'landuse': 'construction'
+                },
+                'union': False,
+                'circle': False,
+                'dilate': dilate
+            },
+            'water': {
+                'tags': {
+                    'natural': ['water', 'bay']
+                },
+                'circle': False,
+                'dilate': dilate
+            },
+            'green': {
+                'tags': {
+                    'landuse': 'grass',
+                    'natural': ['island', 'wood'],
+                    'leisure': 'park'
+                },
+                'circle': False,
+                'dilate': dilate,
+            },
+            'forest': {
+                'tags': {'landuse': 'forest'},
+                'circle': False,
+                'dilate': dilate,
+            },
+            'parking': {
+                'tags': {
+                    'amenity': 'parking',
+                    'highway': 'pedestrian',
+                    'man_made': 'pier'},
+                'circle': False,
+                'dilate': dilate
+            },
+    },
+        drawing_kwargs = {
+            'background': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'hatch': 'ooo...', 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'lw': 0, 'hatch': 'ooo...',  'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'forest': {'fc': '#64B96A', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'hatch': 'ooo...', 'hatch_c': '#85c9e6', 'lw': 1, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 3},
+            'building': {'palette': palette, 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+</code></pre>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>三坊七巷  Sanfang Qixiang, Fuzhou</i></p>
 <h2 id="fang-xing-mo-shi">方形模式</h2>
 <p>欲使地图布满整个方形画面，需要使用 <code>matplotlib</code> 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：</p>
-<div class="highlight"><pre><span></span><code><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">layers</span><span class="p">[</span><span class="s1">'perimeter'</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
-<span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mf">.2</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">dx</span><span class="p">,</span> <span class="n">xmax</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">dy</span><span class="p">,</span> <span class="n">ymax</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">dy</span><span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-py">xmin, ymin, xmax, ymax = layers['perimeter'].bounds
+dx, dy = xmax-xmin, ymax-ymin
+a = .2
+ax.set_xlim(xmin+a*dx, xmax-a*dx)
+ax.set_ylim(ymin+a*dy, ymax-a*dy)
+</code></pre>
 <p>变量 <code>a</code> 表示裁去的四周比例。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>闽江  Min River, Fuzhou</i></p>
@@ -331,103 +331,103 @@
 <li><code>zorder</code> 层数，决定了图层之间相互掩盖的关系。</li>
 </ul>
 <p>有了以上认识之后，我们就能更加随心所欲地绘制想要的地图了。还有一个额外的小技巧，OpenStreetMap 提供了封闭元素，使用地址描述绘制地点，不设置 <code>radius</code> 参数， <code>prettymaps</code> 就会自动匹配封闭元素的边界，使用这个方式可以绘制指定场所的示意图、行政区的示意图。</p>
-<div class="highlight"><pre><span></span><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">constrained_layout</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<pre><code class="language-py">fig, ax = plt.subplots(figsize = (12, 12), constrained_layout = True)
 
-<span class="c1"># 画布颜色</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'#eee'</span><span class="p">)</span>
+# 画布颜色
+fig.patch.set_facecolor('#eee')
 
-<span class="c1"># 边界向外扩张</span>
-<span class="k">def</span> <span class="nf">postprocessing</span><span class="p">(</span><span class="n">layers</span><span class="p">):</span>
-    <span class="n">layers</span><span class="p">[</span><span class="s1">'perimeter'</span><span class="p">]</span> <span class="o">=</span> <span class="n">layers</span><span class="p">[</span><span class="s1">'perimeter'</span><span class="p">]</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">layers</span>
+# 边界向外扩张
+def postprocessing(layers):
+    layers['perimeter'] = layers['perimeter'].buffer(10)
+    return layers
 
-<span class="n">layers</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span>
-    <span class="s2">"北京大学, 5号, 颐和园路, 海淀区, 北京市, 100871, 中国"</span><span class="p">,</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span>
-    <span class="n">postprocessing</span> <span class="o">=</span> <span class="n">postprocessing</span><span class="p">,</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'custom_filter'</span><span class="p">:</span> <span class="s1">'["highway"~"residential|service|unclassified|pedestrian|footway"]'</span><span class="p">,</span>
-                <span class="s1">'width'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'residential'</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
-                    <span class="s1">'service'</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
-                    <span class="s1">'unclassified'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">'pedestrian'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">'footway'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'building'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                    <span class="s1">'landuse'</span><span class="p">:</span> <span class="s1">'construction'</span>
-                <span class="p">},</span>
-                <span class="s1">'union'</span><span class="p">:</span> <span class="kc">False</span>
-            <span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'water'</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'landuse'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'grass'</span><span class="p">],</span>
-                    <span class="s1">'natural'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'island'</span><span class="p">,</span> <span class="s1">'wood'</span><span class="p">],</span>
-                    <span class="s1">'leisure'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'park'</span><span class="p">,</span> <span class="s1">'garden'</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s1">'leisure'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'leisure'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'pitch'</span><span class="p">,</span> <span class="s1">'playground'</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">'amenity'</span><span class="p">:</span> <span class="s1">'parking'</span><span class="p">,</span>
-                    <span class="s1">'highway'</span><span class="p">:</span> <span class="s1">'pedestrian'</span><span class="p">,</span>
-                    <span class="s1">'man_made'</span><span class="p">:</span> <span class="s1">'pier'</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-        <span class="p">},</span>
-        <span class="n">drawing_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'background'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#eee'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span> <span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'perimeter'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'linestyle'</span><span class="p">:</span> <span class="s1">'dashed'</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-            <span class="s1">'green'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#D0F1BF'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'leisure'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#aae0cb'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-            <span class="s1">'water'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#a1e3ff'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-            <span class="s1">'parking'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#F2F4CB'</span><span class="p">,</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'streets'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'fc'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-            <span class="s1">'building'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'palette'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'#FFC857'</span><span class="p">,</span> <span class="s1">'#E9724C'</span><span class="p">,</span> <span class="s1">'#C5283D'</span><span class="p">],</span> <span class="s1">'ec'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'zorder'</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
-        <span class="p">},</span>
-        <span class="n">osm_credit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#2F3737'</span><span class="p">}</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'pku.png'</span><span class="p">)</span>
-</code></pre></div>
+layers = plot(
+    "北京大学, 5号, 颐和园路, 海淀区, 北京市, 100871, 中国",
+    ax = ax,
+    postprocessing = postprocessing,
+    layers = {
+            'perimeter': {},
+            'streets': {
+                'custom_filter': '["highway"~"residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'residential': 1.5,
+                    'service': 1.5,
+                    'unclassified': 1,
+                    'pedestrian': 1,
+                    'footway': 1,
+                }
+            },
+            'building': {
+                'tags': {
+                    'building': True,
+                    'landuse': 'construction'
+                },
+                'union': False
+            },
+            'water': {
+                'tags': {
+                    'natural': ['water']
+                }
+            },
+            'green': {
+                'tags': {
+                    'landuse': ['grass'],
+                    'natural': ['island', 'wood'],
+                    'leisure': ['park', 'garden']
+                }
+            },
+            'leisure': {
+                'tags': {
+                    'leisure': ['pitch', 'playground']
+                }
+            },
+            'parking': {
+                'tags': {
+                    'amenity': 'parking',
+                    'highway': 'pedestrian',
+                    'man_made': 'pier'
+                }
+            },
+        },
+        drawing_kwargs = {
+            'background': {'fc': '#eee', 'lw': 0 , 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 2, 'linestyle': 'dashed', 'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 1},
+            'leisure': {'fc': '#aae0cb', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'alpha': 0.7, 'lw': 0, 'zorder': 3},
+            'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+plt.savefig('pku.png')
+</code></pre>
 <p>由于 <code>prettymaps</code> 的封闭边界太过于靠近建筑，可以使用 <code>buffer()</code> 将边界向外扩张一部分，能获得更好的视觉效果。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>北京大学  Peking University, Beijing</i></p>
 <p>调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：</p>
-<div class="highlight"><pre><span></span><code><span class="s1">'railway'</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'custom_filter'</span><span class="p">:</span> <span class="s1">'["railway"~"rail"]'</span><span class="p">,</span>
-    <span class="s1">'width'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-<span class="p">},</span>
-<span class="s1">'subway'</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">"railway"</span><span class="p">:</span> <span class="s2">"subway"</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-<span class="p">},</span>
-<span class="s1">'platform'</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'tags'</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">'railway'</span><span class="p">:</span> <span class="s1">'platform'</span>
-    <span class="p">},</span>
-    <span class="s1">'circle'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">'dilate'</span><span class="p">:</span> <span class="n">dilate</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code class="language-py">'railway': {
+    'custom_filter': '["railway"~"rail"]',
+    'width': 2,
+    'circle': False,
+    'dilate': dilate,
+},
+'subway': {
+    'tags': {
+        "railway": "subway",
+    },
+    'circle': False,
+    'dilate': dilate,
+},
+'platform': {
+    'tags': {
+        'railway': 'platform'
+    },
+    'circle': False,
+    'dilate': dilate,
+}
+</code></pre>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>&emsp;&emsp;&emsp;&emsp;<span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span><i>天津站  Tianjin Railway Station, Tianjin</i></p>
 <h2 id="zi-ji-de-hua">自己的话</h2>
@@ -506,6 +506,9 @@
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>

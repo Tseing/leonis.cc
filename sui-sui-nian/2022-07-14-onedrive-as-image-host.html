@@ -22,7 +22,7 @@
   <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
-      <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
 
   <!-- Custom fonts -->
@@ -40,7 +40,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 
@@ -156,31 +156,31 @@
 <p>我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 同步云盘文件。</p>
 <h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi">OneDrive 文件链接的生成方式</h2>
 <p>OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了<a href="https://github.com/harrisoff/onedrive-image-hosting">相关项目</a>，点开项目右侧的链接登录自己的OneDrive后直接插入 <code>.md</code> 就可以啦。</p>
-<div class="highlight"><pre><span></span><code>![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
-</code></pre></div>
+<pre><code>![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
+</code></pre>
 <h2 id="an-zhuang-zfile">安装 ZFile</h2>
 <p><a href="https://github.com/zhaojun1998/zfile">ZFile</a> 是一款在线网盘程序，支持包括 OneDrive 在内的多种存储源。ZFile 可以代替其他平台的 OneDrive 应用来管理云盘中的文件，实现同步、上传、下载等功能。ZFile 也能生成文件直链插入文章，但是这个功能需要云服务器，抱着能省则省的态度，就等以后再折腾，这里仅使用 ZFile 来管理 OneDrive。</p>
 <p>在 Linux 系统使用 ZFile 首先需要安装依赖：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Debian 10</span>
-apt update <span class="o">&amp;&amp;</span> apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public <span class="p">|</span> apt-key add -
+<pre><code class="language-sh"># Debian 10
+apt update &amp;&amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-apt update <span class="o">&amp;&amp;</span> apt install -y adoptopenjdk-8-hotspot-jre
-</code></pre></div>
+apt update &amp;&amp; apt install -y adoptopenjdk-8-hotspot-jre
+</code></pre>
 <p>下载 ZFile：</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">ZFILE_INSTALL_PATH</span><span class="o">=</span>~/zfile
-mkdir -p <span class="nv">$ZFILE_INSTALL_PATH</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$ZFILE_INSTALL_PATH</span>
+<pre><code class="language-sh">export ZFILE_INSTALL_PATH=~/zfile
+mkdir -p $ZFILE_INSTALL_PATH &amp;&amp; cd $ZFILE_INSTALL_PATH
 wget https://c.jun6.net/ZFILE/zfile-release.war
-unzip zfile-release.war <span class="o">&amp;&amp;</span> rm -rf zfile-release.war
-chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
-</code></pre></div>
+unzip zfile-release.war &amp;&amp; rm -rf zfile-release.war
+chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
+</code></pre>
 <p><code>ZFILE_INSTALL_PATH</code> 指定了安装路径，可以自行修改。</p>
 <h2 id="qi-dong-bing-pei-zhi-zfile">启动并配置 ZFile</h2>
 <p>通过以下命令启动 ZFile：</p>
-<div class="highlight"><pre><span></span><code> ~/zfile/bin/start.sh       <span class="c1"># 启动项目</span>
- ~/zfile/bin/stop.sh        <span class="c1"># 停止项目</span>
- ~/zfile/bin/restart.sh     <span class="c1"># 重启项目</span>
-</code></pre></div>
+<pre><code class="language-sh"> ~/zfile/bin/start.sh       # 启动项目
+ ~/zfile/bin/stop.sh        # 停止项目
+ ~/zfile/bin/restart.sh     # 重启项目
+</code></pre>
 <p>启动项目后，默认开放在 8080 端口，使用 <code>localhost:8080</code> 进入 ZFile：</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/></a></div></p>
 <p>首次开启时需要注册管理员账号，登录进入系统后，首先配置存储源，选择存储策略为 <code>OneDrive</code>，启用文件操作。</p>
@@ -263,6 +263,9 @@ chmod +x <span class="nv">$ZFILE_INSTALL_PATH</span>/bin/*.sh
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>

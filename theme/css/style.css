@@ -361,10 +361,13 @@ th {
 .hljs {
     display: block;
     color: #66645c;
-    -webkit-text-size-adjust: none
+    -webkit-text-size-adjust: none;
+    padding-left: 0;
+    padding-right: 0;
+    width: min-content;
 }
 
-.hljs-comment,
+/* .hljs-comment,
 .diff .hljs-header,
 .hljs-javadoc {
     color: #998;
@@ -473,7 +476,7 @@ th {
 
 .hljs-chunk {
     color: #aaa
-}
+} */
 
 @supports ((-ms-flex-wrap: wrap) or (flex-wrap: wrap)) {
     body {
@@ -744,11 +747,10 @@ tt {
     padding: 0.3em 5px;
     font-family: 'Ubuntu Mono', monospace, sans-serif;
     font-size: 18px;
-    white-space: pre;
+    /* white-space: pre; */
     background: #faf9f7;
     border: 1px solid #e5e4e1;
     top: -2px;
-    word-break: break-all;
 }
 
 pre {
@@ -756,7 +758,7 @@ pre {
     margin: auto;
     margin-top: 40px;
     padding: 1em;
-    overflow: hidden;
+    overflow-y: hidden;
     font-family: 'Ubuntu Mono', monospace, sans-serif;
     white-space: pre;
     background: #faf9f7;
@@ -772,10 +774,10 @@ pre .lines {
     height: 100%;
     left: 0;
     top: 0;
-    padding: 1.333em 0;
+    padding: 6px 0;
     border-right: 1px solid #e5e4e1;
-    font-size: 0.8em;
-    line-height: 2em;
+    /* font-size: 0.8em; */
+    line-height: 25px;
     text-align: right;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.5)
@@ -793,9 +795,9 @@ pre tt {
     top: auto;
     margin: -1.333em -1.333em -1.333em 1.333em;
     padding: 1.333em;
-    overflow: scroll;
+    overflow: hidden;
     font-size: 18px;
-    line-height: 0;
+    line-height: 25px;
     white-space: pre;
     background: transparent;
     border: none;

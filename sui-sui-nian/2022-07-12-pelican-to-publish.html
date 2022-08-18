@@ -22,7 +22,7 @@
   <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
-      <link href="https://tseing.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
 
   <!-- Custom fonts -->
@@ -40,7 +40,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 
@@ -157,7 +157,7 @@
 <h2 id="zhuan-xie-wen-zhang">撰写文章</h2>
 <h3 id="jupyter-notebook-fang-shi">Jupyter Notebook 方式</h3>
 <p>Jupyter Notebook 能够保存下代码的输入与输出信息，特别适合用于展示程序输出的图形。首先在<code>content</code>目录中创建<code>.nbdata</code>与<code>.ipynb</code>的同名文件。<code>.nbdata</code>文件中保存了文章的结构信息，而<code>.ipynb</code>使用 Jupyter Notebook 保存了文章的具体内容。</p>
-<div class="highlight"><pre><span></span><code>title: # 文章标题
+<pre><code>title: # 文章标题
 slug: # 文章地址
 date: # 时间
 category: # 类别
@@ -172,22 +172,22 @@ authors: # 多作者
 lang: # 语言
 translation: # 是否属于译文
 status: # draft, hidden, or published
-</code></pre></div>
+</code></pre>
 <h3 id="markdown-fang-shi">Markdown 方式</h3>
 <p>使用 Markdown 语言是写博客最为简单普遍的方式，在<code>content</code>文件夹中创建<code>.md</code>文件，在开始部分首先输入与<code>.nbdata</code>相同的文章信息后，就可以直接开始撰写正文。</p>
 <h2 id="sheng-cheng-jing-tai-wang-ye_1">生成静态网页</h2>
 <p>在撰写文章后，进入虚拟环境，在 <code>blog</code> 文件夹中使用 <code>Pelican</code> 生成 <code>.html</code> 文件。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> ./venv/bin/activate
+<pre><code class="language-sh">source ./venv/bin/activate
 pelican content -s publishconf.py
-</code></pre></div>
+</code></pre>
 <p>最后将 <code>output</code> 文件夹同步至 Github 中 <code>&lt;username&gt;.github.io</code> 仓库即完成文章的发布。</p>
 <h2 id="fa-bu">发布</h2>
 <p>使用终端在 <code>blog</code> 文件夹中输入 <code>pelican -lr</code> 即可自动部署到本地服务器，默认端口为 8000，通过 <code>localhost:8000</code> 访问。</p>
 <p>测试完成后将内容推送至 Github:</p>
-<div class="highlight"><pre><span></span><code>git add .
+<pre><code class="language-sh">git add .
 git commit
 git push
-</code></pre></div>
+</code></pre>
 <h2 id="ke-long-yu-tong-bu">克隆与同步</h2>
 <p>由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。</p>
 <p>在终端中使用 <code>git clone --recursive</code> 命令克隆仓库，<code>git clone</code> 命令只会克隆主仓库，导致子模块失效，<code>--recursive</code> 能递归地克隆包括子模块在内的整个仓库。使用 <code>git pull --recurse-submodules</code> 命令能够拉取包含子模块在内的全部更新，即可完成同步。</p>
@@ -266,6 +266,9 @@ git push
 
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>

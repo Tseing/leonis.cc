@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客设置 Lightbox 效果</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="alternate"></link><published>2022-08-17T00:00:00+08:00</published><updated>2022-08-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-17:/sui-sui-nian/2022-08-17-pelican-lightbox.html</id><summary type="html">&lt;p&gt;如何像社交媒体上发布的图片一样，让博客文章中的图片也能点击放大呢？使用现成的 JavaScript 插件，就能在博客文章中添加这种 Lightbox 效果了，再加上配套的 Python-Markdown 的拓展插件，让 Markdown 写作中的图片效果设置变得更加自由。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 &lt;code&gt;![标题](URL)&lt;/code&gt; 语法，Pelican 博客引擎将文章中的 &lt;code&gt;[标题](URL)&lt;/code&gt; 转换为 html 标签 &lt;code&gt;&amp;lt;img alt="标题" src="URL"&amp;gt;&lt;/code&gt;，就生成了用于发布的静态网页。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客设置 Lightbox 效果</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="alternate"></link><published>2022-08-17T00:00:00+08:00</published><updated>2022-08-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-17:/sui-sui-nian/2022-08-17-pelican-lightbox.html</id><summary type="html">&lt;p&gt;如何像社交媒体上发布的图片一样，让博客文章中的图片也能点击放大呢？使用 JavaScript 插件，在博客文章中添加这种 Lightbox 效果，再加上配套的 Python-Markdown 的拓展插件，让 Markdown 写作中的图片效果设置变得更加自由。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 &lt;code&gt;![标题](URL)&lt;/code&gt; 语法，Pelican 博客引擎将文章中的 &lt;code&gt;[标题](URL)&lt;/code&gt; 转换为 html 标签 &lt;code&gt;&amp;lt;img alt="标题" src="URL"&amp;gt;&lt;/code&gt;，就生成了用于发布的静态网页。&lt;/p&gt;
 &lt;p&gt;这样生成的网页中，图片大小由 CSS 文件决定。设定的图片尺寸如果太小，难以看清图片细节，尺寸如果太大就会占据较大版面，也十分影响阅读。&lt;/p&gt;
 &lt;p&gt;各类社交网站上的常规做法是，使用 CSS 文件决定合适的缩略图尺寸，点击缩略图后放大图片。点击缩略图放大的效果就像在暗室中使用的放映机，这个效果就被称为 Lightbox。&lt;/p&gt;
 &lt;p&gt;Lightbox 功能非常常用，因在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 &lt;a href="https://github.com/pelican-plugins/photos"&gt;photos&lt;/a&gt; 和 &lt;a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery"&gt;Gallery&lt;/a&gt; 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。&lt;/p&gt;
-&lt;h2 id="lightgallery-markdown"&gt;Lightgallery-markdown&lt;/h2&gt;
+&lt;h2 id="qing-liang-de-lightgallery-markdown"&gt;轻量的 lightgallery-markdown&lt;/h2&gt;
 &lt;p&gt;兜兜转转之下，我找到了一个实现 Lightbox 功能的 &lt;a href="https://github.com/g-provost/lightgallery-markdown"&gt;Python-Markdown 拓展&lt;/a&gt;。其实原理也很简单，这个拓展能将 &lt;code&gt;![!标题](URL)&lt;/code&gt; 转换为以下代码：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"lightgallery"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"URL"&lt;/span&gt; &lt;span class="na"&gt;data-sub-html&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"标题"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;img&lt;/span&gt; &lt;span class="na"&gt;alt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"标题"&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"URL"&lt;/span&gt; &lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;div class="lightgallery"&amp;gt;
+    &amp;lt;a href="URL" data-sub-html="标题"&amp;gt;
+      &amp;lt;img alt="标题" src="URL" /&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;再在 &lt;a href="https://github.com/sachinchoolur/lightgallery.js"&gt;lightgallery.js&lt;/a&gt; 的作用下就能实现 Lightbox 功能。所以只要是使用 Python-Markdown 作为 html 生成器的博客都可以使个方法设置 Lightbox 效果。&lt;/p&gt;
 &lt;h2 id="an-zhuang-python-markdown-tuo-zhan"&gt;安装 Python-Markdown 拓展&lt;/h2&gt;
 &lt;p&gt;Pelican 提供了 Python-Markdown 拓展的接口，先使用 &lt;code&gt;pip install lightgallery&lt;/code&gt; 安装 lightgallery-markdown，并在 &lt;code&gt;pelicanconf.py&lt;/code&gt; 中添加&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;MARKDOWN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s1"&gt;'extension_configs'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s1"&gt;'markdown.extensions.codehilite'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'css_class'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'highlight'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="s1"&gt;'markdown.extensions.extra'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-        &lt;span class="s1"&gt;'markdown.extensions.meta'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-        &lt;span class="s1"&gt;'lightgallery'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-    &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s1"&gt;'output_format'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'html5'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+        'lightgallery': {},
+    },
+    'output_format': 'html5',
+}
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="bu-shu-lightgalleryjs"&gt;部署 lightgallery.js&lt;/h2&gt;
 &lt;p&gt;在 &lt;a href="https://github.com/sachinchoolur/lightgallery.js"&gt;lightgallery.js 项目仓库&lt;/a&gt;中下载以下文件并放置到相应位置：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;dist/js/lightgallery.min.js&lt;/code&gt;&amp;emsp;--&amp;gt;&amp;emsp;&lt;code&gt;themes/{theme_name}/static/js/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dist/css/lightgallery.min.css&lt;/code&gt;&amp;emsp;--&amp;gt;&amp;emsp;&lt;code&gt;themes/{theme_name}/css/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dist/fonts/lg.*&lt;/code&gt;&amp;emsp;--&amp;gt;&amp;emsp;&lt;code&gt;themes/{theme_name}/font/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dist/img/loading.gif&lt;/code&gt;&amp;emsp;--&amp;gt;&amp;emsp;&lt;code&gt;themes/{theme_name}/images/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dist/js/lightgallery.min.js&lt;/code&gt;&amp;emsp;&amp;rarr;&amp;emsp;&lt;code&gt;themes/{theme_name}/static/js/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dist/css/lightgallery.min.css&lt;/code&gt;&amp;emsp;&amp;rarr;&amp;emsp;&lt;code&gt;themes/{theme_name}/css/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dist/fonts/lg.*&lt;/code&gt;&amp;emsp;&amp;rarr;&amp;emsp;&lt;code&gt;themes/{theme_name}/font/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dist/img/loading.gif&lt;/code&gt;&amp;emsp;&amp;rarr;&amp;emsp;&lt;code&gt;themes/{theme_name}/images/&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;{warn begin}由于文件目录结构不同，需要将 &lt;code&gt;lightgallery.min.css&lt;/code&gt; 中的字体、图片路径修改为相应路径。{warn end}&lt;/p&gt;
 &lt;p&gt;修改 &lt;code&gt;themes/{theme_name}/templates/base.html&lt;/code&gt;，在其中添加以下代码&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;&amp;lt;!-- 引入.css与.js文件--&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/lightgallery.min.css"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/javascript"&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/lightgallery.min.js"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="cm"&gt;&amp;lt;!-- 图片计数 --&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementsByClassName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"lightgallery"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="nx"&gt;lightGallery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;!-- 引入.css与.js文件--&amp;gt;
+&amp;lt;link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/lightgallery.min.css" type="text/css" rel="stylesheet" /&amp;gt;
+&amp;lt;script type="text/javascript" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/lightgallery.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;!-- 图片计数 --&amp;gt;
+&amp;lt;script&amp;gt;
+  var elements = document.getElementsByClassName("lightgallery");
+  for(var i=0; i&amp;lt;elements.length; i++) {
+     lightGallery(elements[i]);
+  }
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;到了这里，已经在博客上添加了 Lightbox 功能，但还缺少最重要的放大缩小功能。&lt;/p&gt;
 &lt;h2 id="tian-jia-lightgalleryjs-cha-jian"&gt;添加 lightgallery.js 插件&lt;/h2&gt;
 &lt;p&gt;下载 &lt;a href="https://github.com/sachinchoolur/lg-zoom.js"&gt;lg-zoom.js&lt;/a&gt;，将 &lt;code&gt;dist/lg_zoom.min.js&lt;/code&gt; 移入 &lt;code&gt;themes/{theme_name}/static/js/&lt;/code&gt;。同样在主题的 &lt;code&gt;base.html&lt;/code&gt; 中引入该 JavaScript 文件即可生效。lightgallery.js 项目还具有许多插件，都可以通过这样简单的方法使其生效。&lt;/p&gt;
 &lt;h2 id="yi-xie-xiao-xiu-gai"&gt;一些小修改&lt;/h2&gt;
 &lt;p&gt;若将图片标题留空，如 &lt;code&gt;![!](URL)&lt;/code&gt;，lightgallery.js 不会渲染查看图片时下方的图片信息，界面十分清爽舒服。但是这么一来，每次导出网页时Pelican 都会给出 &lt;code&gt;WARNING: Empty alt attribute for image content&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;于是修改 &lt;code&gt;lightgallery.js&lt;/code&gt; 文件，修改以下代码块：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ow"&gt;typeof&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;subHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'undefined'&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;subHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;subHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;===&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="nx"&gt;_lgUtils2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;outer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;querySelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendSubHtmlTo&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'lg-empty-html'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="nx"&gt;_lgUtils2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;removeClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;outer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;querySelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendSubHtmlTo&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'lg-empty-html'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-javascript"&gt;if (typeof subHtml !== 'undefined' &amp;amp;&amp;amp; subHtml !== null) {
+            if (subHtml === '') {
+                _lgUtils2.default.addClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
+            } else {
+                _lgUtils2.default.removeClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
+            }
+        }
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;将判断条件修改为：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;subHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;===&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;subHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;===&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;'NoCaption'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-javascript"&gt;if (subHtml === '' || subHtml === 'NoCaption')
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这时只要是标题设置为 &lt;code&gt;"NoCaption"&lt;/code&gt; 的图片就不会显示下方信息栏，Pelican 也不会因为缺少标题而给出警告。&lt;/p&gt;
-&lt;p&gt;{note begin}&lt;code&gt;lightgallery.min.js&lt;/code&gt; 经过压缩，体积较小，加载速度更快，但代码可读性较差，可以修改 &lt;code&gt;lightgallery.js&lt;/code&gt; 再压缩为 &lt;code&gt;lightgallery.min.js&lt;/code&gt;。{note end}&lt;/p&gt;
+&lt;p&gt;{note begin}&lt;code&gt;lightgallery.min.js&lt;/code&gt; 经过压缩，体积较小，加载速度更快，但代码可读性较差，不便于修改，可以先修改 &lt;code&gt;lightgallery.js&lt;/code&gt; 再压缩为 &lt;code&gt;lightgallery.min.js&lt;/code&gt;。{note end}&lt;/p&gt;
 &lt;h2 id="demo"&gt;Demo 🥳&lt;/h2&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="{photo}135 mm&amp;emsp;f/5.6&amp;emsp;1/125&amp;emsp;ISO-800&amp;emsp;Photo by Leo" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="{photo}135 mm&amp;emsp;f/5.6&amp;emsp;1/125&amp;emsp;ISO-800&amp;emsp;Photo by Leo" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;{warn begin}本文最后更新于 2022 年 08 月 17 日，请确定内容是否过时。{warn end}&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Markdown"></category><category term="JavaScript"></category></entry><entry><title>使用 prettymaps 生成精美地图</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html" rel="alternate"></link><published>2022-08-14T00:00:00+08:00</published><updated>2022-08-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-14:/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html</id><summary type="html">&lt;p&gt;经过&lt;a href="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html"&gt;上次&lt;/a&gt;的屡次踩坑，终于艰难地在 Windows 上安装好了 prettymaps。看着 &lt;code&gt;pip list&lt;/code&gt; 中的 &lt;code&gt;prettymaps&lt;/code&gt;，我迫不及待地想试着用 &lt;code&gt;prettymaps&lt;/code&gt; 生成一些地图，那么就开 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;经过&lt;a href="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html"&gt;上次&lt;/a&gt;的屡次踩坑，终于艰难地在 Windows 上安装好了 prettymaps。看着 &lt;code&gt;pip list&lt;/code&gt; 中的 &lt;code&gt;prettymaps&lt;/code&gt;，我迫不及待地想试着用 &lt;code&gt;prettymaps&lt;/code&gt; 生成一些地图，那么就开始吧。&lt;/p&gt;
 &lt;h2 id="attributeerror-cuo-wu"&gt;AttributeError 错误&lt;/h2&gt;
 &lt;p&gt;先运行作者给出的示例代码试验一下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;prettymaps&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;matplotlib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;
-&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;constrained_layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="s1"&gt;'Pra&amp;ccedil;a Ferreira do Amaral, Macau'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'custom_filter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'width'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'motorway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'trunk'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'primary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;4.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'secondary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'tertiary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'residential'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'service'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'unclassified'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'footway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'construction'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="s1"&gt;'union'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'bay'&lt;/span&gt;&lt;span class="p"&gt;]}},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'grass'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'island'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'wood'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'park'&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
-            &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'amenity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'highway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'man_made'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pier'&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;drawing_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'background'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#dadbc1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#dadbc1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#D0F1BF'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#64B96A'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#a1e3ff'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch_c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#85c9e6'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#475657'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'alpha'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'palette'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'#FFC857'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'#E9724C'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'#C5283D'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;osm_credit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'color'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'macao.png'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;from prettymaps import *
+from matplotlib import pyplot as plt
+fig, ax = plt.subplots(figsize = (12, 12), constrained_layout = True)
+layers = plot(
+    'Pra&amp;ccedil;a Ferreira do Amaral, Macau', radius = 1100,
+    ax = ax,
+    layers = {
+            'perimeter': {},
+            'streets': {
+                'custom_filter': '["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'motorway': 5,
+                    'trunk': 5,
+                    'primary': 4.5,
+                    'secondary': 4,
+                    'tertiary': 3.5,
+                    'residential': 3,
+                    'service': 2,
+                    'unclassified': 2,
+                    'pedestrian': 2,
+                    'footway': 1,
+                }
+            },
+            'building': {'tags': {'building': True, 'landuse': 'construction'}, 'union': False},
+            'water': {'tags': {'natural': ['water', 'bay']}},
+            'green': {'tags': {'landuse': 'grass', 'natural': ['island', 'wood'], 'leisure': 'park'}},
+            'forest': {'tags': {'landuse': 'forest'}},
+            'parking': {'tags': {'amenity': 'parking', 'highway': 'pedestrian', 'man_made': 'pier'}}
+        },
+        drawing_kwargs = {
+            'background': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'hatch': 'ooo...', 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'lw': 0, 'hatch': 'ooo...',  'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'forest': {'fc': '#64B96A', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'hatch': 'ooo...', 'hatch_c': '#85c9e6', 'lw': 1, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 3},
+            'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+plt.savefig('macao.png')
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;但是拋出了错误，提示 &lt;code&gt;AttributeError: 'DataFrame' object has no attribute 'crs'&lt;/code&gt;。在 &lt;a href="https://github.com/marceloprates/prettymaps/issues/88"&gt;Github&lt;/a&gt; 上有人给出了解决方案，原因是 &lt;code&gt;osmnx&lt;/code&gt; 的版本过低，直接 &lt;code&gt;pip install osmnx==1.2.1&lt;/code&gt; 就可以解决。&lt;/p&gt;
 &lt;p&gt;需要注意的是，pip 可能会给出错误信息提示 &lt;code&gt;osmnx==1.2.1&lt;/code&gt; 与 &lt;code&gt;prettymaps&lt;/code&gt; 不兼容。但同样给出了已成功安装 &lt;code&gt;osmnx==1.2.1&lt;/code&gt; 的信息。经过我的尝试，&lt;code&gt;prettymaps&lt;/code&gt; 是可以正常工作的，所以这条错误信息可能没有什么影响。&lt;/p&gt;
 &lt;h2 id="chu-kui-prettymapsplot-han-shu"&gt;初窥 prettymaps.plot() 函数&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;prettymaps&lt;/code&gt; 是在 &lt;code&gt;matplotlib&lt;/code&gt; 画布上绘制地图的，所以主要参数与 &lt;code&gt;matplotlib&lt;/code&gt; 的写法相同，用于调整颜色或文本，不甚重要。而用于生成地图的 &lt;code&gt;prettymaps.plot()&lt;/code&gt; 函数就比较关键，比较常用参数的就以下几项：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="c1"&gt;# 地图的中心点，可以是地名的字符串，也可以经纬度的元组&lt;/span&gt;
-    &lt;span class="s1"&gt;'query'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="c1"&gt;# 地图半径，单位为米&lt;/span&gt;
-    &lt;span class="n"&gt;radius&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="c1"&gt;# 将 x 轴绑定至画布 x 轴&lt;/span&gt;
-    &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="c1"&gt;# OpenStreetMap 地图层信息，若不了解复制示例代码即可&lt;/span&gt;
-    &lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{}},&lt;/span&gt;
-    &lt;span class="c1"&gt;# 图层样式，如颜色等&lt;/span&gt;
-    &lt;span class="n"&gt;drawing_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-    &lt;span class="c1"&gt;# 版权信息&lt;/span&gt;
-    &lt;span class="n"&gt;osm_credit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;plot(
+    # 地图的中心点，可以是地名的字符串，也可以经纬度的元组
+    'query',
+    # 地图半径，单位为米
+    radius = 100,
+    # 将 x 轴绑定至画布 x 轴
+    ax = ax,
+    # OpenStreetMap 地图层信息，若不了解复制示例代码即可
+    layers = {'perimeter': {}},
+    # 图层样式，如颜色等
+    drawing_kwargs = {},
+    # 版权信息
+    osm_credit = {}
+)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="yuan-xing-mo-shi"&gt;圆形模式&lt;/h2&gt;
 &lt;p&gt;与示例代码相同，只要将 &lt;code&gt;perimeter&lt;/code&gt; 留空，默认的绘图模式就是圆形模式。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
@@ -138,92 +138,92 @@
 &lt;h2 id="yuan-jiao-ju-xing-mo-shi"&gt;圆角矩形模式&lt;/h2&gt;
 &lt;p&gt;圆角矩形模式下，需要新建一个变量 &lt;code&gt;dilate&lt;/code&gt; 用于控制圆角半径，并在每一个图层的参数中添加 &lt;code&gt;'circle': False&lt;/code&gt; 与 &lt;code&gt;'dilate': dilate&lt;/code&gt; 就能生成圆角矩形地图。&lt;/p&gt;
 &lt;p&gt;在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;dilate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
-&lt;span class="n"&gt;palette&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'#F4A460'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'#FA8072'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;26.08594&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;119.29199&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;radius&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;"circle"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"dilate"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'custom_filter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'width'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'motorway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'trunk'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'primary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;4.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'secondary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'tertiary'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'residential'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'service'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'unclassified'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'footway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'construction'&lt;/span&gt;
-                &lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'union'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'bay'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'grass'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'island'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'wood'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-                    &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'park'&lt;/span&gt;
-                &lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'amenity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'highway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'man_made'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pier'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;drawing_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'background'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#dadbc1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#dadbc1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#D0F1BF'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'forest'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#64B96A'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#a1e3ff'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ooo...'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'hatch_c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#85c9e6'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#475657'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'alpha'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'palette'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;palette&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;osm_credit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'color'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;dilate = 100
+palette=['#F4A460', '#FA8072']
+layers = plot(
+    (26.08594,119.29199), radius = 400,
+    ax = ax,
+    layers = {
+            'perimeter': {"circle": False, "dilate": dilate},
+            'streets': {
+                'custom_filter': '["highway"~"motorway|trunk|primary|secondary|tertiary|residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'motorway': 5,
+                    'trunk': 5,
+                    'primary': 4.5,
+                    'secondary': 4,
+                    'tertiary': 3.5,
+                    'residential': 3,
+                    'service': 3,
+                    'unclassified': 3,
+                    'pedestrian': 3,
+                    'footway': 3,
+                },
+                'circle': False,
+                'dilate': dilate,
+            },
+            'building': {
+                'tags': {
+                    'building': True,
+                    'landuse': 'construction'
+                },
+                'union': False,
+                'circle': False,
+                'dilate': dilate
+            },
+            'water': {
+                'tags': {
+                    'natural': ['water', 'bay']
+                },
+                'circle': False,
+                'dilate': dilate
+            },
+            'green': {
+                'tags': {
+                    'landuse': 'grass',
+                    'natural': ['island', 'wood'],
+                    'leisure': 'park'
+                },
+                'circle': False,
+                'dilate': dilate,
+            },
+            'forest': {
+                'tags': {'landuse': 'forest'},
+                'circle': False,
+                'dilate': dilate,
+            },
+            'parking': {
+                'tags': {
+                    'amenity': 'parking',
+                    'highway': 'pedestrian',
+                    'man_made': 'pier'},
+                'circle': False,
+                'dilate': dilate
+            },
+    },
+        drawing_kwargs = {
+            'background': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'hatch': 'ooo...', 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#dadbc1', 'lw': 0, 'hatch': 'ooo...',  'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'forest': {'fc': '#64B96A', 'ec': '#2F3737', 'lw': 1, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'hatch': 'ooo...', 'hatch_c': '#85c9e6', 'lw': 1, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 3},
+            'building': {'palette': palette, 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;三坊七巷  Sanfang Qixiang, Fuzhou&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="fang-xing-mo-shi"&gt;方形模式&lt;/h2&gt;
 &lt;p&gt;欲使地图布满整个方形画面，需要使用 &lt;code&gt;matplotlib&lt;/code&gt; 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;xmin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ymin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;xmax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ymax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;layers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bounds&lt;/span&gt;
-&lt;span class="n"&gt;dx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xmax&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xmin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ymax&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ymin&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;.2&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xmin&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;xmax&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ymin&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ymax&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;xmin, ymin, xmax, ymax = layers['perimeter'].bounds
+dx, dy = xmax-xmin, ymax-ymin
+a = .2
+ax.set_xlim(xmin+a*dx, xmax-a*dx)
+ax.set_ylim(ymin+a*dy, ymax-a*dy)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;变量 &lt;code&gt;a&lt;/code&gt; 表示裁去的四周比例。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;闽江  Min River, Fuzhou&lt;/i&gt;&lt;/p&gt;
@@ -245,103 +245,103 @@
 &lt;li&gt;&lt;code&gt;zorder&lt;/code&gt; 层数，决定了图层之间相互掩盖的关系。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;有了以上认识之后，我们就能更加随心所欲地绘制想要的地图了。还有一个额外的小技巧，OpenStreetMap 提供了封闭元素，使用地址描述绘制地点，不设置 &lt;code&gt;radius&lt;/code&gt; 参数， &lt;code&gt;prettymaps&lt;/code&gt; 就会自动匹配封闭元素的边界，使用这个方式可以绘制指定场所的示意图、行政区的示意图。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;constrained_layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;fig, ax = plt.subplots(figsize = (12, 12), constrained_layout = True)
 
-&lt;span class="c1"&gt;# 画布颜色&lt;/span&gt;
-&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_facecolor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#eee'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+# 画布颜色
+fig.patch.set_facecolor('#eee')
 
-&lt;span class="c1"&gt;# 边界向外扩张&lt;/span&gt;
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;postprocessing&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;layers&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="n"&gt;layers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;layers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;layers&lt;/span&gt;
+# 边界向外扩张
+def postprocessing(layers):
+    layers['perimeter'] = layers['perimeter'].buffer(10)
+    return layers
 
-&lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="s2"&gt;"北京大学, 5号, 颐和园路, 海淀区, 北京市, 100871, 中国"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;postprocessing&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;postprocessing&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;layers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'custom_filter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'["highway"~"residential|service|unclassified|pedestrian|footway"]'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s1"&gt;'width'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'residential'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'service'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'unclassified'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'footway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'construction'&lt;/span&gt;
-                &lt;span class="p"&gt;},&lt;/span&gt;
-                &lt;span class="s1"&gt;'union'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'landuse'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'grass'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-                    &lt;span class="s1"&gt;'natural'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'island'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'wood'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-                    &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'park'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'garden'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'pitch'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'playground'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="s1"&gt;'amenity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'highway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pedestrian'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="s1"&gt;'man_made'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'pier'&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;drawing_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s1"&gt;'background'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#eee'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'perimeter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'linestyle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'dashed'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#D0F1BF'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'leisure'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#aae0cb'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'water'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#a1e3ff'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'parking'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#F2F4CB'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'streets'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'fc'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'alpha'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-            &lt;span class="s1"&gt;'building'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'palette'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'#FFC857'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'#E9724C'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'#C5283D'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s1"&gt;'ec'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'lw'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'zorder'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="n"&gt;osm_credit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'color'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'#2F3737'&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'pku.png'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+layers = plot(
+    "北京大学, 5号, 颐和园路, 海淀区, 北京市, 100871, 中国",
+    ax = ax,
+    postprocessing = postprocessing,
+    layers = {
+            'perimeter': {},
+            'streets': {
+                'custom_filter': '["highway"~"residential|service|unclassified|pedestrian|footway"]',
+                'width': {
+                    'residential': 1.5,
+                    'service': 1.5,
+                    'unclassified': 1,
+                    'pedestrian': 1,
+                    'footway': 1,
+                }
+            },
+            'building': {
+                'tags': {
+                    'building': True,
+                    'landuse': 'construction'
+                },
+                'union': False
+            },
+            'water': {
+                'tags': {
+                    'natural': ['water']
+                }
+            },
+            'green': {
+                'tags': {
+                    'landuse': ['grass'],
+                    'natural': ['island', 'wood'],
+                    'leisure': ['park', 'garden']
+                }
+            },
+            'leisure': {
+                'tags': {
+                    'leisure': ['pitch', 'playground']
+                }
+            },
+            'parking': {
+                'tags': {
+                    'amenity': 'parking',
+                    'highway': 'pedestrian',
+                    'man_made': 'pier'
+                }
+            },
+        },
+        drawing_kwargs = {
+            'background': {'fc': '#eee', 'lw': 0 , 'zorder': -1},
+            'perimeter': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 2, 'linestyle': 'dashed', 'zorder': 0},
+            'green': {'fc': '#D0F1BF', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 1},
+            'leisure': {'fc': '#aae0cb', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 1},
+            'water': {'fc': '#a1e3ff', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 2},
+            'parking': {'fc': '#F2F4CB', 'ec': '#2F3737', 'lw': 0.5, 'zorder': 3},
+            'streets': {'fc': '#2F3737', 'alpha': 0.7, 'lw': 0, 'zorder': 3},
+            'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 4},
+        },
+        osm_credit = {'color': '#2F3737'}
+)
+plt.savefig('pku.png')
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;由于 &lt;code&gt;prettymaps&lt;/code&gt; 的封闭边界太过于靠近建筑，可以使用 &lt;code&gt;buffer()&lt;/code&gt; 将边界向外扩张一部分，能获得更好的视觉效果。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;北京大学  Peking University, Beijing&lt;/i&gt;&lt;/p&gt;
 &lt;p&gt;调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="s1"&gt;'railway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s1"&gt;'custom_filter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'["railway"~"rail"]'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;'width'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="p"&gt;},&lt;/span&gt;
-&lt;span class="s1"&gt;'subway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s2"&gt;"railway"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"subway"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="p"&gt;},&lt;/span&gt;
-&lt;span class="s1"&gt;'platform'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s1"&gt;'tags'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s1"&gt;'railway'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'platform'&lt;/span&gt;
-    &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s1"&gt;'circle'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;'dilate'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dilate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-py"&gt;'railway': {
+    'custom_filter': '["railway"~"rail"]',
+    'width': 2,
+    'circle': False,
+    'dilate': dilate,
+},
+'subway': {
+    'tags': {
+        "railway": "subway",
+    },
+    'circle': False,
+    'dilate': dilate,
+},
+'platform': {
+    'tags': {
+        'railway': 'platform'
+    },
+    'circle': False,
+    'dilate': dilate,
+}
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;天津站  Tianjin Railway Station, Tianjin&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="zi-ji-de-hua"&gt;自己的话&lt;/h2&gt;
@@ -354,40 +354,40 @@
 &lt;p&gt;{warn begin}本文最后更新于 2022 年 08 月 14 日，请确定内容是否过时。{warn end}&lt;/p&gt;</content><category term="碎碎念"></category><category term="prettymaps"></category><category term="Python"></category><category term="matplotlib"></category><category term="OpenStreetMap"></category></entry><entry><title>在 Windows 安装 prettymaps 的踩坑实录</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-11-prettymaps-install.html" rel="alternate"></link><published>2022-08-11T00:00:00+08:00</published><updated>2022-08-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-11:/sui-sui-nian/2022-08-11-prettymaps-install.html</id><summary type="html">&lt;p&gt;prettymaps 是一个 Python 地图绘图包，在 matplotlib 绘图包的助力下能够绘制出十分精美的地图。但是 prettymaps 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;code&gt;prettymaps&lt;/code&gt; 是一个 Python 地图绘图包，能够使用 OpenStreetMap 的地图数据，在 &lt;code&gt;matplotlib&lt;/code&gt; 绘图包的助力下能够绘制出十分精美、极具艺术感的地图。但是 &lt;code&gt;prettymaps&lt;/code&gt; 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。&lt;/p&gt;
 &lt;h2 id="chang-shi-zhi-jie-shi-yong-pip-an-zhuang"&gt;尝试直接使用 pip 安装&lt;/h2&gt;
 &lt;p&gt;在项目的 &lt;a href="https://github.com/marceloprates/prettymaps"&gt;Github 仓库&lt;/a&gt;中，作者提供的方法是直接通过 &lt;code&gt;pip install prettymaps&lt;/code&gt; 安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装 &lt;code&gt;Fiona&lt;/code&gt; 时发生错误，错误信息如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Fiona&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;21.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Preparing&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;metadata&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exited&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;  Using cached Fiona-1.8.21.tar.gz (1.0 MB)
+  Preparing metadata (setup.py) ... error
+  error: subprocess-exited-with-error
 
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;&amp;times;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;egg_info&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;did&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;not&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;successfully&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;&amp;boxv;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;╰&amp;boxh;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;GDAL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;API&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;must&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;be&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;specified&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Provide&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;GDAL_CONFIG&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;variable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;GDAL_VERSION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;variable&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+  &amp;times; python setup.py egg_info did not run successfully.
+  &amp;boxv; exit code: 1
+  ╰&amp;boxh;&amp;gt; [1 lines of output]
+      A GDAL API version must be specified. Provide a path to gdal-config using a GDAL_CONFIG environment variable or use a GDAL_VERSION environment variable.
+      [end of output]
 
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;note&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;This&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;originates&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;subprocess&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;likely&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;not&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;problem&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;metadata&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;generation&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;failed&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
 
-&lt;span class="err"&gt;&amp;times;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Encountered&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;generating&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;metadata&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="err"&gt;╰&amp;boxh;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;See&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&amp;times; Encountered error while generating package metadata.
+╰&amp;boxh;&amp;gt; See above for output.
 
-&lt;span class="n"&gt;note&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;This&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;an&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;issue&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mentioned&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;not&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;hint&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;See&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;above&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;details&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这里我们需要先明确一下 &lt;code&gt;prettymaps&lt;/code&gt; 的依赖：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;- prettymaps
+&lt;pre&gt;&lt;code&gt;- prettymaps
 ╰&amp;boxh;&amp;gt; - Fiona
     ╰&amp;boxh;&amp;gt; - GDAL
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;再根据错误信息，也就是在安装 &lt;code&gt;Fiona&lt;/code&gt; 依赖时调用的 &lt;code&gt;GDAL&lt;/code&gt; 未正确配置，我的设备上没有安装 &lt;code&gt;GDAL&lt;/code&gt;，所以需要先安装 &lt;code&gt;GDAL&lt;/code&gt;。&lt;/p&gt;
 &lt;h2 id="an-zhuang-gdal-corebu-tui-jian"&gt;安装 GDAL core（不推荐）&lt;/h2&gt;
 &lt;p&gt;可以先尝试直接 &lt;code&gt;pip install gdal&lt;/code&gt;，不出意外的话会有以下错误：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gdalconst_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2703&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gdal_array_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2829&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gnm_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2820&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ogr_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2838&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;osr_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2879&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;cpl_string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gdal_wrap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2883&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;C1083&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;无法打开包括文件&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;&amp;ldquo;&lt;/span&gt;&lt;span class="n"&gt;cpl_port&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="err"&gt;&amp;rdquo;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;such&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;extensions/gdalconst_wrap.c(2703): fatal error C1083: 无法打开包括文件: &amp;ldquo;gdal.h&amp;rdquo;: No such file or directory
+extensions/gdal_array_wrap.cpp(2829): fatal error C1083: 无法打开包括文件: &amp;ldquo;gdal.h&amp;rdquo;: No such file or directory
+extensions/gnm_wrap.cpp(2820): fatal error C1083: 无法打开包括文件: &amp;ldquo;gdal.h&amp;rdquo;: No such file or directory
+extensions/ogr_wrap.cpp(2838): fatal error C1083: 无法打开包括文件: &amp;ldquo;gdal.h&amp;rdquo;: No such file or directory
+extensions/osr_wrap.cpp(2879): fatal error C1083: 无法打开包括文件: &amp;ldquo;cpl_string.h&amp;rdquo;: No such file or directory
+extensions/gdal_wrap.cpp(2883): fatal error C1083: 无法打开包括文件: &amp;ldquo;cpl_port.h&amp;rdquo;: No such file or directory
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是因为 Windows 缺少 Linux 自带的 GDAL core，一个解决方法就是在 Windows 上安装 GDAL core。因为这个过程无比繁琐，而且我不是 GIS 从业者，没有使用其他依赖于 GDAL core 软件的需要，所以我最后没有采取这种方法。&lt;/p&gt;
 &lt;p&gt;但一开始我并未意识到安装 GDAL core 如此麻烦，以至于我也折腾了半天 GDAL core 的安装，我把这一解决方案的整个流程总结如下：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;安装 GDAL core&lt;/code&gt; ⇨ &lt;code&gt;安装 GDAL bindings&lt;/code&gt; ⇨ &lt;code&gt;设置 GDAL core 环境变量&lt;/code&gt; ⇨ &lt;code&gt;安装 Fiona&lt;/code&gt;&lt;/p&gt;
@@ -396,20 +396,20 @@
 &lt;p&gt;要下载 GDAL core 和 bindings 两个安装文件，其中 bindings 需要与自己的 Python 版本匹配，下载完成后先安装 core 再安装 bindings。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="GISInternals下载文件" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7533?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;安装完成后，使用 pip 可以查询到 &lt;code&gt;GDAL&lt;/code&gt; 的安装信息：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt; pip list
+&lt;pre&gt;&lt;code&gt;&amp;gt; pip list
 Package           Version
 ----------------- -------
 GDAL              3.5.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;此时已经在 Python 中安装了 &lt;code&gt;GDAL&lt;/code&gt;，但还需要配置环境变量后才能安装 &lt;code&gt;Fiona&lt;/code&gt;。详细步骤可以参考&lt;a href="https://zhuanlan.zhihu.com/p/141226948"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian"&gt;使用 .whl 文件安装（推荐）&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;GDAL&lt;/code&gt; 与 &lt;code&gt;Fiona&lt;/code&gt; 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 &lt;code&gt;.whl&lt;/code&gt; 安装这两个依赖。UCI 的 &lt;a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal"&gt;Python 拓展包仓库&lt;/a&gt;提供了这两个依赖的 &lt;code&gt;.whl&lt;/code&gt; 文件。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是 &lt;code&gt;GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;将下载文件移入 Python 安装目录下的 &lt;code&gt;Scripts&lt;/code&gt; 文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
+&lt;pre&gt;&lt;code&gt;&amp;gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
 ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;出现这个错误时我寻找了大量解决方法，当然，这个错误也没法解决，这纯粹是安装文件的问题。这个隐藏的坑浪费我大量时间，后来我发现将安装文件换成&lt;code&gt;3.3.3&lt;/code&gt;版本，就能成功安装了。&lt;/p&gt;
 &lt;p&gt;但这还没结束，同样在 UCI 提供的仓库中下载 &lt;code&gt;Fiona&lt;/code&gt;，用同样的方法安装，这时就会发现 &lt;code&gt;Fiona&lt;/code&gt; 尝试卸载 &lt;code&gt;GDAL&lt;/code&gt; 并使用 pip 直接安装其他版本的 &lt;code&gt;GDAL&lt;/code&gt;。当然，结局就会和上面的情况一样，用 pip 直接安装是安装不上 &lt;code&gt;GDAL&lt;/code&gt; 的。&lt;/p&gt;
 &lt;p&gt;这是因为这里还有一个隐藏的大坑，就是 &lt;code&gt;GDAL&lt;/code&gt; 与 &lt;code&gt;Fiona&lt;/code&gt; 的版本必须匹配，否则就会自动重新下载。经过大量尝试，Python 版本为 &lt;code&gt;3.9.10&lt;/code&gt; 的条件下，可以使用 &lt;code&gt;GDAL==3.3.2&lt;/code&gt; 与 &lt;code&gt;Fiona==1.8.20&lt;/code&gt;，这两个版本在 UCI 提供的仓库中都没有，我把下载链接放在后文。&lt;/p&gt;
@@ -1084,31 +1084,31 @@ $$&lt;/div&gt;
 &lt;p&gt;我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 同步云盘文件。&lt;/p&gt;
 &lt;h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi"&gt;OneDrive 文件链接的生成方式&lt;/h2&gt;
 &lt;p&gt;OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了&lt;a href="https://github.com/harrisoff/onedrive-image-hosting"&gt;相关项目&lt;/a&gt;，点开项目右侧的链接登录自己的OneDrive后直接插入 &lt;code&gt;.md&lt;/code&gt; 就可以啦。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="an-zhuang-zfile"&gt;安装 ZFile&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/zhaojun1998/zfile"&gt;ZFile&lt;/a&gt; 是一款在线网盘程序，支持包括 OneDrive 在内的多种存储源。ZFile 可以代替其他平台的 OneDrive 应用来管理云盘中的文件，实现同步、上传、下载等功能。ZFile 也能生成文件直链插入文章，但是这个功能需要云服务器，抱着能省则省的态度，就等以后再折腾，这里仅使用 ZFile 来管理 OneDrive。&lt;/p&gt;
 &lt;p&gt;在 Linux 系统使用 ZFile 首先需要安装依赖：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Debian 10&lt;/span&gt;
-apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public &lt;span class="p"&gt;|&lt;/span&gt; apt-key add -
+&lt;pre&gt;&lt;code class="language-sh"&gt;# Debian 10
+apt update &amp;amp;&amp;amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install -y adoptopenjdk-8-hotspot-jre
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+apt update &amp;amp;&amp;amp; apt install -y adoptopenjdk-8-hotspot-jre
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;下载 ZFile：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;ZFILE_INSTALL_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/zfile
-mkdir -p &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;export ZFILE_INSTALL_PATH=~/zfile
+mkdir -p $ZFILE_INSTALL_PATH &amp;amp;&amp;amp; cd $ZFILE_INSTALL_PATH
 wget https://c.jun6.net/ZFILE/zfile-release.war
-unzip zfile-release.war &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf zfile-release.war
-chmod +x &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt;/bin/*.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+unzip zfile-release.war &amp;amp;&amp;amp; rm -rf zfile-release.war
+chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;ZFILE_INSTALL_PATH&lt;/code&gt; 指定了安装路径，可以自行修改。&lt;/p&gt;
 &lt;h2 id="qi-dong-bing-pei-zhi-zfile"&gt;启动并配置 ZFile&lt;/h2&gt;
 &lt;p&gt;通过以下命令启动 ZFile：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt; ~/zfile/bin/start.sh       &lt;span class="c1"&gt;# 启动项目&lt;/span&gt;
- ~/zfile/bin/stop.sh        &lt;span class="c1"&gt;# 停止项目&lt;/span&gt;
- ~/zfile/bin/restart.sh     &lt;span class="c1"&gt;# 重启项目&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt; ~/zfile/bin/start.sh       # 启动项目
+ ~/zfile/bin/stop.sh        # 停止项目
+ ~/zfile/bin/restart.sh     # 重启项目
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;启动项目后，默认开放在 8080 端口，使用 &lt;code&gt;localhost:8080&lt;/code&gt; 进入 ZFile：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"&gt;&lt;img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;首次开启时需要注册管理员账号，登录进入系统后，首先配置存储源，选择存储策略为 &lt;code&gt;OneDrive&lt;/code&gt;，启用文件操作。&lt;/p&gt;
@@ -1131,7 +1131,7 @@ chmod +x &lt;span class="nv"&gt;$ZFILE_INSTALL_PATH&lt;/span&gt;/bin/*.sh
 &lt;h2 id="zhuan-xie-wen-zhang"&gt;撰写文章&lt;/h2&gt;
 &lt;h3 id="jupyter-notebook-fang-shi"&gt;Jupyter Notebook 方式&lt;/h3&gt;
 &lt;p&gt;Jupyter Notebook 能够保存下代码的输入与输出信息，特别适合用于展示程序输出的图形。首先在&lt;code&gt;content&lt;/code&gt;目录中创建&lt;code&gt;.nbdata&lt;/code&gt;与&lt;code&gt;.ipynb&lt;/code&gt;的同名文件。&lt;code&gt;.nbdata&lt;/code&gt;文件中保存了文章的结构信息，而&lt;code&gt;.ipynb&lt;/code&gt;使用 Jupyter Notebook 保存了文章的具体内容。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;title: # 文章标题
+&lt;pre&gt;&lt;code&gt;title: # 文章标题
 slug: # 文章地址
 date: # 时间
 category: # 类别
@@ -1146,22 +1146,22 @@ authors: # 多作者
 lang: # 语言
 translation: # 是否属于译文
 status: # draft, hidden, or published
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="markdown-fang-shi"&gt;Markdown 方式&lt;/h3&gt;
 &lt;p&gt;使用 Markdown 语言是写博客最为简单普遍的方式，在&lt;code&gt;content&lt;/code&gt;文件夹中创建&lt;code&gt;.md&lt;/code&gt;文件，在开始部分首先输入与&lt;code&gt;.nbdata&lt;/code&gt;相同的文章信息后，就可以直接开始撰写正文。&lt;/p&gt;
 &lt;h2 id="sheng-cheng-jing-tai-wang-ye_1"&gt;生成静态网页&lt;/h2&gt;
 &lt;p&gt;在撰写文章后，进入虚拟环境，在 &lt;code&gt;blog&lt;/code&gt; 文件夹中使用 &lt;code&gt;Pelican&lt;/code&gt; 生成 &lt;code&gt;.html&lt;/code&gt; 文件。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ./venv/bin/activate
+&lt;pre&gt;&lt;code class="language-sh"&gt;source ./venv/bin/activate
 pelican content -s publishconf.py
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;最后将 &lt;code&gt;output&lt;/code&gt; 文件夹同步至 Github 中 &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt; 仓库即完成文章的发布。&lt;/p&gt;
 &lt;h2 id="fa-bu"&gt;发布&lt;/h2&gt;
 &lt;p&gt;使用终端在 &lt;code&gt;blog&lt;/code&gt; 文件夹中输入 &lt;code&gt;pelican -lr&lt;/code&gt; 即可自动部署到本地服务器，默认端口为 8000，通过 &lt;code&gt;localhost:8000&lt;/code&gt; 访问。&lt;/p&gt;
 &lt;p&gt;测试完成后将内容推送至 Github:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git add .
+&lt;pre&gt;&lt;code class="language-sh"&gt;git add .
 git commit
 git push
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="ke-long-yu-tong-bu"&gt;克隆与同步&lt;/h2&gt;
 &lt;p&gt;由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。&lt;/p&gt;
 &lt;p&gt;在终端中使用 &lt;code&gt;git clone --recursive&lt;/code&gt; 命令克隆仓库，&lt;code&gt;git clone&lt;/code&gt; 命令只会克隆主仓库，导致子模块失效，&lt;code&gt;--recursive&lt;/code&gt; 能递归地克隆包括子模块在内的整个仓库。使用 &lt;code&gt;git pull --recurse-submodules&lt;/code&gt; 命令能够拉取包含子模块在内的全部更新，即可完成同步。&lt;/p&gt;
