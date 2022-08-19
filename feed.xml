@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客设置 Lightbox 效果</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="alternate"></link><published>2022-08-17T00:00:00+08:00</published><updated>2022-08-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-17:/sui-sui-nian/2022-08-17-pelican-lightbox.html</id><summary type="html">&lt;p&gt;如何像社交媒体上发布的图片一样，让博客文章中的图片也能点击放大呢？使用 JavaScript 插件，在博客文章中添加这种 Lightbox 效果，再加上配套的 Python-Markdown 的拓展插件，让 Markdown 写作中的图片效果设置变得更加自由。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 &lt;code&gt;![标题](URL)&lt;/code&gt; 语法，Pelican 博客引擎将文章中的 &lt;code&gt;[标题](URL)&lt;/code&gt; 转换为 html 标签 &lt;code&gt;&amp;lt;img alt="标题" src="URL"&amp;gt;&lt;/code&gt;，就生成了用于发布的静态网页。&lt;/p&gt;
 &lt;p&gt;这样生成的网页中，图片大小由 CSS 文件决定。设定的图片尺寸如果太小，难以看清图片细节，尺寸如果太大就会占据较大版面，也十分影响阅读。&lt;/p&gt;
 &lt;p&gt;各类社交网站上的常规做法是，使用 CSS 文件决定合适的缩略图尺寸，点击缩略图后放大图片。点击缩略图放大的效果就像在暗室中使用的放映机，这个效果就被称为 Lightbox。&lt;/p&gt;
-&lt;p&gt;Lightbox 功能非常常用，因在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 &lt;a href="https://github.com/pelican-plugins/photos"&gt;photos&lt;/a&gt; 和 &lt;a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery"&gt;Gallery&lt;/a&gt; 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。&lt;/p&gt;
+&lt;p&gt;Lightbox 功能非常常用，因此在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 &lt;a href="https://github.com/pelican-plugins/photos"&gt;photos&lt;/a&gt; 和 &lt;a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery"&gt;Gallery&lt;/a&gt; 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。&lt;/p&gt;
 &lt;h2 id="qing-liang-de-lightgallery-markdown"&gt;轻量的 lightgallery-markdown&lt;/h2&gt;
 &lt;p&gt;兜兜转转之下，我找到了一个实现 Lightbox 功能的 &lt;a href="https://github.com/g-provost/lightgallery-markdown"&gt;Python-Markdown 拓展&lt;/a&gt;。其实原理也很简单，这个拓展能将 &lt;code&gt;![!标题](URL)&lt;/code&gt; 转换为以下代码：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;div class="lightgallery"&amp;gt;
@@ -134,7 +134,7 @@ plt.savefig('macao.png')
 &lt;h2 id="yuan-xing-mo-shi"&gt;圆形模式&lt;/h2&gt;
 &lt;p&gt;与示例代码相同，只要将 &lt;code&gt;perimeter&lt;/code&gt; 留空，默认的绘图模式就是圆形模式。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;外滩  The Bund, Shanghai&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;{location}&lt;i&gt;外滩  The Bund, Shanghai&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="yuan-jiao-ju-xing-mo-shi"&gt;圆角矩形模式&lt;/h2&gt;
 &lt;p&gt;圆角矩形模式下，需要新建一个变量 &lt;code&gt;dilate&lt;/code&gt; 用于控制圆角半径，并在每一个图层的参数中添加 &lt;code&gt;'circle': False&lt;/code&gt; 与 &lt;code&gt;'dilate': dilate&lt;/code&gt; 就能生成圆角矩形地图。&lt;/p&gt;
 &lt;p&gt;在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。&lt;/p&gt;
@@ -215,7 +215,7 @@ layers = plot(
 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;三坊七巷  Sanfang Qixiang, Fuzhou&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;{location}&lt;i&gt;三坊七巷  Sanfang Qixiang, Fuzhou&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="fang-xing-mo-shi"&gt;方形模式&lt;/h2&gt;
 &lt;p&gt;欲使地图布满整个方形画面，需要使用 &lt;code&gt;matplotlib&lt;/code&gt; 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-py"&gt;xmin, ymin, xmax, ymax = layers['perimeter'].bounds
@@ -226,7 +226,7 @@ ax.set_ylim(ymin+a*dy, ymax-a*dy)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;变量 &lt;code&gt;a&lt;/code&gt; 表示裁去的四周比例。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;闽江  Min River, Fuzhou&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;{location}&lt;i&gt;闽江  Min River, Fuzhou&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="jin-jie-cao-zuo"&gt;进阶操作&lt;/h2&gt;
 &lt;p&gt;但不止如此，我想讨论一些进阶的操作。&lt;code&gt;layers&lt;/code&gt; 参数指定了绘制的图层，在 &lt;code&gt;drawing_kwargs&lt;/code&gt; 中可以指定图层的样式，由底至上常见以下几个图层：&lt;/p&gt;
 &lt;ul&gt;
@@ -319,7 +319,7 @@ plt.savefig('pku.png')
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;由于 &lt;code&gt;prettymaps&lt;/code&gt; 的封闭边界太过于靠近建筑，可以使用 &lt;code&gt;buffer()&lt;/code&gt; 将边界向外扩张一部分，能获得更好的视觉效果。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;北京大学  Peking University, Beijing&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;{location}&lt;i&gt;北京大学  Peking University, Beijing&lt;/i&gt;&lt;/p&gt;
 &lt;p&gt;调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-py"&gt;'railway': {
     'custom_filter': '["railway"~"rail"]',
@@ -343,7 +343,7 @@ plt.savefig('pku.png')
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;{location}&lt;i&gt;天津站  Tianjin Railway Station, Tianjin&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;{location}&lt;i&gt;天津站  Tianjin Railway Station, Tianjin&lt;/i&gt;&lt;/p&gt;
 &lt;h2 id="zi-ji-de-hua"&gt;自己的话&lt;/h2&gt;
 &lt;p&gt;不得不说，&lt;code&gt;prettymaps&lt;/code&gt; 是一款十分优秀的 Python 绘图包，它的操作十分简单，足以让我这样不了解 GIS 的用户迅速入门，绘制出十分惊艳的地图。但在实际使用中，&lt;code&gt;prettymaps&lt;/code&gt; 还是存在着这样那样的问题，使得它的定位可能只能止步于一个发挥创意的工具，而不能成为一个合适的创作工具。&lt;/p&gt;
 &lt;p&gt;譬如说，各种各样的用户因为各种各样的需求接触到 &lt;code&gt;prettymaps&lt;/code&gt;，其中不乏有些用户想为某些场所、学校绘制导览地图，但 &lt;code&gt;prettymaps&lt;/code&gt; 添加元素的方式不够灵活，这会让这些用户使用起来相当费劲。&lt;/p&gt;

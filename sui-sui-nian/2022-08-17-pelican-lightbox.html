@@ -11,7 +11,7 @@
 
 
   <meta name="HandheldFriendly" content="True" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.4" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
 <link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="canonical" />
@@ -155,7 +155,7 @@
                 <p>Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 <code>![标题](URL)</code> 语法，Pelican 博客引擎将文章中的 <code>[标题](URL)</code> 转换为 html 标签 <code>&lt;img alt="标题" src="URL"&gt;</code>，就生成了用于发布的静态网页。</p>
 <p>这样生成的网页中，图片大小由 CSS 文件决定。设定的图片尺寸如果太小，难以看清图片细节，尺寸如果太大就会占据较大版面，也十分影响阅读。</p>
 <p>各类社交网站上的常规做法是，使用 CSS 文件决定合适的缩略图尺寸，点击缩略图后放大图片。点击缩略图放大的效果就像在暗室中使用的放映机，这个效果就被称为 Lightbox。</p>
-<p>Lightbox 功能非常常用，因在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 <a href="https://github.com/pelican-plugins/photos">photos</a> 和 <a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery">Gallery</a> 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。</p>
+<p>Lightbox 功能非常常用，因此在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 <a href="https://github.com/pelican-plugins/photos">photos</a> 和 <a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery">Gallery</a> 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。</p>
 <h2 id="qing-liang-de-lightgallery-markdown">轻量的 lightgallery-markdown</h2>
 <p>兜兜转转之下，我找到了一个实现 Lightbox 功能的 <a href="https://github.com/g-provost/lightgallery-markdown">Python-Markdown 拓展</a>。其实原理也很简单，这个拓展能将 <code>![!标题](URL)</code> 转换为以下代码：</p>
 <pre><code class="language-html">&lt;div class="lightgallery"&gt;
