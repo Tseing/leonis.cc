@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html" rel="canonical" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -44,6 +44,7 @@
 
 
 
+    <meta name="description" content="《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的稀量标准，存在不同的决策树生成算法。">
 
     <meta name="author" content="Leo">
 
@@ -57,11 +58,11 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第五章：决策树"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的稀量标准，存在不同的决策树生成算法。"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-08-05 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-08-23 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
@@ -78,7 +79,7 @@
   "@type": "Article",
   "name": "《统计学习方法》第五章：决策树",
   "headline": "《统计学习方法》第五章：决策树",
-  "datePublished": "2022-08-05 00:00:00+08:00",
+  "datePublished": "2022-08-23 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -86,8 +87,8 @@
     "url": "https://tseing.github.io/author/leo.html"
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
-  "url": "https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html",
-  "description": ""
+  "url": "https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html",
+  "description": "《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的稀量标准，存在不同的决策树生成算法。"
 }
 </script>
 </head>
@@ -131,7 +132,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
-            | <time datetime="2022年 8月05日">2022年 8月05日</time>
+            | <time datetime="2022年 8月23日">2022年 8月23日</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
@@ -145,15 +146,18 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#ce-lue" title="策略">策略</a><ul><li><a class="toc-href" href="#xin-xi-zeng-yi" title="信息增益">信息增益</a></li><li><a class="toc-href" href="#xin-xi-zeng-yi-bi" title="信息增益比">信息增益比</a></li><li><a class="toc-href" href="#ping-fang-wu-chai" title="平方误差">平方误差</a></li><li><a class="toc-href" href="#ji-ni-zhi-shu" title="基尼指数">基尼指数</a></li></ul></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a><ul><li><a class="toc-href" href="#jue-ce-shu" title="决策树">决策树</a></li><li><a class="toc-href" href="#fen-lei-yu-hui-gui-shu" title="分类与回归树">分类与回归树</a></li></ul></li><li><a class="toc-href" href="#ce-lue_1" title="策略">策略</a><ul><li><a class="toc-href" href="#xin-xi-zeng-yi" title="信息增益">信息增益</a></li><li><a class="toc-href" href="#xin-xi-zeng-yi-bi" title="信息增益比">信息增益比</a></li><li><a class="toc-href" href="#ping-fang-wu-chai" title="平方误差">平方误差</a></li><li><a class="toc-href" href="#ji-ni-zhi-shu" title="基尼指数">基尼指数</a></li></ul></li><li><a class="toc-href" href="#suan-fa_1" title="算法">算法</a><ul><li><a class="toc-href" href="#jue-ce-shu-de-sheng-cheng" title="决策树的生成">决策树的生成</a></li></ul></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
                 <h2 id="mo-xing">模型</h2>
+<h3 id="jue-ce-shu">决策树</h3>
 <p>决策树是一种<em>分类</em>与<em>回归</em>的方法，它是由结点和有向边组成的树形结构。决策树的内部结点表示一个特征或属性，叶结点表示一个类。</p>
 <p><img alt="决策树模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7527?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>决策树学习的目标就是根据给定的训练集生成一个决策树模型，利用该模型对实例正确分类。也就是说决策树的生成在本质上是从训练集中归纳出一组分类规则，决策树中结点之间的路径正是对应了这种分类规则。</p>
-<h2 id="ce-lue">策略</h2>
+<h3 id="fen-lei-yu-hui-gui-shu">分类与回归树</h3>
+<p>分类与回归树（CART）模型是一种应用广泛的<em>决策树</em>模型，CART 假定决策树为<em>二叉树</em>，左分支为&ldquo;是&rdquo;路径，右分支为&ldquo;否&rdquo;路径。CART 模型将每个特征不断二分，划分为有限个单元，最后就能在这些单元上进行预测。</p>
+<h2 id="ce-lue_1">策略</h2>
 <p>决策树可以看作为一系列 if-then 规则的集合，那么如何选择规则的判断条件就十分重要了。选择判断条件就是在选择训练数据的特征，可以想象，如果利用一个特征作为分类条件得到的结果与<em>随机分类</em>的结果没有很大差别，那么这个特征是没有分类能力的。为了生成精确的决策树模型，我们需要设立用于衡量所选特征分类能力的准则。</p>
 <p>常用选择特征的准则包括信息增益、信息增益比、平方误差和基尼指数。</p>
 <h3 id="xin-xi-zeng-yi">信息增益</h3>
@@ -193,8 +197,71 @@
 <div class="math">$$H_A(D)=-\sum_{i=1}^n\frac{|D_i|}{|D|}\log_2\frac{|D_i|}{|D|}$$</div>
 <p>其中 <span class="math">\(n\)</span> 为特征 <span class="math">\(A\)</span> 的取值个数。</p>
 <h3 id="ping-fang-wu-chai">平方误差</h3>
+<p>平方误差 <span class="math">\(\sum(y_i-f(x_i))^2\)</span> 是十分常用的误差函数，平方误差常用于回归树的构建。</p>
+<p>回归树将输入空间分割为若干单元，并在每个单元 <span class="math">\(R_m\)</span> 上有一个固定的输出 <span class="math">\(c_m\)</span>，可以表示为</p>
+<div class="math">$$f(x)=\sum c_mI(x\in R_m)$$</div>
+<p>在每个单元上的最优输出 <span class="math">\(\hat{c}_m\)</span> 自然是该单元中所有实例对应的输出 <span class="math">\(y_i\)</span> 的均值：</p>
+<div class="math">$$\hat{c}_m=\mathrm{ave}(y_i|x_i\in R_m)$$</div>
+<p>目的是找到最优的切分特征 <span class="math">\(j\)</span> 与最优切分点 <span class="math">\(s\)</span>，那么对于切分后得到的某一块区域 <span class="math">\(R_m\)</span> 内，<span class="math">\(c_m\)</span> 偏离于实例 <span class="math">\(y_i\)</span> 的值都应该尽可能小：</p>
+<div class="math">$$\min_{c_m}\sum_{x_i\in R_m}(y_i-c_m)^2$$</div>
+<p>实际上，这就是利用最小二乘法确定单元中的 <span class="math">\(\hat{c}_m\)</span> 并使其平方误差最小，这样回归树又称为最小二乘回归树。</p>
+<p><img alt="最小二乘回归树" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7547?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>因为回归树是二叉的，每次划分得到两个区域，对于整体而言。最优的划分条件 <span class="math">\(j\)</span> 与 <span class="math">\(s\)</span> 应使得到两个区域 <span class="math">\(c_m\)</span> 的平方误差之和尽可能小，完整求解问题表述为</p>
+<div class="math">$$\min_{j,s}\left[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_1}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]$$</div>
 <h3 id="ji-ni-zhi-shu">基尼指数</h3>
-<p>基尼指数也是特征分类能力的度量，常用于分类树。</p>
+<p>基尼指数也是特征分类能力的度量，常用于分类树。样本点属于第 <span class="math">\(k\)</span> 类的概率为 <span class="math">\(p_k\)</span>，基尼指数定义为</p>
+<div class="math">$$\mathrm{Gini}(p)=\sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2$$</div>
+<p>从基尼指数的定义可以看出，若样本点越分散，基尼指数越大。从下图可以看出，基尼指数与分类误差率、熵有着相似的变化关系，因此基尼指数同样可以用于衡量特征的分类能力。</p>
+<p><img alt="基尼指数" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7546?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>特征 <span class="math">\(A\)</span> 将样本 <span class="math">\(D\)</span> 划分为两个部分，那么在特征 <span class="math">\(A\)</span> 条件下的基尼指数就表示为</p>
+<div class="math">$$\mathrm{Gini}(D,A)=\frac{|D_1|}{|D|}\mathrm{Gini}(D_1)+\frac{|D_2|}{|D|}\mathrm{Gini}(D_2)$$</div>
+<h2 id="suan-fa_1">算法</h2>
+<h3 id="jue-ce-shu-de-sheng-cheng">决策树的生成</h3>
+<p><strong>算法 5.2（ID3 算法）</strong></p>
+<blockquote>
+<p>输入：训练集 <span class="math">\(D\)</span>，特征集 <span class="math">\(A\)</span> 阈值 <span class="math">\(\varepsilon\)</span><br/>
+输出：决策树 <span class="math">\(T\)</span></p>
+</blockquote>
+<ol>
+<li>若 <span class="math">\(D\)</span> 中所有实例属于同一类（分类完成），将该类作为结节的类标记，返回 <span class="math">\(T\)</span>；</li>
+<li>若 <span class="math">\(A=\varnothing\)</span>（无特征可分），将 <span class="math">\(D\)</span> 中实例数量最多的类作为该结点类标记，返回 <span class="math">\(T\)</span>；</li>
+<li>否则，计算各特征的信息增益，选择信息增益最大的特征 <span class="math">\(A_g\)</span>;</li>
+<li>若 <span class="math">\(g(D,A_g)&lt;\varepsilon\)</span>（信息增益小于阈值），将 <span class="math">\(D\)</span> 中实例数量最多的类作为该结点类标记，返回 <span class="math">\(T\)</span>；</li>
+<li>否则，使用 <span class="math">\(A_g\)</span> 的可能值 <span class="math">\(a_i\)</span> 将训练集分割为若干 <span class="math">\(D_i\)</span>，将 <span class="math">\(D_i\)</span> 中实例数量最多的类作为类标记构建子结点，返回 <span class="math">\(T\)</span>;</li>
+<li>对于第 <span class="math">\(i\)</span> 个结点，以 <span class="math">\(D_i\)</span> 为训练集，以 <span class="math">\(A-\{A_g\}\)</span> 为特征集，递归（1）~（5）步，返回子树 <span class="math">\(T_i\)</span>。</li>
+</ol>
+<p><strong>算法 5.4（C4.5 算法）</strong></p>
+<p>使用<em>信息增益比</em>代替 ID3 算法中的信息增益，就是 C4.5 算法。</p>
+<p><strong>算法 5.4（最小二乘回归树生成算法）</strong></p>
+<blockquote>
+<p>输入：训练数据集 <span class="math">\(D\)</span><br/>
+输出： 回归树 <span class="math">\(f(x)\)</span></p>
+</blockquote>
+<ol>
+<li>选择最优切分变量 <span class="math">\(j\)</span> 与切分点 <span class="math">\(s\)</span>，遍历 <span class="math">\(j\)</span> 与 <span class="math">\(s\)</span>，得到使下式最小的对 <span class="math">\((j,s)\)</span>
+<div class="math">$$\min_{j,s}\left[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_1}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]$$</div>
+</li>
+<li>用对 <span class="math">\((j,s)\)</span> 划分区域并确定 <span class="math">\(\hat{c}_m\)</span>
+<div class="math">$$\begin{gather}
+        R_1(j,s)=\{x|x^{(j)}\leq s\},\quad R_2(j,s)=\{x|x^{(j)}&gt;s\}\\
+        \hat{c}_m=\frac{1}{N_m}\sum_{x_i\in R_m(j,s)}y_i,\quad x\in R_m,\ m=1,2
+    \end{gather}$$</div>
+</li>
+<li>对子区域继续调用步骤（1）~（2），直至停止；</li>
+<li>使用划分的区域生成决策树。</li>
+</ol>
+<p><strong>算法 5.6（CART 生成算法）</strong></p>
+<blockquote>
+<p>输入：训练数据集 <span class="math">\(D\)</span><br/>
+输出：CART 决策树</p>
+</blockquote>
+<ol>
+<li>计算所有特征对于数据集 <span class="math">\(D\)</span> 的基尼指数，对于所有可能特征 <span class="math">\(A\)</span> 的所有可能取值 <span class="math">\(a\)</span>，使用是否满足 <span class="math">\(A=a\)</span> 作为判断条件将数据集划分为两个部分；</li>
+<li>选择基尼指数最小的特征与切分点，生成两个子结点；</li>
+<li>对于子结点继续调用（1）~（2），直至停止；</li>
+<li>生成 CART 决策树。</li>
+</ol>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;算法停止的条件可以参考算法 5.2，可以是样本点数据小于阈值，也可以特征的分类能力小于阈值，也可以是特征数量太少。</p></div></p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -261,13 +328,13 @@
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第五章：决策树&amp;url=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第五章：决策树&amp;url=https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-08-05-statistical-learning-chapter5.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
@@ -326,7 +393,7 @@
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>

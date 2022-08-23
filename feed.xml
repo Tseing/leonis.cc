@@ -1,5 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客设置 Lightbox 效果</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="alternate"></link><published>2022-08-17T00:00:00+08:00</published><updated>2022-08-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-17:/sui-sui-nian/2022-08-17-pelican-lightbox.html</id><summary type="html">&lt;p&gt;如何像社交媒体上发布的图片一样，让博客文章中的图片也能点击放大呢？使用 JavaScript 插件，在博客文章中添加这种 Lightbox 效果，再加上配套的 Python-Markdown 的拓展插件，让 Markdown 写作中的图片效果设置变得更加自由。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 &lt;code&gt;![标题](URL)&lt;/code&gt; 语法，Pelican 博客引擎将文章中的 &lt;code&gt;[标题](URL)&lt;/code&gt; 转换为 html 标签 &lt;code&gt;&amp;lt;img alt="标题" src="URL"&amp;gt;&lt;/code&gt;，就生成了用于发布的静态网页。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-23T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第五章：决策树</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" rel="alternate"></link><published>2022-08-23T00:00:00+08:00</published><updated>2022-08-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-23:/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的稀量标准，存在不同的决策树生成算法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;h3 id="jue-ce-shu"&gt;决策树&lt;/h3&gt;
+&lt;p&gt;决策树是一种&lt;em&gt;分类&lt;/em&gt;与&lt;em&gt;回归&lt;/em&gt;的方法，它是由结点和有向边组成的树形结构。决策树的内部结点表示一个特征或属性，叶结点表示一个类。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="决策树模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7527?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;决策树学习的目标就是根据给定的训练集生成一个决策树模型，利用该模型对实例正确分类。也就是说决策树的生成在本质上是从训练集中归纳出一组分类规则，决策树中结点之间的路径正是对应了这种分类规则。&lt;/p&gt;
+&lt;h3 id="fen-lei-yu-hui-gui-shu"&gt;分类与回归树&lt;/h3&gt;
+&lt;p&gt;分类与回归树（CART）模型是一种应用广泛的&lt;em&gt;决策树&lt;/em&gt;模型，CART 假定决策树为&lt;em&gt;二叉树&lt;/em&gt;，左分支为&amp;ldquo;是&amp;rdquo;路径，右分支为&amp;ldquo;否&amp;rdquo;路径。CART 模型将每个特征不断二分，划分为有限个单元，最后就能在这些单元上进行预测。&lt;/p&gt;
+&lt;h2 id="ce-lue_1"&gt;策略&lt;/h2&gt;
+&lt;p&gt;决策树可以看作为一系列 if-then 规则的集合，那么如何选择规则的判断条件就十分重要了。选择判断条件就是在选择训练数据的特征，可以想象，如果利用一个特征作为分类条件得到的结果与&lt;em&gt;随机分类&lt;/em&gt;的结果没有很大差别，那么这个特征是没有分类能力的。为了生成精确的决策树模型，我们需要设立用于衡量所选特征分类能力的准则。&lt;/p&gt;
+&lt;p&gt;常用选择特征的准则包括信息增益、信息增益比、平方误差和基尼指数。&lt;/p&gt;
+&lt;h3 id="xin-xi-zeng-yi"&gt;信息增益&lt;/h3&gt;
+&lt;p&gt;设一个离散随机分布为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(X=x_i)=p_i,\qquad i=1,2,\cdots,n$$&lt;/div&gt;
+&lt;p&gt;那么随机变量 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 的熵就定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$H(p)=-\sum_{i=1}^np_i\log p_i$$&lt;/div&gt;
+&lt;p&gt;若 &lt;span class="math"&gt;\(p_i=0\)&lt;/span&gt;，规定 &lt;span class="math"&gt;\(0\log 0=0\)&lt;/span&gt;，其中的对数也可取 2 为底或取自然对数。熵是衡量随机变量不确定（混乱）程度的度量，熵值越大，则随机变量越不确定，也就是说各事件发生的概率值越接近，概率分布也更分散。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="熵与概率的关系" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7526?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;条件熵用于表示在某条件下随机变量的不确定性，条件熵具有条件期望的形式，定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$H(X|Y)=\sum_{i=1}^np_iH(Y|X=x_i)$$&lt;/div&gt;
+&lt;p&gt;在实际操作中会使用频率估计概率，这时候熵就称为经验熵，条件熵称为经验条件熵。&lt;/p&gt;
+&lt;p&gt;特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 对训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的信息增益就定义为训练集的经验熵与给定特征下的经验条件熵之差：&lt;/p&gt;
+&lt;div class="math"&gt;$$g(D,A)=H(D)-H(D|A)$$&lt;/div&gt;
+&lt;p&gt;可以直观地理解为，若特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 具有分类能力，在选定的特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 下，数据集表现出更大的确定性或有序性，熵值相应减小，那么熵值变化的大小就可以用来衡量数据集在应用该特征后确定性的增加程度，也就是该特征分类能力的强弱。因此，信息增益大的特征具有更强的分类能力。&lt;/p&gt;
+&lt;p&gt;对于训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;，用 &lt;span class="math"&gt;\(|D|\)&lt;/span&gt; 表示集合中元素个数，即样本个数。设有 &lt;span class="math"&gt;\(K\)&lt;/span&gt; 个类 &lt;span class="math"&gt;\(C_k\)&lt;/span&gt;，类 &lt;span class="math"&gt;\(C_k\)&lt;/span&gt; 中有 &lt;span class="math"&gt;\(|C_k|\)&lt;/span&gt; 个样本。依据特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 可将 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 划分为 &lt;span class="math"&gt;\(n\)&lt;/span&gt; 个子集 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt;，&lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 中属于类 &lt;span class="math"&gt;\(C_k\)&lt;/span&gt; 的样本的集合记作 &lt;span class="math"&gt;\(D_{ik}\)&lt;/span&gt;。那么就按以下方法计算信息增益。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 5.1&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 和特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt;&lt;br/&gt;
+输出：特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 对训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的信息增益&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;计算数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的经验熵
+    &lt;div class="math"&gt;$$H(D)=-\sum_{k=1}^Kp_k\log_2p_k=-\sum_{k=1}^K\frac{|C_k|}{|D|}\log_2\frac{|C_k|}{|D|}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;计算特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; c对数据集的经验条件熵
+    &lt;div class="math"&gt;$$H(D|A)=\sum_{i=1}^n\frac{|D_i|}{|D|}H(D_i)=-\sum_{i=1}^n\frac{|D_i|}{|D|}\sum_{k=1}^K\frac{|D_{ik}|}{|D_i|}\log_2\frac{|D_{ik}|}{|D_i|}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;计算信息增益
+    &lt;div class="math"&gt;$$g(D,A)=H(D)-H(D|A)$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="xin-xi-zeng-yi-bi"&gt;信息增益比&lt;/h3&gt;
+&lt;p&gt;若参考信息增益比的大小选择特征，选择结果会偏向取值较多的特征。可以这么理解，特征取值越多，即划分条件越多，例如按年龄将人群分为青年、中年、老年（特征取值为 3）相较于按出生地将人群划分为是否当地居民（特征取值为 2），得到的划分结果会更「有序」。但这并不意味着年龄这一特征具有更好的分类能力，分类结果可能与被调查人的出生地有着更为密切的关系。&lt;/p&gt;
+&lt;p&gt;当特征取值过多时，这个特征就像是精心制作的筛子，过筛后的结果总是「显得」更加有序，因此需要使用信息增益比校正这一问题。信息增益比定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$g_R(D,A)=\frac{g(D,A)}{H_A(D)}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$H_A(D)=-\sum_{i=1}^n\frac{|D_i|}{|D|}\log_2\frac{|D_i|}{|D|}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(n\)&lt;/span&gt; 为特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的取值个数。&lt;/p&gt;
+&lt;h3 id="ping-fang-wu-chai"&gt;平方误差&lt;/h3&gt;
+&lt;p&gt;平方误差 &lt;span class="math"&gt;\(\sum(y_i-f(x_i))^2\)&lt;/span&gt; 是十分常用的误差函数，平方误差常用于回归树的构建。&lt;/p&gt;
+&lt;p&gt;回归树将输入空间分割为若干单元，并在每个单元 &lt;span class="math"&gt;\(R_m\)&lt;/span&gt; 上有一个固定的输出 &lt;span class="math"&gt;\(c_m\)&lt;/span&gt;，可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$f(x)=\sum c_mI(x\in R_m)$$&lt;/div&gt;
+&lt;p&gt;在每个单元上的最优输出 &lt;span class="math"&gt;\(\hat{c}_m\)&lt;/span&gt; 自然是该单元中所有实例对应的输出 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 的均值：&lt;/p&gt;
+&lt;div class="math"&gt;$$\hat{c}_m=\mathrm{ave}(y_i|x_i\in R_m)$$&lt;/div&gt;
+&lt;p&gt;目的是找到最优的切分特征 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 与最优切分点 &lt;span class="math"&gt;\(s\)&lt;/span&gt;，那么对于切分后得到的某一块区域 &lt;span class="math"&gt;\(R_m\)&lt;/span&gt; 内，&lt;span class="math"&gt;\(c_m\)&lt;/span&gt; 偏离于实例 &lt;span class="math"&gt;\(y_i\)&lt;/span&gt; 的值都应该尽可能小：&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{c_m}\sum_{x_i\in R_m}(y_i-c_m)^2$$&lt;/div&gt;
+&lt;p&gt;实际上，这就是利用最小二乘法确定单元中的 &lt;span class="math"&gt;\(\hat{c}_m\)&lt;/span&gt; 并使其平方误差最小，这样回归树又称为最小二乘回归树。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="最小二乘回归树" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7547?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;因为回归树是二叉的，每次划分得到两个区域，对于整体而言。最优的划分条件 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(s\)&lt;/span&gt; 应使得到两个区域 &lt;span class="math"&gt;\(c_m\)&lt;/span&gt; 的平方误差之和尽可能小，完整求解问题表述为&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{j,s}\left[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_1}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]$$&lt;/div&gt;
+&lt;h3 id="ji-ni-zhi-shu"&gt;基尼指数&lt;/h3&gt;
+&lt;p&gt;基尼指数也是特征分类能力的度量，常用于分类树。样本点属于第 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 类的概率为 &lt;span class="math"&gt;\(p_k\)&lt;/span&gt;，基尼指数定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{Gini}(p)=\sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2$$&lt;/div&gt;
+&lt;p&gt;从基尼指数的定义可以看出，若样本点越分散，基尼指数越大。从下图可以看出，基尼指数与分类误差率、熵有着相似的变化关系，因此基尼指数同样可以用于衡量特征的分类能力。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="基尼指数" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7546?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 将样本 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 划分为两个部分，那么在特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 条件下的基尼指数就表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{Gini}(D,A)=\frac{|D_1|}{|D|}\mathrm{Gini}(D_1)+\frac{|D_2|}{|D|}\mathrm{Gini}(D_2)$$&lt;/div&gt;
+&lt;h2 id="suan-fa_1"&gt;算法&lt;/h2&gt;
+&lt;h3 id="jue-ce-shu-de-sheng-cheng"&gt;决策树的生成&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;算法 5.2（ID3 算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;，特征集 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 阈值 &lt;span class="math"&gt;\(\varepsilon\)&lt;/span&gt;&lt;br/&gt;
+输出：决策树 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;若 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 中所有实例属于同一类（分类完成），将该类作为结节的类标记，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;若 &lt;span class="math"&gt;\(A=\varnothing\)&lt;/span&gt;（无特征可分），将 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 中实例数量最多的类作为该结点类标记，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;否则，计算各特征的信息增益，选择信息增益最大的特征 &lt;span class="math"&gt;\(A_g\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;若 &lt;span class="math"&gt;\(g(D,A_g)&amp;lt;\varepsilon\)&lt;/span&gt;（信息增益小于阈值），将 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 中实例数量最多的类作为该结点类标记，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;否则，使用 &lt;span class="math"&gt;\(A_g\)&lt;/span&gt; 的可能值 &lt;span class="math"&gt;\(a_i\)&lt;/span&gt; 将训练集分割为若干 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt;，将 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 中实例数量最多的类作为类标记构建子结点，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;对于第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个结点，以 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 为训练集，以 &lt;span class="math"&gt;\(A-\{A_g\}\)&lt;/span&gt; 为特征集，递归（1）~（5）步，返回子树 &lt;span class="math"&gt;\(T_i\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;算法 5.4（C4.5 算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用&lt;em&gt;信息增益比&lt;/em&gt;代替 ID3 算法中的信息增益，就是 C4.5 算法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 5.4（最小二乘回归树生成算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;&lt;br/&gt;
+输出： 回归树 &lt;span class="math"&gt;\(f(x)\)&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;选择最优切分变量 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 与切分点 &lt;span class="math"&gt;\(s\)&lt;/span&gt;，遍历 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(s\)&lt;/span&gt;，得到使下式最小的对 &lt;span class="math"&gt;\((j,s)\)&lt;/span&gt;
+&lt;div class="math"&gt;$$\min_{j,s}\left[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_1}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;用对 &lt;span class="math"&gt;\((j,s)\)&lt;/span&gt; 划分区域并确定 &lt;span class="math"&gt;\(\hat{c}_m\)&lt;/span&gt;
+&lt;div class="math"&gt;$$\begin{gather}
+        R_1(j,s)=\{x|x^{(j)}\leq s\},\quad R_2(j,s)=\{x|x^{(j)}&amp;gt;s\}\\
+        \hat{c}_m=\frac{1}{N_m}\sum_{x_i\in R_m(j,s)}y_i,\quad x\in R_m,\ m=1,2
+    \end{gather}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;对子区域继续调用步骤（1）~（2），直至停止；&lt;/li&gt;
+&lt;li&gt;使用划分的区域生成决策树。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;算法 5.6（CART 生成算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：训练数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;&lt;br/&gt;
+输出：CART 决策树&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;计算所有特征对于数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的基尼指数，对于所有可能特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的所有可能取值 &lt;span class="math"&gt;\(a\)&lt;/span&gt;，使用是否满足 &lt;span class="math"&gt;\(A=a\)&lt;/span&gt; 作为判断条件将数据集划分为两个部分；&lt;/li&gt;
+&lt;li&gt;选择基尼指数最小的特征与切分点，生成两个子结点；&lt;/li&gt;
+&lt;li&gt;对于子结点继续调用（1）~（2），直至停止；&lt;/li&gt;
+&lt;li&gt;生成 CART 决策树。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;{note begin}算法停止的条件可以参考算法 5.2，可以是样本点数据小于阈值，也可以特征的分类能力小于阈值，也可以是特征数量太少。{note end}&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>为 Pelican 博客设置 Lightbox 效果</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-17-pelican-lightbox.html" rel="alternate"></link><published>2022-08-17T00:00:00+08:00</published><updated>2022-08-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-17:/sui-sui-nian/2022-08-17-pelican-lightbox.html</id><summary type="html">&lt;p&gt;如何像社交媒体上发布的图片一样，让博客文章中的图片也能点击放大呢？使用 JavaScript 插件，在博客文章中添加这种 Lightbox 效果，再加上配套的 Python-Markdown 的拓展插件，让 Markdown 写作中的图片效果设置变得更加自由。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 &lt;code&gt;![标题](URL)&lt;/code&gt; 语法，Pelican 博客引擎将文章中的 &lt;code&gt;[标题](URL)&lt;/code&gt; 转换为 html 标签 &lt;code&gt;&amp;lt;img alt="标题" src="URL"&amp;gt;&lt;/code&gt;，就生成了用于发布的静态网页。&lt;/p&gt;
 &lt;p&gt;这样生成的网页中，图片大小由 CSS 文件决定。设定的图片尺寸如果太小，难以看清图片细节，尺寸如果太大就会占据较大版面，也十分影响阅读。&lt;/p&gt;
 &lt;p&gt;各类社交网站上的常规做法是，使用 CSS 文件决定合适的缩略图尺寸，点击缩略图后放大图片。点击缩略图放大的效果就像在暗室中使用的放映机，这个效果就被称为 Lightbox。&lt;/p&gt;
 &lt;p&gt;Lightbox 功能非常常用，因此在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 &lt;a href="https://github.com/pelican-plugins/photos"&gt;photos&lt;/a&gt; 和 &lt;a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery"&gt;Gallery&lt;/a&gt; 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。&lt;/p&gt;
@@ -396,7 +569,7 @@ extensions/gdal_wrap.cpp(2883): fatal error C1083: 无法打开包括文件: &am
 &lt;p&gt;要下载 GDAL core 和 bindings 两个安装文件，其中 bindings 需要与自己的 Python 版本匹配，下载完成后先安装 core 再安装 bindings。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="GISInternals下载文件" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7533?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;安装完成后，使用 pip 可以查询到 &lt;code&gt;GDAL&lt;/code&gt; 的安装信息：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; pip list
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; pip list
 Package           Version
 ----------------- -------
 GDAL              3.5.1
@@ -407,7 +580,7 @@ GDAL              3.5.1
 &lt;p&gt;&lt;img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是 &lt;code&gt;GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;将下载文件移入 Python 安装目录下的 &lt;code&gt;Scripts&lt;/code&gt; 文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
 ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;出现这个错误时我寻找了大量解决方法，当然，这个错误也没法解决，这纯粹是安装文件的问题。这个隐藏的坑浪费我大量时间，后来我发现将安装文件换成&lt;code&gt;3.3.3&lt;/code&gt;版本，就能成功安装了。&lt;/p&gt;
@@ -1081,33 +1254,33 @@ $$&lt;/div&gt;
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category></entry><entry><title>在 Linux 上使用 OneDrive 作为博客图床</title><link href="https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html" rel="alternate"></link><published>2022-07-14T00:00:00+08:00</published><updated>2022-07-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-14:/sui-sui-nian/2022-07-14-onedrive-as-image-host.html</id><summary type="html">&lt;p&gt;在博客中插入图片一直是一件头疼事，互联网上的各类图床工具都难令人完全满意。使用 OneDrive 作为图床或是一个很好的选择，这在 Windows 上已经有了成熟的方案，而在 Linux 上就有些麻烦，需要借助些额外的工具。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在个人博客中，图片是不可或缺的，而在 &lt;code&gt;.md&lt;/code&gt; 文件中插入图片必须使用图片的直链，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，再就是把数据交付给第三方手中多少有些不放心。想&lt;/p&gt;
 &lt;p&gt;到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，同时在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步数据。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须采用「绕道通行」的方法生成直链。&lt;/p&gt;
 &lt;p&gt;Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 &lt;a href="https://github.com/Richasy/Img-Share"&gt;Img Share&lt;/a&gt; 生成图片链接。Img Share 后来被 &lt;a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;amp;gl=US"&gt;Picture Share&lt;/a&gt; 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考&lt;a href="https://wzblog.fun/posts/b036879a/"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 同步云盘文件。&lt;/p&gt;
+&lt;p&gt;我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 管理云盘文件。&lt;/p&gt;
 &lt;h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi"&gt;OneDrive 文件链接的生成方式&lt;/h2&gt;
-&lt;p&gt;OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了&lt;a href="https://github.com/harrisoff/onedrive-image-hosting"&gt;相关项目&lt;/a&gt;，点开项目右侧的链接登录自己的OneDrive后直接插入 &lt;code&gt;.md&lt;/code&gt; 就可以啦。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
+&lt;p&gt;OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方 API 生成链接的方案是可行的。发现有人已经写好了&lt;a href="https://github.com/harrisoff/onedrive-image-hosting"&gt;相关项目&lt;/a&gt;，点开项目右侧的链接登录自己的 OneDrive 账号后将生成的链接直接插入到 Markdown 文档就可以啦。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-markdown"&gt;![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="an-zhuang-zfile"&gt;安装 ZFile&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/zhaojun1998/zfile"&gt;ZFile&lt;/a&gt; 是一款在线网盘程序，支持包括 OneDrive 在内的多种存储源。ZFile 可以代替其他平台的 OneDrive 应用来管理云盘中的文件，实现同步、上传、下载等功能。ZFile 也能生成文件直链插入文章，但是这个功能需要云服务器，抱着能省则省的态度，就等以后再折腾，这里仅使用 ZFile 来管理 OneDrive。&lt;/p&gt;
 &lt;p&gt;在 Linux 系统使用 ZFile 首先需要安装依赖：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;# Debian 10
-apt update &amp;amp;&amp;amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
-add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-apt update &amp;amp;&amp;amp; apt install -y adoptopenjdk-8-hotspot-jre
+&lt;pre&gt;&lt;code class="language-shell"&gt;# Debian 10
+$ apt update &amp;amp;&amp;amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
+$ wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+$ add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+$ apt update &amp;amp;&amp;amp; apt install -y adoptopenjdk-8-hotspot-jre
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;下载 ZFile：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;export ZFILE_INSTALL_PATH=~/zfile
-mkdir -p $ZFILE_INSTALL_PATH &amp;amp;&amp;amp; cd $ZFILE_INSTALL_PATH
-wget https://c.jun6.net/ZFILE/zfile-release.war
-unzip zfile-release.war &amp;amp;&amp;amp; rm -rf zfile-release.war
-chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ export ZFILE_INSTALL_PATH=~/zfile
+$ mkdir -p $ZFILE_INSTALL_PATH &amp;amp;&amp;amp; cd $ZFILE_INSTALL_PATH
+$ wget https://c.jun6.net/ZFILE/zfile-release.war
+$ unzip zfile-release.war &amp;amp;&amp;amp; rm -rf zfile-release.war
+$ chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;ZFILE_INSTALL_PATH&lt;/code&gt; 指定了安装路径，可以自行修改。&lt;/p&gt;
 &lt;h2 id="qi-dong-bing-pei-zhi-zfile"&gt;启动并配置 ZFile&lt;/h2&gt;
 &lt;p&gt;通过以下命令启动 ZFile：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt; ~/zfile/bin/start.sh       # 启动项目
- ~/zfile/bin/stop.sh        # 停止项目
- ~/zfile/bin/restart.sh     # 重启项目
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ ~/zfile/bin/start.sh       # 启动项目
+$ ~/zfile/bin/stop.sh        # 停止项目
+$ ~/zfile/bin/restart.sh     # 重启项目
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;启动项目后，默认开放在 8080 端口，使用 &lt;code&gt;localhost:8080&lt;/code&gt; 进入 ZFile：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"&gt;&lt;img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
@@ -1121,12 +1294,12 @@ chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
 &lt;p&gt;在地址栏中输入 &lt;code&gt;localhost:8080&lt;/code&gt; 进入存储界面，在这里就理应能够看到 OneDrive 中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。&lt;/p&gt;
 &lt;p&gt;如果有一台 VPS，在 VPS 上启动 ZFile 后，通过 &lt;code&gt;vps-ip:[port]&lt;/code&gt; 也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在 &lt;code&gt;.md&lt;/code&gt; 中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
-&lt;p&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 &lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链 &lt;code&gt;vps-ip:[port]/...&lt;/code&gt; 时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。&lt;/p&gt;
+&lt;p&gt;因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 &lt;code&gt;1drv.com/...&lt;/code&gt;，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问 ZFile 直链 &lt;code&gt;vps-ip:[port]/...&lt;/code&gt; 时，实际得到的都是 ZFile 转发得到的 OneDrive 临时链接。&lt;/p&gt;
 &lt;p&gt;{warn begin}本文最后更新于 2022 年 07 月 14 日，请确定内容是否过时。{warn end}&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="OneDrive"></category><category term="Linux"></category></entry><entry><title>使用 Pelican 发布文章的流程</title><link href="https://tseing.github.io/sui-sui-nian/2022-07-12-pelican-to-publish.html" rel="alternate"></link><published>2022-07-12T00:00:00+08:00</published><updated>2022-07-12T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-12:/sui-sui-nian/2022-07-12-pelican-to-publish.html</id><summary type="html">&lt;p&gt;经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 Github Pages 上发布博客文章的流程。&lt;/p&gt;</summary><content type="html">&lt;h2 id="articles-or-pages"&gt;Articles or Pages?&lt;/h2&gt;
 &lt;p&gt;Pelican 中有 articles 与 pages 的概念，在创建页面时应当首先区分二者。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;articles&lt;/strong&gt; 指具有时间戳的内容，例如博客文章等，直接创建在&lt;code&gt;content&lt;/code&gt;文件夹中。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;pages&lt;/strong&gt; 指与时间无关、展示固定内容的页面，需要创建在&lt;code&gt;content/pages&lt;/code&gt;文件夹下&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pages&lt;/strong&gt; 指与时间无关、展示固定内容的页面，需要创建在&lt;code&gt;content/pages&lt;/code&gt;文件夹下。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="zhuan-xie-wen-zhang"&gt;撰写文章&lt;/h2&gt;
 &lt;h3 id="jupyter-notebook-fang-shi"&gt;Jupyter Notebook 方式&lt;/h3&gt;
@@ -1151,16 +1324,16 @@ status: # draft, hidden, or published
 &lt;p&gt;使用 Markdown 语言是写博客最为简单普遍的方式，在&lt;code&gt;content&lt;/code&gt;文件夹中创建&lt;code&gt;.md&lt;/code&gt;文件，在开始部分首先输入与&lt;code&gt;.nbdata&lt;/code&gt;相同的文章信息后，就可以直接开始撰写正文。&lt;/p&gt;
 &lt;h2 id="sheng-cheng-jing-tai-wang-ye_1"&gt;生成静态网页&lt;/h2&gt;
 &lt;p&gt;在撰写文章后，进入虚拟环境，在 &lt;code&gt;blog&lt;/code&gt; 文件夹中使用 &lt;code&gt;Pelican&lt;/code&gt; 生成 &lt;code&gt;.html&lt;/code&gt; 文件。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;source ./venv/bin/activate
-pelican content -s publishconf.py
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ source ./venv/bin/activate
+$ pelican content -s publishconf.py
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;最后将 &lt;code&gt;output&lt;/code&gt; 文件夹同步至 Github 中 &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt; 仓库即完成文章的发布。&lt;/p&gt;
 &lt;h2 id="fa-bu"&gt;发布&lt;/h2&gt;
 &lt;p&gt;使用终端在 &lt;code&gt;blog&lt;/code&gt; 文件夹中输入 &lt;code&gt;pelican -lr&lt;/code&gt; 即可自动部署到本地服务器，默认端口为 8000，通过 &lt;code&gt;localhost:8000&lt;/code&gt; 访问。&lt;/p&gt;
 &lt;p&gt;测试完成后将内容推送至 Github:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;git add .
-git commit
-git push
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ git add .
+$ git commit
+$ git push
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="ke-long-yu-tong-bu"&gt;克隆与同步&lt;/h2&gt;
 &lt;p&gt;由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。&lt;/p&gt;

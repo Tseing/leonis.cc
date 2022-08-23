@@ -806,7 +806,7 @@ pre tt {
     margin: -1.333em -1.333em -1.333em 1.333em;
     padding: 1.333em;
     overflow: hidden;
-    font-size: 0.9em;
+    font-size: 1em;
     line-height: 25px;
     white-space: pre;
     background: transparent;
@@ -1593,7 +1593,7 @@ img {
 .index-tags {
     margin-top: 30px;
     text-align: left;
-    font-size: 18px;
+    font-size: 0.9em;
     font-family: "Fira Sans", "Noto Sans SC";
 }
 
@@ -1783,7 +1783,7 @@ img {
 .post-author-bio {
     padding-left: 25%;
     font-family: 'Fira Sans', sans-serif;
-    font-size: 0.75em;
+    font-size: 0.9em;
     line-height: 1.333em
 }
 

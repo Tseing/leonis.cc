@@ -152,7 +152,7 @@
 <p>Pelican 中有 articles 与 pages 的概念，在创建页面时应当首先区分二者。</p>
 <ul>
 <li><strong>articles</strong> 指具有时间戳的内容，例如博客文章等，直接创建在<code>content</code>文件夹中。</li>
-<li><strong>pages</strong> 指与时间无关、展示固定内容的页面，需要创建在<code>content/pages</code>文件夹下</li>
+<li><strong>pages</strong> 指与时间无关、展示固定内容的页面，需要创建在<code>content/pages</code>文件夹下。</li>
 </ul>
 <h2 id="zhuan-xie-wen-zhang">撰写文章</h2>
 <h3 id="jupyter-notebook-fang-shi">Jupyter Notebook 方式</h3>
@@ -177,16 +177,16 @@ status: # draft, hidden, or published
 <p>使用 Markdown 语言是写博客最为简单普遍的方式，在<code>content</code>文件夹中创建<code>.md</code>文件，在开始部分首先输入与<code>.nbdata</code>相同的文章信息后，就可以直接开始撰写正文。</p>
 <h2 id="sheng-cheng-jing-tai-wang-ye_1">生成静态网页</h2>
 <p>在撰写文章后，进入虚拟环境，在 <code>blog</code> 文件夹中使用 <code>Pelican</code> 生成 <code>.html</code> 文件。</p>
-<pre><code class="language-sh">source ./venv/bin/activate
-pelican content -s publishconf.py
+<pre><code class="language-shell">$ source ./venv/bin/activate
+$ pelican content -s publishconf.py
 </code></pre>
 <p>最后将 <code>output</code> 文件夹同步至 Github 中 <code>&lt;username&gt;.github.io</code> 仓库即完成文章的发布。</p>
 <h2 id="fa-bu">发布</h2>
 <p>使用终端在 <code>blog</code> 文件夹中输入 <code>pelican -lr</code> 即可自动部署到本地服务器，默认端口为 8000，通过 <code>localhost:8000</code> 访问。</p>
 <p>测试完成后将内容推送至 Github:</p>
-<pre><code class="language-sh">git add .
-git commit
-git push
+<pre><code class="language-shell">$ git add .
+$ git commit
+$ git push
 </code></pre>
 <h2 id="ke-long-yu-tong-bu">克隆与同步</h2>
 <p>由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。</p>
@@ -267,7 +267,7 @@ git push
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>

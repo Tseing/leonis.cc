@@ -153,33 +153,33 @@
                 <p>在个人博客中，图片是不可或缺的，而在 <code>.md</code> 文件中插入图片必须使用图片的直链，因此通常又需要图床等额外工具。由于国内市场的图床工具良莠不齐，没有精力仔细挑选，再就是把数据交付给第三方手中多少有些不放心。想</p>
 <p>到订阅 Microsoft Office 时附赠了 1 TB 的 OneDrive 容量，正好可以利用起来。使用 OneDrive 作为图床的好处就在于数据在自己的手中，不用担心某天突然挂掉，同时在多平台（Windows、iPad 和 Android）都有 OneDrive 应用，很方便同步数据。但是很遗憾，由于国内的环境，OneDrive 的网页版是打不开的，这就不能通过网页版直接生成图片链接，必须采用「绕道通行」的方法生成直链。</p>
 <p>Windows 系统自带 OneDrive 应用，可以直接使用桌面应用进行文件同步，借助 <a href="https://github.com/Richasy/Img-Share">Img Share</a> 生成图片链接。Img Share 后来被 <a href="https://apps.microsoft.com/store/detail/picture-share/9PHWZ3QL0HN3?hl=en-us&amp;gl=US">Picture Share</a> 代替，在 Microsoft Store 中就可以直接下载到。Picture Share 十分容易上手，界面简洁且功能齐全，具体的设置方法可以参考<a href="https://wzblog.fun/posts/b036879a/">这篇文章</a>。</p>
-<p>我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 同步云盘文件。</p>
+<p>我撰写博客文章的工作环境是 Linux 系统，Linux 系统中没有 OneDrive 应用和上述 UWP 应用，也就不能使用上面的方法。本文就将介绍如何在 Linux 系统下使用 OneDrive 作为个人博客的图床并使用 ZFile 管理云盘文件。</p>
 <h2 id="onedrive-wen-jian-lian-jie-de-sheng-cheng-fang-shi">OneDrive 文件链接的生成方式</h2>
-<p>OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方API生成链接的方案是可行的。发现有人已经写好了<a href="https://github.com/harrisoff/onedrive-image-hosting">相关项目</a>，点开项目右侧的链接登录自己的OneDrive后直接插入 <code>.md</code> 就可以啦。</p>
-<pre><code>![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
+<p>OneDrive 的网页应用直接提供了嵌入代码，可以直接贴在文章中。但因为科学上网时上传速度相当感人，使用起来还是太过麻烦。虽然无法访问 OneDrive 网页，但 OneDrive 在国内的其他功能都是正常的，包括生成的分享链接，所以直接借用官方 API 生成链接的方案是可行的。发现有人已经写好了<a href="https://github.com/harrisoff/onedrive-image-hosting">相关项目</a>，点开项目右侧的链接登录自己的 OneDrive 账号后将生成的链接直接插入到 Markdown 文档就可以啦。</p>
+<pre><code class="language-markdown">![图片名称](https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUZNJKuT3c_gI4Jh/root/content)
 </code></pre>
 <h2 id="an-zhuang-zfile">安装 ZFile</h2>
 <p><a href="https://github.com/zhaojun1998/zfile">ZFile</a> 是一款在线网盘程序，支持包括 OneDrive 在内的多种存储源。ZFile 可以代替其他平台的 OneDrive 应用来管理云盘中的文件，实现同步、上传、下载等功能。ZFile 也能生成文件直链插入文章，但是这个功能需要云服务器，抱着能省则省的态度，就等以后再折腾，这里仅使用 ZFile 来管理 OneDrive。</p>
 <p>在 Linux 系统使用 ZFile 首先需要安装依赖：</p>
-<pre><code class="language-sh"># Debian 10
-apt update &amp;&amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
-add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-apt update &amp;&amp; apt install -y adoptopenjdk-8-hotspot-jre
+<pre><code class="language-shell"># Debian 10
+$ apt update &amp;&amp; apt install -y apt-transport-https software-properties-common ca-certificates dirmngr gnupg
+$ wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+$ add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+$ apt update &amp;&amp; apt install -y adoptopenjdk-8-hotspot-jre
 </code></pre>
 <p>下载 ZFile：</p>
-<pre><code class="language-sh">export ZFILE_INSTALL_PATH=~/zfile
-mkdir -p $ZFILE_INSTALL_PATH &amp;&amp; cd $ZFILE_INSTALL_PATH
-wget https://c.jun6.net/ZFILE/zfile-release.war
-unzip zfile-release.war &amp;&amp; rm -rf zfile-release.war
-chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
+<pre><code class="language-shell">$ export ZFILE_INSTALL_PATH=~/zfile
+$ mkdir -p $ZFILE_INSTALL_PATH &amp;&amp; cd $ZFILE_INSTALL_PATH
+$ wget https://c.jun6.net/ZFILE/zfile-release.war
+$ unzip zfile-release.war &amp;&amp; rm -rf zfile-release.war
+$ chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
 </code></pre>
 <p><code>ZFILE_INSTALL_PATH</code> 指定了安装路径，可以自行修改。</p>
 <h2 id="qi-dong-bing-pei-zhi-zfile">启动并配置 ZFile</h2>
 <p>通过以下命令启动 ZFile：</p>
-<pre><code class="language-sh"> ~/zfile/bin/start.sh       # 启动项目
- ~/zfile/bin/stop.sh        # 停止项目
- ~/zfile/bin/restart.sh     # 重启项目
+<pre><code class="language-shell">$ ~/zfile/bin/start.sh       # 启动项目
+$ ~/zfile/bin/stop.sh        # 停止项目
+$ ~/zfile/bin/restart.sh     # 重启项目
 </code></pre>
 <p>启动项目后，默认开放在 8080 端口，使用 <code>localhost:8080</code> 进入 ZFile：</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"><img alt="NoCaption" src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuUeZko02sAbyr5jh/root/content"/></a></div></p>
@@ -193,7 +193,7 @@ chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
 <p>在地址栏中输入 <code>localhost:8080</code> 进入存储界面，在这里就理应能够看到 OneDrive 中存储的文件了，可以使用其他设备辅助测试是否能够正常上传或删除文件。</p>
 <p>如果有一台 VPS，在 VPS 上启动 ZFile 后，通过 <code>vps-ip:[port]</code> 也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在 <code>.md</code> 中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。</p>
 <p><img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 <code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问ZFile直链 <code>vps-ip:[port]/...</code> 时，实际得到的都是Z File 转发得到的 OneDrive 临时链接。</p>
+<p>因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 <code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问 ZFile 直链 <code>vps-ip:[port]/...</code> 时，实际得到的都是 ZFile 转发得到的 OneDrive 临时链接。</p>
 <p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 07 月 14 日，请确定内容是否过时。</p></div></p>
             </section>
 
@@ -264,7 +264,7 @@ chmod +x $ZFILE_INSTALL_PATH/bin/*.sh
   <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
