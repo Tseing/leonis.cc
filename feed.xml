@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-23T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第五章：决策树</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" rel="alternate"></link><published>2022-08-23T00:00:00+08:00</published><updated>2022-08-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-23:/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的稀量标准，存在不同的决策树生成算法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-08-23T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第五章：决策树</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" rel="alternate"></link><published>2022-08-23T00:00:00+08:00</published><updated>2022-08-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-23:/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的衡量标准，存在不同的决策树生成算法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="jue-ce-shu"&gt;决策树&lt;/h3&gt;
 &lt;p&gt;决策树是一种&lt;em&gt;分类&lt;/em&gt;与&lt;em&gt;回归&lt;/em&gt;的方法，它是由结点和有向边组成的树形结构。决策树的内部结点表示一个特征或属性，叶结点表示一个类。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="决策树模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7527?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
@@ -32,7 +32,7 @@
 &lt;li&gt;计算数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的经验熵
     &lt;div class="math"&gt;$$H(D)=-\sum_{k=1}^Kp_k\log_2p_k=-\sum_{k=1}^K\frac{|C_k|}{|D|}\log_2\frac{|C_k|}{|D|}$$&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;计算特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; c对数据集的经验条件熵
+&lt;li&gt;计算特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 对数据集的经验条件熵
     &lt;div class="math"&gt;$$H(D|A)=\sum_{i=1}^n\frac{|D_i|}{|D|}H(D_i)=-\sum_{i=1}^n\frac{|D_i|}{|D|}\sum_{k=1}^K\frac{|D_{ik}|}{|D_i|}\log_2\frac{|D_{ik}|}{|D_i|}$$&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;计算信息增益
@@ -307,7 +307,7 @@ plt.savefig('macao.png')
 &lt;h2 id="yuan-xing-mo-shi"&gt;圆形模式&lt;/h2&gt;
 &lt;p&gt;与示例代码相同，只要将 &lt;code&gt;perimeter&lt;/code&gt; 留空，默认的绘图模式就是圆形模式。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{location}&lt;i&gt;外滩  The Bund, Shanghai&lt;/i&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;{location}外滩  The Bund, Shanghai&lt;/p&gt;
 &lt;h2 id="yuan-jiao-ju-xing-mo-shi"&gt;圆角矩形模式&lt;/h2&gt;
 &lt;p&gt;圆角矩形模式下，需要新建一个变量 &lt;code&gt;dilate&lt;/code&gt; 用于控制圆角半径，并在每一个图层的参数中添加 &lt;code&gt;'circle': False&lt;/code&gt; 与 &lt;code&gt;'dilate': dilate&lt;/code&gt; 就能生成圆角矩形地图。&lt;/p&gt;
 &lt;p&gt;在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。&lt;/p&gt;
@@ -388,7 +388,7 @@ layers = plot(
 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{location}&lt;i&gt;三坊七巷  Sanfang Qixiang, Fuzhou&lt;/i&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;{location}三坊七巷  Sanfang Qixiang, Fuzhou&lt;/p&gt;
 &lt;h2 id="fang-xing-mo-shi"&gt;方形模式&lt;/h2&gt;
 &lt;p&gt;欲使地图布满整个方形画面，需要使用 &lt;code&gt;matplotlib&lt;/code&gt; 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-py"&gt;xmin, ymin, xmax, ymax = layers['perimeter'].bounds
@@ -399,7 +399,7 @@ ax.set_ylim(ymin+a*dy, ymax-a*dy)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;变量 &lt;code&gt;a&lt;/code&gt; 表示裁去的四周比例。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{location}&lt;i&gt;闽江  Min River, Fuzhou&lt;/i&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;{location}闽江  Min River, Fuzhou&lt;/p&gt;
 &lt;h2 id="jin-jie-cao-zuo"&gt;进阶操作&lt;/h2&gt;
 &lt;p&gt;但不止如此，我想讨论一些进阶的操作。&lt;code&gt;layers&lt;/code&gt; 参数指定了绘制的图层，在 &lt;code&gt;drawing_kwargs&lt;/code&gt; 中可以指定图层的样式，由底至上常见以下几个图层：&lt;/p&gt;
 &lt;ul&gt;
@@ -492,7 +492,7 @@ plt.savefig('pku.png')
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;由于 &lt;code&gt;prettymaps&lt;/code&gt; 的封闭边界太过于靠近建筑，可以使用 &lt;code&gt;buffer()&lt;/code&gt; 将边界向外扩张一部分，能获得更好的视觉效果。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{location}&lt;i&gt;北京大学  Peking University, Beijing&lt;/i&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;{location}北京大学  Peking University, Beijing&lt;/p&gt;
 &lt;p&gt;调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-py"&gt;'railway': {
     'custom_filter': '["railway"~"rail"]',
@@ -516,7 +516,7 @@ plt.savefig('pku.png')
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{location}&lt;i&gt;天津站  Tianjin Railway Station, Tianjin&lt;/i&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;{location}天津站  Tianjin Railway Station, Tianjin&lt;/p&gt;
 &lt;h2 id="zi-ji-de-hua"&gt;自己的话&lt;/h2&gt;
 &lt;p&gt;不得不说，&lt;code&gt;prettymaps&lt;/code&gt; 是一款十分优秀的 Python 绘图包，它的操作十分简单，足以让我这样不了解 GIS 的用户迅速入门，绘制出十分惊艳的地图。但在实际使用中，&lt;code&gt;prettymaps&lt;/code&gt; 还是存在着这样那样的问题，使得它的定位可能只能止步于一个发挥创意的工具，而不能成为一个合适的创作工具。&lt;/p&gt;
 &lt;p&gt;譬如说，各种各样的用户因为各种各样的需求接触到 &lt;code&gt;prettymaps&lt;/code&gt;，其中不乏有些用户想为某些场所、学校绘制导览地图，但 &lt;code&gt;prettymaps&lt;/code&gt; 添加元素的方式不够灵活，这会让这些用户使用起来相当费劲。&lt;/p&gt;
@@ -881,7 +881,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>《统计学习方法》第二章：感知机</title><link href="https://tseing.github.io/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</id><summary type="html">&lt;p&gt;《统计学习方法》的第二章介绍了一种二分类模型——感知机，感知机具有直观的几何模型，有助于理解分类原理。感知机采用随机梯度下降策略选择最佳模型，随机梯度下降也是常用的一种最优化方法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>《统计学习方法》第二章：感知机</title><link href="https://tseing.github.io/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</id><summary type="html">&lt;p&gt;《统计学习方法》第二章介绍了一种二分类模型——感知机，感知机具有直观的几何模型，有助于理解分类原理。感知机采用随机梯度下降策略选择最佳模型，随机梯度下降也是常用的一种最优化方法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="ding-yi"&gt;定义&lt;/h3&gt;
 &lt;p&gt;感知机是&lt;em&gt;二分类&lt;/em&gt;的&lt;em&gt;线性&lt;/em&gt;分类模型，感知机定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w\cdot x+b)$$&lt;/div&gt;
