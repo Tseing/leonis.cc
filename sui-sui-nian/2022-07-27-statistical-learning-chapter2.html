@@ -24,6 +24,10 @@
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
 
   <!-- Custom fonts -->
   <style>
@@ -38,7 +42,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 
@@ -88,7 +92,9 @@
   "url": "https://tseing.github.io/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html",
   "description": "《统计学习方法》第二章介绍了一种二分类模型——感知机，感知机具有直观的几何模型，有助于理解分类原理。感知机采用随机梯度下降策略选择最佳模型，随机梯度下降也是常用的一种最优化方法。"
 }
-</script>
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
 </head>
 <!-- TODO : Body class -->
 <body class="home-template">
@@ -406,6 +412,15 @@
                     <div class="clear"></div>
                 </aside>
 
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
             </div>
         </article>
     </main>
@@ -430,7 +445,7 @@
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.highlightAll();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
@@ -442,6 +457,5 @@
   </script>
   <!-- visitor count -->
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 </html>

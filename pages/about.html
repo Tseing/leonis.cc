@@ -25,6 +25,10 @@
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
 
   <!-- Custom fonts -->
   <style>
@@ -39,7 +43,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 
@@ -64,7 +68,9 @@
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
   "description": "A nook to hoard my manuscripts."
 }
-</script>
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
 </head>
 <!-- TODO : Body class -->
 <body class="home-template">
@@ -129,6 +135,18 @@
 <p>我的博客主要用来存储读书笔记以及一些生活日常，欢迎通过 RSS 订阅，也欢迎使用 Github 或邮件联系我，指出文章中的错误，十分感谢！</p>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;有些文章中包含了长公式，在屏幕宽度较小的移动端上可能显示不完整，这时候可以尝试横屏 &gt;_&lt;</p></div></p>
           </section>
+
+          <div class="clear"></div>
+
+          <div id="waline"></div>
+          <script>
+            Waline.init({
+              el: '#waline',
+              serverURL: 'https://j5b7t4.deta.dev/',
+              emoji: false,
+              imageUploader: false,
+            });
+          </script>
       </div>
       </article>
   </main>
@@ -153,7 +171,7 @@
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.highlightAll();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
@@ -165,6 +183,5 @@
   </script>
   <!-- visitor count -->
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 </html>

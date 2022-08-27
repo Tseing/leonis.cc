@@ -754,7 +754,7 @@ code,
 tt {
     position: relative;
     margin: 0 0;
-    padding: 0.3em 5px;
+    padding: 0.25em 5px;
     font-family: 'Ubuntu Mono', "Noto Sans KR", "Noto Sans SC", sans-serif;
     font-size: 0.9em;
     /* white-space: pre; */
@@ -1875,7 +1875,8 @@ img {
 
 .post-nav {
     position: relative;
-    border-bottom: 1px solid #e5e4e1
+    border-bottom: 1px solid #e5e4e1;
+    margin: 0 17%;
 }
 
 .post-nav:after {
@@ -2109,7 +2110,7 @@ img {
 
 /* location icon */
 i.fa.fa-map-marker.fa-stack-1x {
-    bottom: 10px;
+    bottom: 25%;
 }
 
 @media only screen and (max-width: 900px) and (orientation: landscape){

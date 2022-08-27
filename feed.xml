@@ -68,7 +68,7 @@
 &lt;h3 id="jue-ce-shu-de-sheng-cheng"&gt;决策树的生成&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;算法 5.2（ID3 算法）&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;，特征集 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 阈值 &lt;span class="math"&gt;\(\varepsilon\)&lt;/span&gt;&lt;br/&gt;
+&lt;p&gt;输入：训练集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;，特征集 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 与阈值 &lt;span class="math"&gt;\(\varepsilon\)&lt;/span&gt;&lt;br/&gt;
 输出：决策树 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol&gt;

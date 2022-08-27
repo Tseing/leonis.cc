@@ -24,6 +24,10 @@
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
 
   <!-- Custom fonts -->
   <style>
@@ -38,7 +42,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 
@@ -88,7 +92,9 @@
   "url": "https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html",
   "description": "《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的衡量标准，存在不同的决策树生成算法。"
 }
-</script>
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
 </head>
 <!-- TODO : Body class -->
 <body class="home-template">
@@ -217,7 +223,7 @@
 <h3 id="jue-ce-shu-de-sheng-cheng">决策树的生成</h3>
 <p><strong>算法 5.2（ID3 算法）</strong></p>
 <blockquote>
-<p>输入：训练集 <span class="math">\(D\)</span>，特征集 <span class="math">\(A\)</span> 阈值 <span class="math">\(\varepsilon\)</span><br/>
+<p>输入：训练集 <span class="math">\(D\)</span>，特征集 <span class="math">\(A\)</span> 与阈值 <span class="math">\(\varepsilon\)</span><br/>
 输出：决策树 <span class="math">\(T\)</span></p>
 </blockquote>
 <ol>
@@ -368,6 +374,15 @@
                     <div class="clear"></div>
                 </aside>
 
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
             </div>
         </article>
     </main>
@@ -392,7 +407,7 @@
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.highlightAll();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
@@ -404,6 +419,5 @@
   </script>
   <!-- visitor count -->
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 </html>

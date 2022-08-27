@@ -24,6 +24,10 @@
   <!-- Code highlight color scheme -->
       <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
 
   <!-- Custom fonts -->
   <style>
@@ -38,7 +42,7 @@
   <![endif]-->
 
   <!-- awesome-font icon -->
-  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 
@@ -90,7 +94,9 @@
   "url": "https://tseing.github.io/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html",
   "description": "经过上次的屡次踩坑，终于艰难地在 Windows 上安装好了 prettymaps。看着 pip list 中的 prettymaps，我迫不及待地想试着用 prettymaps 生成一些地图，那么就开 …"
 }
-</script>
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
 </head>
 <!-- TODO : Body class -->
 <body class="home-template">
@@ -482,6 +488,15 @@ plt.savefig('pku.png')
                     <div class="clear"></div>
                 </aside>
 
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
             </div>
         </article>
     </main>
@@ -506,7 +521,7 @@ plt.savefig('pku.png')
   <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.highlightAll();</script>
   <!-- lightbox -->
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
@@ -518,6 +533,5 @@ plt.savefig('pku.png')
   </script>
   <!-- visitor count -->
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 </html>

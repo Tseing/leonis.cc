@@ -1,0 +1,56 @@
+:root {
+    --waline-font-size: 1em!important;
+    --waline-avatar-size: 3.25em!important;
+    --waline-badge-font-size: 0.65em!important;
+}
+
+.wl-card .wl-admin-actions {
+    font-size: 0.8em!important;
+}
+
+.wl-header input {
+    font-size: 0.725em!important;
+}
+
+#waline {
+    margin: 0 17%;
+}
+
+.wl-user > img,
+.wl-avatar img {
+    margin: 0;
+    filter: drop-shadow(1px 5px 5px rgba(0,0,0,.5));
+}
+
+button[title="表情包"] {
+    display: none;
+}
+
+@media only screen and (max-width: 900px) and (orientation: landscape){
+    #waline {
+        margin: 0 1.75em;
+    }
+    .wl-text-number {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 400px) and (orientation: portrait){
+    #waline {
+        padding: 0 5%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .wl-text-number {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1000px) and (orientation: portrait){
+
+    #waliner {
+        padding: 0 5%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
