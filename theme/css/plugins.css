@@ -32,9 +32,14 @@ button[title="表情包"] {
     }
 }
 
-@media only screen and (max-width: 900px) and (orientation: landscape){
+@media only screen and (min-width: 400px) and (max-width: 900px) and (orientation: landscape){
     #waline {
         margin: 0 1.75em;
     }
 }
 
+@media only screen and (max-width: 400px){
+    .wl-text-number{
+        display: none;
+    }
+}
