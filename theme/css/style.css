@@ -2085,7 +2085,7 @@ img {
     transition: background .2s;
 }
 
-@media only screen and (min-width: 400px) and (max-width: 700px) and (orientation: landscape){
+@media only screen and (min-width: 400px) and (max-width: 900px) and (orientation: landscape){
     html {
         font-size: 50%;
     }
@@ -2283,7 +2283,7 @@ img {
         margin-left: auto
     }
     .post-nav {
-        margin: 0 15%;
+        margin: 0 10%;
     }
     .post-nav:after {
         display: none
