@@ -26,6 +26,39 @@ button[title="表情包"] {
     display: none;
 }
 
+/* location icon */
+i.fa.fa-map-marker.fa-stack-1x {
+    bottom: 25%;
+}
+
+.warn-info {
+    border: 2px solid;
+    background: #fff4e5;
+    border-radius: 5px;
+}
+
+.warn-info p{
+    margin: 15px 15px 15px 15px;
+}
+
+.warn-info .fa {
+    color: #ff9100
+}
+
+.note-info {
+    border: 2px solid;
+    background: #e5f7ff;
+    border-radius: 5px;
+}
+
+.note-info p{
+    margin: 15px 15px 15px 15px;
+}
+
+.note-info .fa {
+    color: #00b0ff
+}
+
 @media only screen and (min-width: 1000px){
     #waline {
         margin: auto 16%;
