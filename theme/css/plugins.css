@@ -59,6 +59,12 @@ i.fa.fa-map-marker.fa-stack-1x {
     color: #00b0ff
 }
 
+.cite {
+    font-family: "Noto Serif KR", "Noto Serif SC";
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
 @media only screen and (min-width: 1000px){
     #waline {
         margin: auto 16%;
