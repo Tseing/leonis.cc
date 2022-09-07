@@ -51,7 +51,7 @@
 
 
 
-    <meta name="description" content="《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原理。">
+    <meta name="description" content="《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原">
 
     <meta name="author" content="Leo">
 
@@ -65,7 +65,7 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第五章：逻辑斯谛回归与最大熵模型"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原理。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/drafts/statistical-learning-chapter6.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -95,7 +95,7 @@
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
   "url": "https://tseing.github.io/drafts/statistical-learning-chapter6.html",
-  "description": "《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原理。"
+  "description": "《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，此外还都利用了极大似然估计原"
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -155,7 +155,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a><ul><li><a class="toc-href" href="#luo-ji-si-di-hui-gui-mo-xing" title="逻辑斯谛回归模型">逻辑斯谛回归模型</a></li></ul></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a><ul><li><a class="toc-href" href="#luo-ji-si-di-hui-gui-mo-xing" title="逻辑斯谛回归模型">逻辑斯谛回归模型</a></li><li><a class="toc-href" href="#zui-da-shang-mo-xing" title="最大熵模型">最大熵模型</a></li></ul></li><li><a class="toc-href" href="#ce-lue_1" title="策略">策略</a><ul><li><a class="toc-href" href="#luo-ji-si-di-hui-gui-mo-xing_1" title="逻辑斯谛回归模型">逻辑斯谛回归模型</a></li></ul></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -166,6 +166,38 @@
     F(x)&amp;=P(\leqslant x)=\frac{1}{1+\mathrm{e}^{-(x-\mu)/\gamma}}\\
     f(x)&amp;=F'(x)=\frac{\mathrm{e}^{-(x-\mu)/\gamma}}{\gamma(1+\mathrm{e}^{-(x-\mu)/\gamma})^2}
 \end{align}$$</div>
+<p>逻辑斯谛分布函数与密度函数的图像分别如下：</p>
+<p><img alt="逻辑斯谛分布" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7554?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>将逻辑斯谛分布函数简化，可以得到 Sigmoid 函数：</p>
+<div class="math">$$S(x)=\frac{1}{1+\mathrm{e}^{-x}}=\frac{\mathrm{e}^x}{1+\mathrm{e}^x}$$</div>
+<p>回忆二分类的感知机 <span class="math">\(w\cdot x+b\)</span>，超平面将实例分作 <span class="math">\(w\cdot x+b\geqslant 0\)</span> 与 <span class="math">\(w\cdot x+b&lt; 0\)</span> 两类。可以看出，<span class="math">\(w\cdot x+b\)</span> 的值域为实数域，那么就可以利用逻辑斯谛分布将实数域映射到 <span class="math">\((-1，+1)\)</span>，实现分类。</p>
+<p>为了表述简洁，令 <span class="math">\(w=(w^{(1)},w^{(2)},\cdots,w^{(n)},b)^{\mathrm{T}}\)</span>，<span class="math">\(x=(x^{(1)},x^{(2)},\cdots,x^{(n)},1)^{\mathrm{T}}\)</span>，将 <span class="math">\(w\cdot x\)</span> 代入 Sigmoid 函数：</p>
+<div class="math">$$\begin{align}
+    P(Y=1|x)&amp;=\frac{\exp(w\cdot x)}{1+\exp(w\cdot x)}\\
+    P(Y=0|x)&amp;=1-P(Y=1|x)=\frac{1}{1+\exp(w\cdot x)}
+\end{align}$$</div>
+<p>这就是二项逻辑斯谛回归模型。从式中也能看到，若线性函数 <span class="math">\(w\cdot x\)</span>越大，<span class="math">\(P(Y=1|x)\)</span> 概率越大；若线性函数 <span class="math">\(w\cdot x\)</span>越小，<span class="math">\(P(Y=0|x)\)</span> 概率越大。最后就通过对比 <span class="math">\(P(Y=1|x)\)</span> 与 <span class="math">\(P(Y=0|x)\)</span> 的大小来确定实例的类别。</p>
+<h3 id="zui-da-shang-mo-xing">最大熵模型</h3>
+<p>最大熵原理认为，熵最大的模型是最好的模型。这是一个十分在「直觉」的原理，例如说，在等待公交车时，下一辆公交车只有两种情况&mdash;&mdash;「乘」或「不乘」，基于这种判断，通常会认为下一辆公交车有 50% 的概率可乘，50% 的概率不可乘。</p>
+<p>再例如，某事件有 <span class="math">\(\{A,B,C,D,E\}\)</span> 5 种情况，相应满足约束：</p>
+<div class="math">$$P(A)+P(B)+P(C)+P(D)+P(E)=1$$</div>
+<p>在没有更多信息的情况下，根据最大熵原理，我们会认为</p>
+<div class="math">$$P(A)=P(B)=P(C)=P(D)=P(E)=\frac{1}{5}$$</div>
+<p>如果额外获得了信息 <span class="math">\(P(A)+P(B)=\frac{3}{10}\)</span>，那么根据最大熵原理就会认为</p>
+<div class="math">$$P(A)=P(B)=\frac{3}{20},\ P(C)=P(D)=P(E)=\frac{7}{30}$$</div>
+<p>可以看出，在缺少信息的情况下，最大熵原理将那些不确定的部分都视作等可能。等概率表示了对于事实的无知，但是没有更多信息，这种判断又是合理的。</p>
+<h2 id="ce-lue_1">策略</h2>
+<h3 id="luo-ji-si-di-hui-gui-mo-xing_1">逻辑斯谛回归模型</h3>
+<p>设数据集中的频率为</p>
+<div class="math">$$P(Y=1|x)=\pi(x),\ P(Y=0|x)=1-\pi(x)$$</div>
+<p>构造对数似然函数：</p>
+<div class="math">$$\begin{align}
+    L(w)&amp;=\log\prod_{i}[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}\\
+    &amp;=\sum_i[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+    &amp;=\sum_i[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i)]
+\end{align}$$</div>
+<p>那么求 <span class="math">\(L(w)\)</span> 的极大值，就能得到估计值 <span class="math">\(\hat{w}\)</span>，得到回归模型。也就是说，求解逻辑斯谛回归模型就是对于对数似然函数的最优化问题。</p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;似然函数定义为 <span class="math">\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)</span>，即抽样结果中各频率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是<em>最大似然估计</em>的原理。</p></div></p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

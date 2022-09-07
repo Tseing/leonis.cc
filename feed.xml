@@ -5,7 +5,7 @@
 &lt;p&gt;&lt;img alt="黑名单" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7550?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;在网上看了一圈，原来 &lt;code&gt;github.io&lt;/code&gt; 早就进了黑名单，但还没有被屏蔽。各个网络运营商参考了这份黑名单，但采取了不同的措施，例如我以前使用联通宽带时，访问 Github Pages 时就一切正常，现在切换到移动的服务，却没法访问了。至于电信，暂时还不了解。&lt;/p&gt;
 &lt;p&gt;既然不是被长城屏蔽，只是运营商提供的 DNS 不解析某些网址，那就好办了，只需更换 DNS 服务器即可。下面以阿里公共 DNS &lt;code&gt;223.5.5.5&lt;/code&gt; 与 &lt;code&gt;223.6.6.6&lt;/code&gt; 为例，更换设备的 DNS 服务器。&lt;/p&gt;
-&lt;h2 id="windows"&gt;Windows&lt;/h2&gt;
+&lt;h2 id="windows-she-bei"&gt;Windows 设备&lt;/h2&gt;
 &lt;p&gt;&lt;img alt="网络连接属性" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7551?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;打开网络连接的属性后，选择 IPv4 属性，输入相应的 DNS 地址后保存即可生效。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="IPv4属性" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7552?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
@@ -14,11 +14,12 @@
 &lt;h2 id="android-she-bei"&gt;Android 设备&lt;/h2&gt;
 &lt;p&gt;Android 设备稍有不同，因为在 &lt;code&gt;Wi-Fi&lt;/code&gt; - &lt;code&gt;高级选项&lt;/code&gt; 中，若选择手动配置 DNS，就必须关闭 DHCP 服务，改用静态 IP 地址，这可能会与路由配置冲突。&lt;/p&gt;
 &lt;p&gt;在新版本的 Android 中，在 &lt;code&gt;Wi-Fi&lt;/code&gt; 界面中提供了一个新的选项 &lt;code&gt;私人 DNS&lt;/code&gt;。选择 &lt;code&gt;私人 DNS&lt;/code&gt;，打开该功能后，输入阿里 DNS 的域名 &lt;code&gt;dns.alidns.com&lt;/code&gt; 后保存。注意在此处不能输入 DNS 地址。&lt;/p&gt;
-&lt;h2 id="debian"&gt;Debian&lt;/h2&gt;
+&lt;h2 id="linux-she-bei"&gt;Linux 设备&lt;/h2&gt;
 &lt;p&gt;我的 Linux 设备是安装了 KDE Plasma 桌面的 Debian 11，想必没有安装桌面的 Linux 也没有用浏览器访问网页的需求。在 KDE 下更改 DNS 就和 Windows 一样容易了，在网络选项中选择 &lt;code&gt;IPv4&lt;/code&gt;，将方法改为 &lt;code&gt;自动（仅网络地址）&lt;/code&gt;后再添加 DNS 服务器地址。保存设置后需要注销再重新登录才能生效。&lt;/p&gt;
 &lt;h2 id="hou-ji"&gt;后记&lt;/h2&gt;
 &lt;p&gt;无论如何，修改 DNS 也只是权宜之计，过不了多久，可能其他 DNS 供应方也不再解析「黑名单」中的地址，或是被长城挡在外面，那时恐怕就无计可施了。&lt;/p&gt;
-&lt;p&gt;因此我也一直想着把网站搬到国内的服务器上，但是国内的服务器需要各种备案手续，让我比较难接受。考虑种种因素之后，决定还是让我的博客继续在外面漂流一阵子吧&amp;hellip;&amp;hellip;&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Github"></category><category term="DNS"></category></entry><entry><title>函数绘图工具的选择</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-05-function-drawer.html" rel="alternate"></link><published>2022-09-05T00:00:00+08:00</published><updated>2022-09-05T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-05:/sui-sui-nian/2022-09-05-function-drawer.html</id><summary type="html">&lt;p&gt;不管是论文、博客文章还是 PPT，凡是有数学公式的地方，常常都需要伴有函数图象。绘制插图的工具多到难以计数，找到称心顺手的工具更是难上加难，以下就尝试过的工具给出我的评价，或许能提供一些参考。&lt;/p&gt;</summary><content type="html">&lt;p&gt;不管是论文、博客文章还是 PPT，凡是有数学公式的地方，常常都需要伴有函数图象。绘制插图的工具多到难以计数，找到称心顺手的工具更是难上加难，以下就尝试过的工具给出我的评价，或许能提供一些参考。&lt;/p&gt;
+&lt;p&gt;因此我也一直想着把网站搬到国内的服务器上，但是国内的服务器需要各种备案手续，让我比较难接受。考虑种种因素之后，决定还是让我的博客继续在外面漂流一阵子吧&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;{warn begin}本文最后更新于 2022 年 09 月 06 日，请确定内容是否过时。{warn end}&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Github"></category><category term="DNS"></category></entry><entry><title>函数绘图工具的选择</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-05-function-drawer.html" rel="alternate"></link><published>2022-09-05T00:00:00+08:00</published><updated>2022-09-05T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-05:/sui-sui-nian/2022-09-05-function-drawer.html</id><summary type="html">&lt;p&gt;不管是论文、博客文章还是 PPT，凡是有数学公式的地方，常常都需要伴有函数图象。绘制插图的工具多到难以计数，找到称心顺手的工具更是难上加难，以下就尝试过的工具给出我的评价，或许能提供一些参考。&lt;/p&gt;</summary><content type="html">&lt;p&gt;不管是论文、博客文章还是 PPT，凡是有数学公式的地方，常常都需要伴有函数图象。绘制插图的工具多到难以计数，找到称心顺手的工具更是难上加难，以下就尝试过的工具给出我的评价，或许能提供一些参考。&lt;/p&gt;
 &lt;h2 id="powerpoint"&gt;PowerPoint&lt;/h2&gt;
 &lt;p&gt;对，没有看错，正是 Office 家族的 PowerPoint，PowerPoint 的绘图工具十分强劲。&lt;/p&gt;
 &lt;p&gt;一来是具有图形化界面，所见即所得的操作方式很适合完全没有绘图基础的用户，在一顿摸索之后总能画得出不错的图形。二是 PowerPoint 支持多种图片格式，不管是网络上常用的 JPEG，还是用于论文的 SVG，一键就能导出。此外，在 PowerPoint 原生环境中绘制的图形，插入到 PPT 中更是天衣无缝。再者，PowerPoint 是 Windows 系统中的预装软件，开箱即用，十分方便。&lt;/p&gt;
@@ -46,7 +47,7 @@ ax.plot(x, y(x))
 
 plt.show()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img alt="matplotlib 默认" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7548?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="默认" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7548?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;matplotlib 的默认样式虽然也很美观，但是与我们想要的教科书样式差别很大，教科书样式的主要特点就是坐标轴位于原点、黑白配色，我的解决方案是使用以下代码的样式：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;import numpy as np
 import matplotlib.pyplot as plt
@@ -86,8 +87,69 @@ ax2.plot(x, y(x), lw=2, c="black")
 
 plt.show()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img alt="matplotlib 教科书式" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7549?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
-&lt;p&gt;唯一的不足之处是坐标轴的箭头稍有些肥大，略显怪异，我仍在寻找修改的方法，不过这样的样式已经暂时够用了。&lt;/p&gt;</content><category term="碎碎念"></category><category term="matplotlib"></category><category term="Python"></category></entry><entry><title>詞藪</title><link href="https://tseing.github.io/gu-zhi-dui/2022-08-31-hokciu-word-collect.html" rel="alternate"></link><published>2022-08-31T00:00:00+08:00</published><updated>2022-08-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-31:/gu-zhi-dui/2022-08-31-hokciu-word-collect.html</id><summary type="html">&lt;p&gt;輯錄閩東語散佚在民間的字詞。&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;img alt="教科书式" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7549?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;唯一的不足之处是坐标轴的箭头稍有些肥大，略显怪异，我没有找到改变这个箭头样式的方法，于是只好直接修改默认样式。在 &lt;code&gt;matplotlib.patches&lt;/code&gt; 中找到以下代码片段：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@_register_style(_style_list, name="-|&amp;gt;")
+    class CurveFilledB(_Curve):
+        """An arrow with filled triangle head at the end."""
+        arrow = "-|&amp;gt;"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在后面添加代码修改箭头样式，修改后的代码片段是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;@_register_style(_style_list, name="-|&amp;gt;")
+    class CurveFilledB(_Curve):
+        """An arrow with filled triangle head at the end."""
+        arrow = "-|&amp;gt;"
+        # 修改默认箭头样式
+        def __init__(self, head_length=.75, head_width=.125):
+            super().__init__(head_length=head_length, head_width=head_width)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{warn begin}对于 &lt;code&gt;matplotlib.patches&lt;/code&gt; 的修改，在matplotlib 更新后会失效，需要重新修改。{warn end}&lt;/p&gt;
+&lt;p&gt;最后使用以下代码绘制图像：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;import numpy as np
+import matplotlib.pyplot as plt
+import mpl_toolkits.axisartist as axisartist
+
+def scale_axes(ax, x, y, xscale=0.2, yscale=0.2):
+    dx = np.max(x) - np.min(x)
+    ax.set_xlim([np.min(x)-xscale*dx, np.max(x)+xscale*dx])
+    dy = np.max(y) - np.min(y)
+    ax.set_ylim([np.min(y)-yscale*dy, np.max(y)+yscale*dy])
+
+fig = plt.figure(figsize=(10,4))
+ax1 = axisartist.Subplot(fig, 121)
+ax2 = axisartist.Subplot(fig, 122)
+fig.add_axes(ax1)
+fig.add_axes(ax2)
+
+axes_list = [ax1, ax2]
+
+for ax in axes_list:
+    ax.axis[:].set_visible(False)
+    ax.axis["x"] = ax.new_floating_axis(0,0)
+    ax.axis["y"] = ax.new_floating_axis(1,0)
+    ax.axis["x"].set_axisline_style("-|&amp;gt;", size=1.5)
+    ax.axis["y"].set_axisline_style("-|&amp;gt;", size=1.5)
+    ax.axis["x"].line.set_facecolor("black")
+    ax.axis["y"].line.set_facecolor("black")
+
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+x = np.arange(-6, 6, 0.1)
+y = lambda x: 1/(1+np.e**(-x))
+ax1.plot(x, y(x), lw=2, c="black")
+scale_axes(ax1, x, y(x))
+
+x = np.arange(-6, 6, 0.1)
+y = lambda x: np.e**(-x)/(1+np.e**(-x))**2
+ax2.plot(x, y(x), lw=2, c="black")
+scale_axes(ax2, x, y(x))
+
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中我新增了 &lt;code&gt;scale_axes()&lt;/code&gt; 用于控制函数图像按比例自动缩放，能够让左右图的坐标轴对齐，风格更统一，这样的图像就非常美观了。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="修改箭头" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7554?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;{warn begin}本文最后更新于 2022 年 09 月 07 日，请确定内容是否过时。{warn end}&lt;/p&gt;</content><category term="碎碎念"></category><category term="matplotlib"></category><category term="Python"></category></entry><entry><title>詞藪</title><link href="https://tseing.github.io/gu-zhi-dui/2022-08-31-hokciu-word-collect.html" rel="alternate"></link><published>2022-08-31T00:00:00+08:00</published><updated>2022-08-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-31:/gu-zhi-dui/2022-08-31-hokciu-word-collect.html</id><summary type="html">&lt;p&gt;輯錄閩東語散佚在民間的字詞。&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;p class="cite"&gt;洎夫醇醨旣異，步驟不同，一物多名，繫方俗之語；片言殊訓，滯今古之情，將使後生若爲之鑽仰？&lt;/p&gt;
 &amp;mdash;&amp;mdash;《爾雅疏敘》&lt;/p&gt;
 &lt;/blockquote&gt;

@@ -155,7 +155,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#windows" title="Windows">Windows</a></li><li><a class="toc-href" href="#ios-she-bei" title="IOS 设备">IOS 设备</a></li><li><a class="toc-href" href="#android-she-bei" title="Android 设备">Android 设备</a></li><li><a class="toc-href" href="#debian" title="Debian">Debian</a></li><li><a class="toc-href" href="#hou-ji" title="后记">后记</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#windows-she-bei" title="Windows 设备">Windows 设备</a></li><li><a class="toc-href" href="#ios-she-bei" title="IOS 设备">IOS 设备</a></li><li><a class="toc-href" href="#android-she-bei" title="Android 设备">Android 设备</a></li><li><a class="toc-href" href="#linux-she-bei" title="Linux 设备">Linux 设备</a></li><li><a class="toc-href" href="#hou-ji" title="后记">后记</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -165,7 +165,7 @@
 <p><img alt="黑名单" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7550?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>在网上看了一圈，原来 <code>github.io</code> 早就进了黑名单，但还没有被屏蔽。各个网络运营商参考了这份黑名单，但采取了不同的措施，例如我以前使用联通宽带时，访问 Github Pages 时就一切正常，现在切换到移动的服务，却没法访问了。至于电信，暂时还不了解。</p>
 <p>既然不是被长城屏蔽，只是运营商提供的 DNS 不解析某些网址，那就好办了，只需更换 DNS 服务器即可。下面以阿里公共 DNS <code>223.5.5.5</code> 与 <code>223.6.6.6</code> 为例，更换设备的 DNS 服务器。</p>
-<h2 id="windows">Windows</h2>
+<h2 id="windows-she-bei">Windows 设备</h2>
 <p><img alt="网络连接属性" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7551?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>打开网络连接的属性后，选择 IPv4 属性，输入相应的 DNS 地址后保存即可生效。</p>
 <p><img alt="IPv4属性" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7552?authkey=ALYpzW-ZQ_VBXTU"/></p>
@@ -174,11 +174,12 @@
 <h2 id="android-she-bei">Android 设备</h2>
 <p>Android 设备稍有不同，因为在 <code>Wi-Fi</code> - <code>高级选项</code> 中，若选择手动配置 DNS，就必须关闭 DHCP 服务，改用静态 IP 地址，这可能会与路由配置冲突。</p>
 <p>在新版本的 Android 中，在 <code>Wi-Fi</code> 界面中提供了一个新的选项 <code>私人 DNS</code>。选择 <code>私人 DNS</code>，打开该功能后，输入阿里 DNS 的域名 <code>dns.alidns.com</code> 后保存。注意在此处不能输入 DNS 地址。</p>
-<h2 id="debian">Debian</h2>
+<h2 id="linux-she-bei">Linux 设备</h2>
 <p>我的 Linux 设备是安装了 KDE Plasma 桌面的 Debian 11，想必没有安装桌面的 Linux 也没有用浏览器访问网页的需求。在 KDE 下更改 DNS 就和 Windows 一样容易了，在网络选项中选择 <code>IPv4</code>，将方法改为 <code>自动（仅网络地址）</code>后再添加 DNS 服务器地址。保存设置后需要注销再重新登录才能生效。</p>
 <h2 id="hou-ji">后记</h2>
 <p>无论如何，修改 DNS 也只是权宜之计，过不了多久，可能其他 DNS 供应方也不再解析「黑名单」中的地址，或是被长城挡在外面，那时恐怕就无计可施了。</p>
 <p>因此我也一直想着把网站搬到国内的服务器上，但是国内的服务器需要各种备案手续，让我比较难接受。考虑种种因素之后，决定还是让我的博客继续在外面漂流一阵子吧&hellip;&hellip;</p>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 09 月 06 日，请确定内容是否过时。</p></div></p>
             </section>
 
             <section class="post-info">
