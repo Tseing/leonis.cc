@@ -1,5 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-06T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>国内部分网络无法访问 githui.io 的解决方案</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html" rel="alternate"></link><published>2022-09-06T00:00:00+08:00</published><updated>2022-09-06T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-06:/sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html</id><summary type="html">&lt;p&gt;和往常一样，在浏览器中键入我的 Github Pages 地址，Firefox 却提示「找不到服务器」。发现运营商自动提供的 DNS 服务不解析 github.io，需要通过更改 DNS 服务来解决。&lt;/p&gt;</summary><content type="html">&lt;p&gt;和往常一样，在浏览器中键入我的 Github Pages 地址，Firefox 却提示「找不到服务器」。我心头一紧，以为是 Github 的服务全部挂掉了，但发现 Github 可以正常访问。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-09T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第五章：逻辑斯谛回归与最大熵模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html" rel="alternate"></link><published>2022-09-09T00:00:00+08:00</published><updated>2022-09-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-09:/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，都利用了极大似然估计原理。本章还介绍了广义拉格朗日函数和拟牛顿法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;h3 id="luo-ji-si-di-hui-gui-mo-xing"&gt;逻辑斯谛回归模型&lt;/h3&gt;
+&lt;p&gt;逻辑斯谛分布具有良好的性质，能够将 &lt;span class="math"&gt;\((-\infty,+\infty)\)&lt;/span&gt; 映射至 &lt;span class="math"&gt;\((-1，+1)\)&lt;/span&gt;，因此选用逻辑斯谛分布作为回归模型。逻辑斯谛分布函数与密度函数为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    F(x)&amp;amp;=P(\leqslant x)=\frac{1}{1+\mathrm{e}^{-(x-\mu)/\gamma}}\\
+    f(x)&amp;amp;=F'(x)=\frac{\mathrm{e}^{-(x-\mu)/\gamma}}{\gamma(1+\mathrm{e}^{-(x-\mu)/\gamma})^2}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;逻辑斯谛分布函数与密度函数的图像分别如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="逻辑斯谛分布" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7554?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;将逻辑斯谛分布函数简化，可以得到 Sigmoid 函数：&lt;/p&gt;
+&lt;div class="math"&gt;$$S(x)=\frac{1}{1+\mathrm{e}^{-x}}=\frac{\mathrm{e}^x}{1+\mathrm{e}^x}$$&lt;/div&gt;
+&lt;p&gt;回忆二分类的感知机 &lt;span class="math"&gt;\(w\cdot x+b\)&lt;/span&gt;，超平面将实例分作 &lt;span class="math"&gt;\(w\cdot x+b\geqslant 0\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(w\cdot x+b&amp;lt; 0\)&lt;/span&gt; 两类。可以看出，&lt;span class="math"&gt;\(w\cdot x+b\)&lt;/span&gt; 的值域为实数域，那么就可以利用逻辑斯谛分布将实数域映射到 &lt;span class="math"&gt;\((-1，+1)\)&lt;/span&gt;，实现分类。&lt;/p&gt;
+&lt;p&gt;为了表述简洁，令 &lt;span class="math"&gt;\(w=(w^{(1)},w^{(2)},\cdots,w^{(n)},b)^{\mathrm{T}}\)&lt;/span&gt;，&lt;span class="math"&gt;\(x=(x^{(1)},x^{(2)},\cdots,x^{(n)},1)^{\mathrm{T}}\)&lt;/span&gt;，将 &lt;span class="math"&gt;\(w\cdot x\)&lt;/span&gt; 代入 Sigmoid 函数：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    P(Y=1|x)&amp;amp;=\frac{\exp(w\cdot x)}{1+\exp(w\cdot x)}\\
+    P(Y=0|x)&amp;amp;=1-P(Y=1|x)=\frac{1}{1+\exp(w\cdot x)}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;这就是二项逻辑斯谛回归模型。从式中也能看到，若线性函数 &lt;span class="math"&gt;\(w\cdot x\)&lt;/span&gt;越大，&lt;span class="math"&gt;\(P(Y=1|x)\)&lt;/span&gt; 概率越大；若线性函数 &lt;span class="math"&gt;\(w\cdot x\)&lt;/span&gt;越小，&lt;span class="math"&gt;\(P(Y=0|x)\)&lt;/span&gt; 概率越大。最后就通过对比 &lt;span class="math"&gt;\(P(Y=1|x)\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(P(Y=0|x)\)&lt;/span&gt; 的大小来确定实例的类别。&lt;/p&gt;
+&lt;h3 id="zui-da-shang-mo-xing"&gt;最大熵模型&lt;/h3&gt;
+&lt;p&gt;最大熵原理认为，熵最大的模型是最好的模型。这是一个十分在「直觉」的原理，例如说，在等待公交车时，下一辆公交车只有两种情况&amp;mdash;&amp;mdash;「乘」或「不乘」，基于这种判断，通常会认为下一辆公交车有 50% 的概率可乘，50% 的概率不可乘。&lt;/p&gt;
+&lt;p&gt;再例如，某事件有 &lt;span class="math"&gt;\(\{A,B,C,D,E\}\)&lt;/span&gt; 5 种情况，相应满足约束：&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A)+P(B)+P(C)+P(D)+P(E)=1$$&lt;/div&gt;
+&lt;p&gt;在没有更多信息的情况下，根据最大熵原理，我们会认为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A)=P(B)=P(C)=P(D)=P(E)=\frac{1}{5}$$&lt;/div&gt;
+&lt;p&gt;如果额外获得了信息 &lt;span class="math"&gt;\(P(A)+P(B)=\frac{3}{10}\)&lt;/span&gt;，那么根据最大熵原理就会认为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(A)=P(B)=\frac{3}{20},\ P(C)=P(D)=P(E)=\frac{7}{30}$$&lt;/div&gt;
+&lt;p&gt;可以看出，在缺少信息的情况下，最大熵原理将那些不确定的部分都视作等可能。等概率表示了对于事实的无知，但是没有更多信息，这种判断又是合理的。&lt;/p&gt;
+&lt;p&gt;对于训练数据集，可以得到经验分布 &lt;span class="math"&gt;\(\tilde{P}(X=x,Y=y)\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\tilde{P}(X=x)\)&lt;/span&gt;，这里的经验分布是用频数估计得到的。但是使用频数估计联合分布是不准确的，这种不准确在最大熵模型中会造成约束条件的不准确，而约束条件又是最大熵模型的关键。例如上例中，约束条件为 &lt;span class="math"&gt;\(P(A)+P(B)=\frac{3}{10}\)&lt;/span&gt;，若该约束条件不准确，后续的概率估计也是无意义的。&lt;/p&gt;
+&lt;p&gt;因此在最大熵模型中需要引入特征函数，特征函数用于人为选取「合适」的实例：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    f(x,y)=
+    \begin{cases}
+        1, &amp;amp;x\ 与\ y\ 满足某事实\\
+        0, &amp;amp;否则
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;特征函数 &lt;span class="math"&gt;\(f(x,y)\)&lt;/span&gt; 关于经验分布 &lt;span class="math"&gt;\(\tilde{P}(X,Y)\)&lt;/span&gt; 的期望为&lt;/p&gt;
+&lt;div class="math"&gt;$$E_{\tilde{P}}(f)=\sum_{x,y}\tilde{P}(x,y)f(x,y)$$&lt;/div&gt;
+&lt;p&gt;特征函数 &lt;span class="math"&gt;\(f(x,y)\)&lt;/span&gt; 关于模型 &lt;span class="math"&gt;\(P(X|Y)\)&lt;/span&gt; 与经验分布 &lt;span class="math"&gt;\(\tilde{P}(X)\)&lt;/span&gt; 的期望为&lt;/p&gt;
+&lt;div class="math"&gt;$$E_P(f)=\sum_{x,y}\tilde{P}(x)P(y|x)f(x,y)$$&lt;/div&gt;
+&lt;p&gt;若模型准确，二者理应相等，即&lt;/p&gt;
+&lt;div class="math"&gt;$$E_{\tilde{P}}(f)=E_P(f)$$&lt;/div&gt;
+&lt;p&gt;{note begin}回忆条件概率基本公式 &lt;span class="math"&gt;\(P(x,y)=P(y|x)P(x)\)&lt;/span&gt;。{note end}&lt;/p&gt;
+&lt;p&gt;满足所有约束条件的模型构成的集合为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{C}\equiv \{P\in\mathcal{P}|E_P(f_i)=E_{\tilde{P}}(f_i)\}$$&lt;/div&gt;
+&lt;p&gt;在条件概率分布 &lt;span class="math"&gt;\(P(Y|X)\)&lt;/span&gt; 上的条件熵为&lt;/p&gt;
+&lt;div class="math"&gt;$$H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)$$&lt;/div&gt;
+&lt;p&gt;在集合 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 中选出 &lt;span class="math"&gt;\(H(P)\)&lt;/span&gt; 最大的模型即为最大熵模型。&lt;/p&gt;
+&lt;h2 id="ce-lue_1"&gt;策略&lt;/h2&gt;
+&lt;h3 id="luo-ji-si-di-hui-gui-mo-xing_1"&gt;逻辑斯谛回归模型&lt;/h3&gt;
+&lt;p&gt;设数据集中的概率为&lt;/p&gt;
+&lt;div class="math"&gt;$$P(Y=1|x)=\pi(x),\ P(Y=0|x)=1-\pi(x)$$&lt;/div&gt;
+&lt;p&gt;构造对数似然函数：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    L(w)&amp;amp;=\log\prod_{i}[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}\\
+    &amp;amp;=\sum_i[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+    &amp;amp;=\sum_i[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i)]
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;那么求 &lt;span class="math"&gt;\(L(w)\)&lt;/span&gt; 的极大值，就能得到估计值 &lt;span class="math"&gt;\(\hat{w}\)&lt;/span&gt;，得到回归模型。也就是说，求解逻辑斯谛回归模型就是对于对数似然函数的最优化问题。&lt;/p&gt;
+&lt;p&gt;{note begin}似然函数定义为 &lt;span class="math"&gt;\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)&lt;/span&gt;，即抽样结果中各概率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是&lt;em&gt;最大似然估计&lt;/em&gt;的原理。{note end}&lt;/p&gt;
+&lt;h3 id="yan-yi-la-ge-lang-ri-han-shu"&gt;广义拉格朗日函数&lt;/h3&gt;
+&lt;p&gt;最大熵模型中使用了拉格朗日乘数法，因此有必要先介绍一下广义拉格朗日函数。回忆一下高等数学中的拉格朗日函数，若函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 有约束条件 &lt;span class="math"&gt;\(\varphi(x,y)=0\)&lt;/span&gt;，那么拉格朗日函数就为&lt;/p&gt;
+&lt;div class="math"&gt;$$L(x,y)=f(x,y)+\lambda\varphi(x,y)$$&lt;/div&gt;
+&lt;p&gt;欲寻找函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 的可能极值点，只需令拉格朗日函数的各一阶编导数为零，联立求解。&lt;/p&gt;
+&lt;p&gt;这里引入广义拉格朗日函数，若有约束最优化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \min_x&amp;amp;\quad f(x)\\
+    \mathrm{s.t.}&amp;amp;\quad c_i(x)\leqslant0,\ h_j(x)=0
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;那么广义拉格朗日函数为&lt;/p&gt;
+&lt;div class="math"&gt;$$L(x,\alpha,\beta)=f(x)+\color{teal}{\sum_i\alpha_ic_i(x)}+\color{steelblue}{\sum_j\beta_jh_j(x)}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\beta_j\)&lt;/span&gt; 为拉格朗日乘子，&lt;span class="math"&gt;\(\alpha_i\geqslant0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;可以看出，只要 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 满足约束，&lt;span class="math"&gt;\(L(x,\alpha,\beta)\)&lt;/span&gt; 的第二项是递减的，第三项是不增的。那么就有&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \max_{\alpha,\beta:\alpha_i\geqslant0}L(x,\alpha,\beta)=
+    \begin{cases}
+        f(x), &amp;amp;x\ 满足约束\\
+        +\infty, &amp;amp;否则
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;原来的约束最优化问题 &lt;span class="math"&gt;\(\min_xf(x)\)&lt;/span&gt; 在这里就可以改写为 &lt;/p&gt;
+&lt;div class="math"&gt;$$\min_x\max_{\alpha,\beta:\alpha_i\geqslant0}L(x,\alpha,\beta)$$&lt;/div&gt;
+&lt;p&gt;在满足 Karush-Kuhn-Tucker（KKT）条件下，原始问题的解与对偶问题的解相等，即&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_x\max_{\alpha,\beta:\alpha_i\geqslant0}L(x,\alpha,\beta)=\max_{\alpha,\beta:\alpha_i\geqslant0}\min_xL(x,\alpha,\beta)$$&lt;/div&gt;
+&lt;h3 id="zui-da-shang-mo-xing_1"&gt;最大熵模型&lt;/h3&gt;
+&lt;p&gt;最大熵模型的学习过程是有约束的最优化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \max_{P\in\mathcal{C}}&amp;amp;\quad H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)\\
+    \mathrm{s.t.}&amp;amp;\quad E_P(f_i)=E_{\tilde{P}}(f_i),\ \sum_yP(y|x)=1
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;按照凸优化的习惯（求向下凸的函数的最小值），问题等价于&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \min_{P\in\mathcal{C}}&amp;amp;\quad -H(P)=\sum_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)\\
+    \mathrm{s.t.}&amp;amp;\quad E_P(f_i)=E_{\tilde{P}}(f_i),\ \sum_yP(y|x)=1
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;构造拉格朗日函数 &lt;span class="math"&gt;\(L(P,w)\)&lt;/span&gt;：&lt;/p&gt;
+&lt;div class="math"&gt;$$L(P,w)\equiv-H(P)+w_0\left[1-\sum_yP(y|x)\right]+\sum_iw_i[E_P(f_i)-E_{\tilde{P}}(f_i)]$$&lt;/div&gt;
+&lt;p&gt;在这里，原始问题的解与对偶问题的解同样是等价的，即&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{P\in\mathcal{C}}\max_wL(P,w)=\max_w\min_{P\in\mathcal{C}}L(P,w)$$&lt;/div&gt;
+&lt;p&gt;那么就可以通过求解对偶问题来求解原始问题，具体来说，就是先求解 &lt;span class="math"&gt;\(\min_{P\in\mathcal{C}}L(P,w)\)&lt;/span&gt;，固定 &lt;span class="math"&gt;\(w\)&lt;/span&gt;，令 &lt;span class="math"&gt;\(\frac{\partial L(P,w)}{\partial P(y|x)}=0\)&lt;/span&gt;，得到 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt; 的表达式后将其代入 &lt;span class="math"&gt;\(L(P,w)\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\(\min_{P\in\mathcal{C}}L(P,w)\)&lt;/span&gt;。再令 &lt;span class="math"&gt;\(\frac{\partial \min_{P\in\mathcal{C}}L(P,w)}{\partial w}=0\)&lt;/span&gt;，最终得到 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id="suan-fa_1"&gt;算法&lt;/h2&gt;
+&lt;p&gt;逻辑斯谛回归模型和最大熵模型都是光滑的凸函数，适用于多种最优化方法，常用的方法包括迭代尺度算法、梯度下降法、牛顿法或拟牛顿法。&lt;/p&gt;
+&lt;h3 id="gai-jin-de-die-dai-chi-du-fa"&gt;改进的迭代尺度法&lt;/h3&gt;
+&lt;p&gt;令 &lt;span class="math"&gt;\(\frac{\partial L(P,w)}{\partial P(y|x)}=0\)&lt;/span&gt;，可以得到&lt;/p&gt;
+&lt;div class="math"&gt;$$P(y|x)=\frac{\exp(\sum_iw_if_i(x,y))}{\exp(1-w_0)}$$&lt;/div&gt;
+&lt;p&gt;其中的 &lt;span class="math"&gt;\(\exp(1-w_0)\)&lt;/span&gt; 部分是个定值，不影响概率的相对大小，因此略去该项并归一化，得到&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    P_w(y|x)&amp;amp;=\frac{1}{Z_w(x)}\exp\left(\sum_iw_if_i(x,y)\right)\\
+    Z_w(x)&amp;amp;=\sum_y\exp\left(w_if_i(x,y)\right)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;对数似然函数为&lt;/p&gt;
+&lt;div class="math"&gt;$$L(w)=\log\prod_{x,y}P(y|x)^{\tilde{P}(x,y)}=\sum_{x,y}\tilde{P}(x,y)\log P(y|x)$$&lt;/div&gt;
+&lt;p&gt;将 &lt;span class="math"&gt;\(P_w(y|x)\)&lt;/span&gt; 代入得到&lt;/p&gt;
+&lt;div class="math"&gt;$$L(w)=\sum_{x,y}\tilde{P}(x,y)\sum_iw_if_i(x,y)-\sum_x\tilde{P}(x)\log Z_w(x)$$&lt;/div&gt;
+&lt;p&gt;迭代尺度法的思路就是寻找一个新参数向量 &lt;span class="math"&gt;\(w+\delta=(w_i+\delta_1,w_2+\delta_2,\cdots,w_n+\delta_n)^\mathrm{T}\)&lt;/span&gt;，使 &lt;span class="math"&gt;\(L(w)\)&lt;/span&gt; 增大，并不断迭代更新 &lt;span class="math"&gt;\(w\rightarrow w+\delta\)&lt;/span&gt;，最终使 &lt;span class="math"&gt;\(L(w)\)&lt;/span&gt; 最大。&lt;/p&gt;
+&lt;p&gt;为了简化计算，在该算法中需要引入一个量 &lt;span class="math"&gt;\(f^\#(x,y)\)&lt;/span&gt;：&lt;/p&gt;
+&lt;div class="math"&gt;$$f^\#(x,y)=\sum_if_i(x,y)$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(f^\#(x,y)\)&lt;/span&gt; 表示了所有特征出现的次数。&lt;/p&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(w\)&lt;/span&gt; 更新前后似然函数的变化值为（证明略）&lt;/p&gt;
+&lt;div class="math"&gt;$$L(w+\delta)-L(w)\geqslant B(\delta|w)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$B(\delta|w)=\sum_{x,y}\tilde{P}(x,y)\sum_i\delta_if_i(x,y)+1-\sum_x\tilde{P}(x)\sum_yP_w(y|x)\sum_i\left(\frac{f_i(x,y)}{f^\#(x,y)}\right)\exp(\delta_i,f^\#(x,y))$$&lt;/div&gt;
+&lt;p&gt;我们需要找到 &lt;span class="math"&gt;\(B(\delta|w)\)&lt;/span&gt; 的极值，让每次迭代后 &lt;span class="math"&gt;\(L(w)\)&lt;/span&gt; 尽可能大，因此求 &lt;span class="math"&gt;\(B(\delta|w)\)&lt;/span&gt; 对 &lt;span class="math"&gt;\(\delta_i\)&lt;/span&gt; 的偏导，并令其为零，得到&lt;/p&gt;
+&lt;div class="math"&gt;$$\underbrace{\sum_{x,y}\tilde{P}(x)P_w(y|x)f_i(x,y)}_{E_P(f_i)}\exp(\delta_if^\#(x,y))=E_{\tilde{P}}(f_i)$$&lt;/div&gt;
+&lt;p&gt;解该方程即可得到用于每次迭代的 &lt;span class="math"&gt;\(\delta\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;若 &lt;span class="math"&gt;\(f^\#(x,y)\)&lt;/span&gt; 为常数，那么&lt;/p&gt;
+&lt;div class="math"&gt;$$\delta_i=\frac{1}{f^\#(x,y)}\log\frac{E_{\tilde{P}}(f_i)}{E_P(f_i)}$$&lt;/div&gt;
+&lt;p&gt;若 &lt;span class="math"&gt;\(f^\#(x,y)\)&lt;/span&gt; 不是常数，通常使用数值计算的方法求解。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 6.1（IIS 算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：特征函数 &lt;span class="math"&gt;\(f_i\)&lt;/span&gt;；经验分布 &lt;span class="math"&gt;\(\tilde{P}(X,Y)\)&lt;/span&gt;；模型 &lt;span class="math"&gt;\(P_w(y|x)\)&lt;/span&gt;；&lt;br/&gt;
+输出：最优参数 &lt;span class="math"&gt;\(w^*_i\)&lt;/span&gt;；最优模型 &lt;span class="math"&gt;\(P_{w^*}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;对所有 &lt;span class="math"&gt;\(i\)&lt;/span&gt;，取初值 &lt;span class="math"&gt;\(w_i=0\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;对每一个 &lt;span class="math"&gt;\(i\)&lt;/span&gt;，&lt;ol&gt;
+&lt;li&gt;解以下方程得到 &lt;span class="math"&gt;\(\delta_i\)&lt;/span&gt;：
+    &lt;div class="math"&gt;$$\sum_{x,y}\tilde{P}(x)P_w(y|x)f_i(x,y)\exp(\delta_if^\#(x,y))=E_{\tilde{P}}(f_i)$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;更新 &lt;span class="math"&gt;\(w_i\)&lt;/span&gt;：&lt;span class="math"&gt;\(w_i\leftarrow w_i+\delta_i\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;若不是所有 &lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 收敛，重复第 2 步。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="niu-dun-fa-yu-ni-niu-dun-fa"&gt;牛顿法与拟牛顿法&lt;/h3&gt;
+&lt;h4&gt;牛顿法&lt;/h4&gt;
+&lt;p&gt;对于最优化的目标目标函数 &lt;span class="math"&gt;\(f(x)\)&lt;/span&gt;，若满足二阶可微的前提，可以在 &lt;span class="math"&gt;\(x=x^{(k)}\)&lt;/span&gt; 处二阶泰勒展开：&lt;/p&gt;
+&lt;div class="math"&gt;$$f(x)=f(x^{(x)})+\nabla f(x^{(k)})\Delta x^{(k)}+\frac{1}{2}(\Delta x^{(k)})^\mathrm{T}\nabla^2f(x^{(k)})\Delta x^{(k)}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\Delta x^{(k)}=x-x^{(k)}\)&lt;/span&gt;。牛顿法的思路就是利用二阶泰勒展开近似，寻找合理的下降方向 &lt;span class="math"&gt;\(p_k\)&lt;/span&gt;，使 &lt;span class="math"&gt;\(f(x)\)&lt;/span&gt; 在数次迭代后到达极小值。显然当 &lt;span class="math"&gt;\(f(x)\)&lt;/span&gt; 达到极小值时梯度为 0。那么假设下一次（第 &lt;span class="math"&gt;\(k+1\)&lt;/span&gt; 次）迭代时 &lt;span class="math"&gt;\(f(x)\)&lt;/span&gt; 就能达到极小值，也就是令上式在 &lt;span class="math"&gt;\(x^{(k+1)}\)&lt;/span&gt; 处的梯度为零：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \nabla f(x)&amp;amp;=\nabla f(x^{(k)})+\nabla^2f(x^{(k)})\Delta x^{(k)}\\
+    \nabla f(x^{(k+1)})&amp;amp;=\nabla f(x^{(k)})+\nabla^2f(x^{(k)})(x^{(k+1)}-x^{(k)})=0\\
+    x^{(k+1)}&amp;amp;=x^{(k)}-\nabla^2f(x^{(k)})^{-1}\nabla f(x^{(k)})
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;将其中的 &lt;span class="math"&gt;\(\nabla^2f(x^{(k)})^{-1}\)&lt;/span&gt; 记作 &lt;span class="math"&gt;\(H^{-1}_k\)&lt;/span&gt;，是黑塞矩阵的逆，将 &lt;span class="math"&gt;\(\nabla f(x^{(k)})\)&lt;/span&gt; 记作 &lt;span class="math"&gt;\(g_k\)&lt;/span&gt;。令 &lt;span class="math"&gt;\(p_k=-H^{-1}_kg_k\)&lt;/span&gt;，称为牛顿方向，那么每次迭代的过程就是&lt;/p&gt;
+&lt;div class="math"&gt;$$x^{(k+1)}=x^{k}+p_k$$&lt;/div&gt;
+&lt;p&gt;{begin note}这里的泰勒展开为矩阵形式，因此式中带有转置与逆等符号，若对求导过程有疑惑，可以参考&lt;a href="https://zhuanlan.zhihu.com/p/382683133"&gt;泰勒展开的矩阵形式&lt;/a&gt;。{begin note}&lt;/p&gt;
+&lt;h4&gt;拟牛顿法&lt;/h4&gt;
+&lt;p&gt;考虑以上推导过程中得到的&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \nabla f(x^{(k+1)})&amp;amp;=\nabla f(x^{(k)})+\nabla^2f(x^{(k)})(x^{(k+1)}-x^{(k)})\\
+    g_{k+1}-g_k&amp;amp;=H_k(x^{(k+1)}-x^{(k)})\\
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;令 &lt;span class="math"&gt;\(y_k=g_{k+1}-g_k\)&lt;/span&gt;，&lt;span class="math"&gt;\(\delta_k=x^{(k+1)}-x^{(k)}\)&lt;/span&gt;，可以改写为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    y_k&amp;amp;=H_k\delta_k\\
+    H^{-1}_ky_k&amp;amp;=\delta_k
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;由于牛顿法每次迭代都需要计算黑森矩阵的逆 &lt;span class="math"&gt;\(H^{-1}_k\)&lt;/span&gt;，逆矩阵的计算过程比较繁琐，拟牛顿法的思路是寻找一个矩阵 &lt;span class="math"&gt;\(G_k\)&lt;/span&gt;，使其代替逆黑森矩阵：&lt;/p&gt;
+&lt;div class="math"&gt;$$G_{k+1}y_k=\delta_k$$&lt;/div&gt;
+&lt;p&gt;或是用 &lt;span class="math"&gt;\(B_k\)&lt;/span&gt; 逼近黑塞矩阵：&lt;/p&gt;
+&lt;div class="math"&gt;$$B_{k+1}\delta_k=y_k$$&lt;/div&gt;
+&lt;p&gt;那么每次迭代的步骤就是更新该矩阵：&lt;/p&gt;
+&lt;div class="math"&gt;$$B_{k+1}=B_k+\Delta B_k$$&lt;/div&gt;
+&lt;p&gt;拟牛顿矩阵更新方式不同，会有不同的计算公式和算法，这里以 BFGS 算法为例推导矩阵更新公式。&lt;/p&gt;
+&lt;p&gt;假设 &lt;span class="math"&gt;\(B_{k+1}=B_k+P_k+Q_k\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(P_k\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(Q_k\)&lt;/span&gt; 为待定矩阵：&lt;/p&gt;
+&lt;div class="math"&gt;$$B_{k+1}\delta_k=\color{teal}{y_k}=\color{steelblue}{B_k\delta_k}+\color{teal}{P_k\delta_k}+\color{steelblue}{Q_k\delta_k}$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(P_k\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(Q_k\)&lt;/span&gt; 在该式中可以有多种取法，这里用最简单的取法：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    &amp;amp;\color{teal}{P_k\delta_k=y_k}\\
+    &amp;amp;\color{steelblue}{Q_k\delta_k=-B_k\delta_k}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;那么就可以得到迭代公式：&lt;/p&gt;
+&lt;div class="math"&gt;$$B_{k+1}=B_k+\frac{y_ky^\mathrm{T}_k}{y^\mathrm{T}_k\delta_k}-\frac{B_k\delta_k\delta^\mathrm{T}_kB_k}{\delta^\mathrm{T}_kB_k\delta_k}$$&lt;/div&gt;
+&lt;p&gt;{note begin}式中有许多 &lt;span class="math"&gt;\(y_ky^\mathrm{T}_k\)&lt;/span&gt; 类型结构，这是为了将向量转化为方阵，才有逆运算，否则向量不具有除法运算。{note end}&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 6.2（最大熵模型的 BFGS 算法）&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：特征函数 &lt;span class="math"&gt;\(f_i\)&lt;/span&gt;；经验分布 &lt;span class="math"&gt;\(\tilde{P}(x,y)\)&lt;/span&gt;；目标函数 &lt;span class="math"&gt;\(f(w)=-L(w)\)&lt;/span&gt;，梯度 &lt;span class="math"&gt;\(g(w)=\nabla f(w)\)&lt;/span&gt;，精度 &lt;span class="math"&gt;\(\varepsilon\)&lt;/span&gt;；&lt;br/&gt;
+输出：最优参数值 &lt;span class="math"&gt;\(w^*\)&lt;/span&gt;；最优模型 &lt;span class="math"&gt;\(P_{w^*}(y|x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;选定初始点 &lt;span class="math"&gt;\(w^{(0)}\)&lt;/span&gt;，取 &lt;span class="math"&gt;\(B_0\)&lt;/span&gt; 为正定对称矩阵，置 &lt;span class="math"&gt;\(k=0\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;计算 &lt;span class="math"&gt;\(g_k=g(w^{(k)})\)&lt;/span&gt;。若 &lt;span class="math"&gt;\(||g_k||&amp;lt;\varepsilon\)&lt;/span&gt;，则停止，&lt;span class="math"&gt;\(w^*=w^{(k)}\)&lt;/span&gt;，否则继续。&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(B_kp_k=-g_k\)&lt;/span&gt;，求 &lt;span class="math"&gt;\(p_k\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;求 &lt;span class="math"&gt;\(\lambda_k\)&lt;/span&gt; 使得 &lt;span class="math"&gt;\(f(w^{(k)}+\lambda_kp_k)=\min_{\lambda\geqslant0}f(w^{(k)}+\lambda p_k)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(w^{(k+1)}=w^{(k)}+\lambda_kp_k\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(g_{k+1}=g(w^{(k+1)})\)&lt;/span&gt;，若 &lt;span class="math"&gt;\(||g_{k+1}||\varepsilon\)&lt;/span&gt;，则停止，&lt;span class="math"&gt;\(w^*=w^{(k)}\)&lt;/span&gt;，否则按 BFGS 迭代公式求 &lt;span class="math"&gt;\(B_{k+1}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(k=k+1\)&lt;/span&gt;，回到步骤 3。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr/&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/33437381/"&gt;李航, 2019. 统计学习方法（第2版）. 清华大学出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/35258057/"&gt;刘浩洋, 户将, 李勇锋, 文再文, 2020. 最优化：建模、算法与理论. 高等教育出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.zhihu.com/question/24094554"&gt;如何理解最大熵模型里面的特征？ - 知乎&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/38163970"&gt;Karush-Kuhn-Tucker (KKT)条件 - 知乎&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>国内部分网络无法访问 githui.io 的解决方案</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html" rel="alternate"></link><published>2022-09-06T00:00:00+08:00</published><updated>2022-09-06T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-06:/sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html</id><summary type="html">&lt;p&gt;和往常一样，在浏览器中键入我的 Github Pages 地址，Firefox 却提示「找不到服务器」。发现运营商自动提供的 DNS 服务不解析 github.io，需要通过更改 DNS 服务来解决。&lt;/p&gt;</summary><content type="html">&lt;p&gt;和往常一样，在浏览器中键入我的 Github Pages 地址，Firefox 却提示「找不到服务器」。我心头一紧，以为是 Github 的服务全部挂掉了，但发现 Github 可以正常访问。&lt;/p&gt;
 &lt;p&gt;我还注意到，在键入 Github Pages 地址后，没有经过加载过程，立马给出了无法访问的信息，我怀疑这可能是带有 &lt;code&gt;github.io&lt;/code&gt; 后缀的域名都进了黑名单。后来我切换到手机流量访问 Github Pages 页面，网页解析一切正常，更是验证了这一猜测。&lt;/p&gt;
 &lt;p&gt;正好最近在忙 ICP 备案的事，在工信部官网一查，&lt;code&gt;已经列入黑名单&lt;/code&gt; 赫然在目。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="黑名单" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7550?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
@@ -262,7 +529,7 @@ plt.show()
 &lt;li&gt;否则，计算各特征的信息增益，选择信息增益最大的特征 &lt;span class="math"&gt;\(A_g\)&lt;/span&gt;;&lt;/li&gt;
 &lt;li&gt;若 &lt;span class="math"&gt;\(g(D,A_g)&amp;lt;\varepsilon\)&lt;/span&gt;（信息增益小于阈值），将 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 中实例数量最多的类作为该结点类标记，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;；&lt;/li&gt;
 &lt;li&gt;否则，使用 &lt;span class="math"&gt;\(A_g\)&lt;/span&gt; 的可能值 &lt;span class="math"&gt;\(a_i\)&lt;/span&gt; 将训练集分割为若干 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt;，将 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 中实例数量最多的类作为类标记构建子结点，返回 &lt;span class="math"&gt;\(T\)&lt;/span&gt;;&lt;/li&gt;
-&lt;li&gt;对于第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个结点，以 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 为训练集，以 &lt;span class="math"&gt;\(A-\{A_g\}\)&lt;/span&gt; 为特征集，递归（1）~（5）步，返回子树 &lt;span class="math"&gt;\(T_i\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;对于第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个结点，以 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 为训练集，以 &lt;span class="math"&gt;\(A-\{A_g\}\)&lt;/span&gt; 为特征集，递归 1~5 步，返回子树 &lt;span class="math"&gt;\(T_i\)&lt;/span&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;算法 5.4（C4.5 算法）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用&lt;em&gt;信息增益比&lt;/em&gt;代替 ID3 算法中的信息增益，就是 C4.5 算法。&lt;/p&gt;
@@ -292,10 +559,15 @@ plt.show()
 &lt;ol&gt;
 &lt;li&gt;计算所有特征对于数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 的基尼指数，对于所有可能特征 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的所有可能取值 &lt;span class="math"&gt;\(a\)&lt;/span&gt;，使用是否满足 &lt;span class="math"&gt;\(A=a\)&lt;/span&gt; 作为判断条件将数据集划分为两个部分；&lt;/li&gt;
 &lt;li&gt;选择基尼指数最小的特征与切分点，生成两个子结点；&lt;/li&gt;
-&lt;li&gt;对于子结点继续调用（1）~（2），直至停止；&lt;/li&gt;
+&lt;li&gt;对于子结点继续调用 1~2 步，直至停止；&lt;/li&gt;
 &lt;li&gt;生成 CART 决策树。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;{note begin}算法停止的条件可以参考算法 5.2，可以是样本点数据小于阈值，也可以特征的分类能力小于阈值，也可以是特征数量太少。{note end}&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/33437381/"&gt;李航, 2019. 统计学习方法（第2版）. 清华大学出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -988,7 +1260,7 @@ $$&lt;/div&gt;
 &lt;li&gt;递归向上层访问，每次访问进行两个操作：&lt;ol&gt;
 &lt;li&gt;如果该点距离 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 更近，将其作为新的「当前最近点」。&lt;/li&gt;
 &lt;li&gt;因为 kd 为二叉树，该点必然存在另一分支子结点，那么就需要检查分支下是否存在更近的点。具体做法是判断分支子结点的区域是否与以点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 为圆心、以点 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 与「当前最近点」距离为半径的圆相交。&lt;ul&gt;
-&lt;li&gt;若相交，则访问分支子结点并进行（3）步骤；&lt;/li&gt;
+&lt;li&gt;若相交，则访问分支子结点并进行 3 步骤；&lt;/li&gt;
 &lt;li&gt;若不相交，回退到上一层。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -1198,7 +1470,7 @@ $$&lt;/div&gt;
 &lt;li&gt;若&lt;span class="math"&gt;\(y_i\left(\sum_{j=1}^N\alpha_jy_jx_j\cdot x_i+b\right)\leqslant0\)&lt;/span&gt;，&lt;div class="math"&gt;$$\alpha_i\leftarrow\alpha_i+\eta$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b\leftarrow b+\eta y_i$$&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;重复步骤（2），直至没有误分类点。&lt;/li&gt;
+&lt;li&gt;重复步骤 2，直至没有误分类点。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;考虑迭代的判断条件&lt;/p&gt;
 &lt;div class="math"&gt;$$y_i\left(\sum_{j=1}^N\alpha_jy_j\vec{x_j}\cdot \vec{x_i}+b\right)\leqslant0$$&lt;/div&gt;
