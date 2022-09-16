@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>《统计学习方法》第七章：支持向量机</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <meta name="description" content="《统计学习方法》第五章介绍了支持向量机模型以及支持向量机模型在处理线性可分、线性近似可分、线性不可分数据时的应用。支持向量机的学习过程同样采用对偶算法，此外还有 SMO 算法，大大提高了运算速度。">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="统计学习方法">
+    <meta name="tags" content="Machine learning">
+    <meta name="tags" content="Algorithm">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="《统计学习方法》第七章：支持向量机"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="《统计学习方法》第五章介绍了支持向量机模型以及支持向量机模型在处理线性可分、线性近似可分、线性不可分数据时的应用。支持向量机的学习过程同样采用对偶算法，此外还有 SMO 算法，大大提高了运算速度。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-16 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="统计学习方法"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Machine learning"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Algorithm"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "《统计学习方法》第七章：支持向量机",
+  "headline": "《统计学习方法》第七章：支持向量机",
+  "datePublished": "2022-09-16 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html",
+  "description": "《统计学习方法》第五章介绍了支持向量机模型以及支持向量机模型在处理线性可分、线性近似可分、线性不可分数据时的应用。支持向量机的学习过程同样采用对偶算法，此外还有 SMO 算法，大大提高了运算速度。"
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">《统计学习方法》第七章：支持向量机</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 9月16日">2022年 9月16日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#xian-xing-ke-fen-zhi-chi-xiang-liang-ji" title="线性可分支持向量机">线性可分支持向量机</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#ce-lue" title="策略">策略</a></li><li><a class="toc-href" href="#suan-fa" title="算法">算法</a></li></ul></li><li><a class="toc-href" href="#xian-xing-zhi-chi-xiang-liang-ji_1" title="线性支持向量机">线性支持向量机</a><ul><li><a class="toc-href" href="#mo-xing_1" title="模型">模型</a></li><li><a class="toc-href" href="#ce-lue_1" title="策略">策略</a></li><li><a class="toc-href" href="#suan-fa_1" title="算法">算法</a></li></ul></li><li><a class="toc-href" href="#fei-xian-xing-zhi-chi-xiang-liang-ji_1" title="非线性支持向量机">非线性支持向量机</a><ul><li><a class="toc-href" href="#mo-xing_2" title="模型">模型</a></li><li><a class="toc-href" href="#suan-fa_2" title="算法">算法</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>支持向量机是一种与感知机相似的二分类模型，但感知机的学习策略仅仅是使线性可分的两类实例区分开来，而支持向量机使用的是间隔最大化策略。间隔最大化使支持向量机不仅能完成二分类任务，同时使支持向量机具有更加良好的可信度和预测功能。</p>
+<table>
+<thead>
+<tr>
+<th>训练数据</th>
+<th>策略</th>
+<th>模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线性可分</td>
+<td>硬间隔最大化</td>
+<td>线性可分支持向量机</td>
+</tr>
+<tr>
+<td>近似线性可分</td>
+<td>软间隔最大化</td>
+<td>线性支持向量机</td>
+</tr>
+<tr>
+<td>线性不可分</td>
+<td>核技巧、软间隔最大化</td>
+<td>非线性支持向量机</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xian-xing-ke-fen-zhi-chi-xiang-liang-ji">线性可分支持向量机</h2>
+<h3 id="mo-xing">模型</h3>
+<p>支持向量机的模型与感知机类似，分离超平面为</p>
+<div class="math">$$w^*\cdot x+b^*=0$$</div>
+<p>分类决策函数为</p>
+<div class="math">$$f(x)=\mathrm{sign}(w^*\cdot x+b^*)$$</div>
+<h3 id="ce-lue">策略</h3>
+<h4>函数间隔与几何间隔</h4>
+<p>实例到超平面的距离能<em>相对地</em>用 <span class="math">\(|w\cdot x+b|\)</span> 衡量，称为函数间隔。样本点到超平面的函数间隔记作 <span class="math">\(\hat{\gamma}_i\)</span>，将数据集 <span class="math">\(T\)</span> 中所有样本点函数间隔的最小值称为超平面关于数据集 <span class="math">\(T\)</span> 的函数间隔，记作 <span class="math">\(\hat{\gamma}\)</span>。</p>
+<p>函数间隔会随着超平面参数 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 的改变而改变，但若 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 等比例缩放，超平面没有变化（等式左右可同时约去比例），样本点到超平面距离没有变化，而函数间隔变化了。</p>
+<p>这说明需要将函数间隔规范化，也就得到了几何间隔 <span class="math">\(\frac{w}{||w||}\)</span>，这也就是样本点到超平面的实际（几何）距离，记作 <span class="math">\(\gamma_i\)</span>，类似地，超平面关于数据集的几何间隔记作 <span class="math">\(\gamma\)</span>，得到转化公式</p>
+<div class="math">$$\begin{align}
+    \gamma_i=\frac{\hat{\gamma}_i}{||w||}\\
+    \gamma=\frac{\hat{\gamma}}{||w||}
+\end{align}$$</div>
+<h4>间隔最大化</h4>
+<p>不同于感知机，间隔最大化的策略不仅用超平面将两类样本点分开，还要使不同类别的样本点的几何距离超平面最大，这样的做法使得超平面有足够的确信度将两类样本分开。</p>
+<p>再回忆一下感知机，感知机仅仅将线性可分的样本点分开，因此运算过程中取样本点的顺序不同，会得到不同的结果，当然这些不同的结果都能分开两类样本。但支持向量机采用了间隔最大化策略，几何间隔最大的分离超平面是唯一的，最后也就得到唯一且最优的模型。</p>
+<p>间隔最大化策略使得分离超平面的确定只依赖于最靠近超平面的样本点，这些实例点就称为支持向量。</p>
+<p>根据间隔最大化的思路，可以得到以下最优化问题：</p>
+<div class="math">$$\begin{align}
+    \max_{w,b}&amp;\quad \frac{\hat{\gamma}}{||w||}\\
+    \mathrm{s.t.}&amp;\quad y_i\frac{w\cdot x+b}{||w||}\geqslant \frac{\hat{\gamma}}{||w||}
+\end{align}$$</div>
+<p>等比缩放 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 将得到 <span class="math">\(\lambda \hat{\gamma}\)</span>，但超平面没有改变，几何间隔也没有改变，也就是说只需要考虑 <span class="math">\(\frac{1}{||w||}\)</span>，略去 <span class="math">\(\hat{\gamma}\)</span> 得到</p>
+<div class="math">$$\begin{align}
+    \max_{w,b}&amp;\quad \frac{1}{||w||}\\
+    \mathrm{s.t.}&amp;\quad y_i(w\cdot x+b)\geqslant 1
+\end{align}$$</div>
+<p>将该最优化问题转化为最小化问题：</p>
+<div class="math">$$\begin{align}
+    \min_{w,b}&amp;\quad \frac{1}{2}||w||^2\\
+    \mathrm{s.t.}&amp;\quad y_i(w\cdot x+b)-1\geqslant 0
+\end{align}$$</div>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;最大化 <span class="math">\(\frac{1}{||w||}\)</span> 等价与最小化 <span class="math">\(||w||^2\)</span>，当然前面的常数项更是无所谓的。</p></div></p>
+<h3 id="suan-fa">算法</h3>
+<h4>原始算法</h4>
+<p><strong>算法 7.1</strong></p>
+<blockquote>
+<p>输入：线性可分的数据集<br/>
+输出：最大间隔分离超平面和分离决策函数</p>
+</blockquote>
+<ol>
+<li>构造求解最优化问题得到最优解 <span class="math">\(w^*\)</span> 与 <span class="math">\(b^*\)</span>（解不等式组）；
+    <div class="math">$$\begin{align}
+        \min_{w,b}&amp;\quad \frac{1}{2}||w||^2\\
+        \mathrm{s.t.}&amp;\quad y_i(w\cdot x+b)-1\geqslant 0
+    \end{align}$$</div>
+</li>
+<li>得到分离超平面与决策函数。</li>
+</ol>
+<h4>对偶算法</h4>
+<p>对偶算法同样依赖于 Lagrange 函数（见<a href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html#yan-yi-la-ge-lang-ri-han-shu">第六章</a>），构造 lagrange 函数：</p>
+<div class="math">$$\begin{align}
+    L(w,b,\alpha)&amp;=\frac{1}{2}||w||^2-\sum_i\alpha_i[y_i(w\cdot x+b)-1]\\
+    &amp;=\frac{1}{2}||w||^2-\sum_i\alpha_iy_i(w\cdot x+b)+\sum_i\alpha_i
+\end{align}$$</div>
+<p><strong>求对偶问题的极小 <span class="math">\(\min_{w,b}L(w,b,\alpha)\)</span>：</strong></p>
+<p>求 Lagrange 函数对 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 的偏导并令其为零：</p>
+<div class="math">$$\frac{\partial L}{w}=w-\sum_i\alpha_iy_ix_i=0$$</div>
+<div class="math">$$\frac{\partial L}{b}=-\sum_i\alpha_iy_i=0$$</div>
+<p>将 <span class="math">\(w=\sum_i\alpha_iy_ix_i\)</span> 代入 Lagrange 函数，为简洁起见，先只考虑 <span class="math">\(\frac{1}{2}||w||^2\)</span> 一项：</p>
+<div class="math">$$\begin{align}
+    \frac{1}{2}||w||^2&amp;=\frac{1}{2}x^\mathrm{T}\cdot x\\
+    &amp;=\frac{1}{2}\left(\sum_i\alpha_iy_ix_i\right)\cdot\left(\sum_j\alpha_jy_jx_j\right)\\
+    &amp;=\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)
+\end{align}$$</div>
+<p>再考虑到 <span class="math">\(b\sum_i\alpha_iy_i=0\)</span> 那么 Lagrange 函数应当为</p>
+<div class="math">$$\begin{align}
+    L(w,b,\alpha)&amp;=\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_iy_i\left(\sum_j\alpha_jy_jx_j\cdot x_i\right)+\sum_i\alpha_i\\
+    &amp;=-\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i
+\end{align}$$</div>
+<p>对偶问题的极小也就是 <span class="math">\(-\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i\)</span>。</p>
+<p><strong>求对偶问题极小的极大 <span class="math">\(\max_{\alpha}\min_{w,b}L(w,b,\alpha)\)</span>：</strong></p>
+<div class="math">$$\begin{align}
+    \max_{\alpha}&amp;\quad -\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i\\
+    \mathrm{s.t.}&amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+\end{align}$$</div>
+<p>转化为极小问题</p>
+<div class="math">$$\begin{align}
+    \min_{\alpha}&amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+    \mathrm{s.t.}&amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+\end{align}$$</div>
+<p>假设该问题的解为 <span class="math">\(\alpha^*=(\alpha^*_1,\alpha^*_2,\cdots,\alpha^*_N)^\mathrm{T}\)</span>，那么支持向量机的参数（从 KKT 条件导出）为</p>
+<div class="math">$$\begin{align}
+    &amp;w^*=\sum_i\alpha^*_iy_ix_i\\
+    &amp;b^*=y_j-\sum_i\alpha^*_iy_i(x_i\cdot x_j)
+\end{align}$$</div>
+<p>可以看出，若 <span class="math">\(\alpha_i=0\)</span>，参数与该分量无关，也就是说该分量所对应的样本点不影响支持向量机。从另一方面看，支持向量机只与 <span class="math">\(\alpha_i&gt;0\)</span> 对应的样本点有关，这些样本点就是支持向量。</p>
+<p><strong>算法 7.2</strong></p>
+<blockquote>
+<p>输入：线性可分的数据集<br/>
+输出：最大间隔分离超平面和分离决策函数</p>
+</blockquote>
+<ol>
+<li>构造并求解问题得到 <span class="math">\(\alpha^*\)</span>
+<div class="math">$$\begin{align}
+        \min_{\alpha}&amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+        \mathrm{s.t.}&amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+    \end{align}$$</div>
+</li>
+<li>用 <span class="math">\(\alpha^*\)</span> 计算 <span class="math">\(w^*\)</span>，用 <span class="math">\(\alpha^*\)</span> 的正分量计算 <span class="math">\(b^*\)</span>;</li>
+<li>得到分离超平面与决策函数。</li>
+</ol>
+<h4>对偶算法案例</h4>
+<p>在算法 7.2 的第 1 步中，需要求解 <span class="math">\(\alpha^*\)</span>，这里容易令人困惑，以书中的例子说明计算方法。</p>
+<blockquote>
+<p>正例点为 <span class="math">\(x_1=(3,3)^\mathrm{T}\)</span> 与 <span class="math">\(x_2=(4,3)^\mathrm{T}\)</span>，负例点为 <span class="math">\(x_3=(1,1)^\mathrm{T}\)</span>，求线性可分支持向量机。</p>
+</blockquote>
+<p>先计算样本点的 Gram 矩阵，以便后续计算：</p>
+<div class="math">$$G=\begin{bmatrix}
+    18 &amp;21 &amp;6\\
+    21 &amp;25 &amp;7\\
+    6  &amp;7  &amp;2
+\end{bmatrix}$$</div>
+<div class="math">$$\begin{align}
+     \min_{w,b}&amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+     &amp;=\frac{1}{2}(18\alpha^2_1+25\alpha^2_2+2\alpha^2_3+42\alpha_1\alpha_2-12\alpha_1\alpha_3-14\alpha_2\alpha_3)-\alpha_1-\alpha_2-\alpha3\\
+     \mathrm{s.t.}&amp;\quad \alpha_1+\alpha_2-\alpha_3=0,\ \alpha_i\geqslant0
+ \end{align}$$</div>
+<p>为了求解这一最优化问题，需要将约束代入目标问题，得到</p>
+<div class="math">$$s(\alpha_1,\alpha_2)=4\alpha^2_1+\frac{13}{2}\alpha^2_2+10\alpha_1\alpha_2-2\alpha_1-2\alpha_2$$</div>
+<p>求其偏导并令其为零，得知 <span class="math">\(s(\alpha_1,\alpha_2)\)</span> 在 <span class="math">\((\frac{3}{2},-1)^\mathrm{T}\)</span> 处取得极值，但 <span class="math">\(\alpha_2=-1\)</span> 违反了 <span class="math">\(\alpha_i\geqslant0\)</span> 的约束，那么<em>最小值将在边界上取到</em>。</p>
+<div class="math">$$\begin{align}
+    &amp;a_1=0,\quad s(0,\frac{2}{13})=-\frac{2}{13}\\
+    &amp;a_2=0,\quad s(\frac{1}{4},0)=-\frac{1}{4}
+\end{align}$$</div>
+<p>所以计算得到最终的 <span class="math">\(\alpha^*=(\frac{1}{4},0,\frac{1}{4})^\mathrm{T}\)</span>。</p>
+<h2 id="xian-xing-zhi-chi-xiang-liang-ji_1">线性支持向量机</h2>
+<h3 id="mo-xing_1">模型</h3>
+<p>线性可分支持向量机是线性支持向量机的特例，所以线性支持向量机的模型与线性可分支持向量机相同。在现实情况中，很难遇到标准的线性可分的数据，这时候就需要使用更为普遍的线性支持向量机。</p>
+<h3 id="ce-lue_1">策略</h3>
+<p>线性可分数据集与近似线性可分数据集的差别在于，近似线性可分数据集中存在一些特异点，若将这些特异点去除，那么数据集就变成了线性可分的。</p>
+<p>特异点无法被正常分类的原因是特异点不能满足支持向量机的分类条件</p>
+<div class="math">$$\begin{align}
+    &amp;正例点：w\cdot x+b\geqslant1\\
+    &amp;负例点：w\cdot x+b\leqslant-1
+\end{align}$$</div>
+<p>从几何上来看，也就是特异点与分离超平面的距离不够远，不能满足函数间隔大于等于 1，因此引入一个松驰变量 <span class="math">\(\xi_i\geqslant0\)</span>，使得特异点的函数间隔加上松驰变量大于等于 1，那么最优化问题的约束就变为</p>
+<div class="math">$$y_i(w\cdot x_i+b)\geqslant1-\xi_i$$</div>
+<p>原来的目标函数改为</p>
+<div class="math">$$\frac{1}{2}||w||^2+C\sum_i\xi_i$$</div>
+<p>其中 <span class="math">\(C&gt;0\)</span> 称为惩罚参数，目标函数使 <span class="math">\(\frac{1}{2}||w||^2\)</span> 尽可能小，也就是间隔尽量大；<span class="math">\(\xi_i\)</span> 尽可能小，也就是误分类的点（补偿的间隔）尽量少；<span class="math">\(C\)</span> 就是在二种策略间权衡的权重值，调和二者关系。</p>
+<h3 id="suan-fa_1">算法</h3>
+<h4>原始算法</h4>
+<p>线性支持向量机的原始问题为</p>
+<div class="math">$$\begin{align}
+     \min_{w,b}&amp;\quad \frac{1}{2}||w||^2+C\sum_i\xi_i\\
+     \mathrm{s.t.}&amp;\quad y_i(w\cdot x_i+b)\geqslant1-\xi_i,\ \xi_i\geqslant0
+\end{align}$$</div>
+<p>线性支持向量机的原始问题与线性可分支持向量机也相似，求解该问题得到分离超平面与分类决策函数。</p>
+<h4>对偶算法</h4>
+<p>从原始问题中导出对偶问题，使用同样的步骤构造 Lagrange 函数，并求其极大极小：</p>
+<div class="math">$$\begin{align}
+     \min_{\alpha}&amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+     \mathrm{s.t.}&amp;\quad \sum_i\alpha_iy_i=0,\ 0\leqslant\alpha_i\color{orangered}{\leqslant C}
+\end{align}$$</div>
+<p>可以看出线性支持向量机的原始问题只是比线性可分支持向量机多了一个约束条件，因此最终导出的结果也是相似的。求解该对偶问题得到 <span class="math">\(\alpha^*\)</span>，求得支持向量机参数</p>
+<div class="math">$$\begin{align}
+    &amp;w^*=\sum_i\alpha^*_iy_ix_i\\
+    &amp;b^*=y_j-\sum_i\alpha^*_iy_i(x_i\cdot x_j)
+\end{align}$$</div>
+<p>这里需要注意的是，由于存在 <span class="math">\(0\leqslant\alpha_i\leqslant C\)</span> 的约束条件，需要保证 <span class="math">\(\alpha^*\)</span> 中各分量满足这一约束，选择其中满足 <span class="math">\(0&lt;\alpha_i&lt;C\)</span> 条件的分量计算支持向量机参数，很容易明白，满足 <span class="math">\(0&lt;\alpha_i&lt;C\)</span> 条件分量所对应的样本点就是该模型中的支持向量。</p>
+<p><strong>算法 7.3</strong></p>
+<blockquote>
+<p>输入：数据集<br/>
+输出：分离超平面和分离决策函数</p>
+</blockquote>
+<ol>
+<li>构造并求解问题得到 <span class="math">\(\alpha^*\)</span>
+<div class="math">$$\begin{align}
+        \min_{\alpha}&amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+        \mathrm{s.t.}&amp;\quad \sum_i\alpha_iy_i=0,\ 0\leqslant\alpha_i\leqslant C
+    \end{align}$$</div>
+</li>
+<li>用 <span class="math">\(\alpha^*\)</span> 计算 <span class="math">\(w^*\)</span>，用 <span class="math">\(\alpha^*\)</span> 中满足条件 <span class="math">\(0&lt;\alpha_i&lt;C\)</span> 的分量计算 <span class="math">\(b^*\)</span>;</li>
+<li>得到分离超平面与决策函数。</li>
+</ol>
+<h2 id="fei-xian-xing-zhi-chi-xiang-liang-ji_1">非线性支持向量机</h2>
+<h3 id="mo-xing_2">模型</h3>
+<p>在实际情况中，常常还会得到非线性的数据集，这时候若尝试用一个超平面将两类实例区分开，会得到大量的误分类点，这样的模型没有很好的确信度和预测性能。超平面的模型是简单的，若使用更复杂一些的超曲面，通常能取得更好的效果。</p>
+<p>我用一个简单的例子说明这个问题，回忆中学时代的线性回归，也就是用一条直线来拟合一系列数据点，如果数据点是由二次函数产生的，断然是无法找到这条合适的直线的。此时需要将数据点经过变换，经过变换后，在另一空间中得到适合拟合的数据。</p>
+<p><img alt="核技巧" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7606?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>核技巧也是同样的思路，将不适合使用超平面分类的数据集变换到另一空间中，在该空间中使用超平面分类，就相当于在原空间中使用超曲面而非超平面分类。</p>
+<p>将这个从输入空间到特征空间的映射记作 <span class="math">\(\phi(x)\)</span>，使得输入空间中的所有 <span class="math">\(x,z\)</span> 满足</p>
+<div class="math">$$K(x,z)=\phi(x)\cdot\phi(z)$$</div>
+<p>就称 <span class="math">\(K(x,z)\)</span> 为核函数。考虑对偶问题</p>
+<div class="math">$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(\color{orangered}{x_i\cdot x_j})-\sum_i\alpha_i$$</div>
+<p>将核函数代入就得到非线性支持向量机的对偶问题</p>
+<div class="math">$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j\color{orangered}{K(x_i,x_j)}-\sum_i\alpha_i$$</div>
+<p>所以非线性支持向量机的分类决策函数就是</p>
+<div class="math">$$f(x)=\mathrm{sign}\left(\sum_i\alpha^*_iy_iK(x,x_i)+b^*\right)$$</div>
+<p>核函数一般不用自己计算，常见的核函数有</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>核函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多项式核函数</td>
+<td><span class="math">\(K(x,z)=(x\cdot z+1)^p\)</span></td>
+</tr>
+<tr>
+<td>高斯核函数</td>
+<td><span class="math">\(K(x,z)=\exp\left(-\frac{\|x-z\|^2}{2\sigma^2}\right)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="suan-fa_2">算法</h3>
+<p>非线性支持向量机的算法与线性支持向量机无异，不过是需要预先选择合适的核函数，构造最优化问题</p>
+<div class="math">$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j\K(x_i,x_j)-\sum_i\alpha_i$$</div>
+<p>最后用同样的方法求解该最优化问题得到非线性支持向量机。</p>
+<hr/>
+<h2 id="references_1">References</h2>
+<ul>
+<li><a href="https://book.douban.com/subject/33437381/">李航, 2019. 统计学习方法（第2版）. 清华大学出版社.</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/433150785">保姆级笔记-详细剖析SMO算法中的知识点 - 知乎</a></li>
+</ul>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=《统计学习方法》第七章：支持向量机&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/tong-ji-xue-xi-fang-fa.html">统计学习方法</a><a href="https://tseing.github.io/tag/machine-learning.html">Machine learning</a><a href="https://tseing.github.io/tag/algorithm.html">Algorithm</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">《统计学习方法》第六章：逻辑斯谛回归与最大熵模型</h2>
+                            <p class="post-nav-excerpt">《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，都利...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

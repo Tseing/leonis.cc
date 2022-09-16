@@ -1,5 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-09T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第五章：逻辑斯谛回归与最大熵模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html" rel="alternate"></link><published>2022-09-09T00:00:00+08:00</published><updated>2022-09-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-09:/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，都利用了极大似然估计原理。本章还介绍了广义拉格朗日函数和拟牛顿法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-16T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>《统计学习方法》第七章：支持向量机</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html" rel="alternate"></link><published>2022-09-16T00:00:00+08:00</published><updated>2022-09-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-16:/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章介绍了支持向量机模型以及支持向量机模型在处理线性可分、线性近似可分、线性不可分数据时的应用。支持向量机的学习过程同样采用对偶算法，此外还有 SMO 算法，大大提高了运算速度。&lt;/p&gt;</summary><content type="html">&lt;p&gt;支持向量机是一种与感知机相似的二分类模型，但感知机的学习策略仅仅是使线性可分的两类实例区分开来，而支持向量机使用的是间隔最大化策略。间隔最大化使支持向量机不仅能完成二分类任务，同时使支持向量机具有更加良好的可信度和预测功能。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;训练数据&lt;/th&gt;
+&lt;th&gt;策略&lt;/th&gt;
+&lt;th&gt;模型&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;线性可分&lt;/td&gt;
+&lt;td&gt;硬间隔最大化&lt;/td&gt;
+&lt;td&gt;线性可分支持向量机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;近似线性可分&lt;/td&gt;
+&lt;td&gt;软间隔最大化&lt;/td&gt;
+&lt;td&gt;线性支持向量机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;线性不可分&lt;/td&gt;
+&lt;td&gt;核技巧、软间隔最大化&lt;/td&gt;
+&lt;td&gt;非线性支持向量机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="xian-xing-ke-fen-zhi-chi-xiang-liang-ji"&gt;线性可分支持向量机&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;支持向量机的模型与感知机类似，分离超平面为&lt;/p&gt;
+&lt;div class="math"&gt;$$w^*\cdot x+b^*=0$$&lt;/div&gt;
+&lt;p&gt;分类决策函数为&lt;/p&gt;
+&lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w^*\cdot x+b^*)$$&lt;/div&gt;
+&lt;h3 id="ce-lue"&gt;策略&lt;/h3&gt;
+&lt;h4&gt;函数间隔与几何间隔&lt;/h4&gt;
+&lt;p&gt;实例到超平面的距离能&lt;em&gt;相对地&lt;/em&gt;用 &lt;span class="math"&gt;\(|w\cdot x+b|\)&lt;/span&gt; 衡量，称为函数间隔。样本点到超平面的函数间隔记作 &lt;span class="math"&gt;\(\hat{\gamma}_i\)&lt;/span&gt;，将数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 中所有样本点函数间隔的最小值称为超平面关于数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 的函数间隔，记作 &lt;span class="math"&gt;\(\hat{\gamma}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;函数间隔会随着超平面参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 的改变而改变，但若 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 等比例缩放，超平面没有变化（等式左右可同时约去比例），样本点到超平面距离没有变化，而函数间隔变化了。&lt;/p&gt;
+&lt;p&gt;这说明需要将函数间隔规范化，也就得到了几何间隔 &lt;span class="math"&gt;\(\frac{w}{||w||}\)&lt;/span&gt;，这也就是样本点到超平面的实际（几何）距离，记作 &lt;span class="math"&gt;\(\gamma_i\)&lt;/span&gt;，类似地，超平面关于数据集的几何间隔记作 &lt;span class="math"&gt;\(\gamma\)&lt;/span&gt;，得到转化公式&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \gamma_i=\frac{\hat{\gamma}_i}{||w||}\\
+    \gamma=\frac{\hat{\gamma}}{||w||}
+\end{align}$$&lt;/div&gt;
+&lt;h4&gt;间隔最大化&lt;/h4&gt;
+&lt;p&gt;不同于感知机，间隔最大化的策略不仅用超平面将两类样本点分开，还要使不同类别的样本点的几何距离超平面最大，这样的做法使得超平面有足够的确信度将两类样本分开。&lt;/p&gt;
+&lt;p&gt;再回忆一下感知机，感知机仅仅将线性可分的样本点分开，因此运算过程中取样本点的顺序不同，会得到不同的结果，当然这些不同的结果都能分开两类样本。但支持向量机采用了间隔最大化策略，几何间隔最大的分离超平面是唯一的，最后也就得到唯一且最优的模型。&lt;/p&gt;
+&lt;p&gt;间隔最大化策略使得分离超平面的确定只依赖于最靠近超平面的样本点，这些实例点就称为支持向量。&lt;/p&gt;
+&lt;p&gt;根据间隔最大化的思路，可以得到以下最优化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \max_{w,b}&amp;amp;\quad \frac{\hat{\gamma}}{||w||}\\
+    \mathrm{s.t.}&amp;amp;\quad y_i\frac{w\cdot x+b}{||w||}\geqslant \frac{\hat{\gamma}}{||w||}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;等比缩放 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 将得到 &lt;span class="math"&gt;\(\lambda \hat{\gamma}\)&lt;/span&gt;，但超平面没有改变，几何间隔也没有改变，也就是说只需要考虑 &lt;span class="math"&gt;\(\frac{1}{||w||}\)&lt;/span&gt;，略去 &lt;span class="math"&gt;\(\hat{\gamma}\)&lt;/span&gt; 得到&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \max_{w,b}&amp;amp;\quad \frac{1}{||w||}\\
+    \mathrm{s.t.}&amp;amp;\quad y_i(w\cdot x+b)\geqslant 1
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;将该最优化问题转化为最小化问题：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \min_{w,b}&amp;amp;\quad \frac{1}{2}||w||^2\\
+    \mathrm{s.t.}&amp;amp;\quad y_i(w\cdot x+b)-1\geqslant 0
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;{note begin}最大化 &lt;span class="math"&gt;\(\frac{1}{||w||}\)&lt;/span&gt; 等价与最小化 &lt;span class="math"&gt;\(||w||^2\)&lt;/span&gt;，当然前面的常数项更是无所谓的。{note end}&lt;/p&gt;
+&lt;h3 id="suan-fa"&gt;算法&lt;/h3&gt;
+&lt;h4&gt;原始算法&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;算法 7.1&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：线性可分的数据集&lt;br/&gt;
+输出：最大间隔分离超平面和分离决策函数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;构造求解最优化问题得到最优解 &lt;span class="math"&gt;\(w^*\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b^*\)&lt;/span&gt;（解不等式组）；
+    &lt;div class="math"&gt;$$\begin{align}
+        \min_{w,b}&amp;amp;\quad \frac{1}{2}||w||^2\\
+        \mathrm{s.t.}&amp;amp;\quad y_i(w\cdot x+b)-1\geqslant 0
+    \end{align}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;得到分离超平面与决策函数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;对偶算法&lt;/h4&gt;
+&lt;p&gt;对偶算法同样依赖于 Lagrange 函数（见&lt;a href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html#yan-yi-la-ge-lang-ri-han-shu"&gt;第六章&lt;/a&gt;），构造 lagrange 函数：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    L(w,b,\alpha)&amp;amp;=\frac{1}{2}||w||^2-\sum_i\alpha_i[y_i(w\cdot x+b)-1]\\
+    &amp;amp;=\frac{1}{2}||w||^2-\sum_i\alpha_iy_i(w\cdot x+b)+\sum_i\alpha_i
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;求对偶问题的极小 &lt;span class="math"&gt;\(\min_{w,b}L(w,b,\alpha)\)&lt;/span&gt;：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;求 Lagrange 函数对 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 的偏导并令其为零：&lt;/p&gt;
+&lt;div class="math"&gt;$$\frac{\partial L}{w}=w-\sum_i\alpha_iy_ix_i=0$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\frac{\partial L}{b}=-\sum_i\alpha_iy_i=0$$&lt;/div&gt;
+&lt;p&gt;将 &lt;span class="math"&gt;\(w=\sum_i\alpha_iy_ix_i\)&lt;/span&gt; 代入 Lagrange 函数，为简洁起见，先只考虑 &lt;span class="math"&gt;\(\frac{1}{2}||w||^2\)&lt;/span&gt; 一项：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \frac{1}{2}||w||^2&amp;amp;=\frac{1}{2}x^\mathrm{T}\cdot x\\
+    &amp;amp;=\frac{1}{2}\left(\sum_i\alpha_iy_ix_i\right)\cdot\left(\sum_j\alpha_jy_jx_j\right)\\
+    &amp;amp;=\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;再考虑到 &lt;span class="math"&gt;\(b\sum_i\alpha_iy_i=0\)&lt;/span&gt; 那么 Lagrange 函数应当为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    L(w,b,\alpha)&amp;amp;=\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_iy_i\left(\sum_j\alpha_jy_jx_j\cdot x_i\right)+\sum_i\alpha_i\\
+    &amp;amp;=-\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;对偶问题的极小也就是 &lt;span class="math"&gt;\(-\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;求对偶问题极小的极大 &lt;span class="math"&gt;\(\max_{\alpha}\min_{w,b}L(w,b,\alpha)\)&lt;/span&gt;：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \max_{\alpha}&amp;amp;\quad -\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)+\sum_i\alpha_i\\
+    \mathrm{s.t.}&amp;amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;转化为极小问题&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \min_{\alpha}&amp;amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+    \mathrm{s.t.}&amp;amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;假设该问题的解为 &lt;span class="math"&gt;\(\alpha^*=(\alpha^*_1,\alpha^*_2,\cdots,\alpha^*_N)^\mathrm{T}\)&lt;/span&gt;，那么支持向量机的参数（从 KKT 条件导出）为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    &amp;amp;w^*=\sum_i\alpha^*_iy_ix_i\\
+    &amp;amp;b^*=y_j-\sum_i\alpha^*_iy_i(x_i\cdot x_j)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;可以看出，若 &lt;span class="math"&gt;\(\alpha_i=0\)&lt;/span&gt;，参数与该分量无关，也就是说该分量所对应的样本点不影响支持向量机。从另一方面看，支持向量机只与 &lt;span class="math"&gt;\(\alpha_i&amp;gt;0\)&lt;/span&gt; 对应的样本点有关，这些样本点就是支持向量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 7.2&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：线性可分的数据集&lt;br/&gt;
+输出：最大间隔分离超平面和分离决策函数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;构造并求解问题得到 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt;
+&lt;div class="math"&gt;$$\begin{align}
+        \min_{\alpha}&amp;amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+        \mathrm{s.t.}&amp;amp;\quad \sum_i\alpha_iy_i=0,\ \alpha_i\geqslant0
+    \end{align}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;用 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt; 计算 &lt;span class="math"&gt;\(w^*\)&lt;/span&gt;，用 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt; 的正分量计算 &lt;span class="math"&gt;\(b^*\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;得到分离超平面与决策函数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;对偶算法案例&lt;/h4&gt;
+&lt;p&gt;在算法 7.2 的第 1 步中，需要求解 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt;，这里容易令人困惑，以书中的例子说明计算方法。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;正例点为 &lt;span class="math"&gt;\(x_1=(3,3)^\mathrm{T}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(x_2=(4,3)^\mathrm{T}\)&lt;/span&gt;，负例点为 &lt;span class="math"&gt;\(x_3=(1,1)^\mathrm{T}\)&lt;/span&gt;，求线性可分支持向量机。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;先计算样本点的 Gram 矩阵，以便后续计算：&lt;/p&gt;
+&lt;div class="math"&gt;$$G=\begin{bmatrix}
+    18 &amp;amp;21 &amp;amp;6\\
+    21 &amp;amp;25 &amp;amp;7\\
+    6  &amp;amp;7  &amp;amp;2
+\end{bmatrix}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\begin{align}
+     \min_{w,b}&amp;amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+     &amp;amp;=\frac{1}{2}(18\alpha^2_1+25\alpha^2_2+2\alpha^2_3+42\alpha_1\alpha_2-12\alpha_1\alpha_3-14\alpha_2\alpha_3)-\alpha_1-\alpha_2-\alpha3\\
+     \mathrm{s.t.}&amp;amp;\quad \alpha_1+\alpha_2-\alpha_3=0,\ \alpha_i\geqslant0
+ \end{align}$$&lt;/div&gt;
+&lt;p&gt;为了求解这一最优化问题，需要将约束代入目标问题，得到&lt;/p&gt;
+&lt;div class="math"&gt;$$s(\alpha_1,\alpha_2)=4\alpha^2_1+\frac{13}{2}\alpha^2_2+10\alpha_1\alpha_2-2\alpha_1-2\alpha_2$$&lt;/div&gt;
+&lt;p&gt;求其偏导并令其为零，得知 &lt;span class="math"&gt;\(s(\alpha_1,\alpha_2)\)&lt;/span&gt; 在 &lt;span class="math"&gt;\((\frac{3}{2},-1)^\mathrm{T}\)&lt;/span&gt; 处取得极值，但 &lt;span class="math"&gt;\(\alpha_2=-1\)&lt;/span&gt; 违反了 &lt;span class="math"&gt;\(\alpha_i\geqslant0\)&lt;/span&gt; 的约束，那么&lt;em&gt;最小值将在边界上取到&lt;/em&gt;。&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    &amp;amp;a_1=0,\quad s(0,\frac{2}{13})=-\frac{2}{13}\\
+    &amp;amp;a_2=0,\quad s(\frac{1}{4},0)=-\frac{1}{4}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;所以计算得到最终的 &lt;span class="math"&gt;\(\alpha^*=(\frac{1}{4},0,\frac{1}{4})^\mathrm{T}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id="xian-xing-zhi-chi-xiang-liang-ji_1"&gt;线性支持向量机&lt;/h2&gt;
+&lt;h3 id="mo-xing_1"&gt;模型&lt;/h3&gt;
+&lt;p&gt;线性可分支持向量机是线性支持向量机的特例，所以线性支持向量机的模型与线性可分支持向量机相同。在现实情况中，很难遇到标准的线性可分的数据，这时候就需要使用更为普遍的线性支持向量机。&lt;/p&gt;
+&lt;h3 id="ce-lue_1"&gt;策略&lt;/h3&gt;
+&lt;p&gt;线性可分数据集与近似线性可分数据集的差别在于，近似线性可分数据集中存在一些特异点，若将这些特异点去除，那么数据集就变成了线性可分的。&lt;/p&gt;
+&lt;p&gt;特异点无法被正常分类的原因是特异点不能满足支持向量机的分类条件&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    &amp;amp;正例点：w\cdot x+b\geqslant1\\
+    &amp;amp;负例点：w\cdot x+b\leqslant-1
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;从几何上来看，也就是特异点与分离超平面的距离不够远，不能满足函数间隔大于等于 1，因此引入一个松驰变量 &lt;span class="math"&gt;\(\xi_i\geqslant0\)&lt;/span&gt;，使得特异点的函数间隔加上松驰变量大于等于 1，那么最优化问题的约束就变为&lt;/p&gt;
+&lt;div class="math"&gt;$$y_i(w\cdot x_i+b)\geqslant1-\xi_i$$&lt;/div&gt;
+&lt;p&gt;原来的目标函数改为&lt;/p&gt;
+&lt;div class="math"&gt;$$\frac{1}{2}||w||^2+C\sum_i\xi_i$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(C&amp;gt;0\)&lt;/span&gt; 称为惩罚参数，目标函数使 &lt;span class="math"&gt;\(\frac{1}{2}||w||^2\)&lt;/span&gt; 尽可能小，也就是间隔尽量大；&lt;span class="math"&gt;\(\xi_i\)&lt;/span&gt; 尽可能小，也就是误分类的点（补偿的间隔）尽量少；&lt;span class="math"&gt;\(C\)&lt;/span&gt; 就是在二种策略间权衡的权重值，调和二者关系。&lt;/p&gt;
+&lt;h3 id="suan-fa_1"&gt;算法&lt;/h3&gt;
+&lt;h4&gt;原始算法&lt;/h4&gt;
+&lt;p&gt;线性支持向量机的原始问题为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+     \min_{w,b}&amp;amp;\quad \frac{1}{2}||w||^2+C\sum_i\xi_i\\
+     \mathrm{s.t.}&amp;amp;\quad y_i(w\cdot x_i+b)\geqslant1-\xi_i,\ \xi_i\geqslant0
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;线性支持向量机的原始问题与线性可分支持向量机也相似，求解该问题得到分离超平面与分类决策函数。&lt;/p&gt;
+&lt;h4&gt;对偶算法&lt;/h4&gt;
+&lt;p&gt;从原始问题中导出对偶问题，使用同样的步骤构造 Lagrange 函数，并求其极大极小：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+     \min_{\alpha}&amp;amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+     \mathrm{s.t.}&amp;amp;\quad \sum_i\alpha_iy_i=0,\ 0\leqslant\alpha_i\color{orangered}{\leqslant C}
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;可以看出线性支持向量机的原始问题只是比线性可分支持向量机多了一个约束条件，因此最终导出的结果也是相似的。求解该对偶问题得到 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt;，求得支持向量机参数&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    &amp;amp;w^*=\sum_i\alpha^*_iy_ix_i\\
+    &amp;amp;b^*=y_j-\sum_i\alpha^*_iy_i(x_i\cdot x_j)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;这里需要注意的是，由于存在 &lt;span class="math"&gt;\(0\leqslant\alpha_i\leqslant C\)&lt;/span&gt; 的约束条件，需要保证 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt; 中各分量满足这一约束，选择其中满足 &lt;span class="math"&gt;\(0&amp;lt;\alpha_i&amp;lt;C\)&lt;/span&gt; 条件的分量计算支持向量机参数，很容易明白，满足 &lt;span class="math"&gt;\(0&amp;lt;\alpha_i&amp;lt;C\)&lt;/span&gt; 条件分量所对应的样本点就是该模型中的支持向量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;算法 7.3&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入：数据集&lt;br/&gt;
+输出：分离超平面和分离决策函数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;构造并求解问题得到 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt;
+&lt;div class="math"&gt;$$\begin{align}
+        \min_{\alpha}&amp;amp;\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_i\alpha_i\\
+        \mathrm{s.t.}&amp;amp;\quad \sum_i\alpha_iy_i=0,\ 0\leqslant\alpha_i\leqslant C
+    \end{align}$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;用 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt; 计算 &lt;span class="math"&gt;\(w^*\)&lt;/span&gt;，用 &lt;span class="math"&gt;\(\alpha^*\)&lt;/span&gt; 中满足条件 &lt;span class="math"&gt;\(0&amp;lt;\alpha_i&amp;lt;C\)&lt;/span&gt; 的分量计算 &lt;span class="math"&gt;\(b^*\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;得到分离超平面与决策函数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="fei-xian-xing-zhi-chi-xiang-liang-ji_1"&gt;非线性支持向量机&lt;/h2&gt;
+&lt;h3 id="mo-xing_2"&gt;模型&lt;/h3&gt;
+&lt;p&gt;在实际情况中，常常还会得到非线性的数据集，这时候若尝试用一个超平面将两类实例区分开，会得到大量的误分类点，这样的模型没有很好的确信度和预测性能。超平面的模型是简单的，若使用更复杂一些的超曲面，通常能取得更好的效果。&lt;/p&gt;
+&lt;p&gt;我用一个简单的例子说明这个问题，回忆中学时代的线性回归，也就是用一条直线来拟合一系列数据点，如果数据点是由二次函数产生的，断然是无法找到这条合适的直线的。此时需要将数据点经过变换，经过变换后，在另一空间中得到适合拟合的数据。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="核技巧" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7606?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
+&lt;p&gt;核技巧也是同样的思路，将不适合使用超平面分类的数据集变换到另一空间中，在该空间中使用超平面分类，就相当于在原空间中使用超曲面而非超平面分类。&lt;/p&gt;
+&lt;p&gt;将这个从输入空间到特征空间的映射记作 &lt;span class="math"&gt;\(\phi(x)\)&lt;/span&gt;，使得输入空间中的所有 &lt;span class="math"&gt;\(x,z\)&lt;/span&gt; 满足&lt;/p&gt;
+&lt;div class="math"&gt;$$K(x,z)=\phi(x)\cdot\phi(z)$$&lt;/div&gt;
+&lt;p&gt;就称 &lt;span class="math"&gt;\(K(x,z)\)&lt;/span&gt; 为核函数。考虑对偶问题&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j(\color{orangered}{x_i\cdot x_j})-\sum_i\alpha_i$$&lt;/div&gt;
+&lt;p&gt;将核函数代入就得到非线性支持向量机的对偶问题&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j\color{orangered}{K(x_i,x_j)}-\sum_i\alpha_i$$&lt;/div&gt;
+&lt;p&gt;所以非线性支持向量机的分类决策函数就是&lt;/p&gt;
+&lt;div class="math"&gt;$$f(x)=\mathrm{sign}\left(\sum_i\alpha^*_iy_iK(x,x_i)+b^*\right)$$&lt;/div&gt;
+&lt;p&gt;核函数一般不用自己计算，常见的核函数有&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;名称&lt;/th&gt;
+&lt;th&gt;核函数&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;多项式核函数&lt;/td&gt;
+&lt;td&gt;&lt;span class="math"&gt;\(K(x,z)=(x\cdot z+1)^p\)&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;高斯核函数&lt;/td&gt;
+&lt;td&gt;&lt;span class="math"&gt;\(K(x,z)=\exp\left(-\frac{\|x-z\|^2}{2\sigma^2}\right)\)&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="suan-fa_2"&gt;算法&lt;/h3&gt;
+&lt;p&gt;非线性支持向量机的算法与线性支持向量机无异，不过是需要预先选择合适的核函数，构造最优化问题&lt;/p&gt;
+&lt;div class="math"&gt;$$\min_{\alpha}\quad \frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j\K(x_i,x_j)-\sum_i\alpha_i$$&lt;/div&gt;
+&lt;p&gt;最后用同样的方法求解该最优化问题得到非线性支持向量机。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://book.douban.com/subject/33437381/"&gt;李航, 2019. 统计学习方法（第2版）. 清华大学出版社.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/433150785"&gt;保姆级笔记-详细剖析SMO算法中的知识点 - 知乎&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>《统计学习方法》第六章：逻辑斯谛回归与最大熵模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html" rel="alternate"></link><published>2022-09-09T00:00:00+08:00</published><updated>2022-09-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-09:/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍逻辑斯谛回归模型与最大熵模型，这两种模型具有类似的对数结构，都利用了极大似然估计原理。本章还介绍了广义拉格朗日函数和拟牛顿法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="luo-ji-si-di-hui-gui-mo-xing"&gt;逻辑斯谛回归模型&lt;/h3&gt;
 &lt;p&gt;逻辑斯谛分布具有良好的性质，能够将 &lt;span class="math"&gt;\((-\infty,+\infty)\)&lt;/span&gt; 映射至 &lt;span class="math"&gt;\((-1，+1)\)&lt;/span&gt;，因此选用逻辑斯谛分布作为回归模型。逻辑斯谛分布函数与密度函数为&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
@@ -62,7 +371,7 @@
 &lt;h3 id="yan-yi-la-ge-lang-ri-han-shu"&gt;广义拉格朗日函数&lt;/h3&gt;
 &lt;p&gt;最大熵模型中使用了拉格朗日乘数法，因此有必要先介绍一下广义拉格朗日函数。回忆一下高等数学中的拉格朗日函数，若函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 有约束条件 &lt;span class="math"&gt;\(\varphi(x,y)=0\)&lt;/span&gt;，那么拉格朗日函数就为&lt;/p&gt;
 &lt;div class="math"&gt;$$L(x,y)=f(x,y)+\lambda\varphi(x,y)$$&lt;/div&gt;
-&lt;p&gt;欲寻找函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 的可能极值点，只需令拉格朗日函数的各一阶编导数为零，联立求解。&lt;/p&gt;
+&lt;p&gt;欲寻找函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 的可能极值点，只需令拉格朗日函数的各一阶偏导数为零，联立求解。&lt;/p&gt;
 &lt;p&gt;这里引入广义拉格朗日函数，若有约束最优化问题：&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
     \min_x&amp;amp;\quad f(x)\\
@@ -97,7 +406,7 @@
 &lt;p&gt;构造拉格朗日函数 &lt;span class="math"&gt;\(L(P,w)\)&lt;/span&gt;：&lt;/p&gt;
 &lt;div class="math"&gt;$$L(P,w)\equiv-H(P)+w_0\left[1-\sum_yP(y|x)\right]+\sum_iw_i[E_P(f_i)-E_{\tilde{P}}(f_i)]$$&lt;/div&gt;
 &lt;p&gt;在这里，原始问题的解与对偶问题的解同样是等价的，即&lt;/p&gt;
-&lt;div class="math"&gt;$$\min_{P\in\mathcal{C}}\max_wL(P,w)=\max_w\min_{P\in\mathcal{C}}L(P,w)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\underbrace{\min_{P\in\mathcal{C}}\max_wL(P,w)}_{原始形式}=\underbrace{\max_w\min_{P\in\mathcal{C}}L(P,w)}_{对偶形式}$$&lt;/div&gt;
 &lt;p&gt;那么就可以通过求解对偶问题来求解原始问题，具体来说，就是先求解 &lt;span class="math"&gt;\(\min_{P\in\mathcal{C}}L(P,w)\)&lt;/span&gt;，固定 &lt;span class="math"&gt;\(w\)&lt;/span&gt;，令 &lt;span class="math"&gt;\(\frac{\partial L(P,w)}{\partial P(y|x)}=0\)&lt;/span&gt;，得到 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt; 的表达式后将其代入 &lt;span class="math"&gt;\(L(P,w)\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\(\min_{P\in\mathcal{C}}L(P,w)\)&lt;/span&gt;。再令 &lt;span class="math"&gt;\(\frac{\partial \min_{P\in\mathcal{C}}L(P,w)}{\partial w}=0\)&lt;/span&gt;，最终得到 &lt;span class="math"&gt;\(P(y|x)\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h2 id="suan-fa_1"&gt;算法&lt;/h2&gt;
 &lt;p&gt;逻辑斯谛回归模型和最大熵模型都是光滑的凸函数，适用于多种最优化方法，常用的方法包括迭代尺度算法、梯度下降法、牛顿法或拟牛顿法。&lt;/p&gt;
@@ -154,7 +463,7 @@
 \end{align}$$&lt;/div&gt;
 &lt;p&gt;将其中的 &lt;span class="math"&gt;\(\nabla^2f(x^{(k)})^{-1}\)&lt;/span&gt; 记作 &lt;span class="math"&gt;\(H^{-1}_k\)&lt;/span&gt;，是黑塞矩阵的逆，将 &lt;span class="math"&gt;\(\nabla f(x^{(k)})\)&lt;/span&gt; 记作 &lt;span class="math"&gt;\(g_k\)&lt;/span&gt;。令 &lt;span class="math"&gt;\(p_k=-H^{-1}_kg_k\)&lt;/span&gt;，称为牛顿方向，那么每次迭代的过程就是&lt;/p&gt;
 &lt;div class="math"&gt;$$x^{(k+1)}=x^{k}+p_k$$&lt;/div&gt;
-&lt;p&gt;{begin note}这里的泰勒展开为矩阵形式，因此式中带有转置与逆等符号，若对求导过程有疑惑，可以参考&lt;a href="https://zhuanlan.zhihu.com/p/382683133"&gt;泰勒展开的矩阵形式&lt;/a&gt;。{begin note}&lt;/p&gt;
+&lt;p&gt;{note begin}这里的泰勒展开为矩阵形式，因此式中带有转置与逆等符号，若对求导过程有疑惑，可以参考&lt;a href="https://zhuanlan.zhihu.com/p/382683133"&gt;泰勒展开的矩阵形式&lt;/a&gt;。{note end}&lt;/p&gt;
 &lt;h4&gt;拟牛顿法&lt;/h4&gt;
 &lt;p&gt;考虑以上推导过程中得到的&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
@@ -1416,6 +1725,7 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$&lt;/div&gt;
 &lt;p&gt;感知机的学习策略就是在假设空间中选取 &lt;span class="math"&gt;\(L(w,b)\)&lt;/span&gt; 最小的模型参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(b\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/Tseing/Statistical_Algorithms/blob/master/perceptron.py"&gt;&lt;i class="fa fa-github-alt"&gt;&lt;/i&gt; Code Here.&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;感知机的学习算法就是求解以下最优化问题的算法：&lt;/p&gt;
 &lt;div class="math"&gt;$$\min_{w,b}L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$&lt;/div&gt;
 &lt;h3 id="sui-ji-ti-du-xia-jiang-fa"&gt;随机梯度下降法&lt;/h3&gt;
