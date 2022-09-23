@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html" rel="canonical" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -66,9 +66,9 @@
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结：从头药物设计中的深度学习方法"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural..."/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-20 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-21 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
@@ -84,7 +84,7 @@
   "@type": "Article",
   "name": "文献总结：从头药物设计中的深度学习方法",
   "headline": "文献总结：从头药物设计中的深度学习方法",
-  "datePublished": "2022-09-20 00:00:00+08:00",
+  "datePublished": "2022-09-21 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -92,7 +92,7 @@
     "url": "https://tseing.github.io/author/leo.html"
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
-  "url": "https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html",
   "description": "本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural..."
 }
 </script>  <!-- waline comment -->
@@ -139,7 +139,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
-            | <time datetime="2022年 9月20日">2022年 9月20日</time>
+            | <time datetime="2022年 9月21日">2022年 9月21日</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
@@ -161,7 +161,7 @@
 <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1016/j.sbi.2021.10.001">doi.org/10.1016/j.sbi.2021.10.001</a></p>
 <h2 id="yin-yan">引言</h2>
 <p>从头药物设计（分子生成）的主要目标是从现有的化合物库中生成新颖且具有指定特征的分子。与虚拟筛选相比，虚拟筛选通过多种筛选方法不断缩小化合物范围，最终获得目标分子，而基于深度学习的生成模型则是通过总结和提取现有分子的特征，然后将其转换成新颖的化合物。</p>
-<p><div class="lightgallery"><a data-sub-html="分子生成与虚拟筛选" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"><img alt="分子生成与虚拟筛选" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="fen-zi-miao-shu-yu-sheng-cheng-mo-xing-ping-jie-zhi-biao">分子描述与生成模型评价指标</h2>
 <h3 id="fen-zi-miao-shu">分子描述</h3>
 <p>数据集和生成算法都会影响生成模型的预测性能，除此之外，模型的预测性能很大程度上也依赖于如何将配体和蛋白-配体复合物描述成合适的形式并用于特征用学习。</p>
@@ -203,7 +203,7 @@
 <h4>针对生成模型的整体评价工具</h4>
 <p>一些整体评价工具套件常用于评价整体的生成模型，这些工具大多集成了内置的指标，常用的工具包括 MOSES 与 GuacaMol。</p>
 <h2 id="fen-zi-sheng-cheng-zhong-zui-xin-de-shen-du-xue-xi-kuang-jia_1">分子生成中最新的深度学习框架</h2>
-<p><div class="lightgallery"><a data-sub-html="分子生成模型" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"><img alt="分子生成模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p class="intro">（a）VAE 生成模型使用包括编码器 q(z|x) 与解码器 (x|z) 的分子通过最大化 LB（下界）训练模型；（b）RNN 模型通过最大化合理分子字符序列组合的概率 (y1y2&hellip;yt) 生成分子；（c）GAN 模型中，鉴别器 D 否决生成器 G（D(x)&rarr;0, D(G(z))&rarr;0），而生成器要生成更&ldquo;真实&rdquo;的分子来欺骗鉴别器（D(G(z))&rarr;1)）;（d）RL 框架使用预测器来奖励生成器的每个状态 s，最大化末了状态 S 的总分 R；（e）不同的分子描述形式。</p>
 <h3 id="ji-yu-enc-dec-de-mo-xing">基于 Enc-Dec 的模型</h3>
 <p>Enc-Dec 是一种无监督学习的模型，编码器将分子映射成潜在空间中的向量，解码器将概率分布映射回原始空间，基于 Enc-Dec 的模型就通过在潜在空间中抽样来生成分子。最早基于 Enc-Dec 的模型属于变分自编码器（Variational Autoencoder, VAE），后来又产生了许多种变种。</p>
@@ -211,25 +211,25 @@
 <p>与基于 Enc-Dec 的模型不同，基于循环神经网络（Recurrent Neural Network, RNN）、强化学习（Reinforcement
 Learning, RL）和生成对抗网络（Generative Adversarial
 Network, GAN）的模型向着预先设定的特征生成分子。</p>
-<p>基于 RNN 的模型能够通过逐层的神经网络生成具有最高概率的分子排布形式，为了解决梯度下降等问题，还向 RNN 层中引入了长短期记忆和门循环单元算法。转移学习（Transfer Learning, TL）通过转移从相关任务中的知识来提升对新任务的学习效果。在基于 RNN 的模型中，TL 通常就是指在针对某特定目标的任务中使用一些具有活性的化合物来再训练生成模型，这种 RNN 与 TL 的结合已经有许多成功案例。相比其他算法，RNN 具有的优势包括能够生成无限长度的分子和模型训练的操作简单。</p>
+<p>基于 RNN 的模型能够通过逐层的神经网络生成具有最高概率的分子排布形式，为了解决梯度下降等问题，还向 RNN 层中引入了长短期记忆和门循环单元算法。转移学习（Transfer Learning, TL）通过转移从相关任务中的知识来提升对新任务的学习效果。在基于 RNN 的模型中，TL 通常就是指在针对某特定靶点的任务中使用一些具有活性的化合物来再训练生成模型，这种 RNN 与 TL 的结合已经有许多成功案例。相比其他算法，RNN 具有的优势包括能够生成无限长度的分子和模型训练的操作简单。</p>
 <p>GAN 的基本原理是生成器与鉴别器之间的二人零和博弈，鉴别器尝试鉴别出生成分子中的真阳性分子，而生成器尝试在噪声中生成分子并欺骗鉴别器。GAN 常与其他深度学习框架结合，共同完成药物设计任务，例如在训练过程中可以将 GAN 鉴别器与 RL 奖励系统结合，为生成分子打分。</p>
 <p>DL 更多作为深度学习模型的一种优化策略，DL 使用奖励函数为行要打分，打分结果就决定了下一阶段的行为。在分子生成模型中，生成器通过某些方式生成分子，然后内置的 QSAR 预测器就会评估生成分子的质量（奖励还是惩罚），评估过程的目的就是增强生成分子的人为预设特征。</p>
 <h2 id="wei-lai-zhan-wang_1">未来展望</h2>
 <p>分子描述仍然是分子生成模型中的关键问题，不同于文本或图像能够直接使用计算机处理，针对于不同的任务，具有多种多样的分子描述形式，根本原因还是在于仍没有完美的分子表述形式，所以针对于不同算法和任务，必须选取合适的描述方式。分子描述还具有一个容错率的问题，例如文本中某些词语和图像中某些像素若具有错误，不会被鉴别器完全否定，而在分子生成模型中，只要一个原子存在错误，就可能生成不合理的分子。</p>
 <p>在各种分子生成模型中，假阳性也是一个不能忽视的问题。湿实验当然是评估生成分子质量的最直接方法，但生成分子的数量如此之大，这种方法也是不可行的。目前在机器学习领域仍然缺少评估生成分子质量的标准，我们仍需要评估模型与生成分子质量的普适标准。</p>
-<p>目前方法学的研究还是集中于优化深度学习框架的算法，实际应用的研究远少于方法学研究，许多开源工具也集中于新算法的优化而不是针对特定目标的药物设计。因此，目前迫切需要一种集成了多种分子生成算法的平台，并将其用于药物设计。</p>
+<p>目前方法学的研究还是集中于优化深度学习框架的算法，实际应用的研究远少于方法学研究，许多开源工具也集中于新算法的优化而不是针对特定靶点的药物设计。因此，目前迫切需要一种集成了多种分子生成算法的平台，并将其用于药物设计。</p>
 <p>在深度学习展现出广阔前景的同时，传统算法并未过时，例如传统的遗传算法在分子生成模型中也能得到可观的结果。在深度学习在其他领域迈步向前的同时，在药物设计邻域才初具雏形，因此其他邻域的应用可能也能为药物设计与发现提供有价值的导向。</p>
             </section>
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=文献总结：从头药物设计中的深度学习方法&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结：从头药物设计中的深度学习方法&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-20-summary-deep-learning-for-drug-design.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>

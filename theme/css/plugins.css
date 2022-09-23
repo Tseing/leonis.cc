@@ -65,6 +65,16 @@ i.fa.fa-map-marker.fa-stack-1x {
     font-size: 1.2em;
 }
 
+.intro {
+    font-style: italic;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: -20px;
+    font-size: 90%;
+    opacity: 0.8;
+    text-align: left;
+}
+
 @media only screen and (min-width: 1000px){
     #waline {
         margin: auto 16%;
@@ -78,6 +88,10 @@ i.fa.fa-map-marker.fa-stack-1x {
 }
 
 @media only screen and (max-width: 400px){
+    .intro {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
     .wl-text-number{
         display: none;
     }

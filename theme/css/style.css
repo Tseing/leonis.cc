@@ -1628,16 +1628,6 @@ img {
     margin-right: auto;
 }
 
-.intro {
-    font-style: italic;
-    margin-left: 10%;
-    margin-left: 10%;
-    margin-top: -20px;
-    font-size: 90%;
-    opacity: 0.8;
-    text-align: left;
-}
-
 .post-content .fluid-width-video-wrapper {
     max-width: none;
     width: 110%;
@@ -2344,10 +2334,6 @@ img {
     .menu-active #blog-header,
     .menu-active #post-header {
         padding-right: inherit
-    }
-    .intro {
-        margin-left: 5%;
-        margin-right: 5%;
     }
     pre code,
     pre tt {
