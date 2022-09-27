@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-21T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结：从头药物设计中的深度学习方法</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" rel="alternate"></link><published>2022-09-21T00:00:00+08:00</published><updated>2022-09-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-21:/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html</id><summary type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural Biology 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 &lt;i&gt;Deep learning approaches for de novo drug design: An overview&lt;/i&gt;，发表在 &lt;i&gt;Current Opinion in Structural Biology&lt;/i&gt; 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-09-27T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>用 Markdown 创作 pptx 的尝试</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" rel="alternate"></link><published>2022-09-27T00:00:00+08:00</published><updated>2022-09-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-27:/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html</id><summary type="html">&lt;p&gt;总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。&lt;/p&gt;
+&lt;h2 id="an-zhuang"&gt;安装&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://marp.app/#get-started"&gt;Marp 官网&lt;/a&gt;提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。&lt;/p&gt;
+&lt;p&gt;安装完成后打开拓展设置，将 &lt;code&gt;Markdown &amp;gt; Marp:Export Type&lt;/code&gt; 修改为 &lt;code&gt;pptx&lt;/code&gt;，输出文件格式就默认为 pptx（若要调试 CSS 样式，输出 html 更为方便），其余设置按需修改。&lt;/p&gt;
+&lt;p&gt;接下来测试一下 Marp 的功能是否正常，新建一个 &lt;code&gt;.md&lt;/code&gt; 文件，内容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-markdown"&gt;---
+marp: true
+---
+
+# Hello, Marp!
+
+pptx by Marp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接着点击右上角的 &lt;code&gt;打开侧边预览&lt;/code&gt; 按钮，或使用快捷键 &lt;code&gt;Ctrl+K V&lt;/code&gt; （摁下 Ctrl+K 后再摁 V）打开预览界面。点击右上角 Marp 的图标，选择 &lt;code&gt;Toggle Marp Feature For Current Markdown&lt;/code&gt; 后理应出现像下图一样的幻灯片预览。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;有的朋友会发现仍然是 Markdown 文档的样式，而非幻灯片分页的形式，这可能是因为之前安装了其他的 Markdown 预览插件。最简单的方法就是使用 VS Code 自带的预览工具，以我的 Markdown Preview Enhanced 插件为例，在它的插件设置中找到 &lt;code&gt;Hide Default VSCode Markdown Preview Button&lt;/code&gt;，取消取定，重新启动后就会看见右上角有两个预览图标，一个是 VS Code 默认预览，另一个是 Markdown Preview Enhanced 插件，使用默认预览就能正常显示了。&lt;/p&gt;
+&lt;h2 id="chuang-zuo-huan-deng-pian"&gt;创作幻灯片&lt;/h2&gt;
+&lt;p&gt;Marp 中比较特殊的语法可以参考&lt;a href="https://github.com/marp-team/marp-vscode"&gt;官方文档&lt;/a&gt;与&lt;a href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html"&gt;博客 CAI&lt;/a&gt;，其他语法与 Markdown 无异。&lt;/p&gt;
+&lt;p&gt;全局的样式定义在主题 CSS 文件中，有时候需要修改单独页面的主题，Marp 提供了局部样式的方式：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;style scoped&amp;gt;
+    &amp;lt;!-- Your style Here.
+    Such as: --&amp;gt;
+    p{
+        font-size: 30px;
+    }
+&amp;lt;/style&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Marp 使用与 Markdown 相同的方式插入图片，例如&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-markdown"&gt;![img](url) ![img](url)
+
+---
+
+![img](url)
+![img](url)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若将两个以上插入图片的语句写在同一行，那么两张图片会被包装在同一个 &lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;&lt;/code&gt; 标签中，也就类似于在文本框中插入两张图片，若宽度足够，两张图片会左右排列在同一行。&lt;/p&gt;
+&lt;p&gt;若用第二种方式，也就是将两个以上插入图片的语句分行书写，那么各个图片在各自的 &lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;&lt;/code&gt; 标签中，也就是分行排列。&lt;/p&gt;
+&lt;p&gt;正是因为图片在 &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; 标签中，继承了 &lt;code&gt;text-align: left&lt;/code&gt; 的属性，也就是左侧对齐。对于我而言，图片居中更为重要，所以在样式文件中加入以下代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-css"&gt;img[alt~="center"] {
+    display: block;
+    margin: 0px auto;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在撰写文章时，使用 &lt;code&gt;![center](url)&lt;/code&gt; 就能使图片居中了。但是因为 &lt;code&gt;display: block&lt;/code&gt; 属性，居中的同时就不能左右排列两张图片了，所以欲使两张图片并排共同居中可能还要想点办法&lt;del&gt;（为什么要用 Markdown 做排版软件做的事 -_-）&lt;/del&gt;。&lt;/p&gt;
+&lt;h2 id="yi-ge-wo-chuang-jian-de-mo-ban"&gt;一个我创建的模版&lt;/h2&gt;
+&lt;p&gt;Marp 中的样式是由 CSS 文件定义的，因此只要会使用 CSS，就能创建自己的主题。我制作了一个适用于各种汇报和答辩的 slide 主题，主题项目已经发布到 Github 了， &lt;a href="https://github.com/Tseing/Marp-Theme-NKU"&gt;&lt;i class="fa fa-github fa-lg"&gt;&lt;/i&gt; Marp-Theme-NKU&lt;/a&gt; 仓库页面有更详细的介绍和安装方法。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="page1" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7687?authkey=ALYpzW-ZQ_VBXTU"/&gt;
+&lt;img alt="page2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7688?authkey=ALYpzW-ZQ_VBXTU"/&gt;
+&lt;img alt="page3" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7689?authkey=ALYpzW-ZQ_VBXTU"/&gt;
+&lt;img alt="page4" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7690?authkey=ALYpzW-ZQ_VBXTU"/&gt;
+&lt;img alt="page5" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7691?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;</content><category term="碎碎念"></category><category term="Marp"></category><category term="Markdown"></category></entry><entry><title>文献总结：从头药物设计中的深度学习方法</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" rel="alternate"></link><published>2022-09-21T00:00:00+08:00</published><updated>2022-09-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-21:/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html</id><summary type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural Biology 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 &lt;i&gt;Deep learning approaches for de novo drug design: An overview&lt;/i&gt;，发表在 &lt;i&gt;Current Opinion in Structural Biology&lt;/i&gt; 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1016/j.sbi.2021.10.001"&gt;doi.org/10.1016/j.sbi.2021.10.001&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;从头药物设计（分子生成）的主要目标是从现有的化合物库中生成新颖且具有指定特征的分子。与虚拟筛选相比，虚拟筛选通过多种筛选方法不断缩小化合物范围，最终获得目标分子，而基于深度学习的生成模型则是通过总结和提取现有分子的特征，然后将其转换成新颖的化合物。&lt;/p&gt;
