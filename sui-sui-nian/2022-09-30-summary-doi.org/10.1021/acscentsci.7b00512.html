@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结：使用循环神经网络为药物发现生成指定的分子库</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结：使用循环神经网络为药物发现生成指定的分子库"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-30 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结：使用循环神经网络为药物发现生成指定的分子库",
+  "headline": "文献总结：使用循环神经网络为药物发现生成指定的分子库",
+  "datePublished": "2022-09-30 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html",
+  "description": "本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结：使用循环神经网络为药物发现生成指定的分子库</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 9月30日">2022年 9月30日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#zhuan-yi-xue-xi" title="转移学习">转移学习</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#ping-jie-zhi-biao" title="评价指标">评价指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#sheng-cheng-xin-fen-zi" title="生成新分子">生成新分子</a></li><li><a class="toc-href" href="#zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku" title="针对特定靶定生成活性分子库">针对特定靶定生成活性分子库</a></li><li><a class="toc-href" href="#mo-ni-she-ji-he-cheng-ce-shi-de-xun-huan" title="模拟「设计-合成-测试」的循环">模拟「设计-合成-测试」的循环</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。</p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acscentsci.7b00512">doi.org/10.1021/acscentsci.7b00512</a></p>
+<h2 id="yin-yan">引言</h2>
+<p>在通常的分子任务中，计算机需要完成</p>
+<ol>
+<li>生成分子；</li>
+<li>给分子打分并根据结果过滤；</li>
+<li>基于此前步骤中获得的知识，寻找更优分子。</li>
+</ol>
+<p>针对于目标（1），常见方式包括</p>
+<ul>
+<li>基于预先定义的原子团或片段构建分子在 &rarr; 分子可能难以合成；</li>
+<li>基于专门的编码规则进行虚拟反应 &rarr; 反应难以预测。</li>
+</ul>
+<p>针对于目标（2），可以使用靶点对接或机器学习过滤去不需要的基团，这会需要用到靶点预测与定量构效关系（QSAR）。针对于目标（3），传统的方式包括遗传算法和蚁群优化。此外还有新提出的逆 QSAR 方法，传统的 QSAR 将结构映射到性质，逆 QSAR 将性质映射到结构，但这种映射关系常常是一对多的，带来了许多问题。</p>
+<p>在这篇文章中，作者提出了一种完全由数据驱动的从头药物没计方法。基于循环神经网络（Recurrent Neural Network, RNN），模型通过学习训练集生成概率分布，并从该分布中取样生成新实例，生成的新实例与训练集数据具有相似特征。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="mo-xing">模型</h3>
+<p>文章决定使用 SMILES 作为分子的编码方式，并以 <code>\n</code> 作为每个分子编码的结束符。</p>
+<p>对于给定的词序列 <span class="math">\((w_1,w_2,\cdots,w_i)\)</span>，语言模型能够预测第 <span class="math">\(i+1\)</span> 个词 <span class="math">\(w_{i+1}\)</span> 的概率分布，同时还能识别其中的语法错误和语义错误。就其本质而，在步骤 <span class="math">\(t_i\in T\)</span> 中，对于给定的字符 <span class="math">\(s_i\)</span> 序列 <span class="math">\(S\)</span>，语言模型通过计算概率（马尔可夫链）</p>
+<div class="math">$$P_\theta(S)=P_\theta(s_1)\prod_{t=2}^TP_\theta(s_t|s_{t_1},\cdots,s_1)$$</div>
+<p>预测下一个字符，其中 <span class="math">\(\theta\)</span> 是从训练集中学习到的参数。</p>
+<p>对于上述 <span class="math">\(P_\theta\)</span> 的计算，文章主要应用了 RNN。RNN 得到输入向量序列 <span class="math">\(\boldsymbol{x}_{1:n}=(\boldsymbol{x}_1,\boldsymbol{x}_2,\cdots,\boldsymbol{x}_n)\)</span> 和初始状态向量 <span class="math">\(\boldsymbol{h}_0\)</span>，输出状态向量序列 <span class="math">\(\boldsymbol{h}_{1:n}=(\boldsymbol{h}_1,\boldsymbol{h}_2,\cdots,\boldsymbol{h}_n)\)</span> 和输出向量序列 <span class="math">\(\boldsymbol{y}_{1:n}=(\boldsymbol{y}_1,\boldsymbol{y}_2,\cdots,\boldsymbol{y}_n)\)</span>，可以表达为</p>
+<div class="math">$$\mathrm{RNN}(\boldsymbol{h}_0,\boldsymbol{x}_{1:n})=\boldsymbol{h}_{1:n},\boldsymbol{y}_{1:n}$$</div>
+<p>RNN 中的迭代函数 <span class="math">\(R\)</span> 获取状态向量 <span class="math">\(\boldsymbol{h}_i\)</span> 和输入向量 <span class="math">\(\boldsymbol{x}_{i+1}\)</span>，然后输出新的状态向量 <span class="math">\(\boldsymbol{h}_{i+1}\)</span>。另一个函数 <span class="math">\(O\)</span> 将状态向量 <span class="math">\(\boldsymbol{h}_i\)</span> 映射为输出 <span class="math">\(\boldsymbol{y}_i\)</span>（激活函数）。</p>
+<div class="math">$$\begin{align}
+    &amp;\boldsymbol{h}_i=R(\boldsymbol{h}_{i_1},\boldsymbol{x}_i)\\
+    &amp;\boldsymbol{y}_i=O(\boldsymbol{h}_i)
+\end{align}$$</div>
+<p><img alt="RNN" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7694?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>预先将分子编码转换为 one-hot 模式，在该模型中，通过计算（softmax 函数）</p>
+<div class="math">$$P_\theta(s_{t+1}|s_t,\cdots,s_1)=\frac{\exp(y^k_t)}{\sum^K_{k'=1}\exp(y^{k'}_t)}$$</div>
+<p>得到序列的下一个字符 <span class="math">\(s_{t+1}\)</span>，再将该字符加入到输入向量中，继续得到 <span class="math">\(y_{t+1}\)</span>，从而得到 <span class="math">\(s_{t+2}\)</span>，用这种迭代的方式生成分子的描述序列。</p>
+<p><img alt="symbol generation" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7695?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h3 id="zhuan-yi-xue-xi">转移学习</h3>
+<p>文章的两个目标是生成尽可能大的多样分子数据用于虚拟筛选和针对特定靶点生成可能具有活性的分子数据。对于第一个目标，首先使用一个较大的训练集训练模型，使模型学会 SMILES 语法后，让模型生成大量分子数据。对于第二个目标，就需要用到转移学习，使用更小的具有某特征的数据集训练再次训练模型，该操作称为 fine-tune，模型就能从中学习到特征，生成对某靶点可能具有活性的分子。</p>
+<h3 id="shu-ju">数据</h3>
+<p>140 万个分子的 SMILES 数据来自于 ChEMBL 数据库。</p>
+<h3 id="ping-jie-zhi-biao">评价指标</h3>
+<div class="math">$$\mathrm{EOR}=\frac{n/|G_N|}{m/|R_M|}$$</div>
+<p>其中 <span class="math">\(R_M\)</span> 为只经过较大数据集训练的模型生成的分子集，<span class="math">\(G_N\)</span> 为经过 fine-tune 后模型生成的分子集，用 <span class="math">\(T\)</span> 表示测试集，<span class="math">\(m=|G_N\cap T|\)</span>，<span class="math">\(n=|R_M\cap T|\)</span>，EOR 表示相对于普通模型，经过 fine-tune 后的模型有多好。</p>
+<h2 id="jie-guo_1">结果</h2>
+<h3 id="sheng-cheng-xin-fen-zi">生成新分子</h3>
+<p>在使用大数据集训练模型后，让模型生成 50,000,000 个SMILES 符号，这些符号构成了 976,327 个分子，其中 97.7% 通过了 CDK 工具的合法性检测，说明模型学会了 SMILES 语法。在剔除重复与非法分子后，最终得到了 847,955 个新分子。</p>
+<p>接着使用 RDKit 库（version 2016.03.1）调查了生成的分子的物理化学性质，绘制了 t-SNE（(t-distributed stochastic neighbor embedding）数据降维图。</p>
+<p><img alt="t-SNE of novel molecules" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7696?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>可以看出生成分子集与训练集有很大的重叠，二者物理化学性质相似，该模型学习到了训练集中的特征。</p>
+<h3 id="zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku">针对特定靶定生成活性分子库</h3>
+<p>针对于 5-HT~2A~ 受体，在 ChEMBL 数据库中选择 pIC~50~ &gt; 7 的 732 个分子作为训练集，用于 fine-tune 之前已经训练好的模型。随着 fine-tune 的 epochs 不断增加，生成分子中具有活性的分子占比随之增加。</p>
+<p><img alt="epochs" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7697?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>此外，文章中还针金黄色葡萄球菌生成了具有活性的分子，使用 1000 个数据得到预训练的模型后，只需要使用 50 个数据进行 fine-tune 操作也能得到可观的结果，这有利于在数据较少的情况下生成特定特征的分子。</p>
+<p><img alt="fine-tune table" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7699?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h3 id="mo-ni-she-ji-he-cheng-ce-shi-de-xun-huan">模拟「设计-合成-测试」的循环</h3>
+<p>从头药物设计的流程包括药物的设计、合成、活性性测的循环，不断重复直至寻找到新的药物。这篇文章中使用模型模拟了这一流程，也就是分子生成（合成）&rarr; 基于靶点预测选择更优分子（虚拟筛选）&rarr; 使用更优分子训练模型（设计）。</p>
+<p>在经过 8 次循环后，模型生成了与测试集（7001 个分子）中相同 416 个分子，得到了 59.6 的 EOR，比使用 fine-tune 直接训练模型的结果更高。</p>
+<h2 id="jie-lun_1">结论</h2>
+<p>文章利用循环神经网络构建了分子生成模型，该模型能够生成与训练集具有类似特征的分子。文章还使用了 fine-tune 的操作，在使用大数据集训练模型后，使用较小的数据集就能生成有针对性的分子。最后，文章将生成模型与靶点预测模型相结合，使用靶点预测的结果再训练生成模型，实现了从头药物设计流程的闭环。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结：使用循环神经网络为药物发现生成指定的分子库&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">用 Markdown 创作 pptx 的尝试</h2>
+                            <p class="post-nav-excerpt">总是遇到一些时候，一个又一个的 presentation...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

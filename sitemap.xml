@@ -5,22 +5,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/</loc>
-<lastmod>2022-09-27T20:50:47-00:00</lastmod>
+<lastmod>2022-09-30T18:57:56-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/about.html</loc>
-<lastmod>2022-09-27T20:50:47-00:00</lastmod>
+<lastmod>2022-09-30T18:57:56-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-09-27T20:50:47-00:00</lastmod>
+<lastmod>2022-09-30T18:57:56-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</loc>
+<lastmod>2022-09-30T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -145,7 +152,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/author/leo.html</loc>
-<lastmod>2022-09-27T00:00:00+08:06</lastmod>
+<lastmod>2022-09-30T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
