@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html" rel="canonical" />
+  <!-- Feed -->
+
+  <link href="http://localhost:8000/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="http://localhost:8000/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="http://localhost:8000/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="http://localhost:8000/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-10-07 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="http://localhost:8000/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://localhost:8000/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成",
+  "headline": "文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成",
+  "datePublished": "2022-10-07 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "http://localhost:8000/author/leo.html"
+  },
+  "image": "http://localhost:8000/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html",
+  "description": "本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="http://localhost:8000/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="http://localhost:8000/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="http://localhost:8000/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="http://localhost:8000/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="http://localhost:8000/tags.html" role="presentation">Tags</a></li>
+          <li><a href="http://localhost:8000/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="http://localhost:8000/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="http://localhost:8000/author/leo.html">Leo</a>
+            | <time datetime="2022年 10月07日">2022年 10月07日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#bian-ma" title="编码">编码</a></li><li><a class="toc-href" href="#shu-ju-lai-yuan" title="数据来源">数据来源</a></li><li><a class="toc-href" href="#huo-xing-yu-ce-mo-xing" title="活性预测模型">活性预测模型</a></li><li><a class="toc-href" href="#fen-zi-sheng-cheng-mo-xing" title="分子生成模型">分子生成模型</a></li><li><a class="toc-href" href="#mo-xing-ping-gu" title="模型评估">模型评估</a></li><li><a class="toc-href" href="#ping-jie-zhi-biao" title="评价指标">评价指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#transformer-xiang-bi-rnn-de-you-shi" title="transformer 相比 RNN 的优势">transformer 相比 RNN 的优势</a></li><li><a class="toc-href" href="#liang-chong-zheng-liu-mo-shi-de-dui-bi" title="两种蒸馏模式的对比">两种蒸馏模式的对比</a></li><li><a class="toc-href" href="#mo-xing-ping-gu_1" title="模型评估">模型评估</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li><li><a class="toc-href" href="#ling-transformer-de-jie-shao" title="另：transformer 的介绍">另：transformer 的介绍</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 <em>Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning</em>，于 2021 年发表在 <em>Nature Machine Intelligence</em> 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。</p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-021-00403-1">doi.org/10.1038/s42256-021-00403-1</a></p>
+<h2 id="yin-yan">引言</h2>
+<p>在药物分子生成的任务中，目标分子既需要有高类药性、低毒性，其结构又需要尽可多样和新颖，药物分子生成就是这样一个多约束优化问题。</p>
+<p>文章针对该问题提出了一种新的分子生成方法&mdash;&mdash;MCMG（Multi-Constraint Molecular Generation），鉴于 conditional transformer 在自然语言处理中的优势，MCMG 将其作为分子生成模型，接着使用知识蒸馏降低模型复杂程度，简化后的模型更便于使用强化学习 fine-tune，最后得到由 RNN 构成的代理模型。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="bian-ma">编码</h3>
+<p>MCMG 使用 SMILES 作为分子的表示方式。</p>
+<h3 id="shu-ju-lai-yuan">数据来源</h3>
+<ul>
+<li>
+<p>训练数据来自于 <a href="https://doi.org/10.1186/s13321-017-0235-x">Olivecrona et al.</a> 从 ChEMBL 中挑选的数据。</p>
+</li>
+<li>
+<p>生物活性数据：
+    | 靶点  | negative / positive | 来源 |
+    |------|---------------------|------|
+    | DRD2 | 100000 / 7219       | <a href="https://doi.org/10.1186/s13321-017-0235-x">Olivecrona et al.</a> |
+    | JNK3 | 50000 / 2665        | <a href="https://doi.org/10.48550/arXiv.1806.02473">Li et al.</a> |
+    | GSK3&beta;| 50000 / 740         | <a href="https://doi.org/10.48550/arXiv.1806.02473">Li et al.</a> |</p>
+</li>
+</ul>
+<h3 id="huo-xing-yu-ce-mo-xing">活性预测模型</h3>
+<table>
+<thead>
+<tr>
+<th>靶点</th>
+<th>算法</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRD2</td>
+<td>支持向量机</td>
+<td><a href="https://doi.org/10.1186/s13321-017-0235-x">Olivecrona et al.</a></td>
+</tr>
+<tr>
+<td>JNK3</td>
+<td>随机森林</td>
+<td><a href="https://doi.org/10.48550/arXiv.2002.03244">Jin et al.</a></td>
+</tr>
+<tr>
+<td>GSK3&beta;</td>
+<td>随机森林</td>
+<td><a href="https://doi.org/10.48550/arXiv.2002.03244">Jin et al.</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fen-zi-sheng-cheng-mo-xing">分子生成模型</h3>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7714?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7714?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><strong>1. 先验模型</strong>：生成具有目标特征的分子。</p>
+<p>在先验模型中添加了约束码 <span class="math">\(c\)</span>，约束码 <span class="math">\(c\)</span> 是一个 n 位字符串，用于表示分子是否满足了 n 个约束。先验模型的训练目标就是以 <code>\s</code> + SMILES 为输入，以 SMILES + <code>\EOS</code> 为输出，通过 <span class="math">\(c\)</span> 表示分子状态，输出最优分子。先验模型通过这个过程中学习到的条件概率分布生成预期分子：</p>
+<div class="math">$$p(x|c)=\prod^n_{i=1}p(x_i|x_{&lt;i},c)$$</div>
+<p><strong>2. 蒸馏模型</strong>：简化 transformer 结果，便于 RL 优化。</p>
+<p>蒸馏模型的结构是具有三层循环单元的 RNN，蒸馏模型分为两种模式，分别是 DL（Distilled Likelihood） 与 DM（Distilled Molecules）。</p>
+<ul>
+<li>DL: 使用先验模型中生成的字符作为训练集，与先验模型的训练过程类似，首先输入 <code>\s</code> 与 <span class="math">\(c\)</span>，再逐个输入先验模型生成的下一个字符，直至到达 <code>\EOS</code>。在这个过程中，模型能够学习到准确的概率。最后经过 fine-tune 的模型就称作 MCMGL。</li>
+<li>DM： 直接使用先验模型中生成的分子集作为训练集，无法学习到准确的概率。最后经过 fine-tune 的模型就称作 MCMGM。</li>
+</ul>
+<p>此外，文章还提出了 semi-DM 与 semi-MCMGM 模型，这部分模型的训练集由满足一部分约束条件的分子构成，例如 QED 与 SA，用于增加计算效率。</p>
+<p><strong>3. 代理模型</strong>：使用 RL 算法 fine-tune 预先训练好的神经网络。</p>
+<p>在该步骤中，使用 REINVENT 中的 RL 算法 fine-tune 蒸馏模型。具体来说，RL 将模型产生 SMILES 视作行为，接着根据每个行为给予一定的奖惩，代理模型最终学习到状态 <span class="math">\(S\)</span> 下行为 <span class="math">\(A\)</span> 的条件概率 <span class="math">\(p(A|S)\)</span>。</p>
+<p>在代理模型生成的分子中取样，记录其概率 <span class="math">\(\log p(A)_{\mathrm{agent}}\)</span>，将生成的分子输入蒸馏模型得到概率 <span class="math">\(\log p(A)_{\mathrm{middle}}\)</span>，通过下式计算增广概率：</p>
+<div class="math">$$\log p(A)_{\mathrm{aug}}=\log p(A)_{\mathrm{middle}}+\sigma S(A)$$</div>
+<p>式中 <span class="math">\(S(A)\)</span> 是对分子的打分，可以通过活性预测模型得到。代理模型的损失函数就是</p>
+<div class="math">$$\mathrm{Loss}=[\log p(A)_{\mathrm{aug}}-\log p(A)_{\mathrm{agent}}]^2$$</div>
+<h3 id="mo-xing-ping-gu">模型评估</h3>
+<p>对于模型的评估从两方面展开：</p>
+<ul>
+<li><strong>实验 1</strong>：评估优化后各个最佳模型的能力，即评估模型最后生成的分子的各方面指标；</li>
+<li><strong>实验 2</strong>：评估各模型在相同条件下生成分子的性能与质量，即保存了全过程中生成的分子用于评估。</li>
+</ul>
+<p>文章中将针对 DRD2 生成活性分子的工作称为任务 1，针对 JNK3 与 GSK3&beta; 的称为任务 2。</p>
+<h3 id="ping-jie-zhi-biao">评价指标</h3>
+<p>文章中对生成分子的评价使用了 <a href="https://doi.org/10.48550/arXiv.2002.03244">Jin et al.</a> 提出的标准指标与 MOSES 指标。</p>
+<p>标准指标：</p>
+<ul>
+<li>Success: 若 QED、SA、对受体活性的预测值都在指定范围内，则认为该分子属于 success，successful 分子占比即为 success rate。</li>
+<li>Real success: 生成分子中满足 success 条件的独特（unique）分子占比。</li>
+<li>Diversity：在 successful 分子中基于摩根指纹两两评估谷本距离 <span class="math">\(\mathrm{sim}(X,Y)\)</span>，
+    <div class="math">$$\mathrm{Diversity}=1-\frac{2}{n(n-1)}\sum_{X,Y}\mathrm{sim}(X,Y)$$</div>
+</li>
+<li>Novelty:对于每个 successful 分子 <span class="math">\(G\)</span>，在训练集中取其最近邻 <span class="math">\(G_{\mathrm{SNN}}\)</span>，
+    <div class="math">$$\mathrm{Novelty}=\frac{1}{n}\sum_G\mathrm{sim}(G,G_{\mathrm{SNN}})$$</div>
+</li>
+</ul>
+<p>生成分子集为 <span class="math">\(G\)</span>，测试集为 <span class="math">\(T\)</span>，MOSES 指标：</p>
+<ul>
+<li><span class="math">\(\mathrm{Novelty}=1-\frac{|\mathrm{set}(G\cap T)|}{G}\)</span></li>
+<li><span class="math">\(\mathrm{IntDiv(G)}=1-\frac{1}{|\mathrm{set}(G)|^2}\sum_{(X,Y)\in\mathrm{set}(G)}\mathrm{sim}(X,Y)\)</span></li>
+<li>Frag：衡量训练集与测试集中不同的分子片段出现频率，用 RDKit 的 BRICS 函数计算。</li>
+<li>SNN：生成分子中分子与训练集中其最近邻分子的平均谷本系数。</li>
+</ul>
+<h2 id="jie-guo_1">结果</h2>
+<h3 id="transformer-xiang-bi-rnn-de-you-shi">transformer 相比 RNN 的优势</h3>
+<p>为了对比 RNN、conditional RNN 和 conditional transformer 性能差别，经过训练后，在各模型中抽取相同数量的生成分子进行评估。</p>
+<p>RNN 的 success 占比为 0%，这说明 RNN 模型生成的分子无法同时满足四种约束，c-RNN 虽然生成了一定数量的 successful 分子，但仍是低于 c-transformer 模型。这是因为 c-transformer 模型并不是像 RNN 模型那样依赖于输入的上一个词再输出下一个词，c-transformer 模型将句子看作整体进行计算，不仅提高了计算性能，还有效避免了长期依赖问题。</p>
+<p><img alt="table" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7715?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h3 id="liang-chong-zheng-liu-mo-shi-de-dui-bi">两种蒸馏模式的对比</h3>
+<p>文章对比了两种蒸馏模式生成分子的结果，其中 DM 生成的 successful 分子显著少于 DL，但 DM 模式具有更高的 Frag 与 IntDiv，DM 模式可能构建了一个更大的化学空间，生成了更多新颖的分子。</p>
+<p>文章提出了以下假设，将灰色的椭圆区域视作无条件的化学空间，其中的红点代表需要寻找的分子。DL 模式得到的模型可以看作为蓝色区域，在这个区域中红点的密度更高（success 比例更大），但区域面积较小，在后续 RL 过程中容易陷入局部最优点，而 DM 模式得到的模型可以看作为绿色区域，虽然红点密度比蓝色区域更低，但是相比于灰色区域还是更高的，因此也可以使用后续 RL 过程优化。</p>
+<p><img alt="chemical space" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7716?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>文章计算了 RNN、DM、DL 和 semi-DM 模型生成分子的平均负对数似然（Negative Log-Likelihood, NLL），平均 NLL 越小，生成 SMILES 序列的随机性也越小，分子多样性越低，相应化学空间也更小。</p>
+<p>结果表明 DL 模型的平均 NLL 最低，DM 次之，semi-DM 再次之，验证了上文的假设。</p>
+<p><img alt="NLL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7717?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h3 id="mo-xing-ping-gu_1">模型评估</h3>
+<p>实验 1 的目的是评估模型经过若干过程的优化后，最终生成的分子的各方面指标。模型不断优化得到最优模型的过程可以看作模型相应的化学空间不断缩小，化学空间中预期分子密度达到设定值的过程，左图中橙色区域就代表最优模型。</p>
+<p>实验 2 的目的是评估各模型在优化过程中生成分子的质量，也就是评估化学空间缩小的过程中涉及的分子，如右图中的路径所示。</p>
+<p><img alt="模型评估" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7718?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>实验 1 的结果列举在表格中，其中 MCMGL（DL）具有接近 100% 的 success 比例，但该模型生成分子的 Novelty 与 Div 都很低，REINVENT2.0 模型也有同样的问题。这不仅是因为训练数据集中活性分子占比少，更是因为 MCMGL 经过 RL 优化后的化学空间很小，在这一点上，化学空间更大的 MCMGM 与 semi-MCMGM 具有更大优势。</p>
+<p><img alt="table" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7719?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>实验 2 评估了在 RL 优化过程中每个步骤生成的一部分分子。在初始阶段，MCMGM、MCMGL 和 REINVENT2.0 模型就生成了大量 successful 分子，在 1000 步后，REINVENT 和 semi-MCMGM 模型生成的分子迅速增长。其原因就是 REINVENT 和 semi-MCMGM 模型具有更大的化学空间，不会受制随着 RL 过程推进而越一越小的化学空间。在后期，MCMGL 无法生成新颖的 successful 分子，REINVENT2.0 显然也有相同的趋势，这是因为 RL 优化进入了局部最优点。</p>
+<p>除此之外，文章还对模型生成的分子骨架做了相似性评估，其中 MCMGM 和 semi-MCMGM 模型在生成新颖骨架上同样具有优势。</p>
+<p><img alt="实验 2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7720?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h2 id="jie-lun_1">结论</h2>
+<p>文章提出了一种运用了 conditional transformer、知识蒸馏与强化学习的分子生成方法，经过一系列评估，MCMG 方法能够生成更多独特且满足目标条件的分子，在一系列评估中，MCMG 模型与已知的活性分子具有最低的相似度，能够完成针对文中 3 个靶点的活性分子生成任务。在一系列模型评估中，MCMG 模型具有显著优势。</p>
+<h2 id="ling-transformer-de-jie-shao">另：transformer 的介绍</h2>
+<p>transformer 是一种应用在自然语言处理中的模型，transformer 解决了 RNN 存在的一系列缺点。对于 RNN（或 LSTM）来说，计算的过程是顺序的，那么，</p>
+<ol>
+<li>第 <span class="math">\(t\)</span> 步的计算依赖于第 <span class="math">\(t-1\)</span> 步的计算结果，不能并行计算；</li>
+<li>顺序计算导致长时间前的信息丢失，尽管 LSTM 可以缓解这一问题，但对于特别长期的记忆仍然会失效，也就是长期依赖问题。</li>
+</ol>
+<p>而对于 transformer 来说，</p>
+<ol>
+<li>使用了注意力机制，序列中任意两个位置之间的距离为常量；</li>
+<li>并非顺序计算，具有并行能力。</li>
+</ol>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结：基于 conditional transformer、知识蒸馏与强化学习的多约束分子生成&amp;url=http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://localhost:8000/drafts/summary-doi.org/10.1038/s42256-021-00403-1.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="http://localhost:8000/tag/literature-summary.html">Literature Summary</a><a href="http://localhost:8000/tag/cadd.html">CADD</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="http://localhost:8000/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="http://localhost:8000/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="http://localhost:8000"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8000/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="http://localhost:8000/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8000/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
