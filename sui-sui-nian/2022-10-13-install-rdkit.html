@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>用 Markdown 创作 pptx 的尝试</title>
+  <title>在不安装 Anaconda 的条件下安装 RDKit</title>
 
 
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" rel="canonical" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -51,29 +51,29 @@
 
 
 
-    <meta name="description" content="总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。">
+    <meta name="description" content="RDKit 是一款十分常用的化学信息包，但由于它不是纯粹的 Python 包，不能直接使用 pip 安装。官网上给出最方便的安装方法是要使用 Anaconda，而 Anaconda 的臃肿令我很难喜欢上它，因此偏要在 在不安装 Anaconda 的条件下安装 RDKit。">
 
     <meta name="author" content="Leo">
 
-    <meta name="tags" content="Marp">
-    <meta name="tags" content="Markdown">
+    <meta name="tags" content="Python">
+    <meta name="tags" content="RDKit">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="用 Markdown 创作 pptx 的尝试"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="在不安装 Anaconda 的条件下安装 RDKit"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="RDKit 是一款十分常用的化学信息包，但由于它不是纯粹的 Python 包，不能直接使用 pip 安装。官网上给出最方便的安装方法是要使用 Anaconda，而 Anaconda 的臃肿令我很难喜欢上它，因此偏要在 在不安装 Anaconda 的条件下安装 RDKit。"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-27 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-10-13 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Marp"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Markdown"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Python"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="RDKit"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
 
 <!-- Twitter Card -->
@@ -82,9 +82,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "用 Markdown 创作 pptx 的尝试",
-  "headline": "用 Markdown 创作 pptx 的尝试",
-  "datePublished": "2022-09-27 00:00:00+08:00",
+  "name": "在不安装 Anaconda 的条件下安装 RDKit",
+  "headline": "在不安装 Anaconda 的条件下安装 RDKit",
+  "datePublished": "2022-10-13 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -92,8 +92,8 @@
     "url": "https://tseing.github.io/author/leo.html"
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
-  "url": "https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html",
-  "description": "总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。"
+  "url": "https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html",
+  "description": "RDKit 是一款十分常用的化学信息包，但由于它不是纯粹的 Python 包，不能直接使用 pip 安装。官网上给出最方便的安装方法是要使用 Anaconda，而 Anaconda 的臃肿令我很难喜欢上它，因此偏要在 在不安装 Anaconda 的条件下安装 RDKit。"
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -135,11 +135,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">用 Markdown 创作 pptx 的尝试</h1>
+        <h1 class="post-title">在不安装 Anaconda 的条件下安装 RDKit</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
-            | <time datetime="2022年 9月27日">2022年 9月27日</time>
+            | <time datetime="2022年 10月13日">2022年 10月13日</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
@@ -153,79 +153,82 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#an-zhuang" title="安装">安装</a></li><li><a class="toc-href" href="#chuang-zuo-huan-deng-pian" title="创作幻灯片">创作幻灯片</a></li><li><a class="toc-href" href="#yi-ge-wo-chuang-jian-de-mo-ban" title="一个我创建的模版">一个我创建的模版</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#zhun-bei-gong-zuo" title="准备工作">准备工作</a><ul><li><a class="toc-href" href="#an-zhuang-boost" title="安装 Boost">安装 Boost</a></li><li><a class="toc-href" href="#xia-zai-rdkit-yuan-dai-ma" title="下载 RDKit 源代码">下载 RDKit 源代码</a></li><li><a class="toc-href" href="#an-zhuang-postgresql" title="安装 PostgreSQL">安装 PostgreSQL</a></li></ul></li><li><a class="toc-href" href="#she-ding-huan-jing-bian-liang_1" title="设定环境变量">设定环境变量</a></li><li><a class="toc-href" href="#jian-li-gong-cheng-wen-jian" title="建立工程文件">建立工程文件</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。</p>
-<h2 id="an-zhuang">安装</h2>
-<p><a href="https://marp.app/#get-started">Marp 官网</a>提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。</p>
-<p>安装完成后打开拓展设置，将 <code>Markdown &gt; Marp:Export Type</code> 修改为 <code>pptx</code>，输出文件格式就默认为 pptx（若要调试 CSS 样式，输出 html 更为方便），其余设置按需修改。</p>
-<p>接下来测试一下 Marp 的功能是否正常，新建一个 <code>.md</code> 文件，内容如下：</p>
-<pre><code class="language-markdown">---
-marp: true
----
+                <h2 id="zhun-bei-gong-zuo">准备工作</h2>
+<p>参考 RDKit 官网的<a href="https://rdkit.org/docs/Install.html#windows">安装指南</a>，在 Windows 下安装 RDKit 需要以下依赖：</p>
+<ul>
+<li>python 3.6+</li>
+<li>numpy</li>
+<li>Pillow</li>
+</ul>
+<p>这些依赖的安装十分简单，不需要在这里介绍了，但除此以外还需要安装一些软件：</p>
+<ul>
+<li>Microsoft Visual C++：C/C++ 的 IDE，<a href="https://visualstudio.microsoft.com/vs/community/">下载链接</a></li>
+<li>CMake：<a href="http://www.cmake.org/cmake/resources/software.html">下载链接</a></li>
+<li>Boost：<a href="http://sourceforge.net/projects/boost/files/boost-binaries/">下载链接</a></li>
+</ul>
+<h3 id="an-zhuang-boost">安装 Boost</h3>
+<p>Microsoft Visual 和 CMake 都好安装，只是 Boost 比较麻烦。下载 Boost 压缩包后将其挪到安装的路径并解压。使用命令行进入解压得到的文件夹，使用 <code>setx BOOST_ROOT D:\boost_1_80_0</code> 设定环境变量，接着运行 <code>bootstrap.bat</code>。</p>
+<p><img alt="bootstrap" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7768?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>然后在目录中就生成了 <code>b2.exe</code>，使用 <code>b2.exe --address-model=64</code> 命令编译 Boost，其中 <code>--address-model=64</code> 参数指安装在 64位系统下。输出以下信息即表示安装成功：</p>
+<pre><code>The Boost C++ Libraries were successfully built!
 
-# Hello, Marp!
+The following directory should be added to compiler include paths:
 
-pptx by Marp
-</code></pre>
-<p>接着点击右上角的 <code>打开侧边预览</code> 按钮，或使用快捷键 <code>Ctrl+K V</code> （摁下 Ctrl+K 后再摁 V）打开预览界面。点击右上角 Marp 的图标，选择 <code>Toggle Marp Feature For Current Markdown</code> 后理应出现像下图一样的幻灯片预览。</p>
-<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>有的朋友会发现仍然是 Markdown 文档的样式，而非幻灯片分页的形式，这可能是因为之前安装了其他的 Markdown 预览插件。最简单的方法就是使用 VS Code 自带的预览工具，以我的 Markdown Preview Enhanced 插件为例，在它的插件设置中找到 <code>Hide Default VSCode Markdown Preview Button</code>，取消取定，重新启动后就会看见右上角有两个预览图标，一个是 VS Code 默认预览，另一个是 Markdown Preview Enhanced 插件，使用默认预览就能正常显示了。</p>
-<h2 id="chuang-zuo-huan-deng-pian">创作幻灯片</h2>
-<p>Marp 中比较特殊的语法可以参考<a href="https://github.com/marp-team/marp-vscode">官方文档</a>与<a href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html">博客 CAI</a>，其他语法与 Markdown 无异。</p>
-<p>全局的样式定义在主题 CSS 文件中，有时候需要修改单独页面的主题，Marp 提供了局部样式的方式：</p>
-<pre><code class="language-html">&lt;style scoped&gt;
-    &lt;!-- Your style Here.
-    Such as: --&gt;
-    p{
-        font-size: 30px;
-    }
-&lt;/style&gt;
-</code></pre>
-<p>Marp 使用与 Markdown 相同的方式插入图片，例如</p>
-<pre><code class="language-markdown">![img](url) ![img](url)
+    D:\boost_1_80_0
 
----
+The following directory should be added to linker library paths:
 
-![img](url)
-![img](url)
+    D:\boost_1_80_0\stage\lib
 </code></pre>
-<p>若将两个以上插入图片的语句写在同一行，那么两张图片会被包装在同一个 <code>&lt;p&gt;&lt;/p&gt;</code> 标签中，也就类似于在文本框中插入两张图片，若宽度足够，两张图片会左右排列在同一行。</p>
-<p>若用第二种方式，也就是将两个以上插入图片的语句分行书写，那么各个图片在各自的 <code>&lt;p&gt;&lt;/p&gt;</code> 标签中，也就是分行排列。</p>
-<p>正是因为图片在 <code>&lt;p&gt;</code> 标签中，继承了 <code>text-align: left</code> 的属性，也就是左侧对齐。对于我而言，图片居中更为重要，所以在样式文件中加入以下代码：</p>
-<pre><code class="language-css">img[alt~="center"] {
-    display: block;
-    margin: 0px auto;
-}
-</code></pre>
-<p>在撰写文章时，使用 <code>![center](url)</code> 就能使图片居中了。但是因为 <code>display: block</code> 属性，居中的同时就不能左右排列两张图片了，所以欲使两张图片并排共同居中可能还要想点办法<del>（为什么要用 Markdown 做排版软件做的事 ..&bull;&breve;_&breve;&bull;.. ）</del>。</p>
-<h2 id="yi-ge-wo-chuang-jian-de-mo-ban">一个我创建的模版</h2>
-<p>Marp 中的样式是由 CSS 文件定义的，因此只要会使用 CSS，就能创建自己的主题。我制作了一个适用于各种汇报和答辩的 slide 主题，主题项目已经发布到 Github 了， <a href="https://github.com/Tseing/Marp-Theme-NKU"><i class="fa fa-github fa-lg"></i> Marp-Theme-NKU</a> 仓库页面有更详细的介绍和安装方法。</p>
-<p><img alt="page1" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7687?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7688?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page3" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7689?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page4" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7690?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page5" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7691?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<h3 id="xia-zai-rdkit-yuan-dai-ma">下载 RDKit 源代码</h3>
+<p>在 RDKit 仓库中的 <a href="https://github.com/rdkit/rdkit/releases">releases 页面</a>下载选定版本，将文件解压后复制其中的 <code>rdkit</code> 文件夹，粘贴至需要放置的路径下。</p>
+<h3 id="an-zhuang-postgresql">安装 PostgreSQL</h3>
+<p>RDKit 许多功能也依赖于 PostgreSQL 数据库，但不知为什么官网的依赖中没有写明。直接在 PostgreSQL 官网下载安装包后安装至选定路径，唯一的要求是版本在 9.1 之上。</p>
+<h2 id="she-ding-huan-jing-bian-liang_1">设定环境变量</h2>
+<p>在设定环境变量前，首先确定一下各个依赖的路径，我的设置是这样的：</p>
+<ul>
+<li>Python：<code>D:\Python39</code></li>
+<li>RDKit：<code>E:\Py39Lib\RDKit</code></li>
+<li>Boost：<code>D:\boost_1_80_0</code></li>
+<li>PostgreSQL：<code>D:\PostgreSQL\9.5</code></li>
+</ul>
+<p>那么根据官方文档的说明，需要保证</p>
+<ul>
+<li><code>D:\Python39</code> 在环境变量中</li>
+<li><code>E:\Py39Lib\RDKit\lib</code> ？</li>
+<li><code>D:\boost_1_80_0\libs</code> 在环境变量中</li>
+<li><code>E:\Py39Lib\RDKit</code> 在 PATHONPATH 中</li>
+</ul>
+<p>添加环境变量的步骤也很简单，添加路径至 PATH 变量下即可。在系统变量中也有 PATHONPATH 变量，按相应的要求添加即可。可以使用 <code>python -m site</code> 命令检查是否将目录添加到了 PATHONPATH。</p>
+<h2 id="jian-li-gong-cheng-wen-jian">建立工程文件</h2>
+<ol>
+<li>在 <code>E:\Py39Lib\rdkit</code> 中创建名为 <code>build</code> 的文件夹，使用命令行进入该文件夹；</li>
+<li>运行 CMake，使用命令为 <code>cmake -DRDK_BUILD_PYTHON_WRAPPERS=ON -DBOOST_ROOT=D:\boost_1_80_0 -DRDK_BUILD_INCHI_SUPPORT=ON -DRDK_BUILD_AVALON_SUPPORT=ON -DRDK_BUILD_PGSQL=ON -DPostgreSQL_ROOT="D:\PostgreSQL\9.5" -G"Visual Studio 15 2017" ..</code>。注意其中的路径参数以及 Visual Studio 版本都需要按自己电脑的环境设置。这个步骤需要从 GitHub 与 Google 服务上下载文件，需要预先检查好网络的通联状态。</li>
+<li><code>C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe /m:4 /p:Configuration=Release INSTALL.vcxproj</code></li>
+</ol>
+<p>Windows 装不上 pthread，遂放弃。</p>
             </section>
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=用 Markdown 创作 pptx 的尝试&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=在不安装 Anaconda 的条件下安装 RDKit&amp;url=https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-10-13-install-rdkit.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://tseing.github.io/tag/marp.html">Marp</a><a href="https://tseing.github.io/tag/markdown.html">Markdown</a>                </aside>
+<a href="https://tseing.github.io/tag/python.html">Python</a><a href="https://tseing.github.io/tag/rdkit.html">RDKit</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -251,20 +254,6 @@ pptx by Marp
 
 
                 <aside class="post-nav">
-                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-left"></i>
-                                <h2 class="post-nav-title">文献总结｜使用循环神经网络为药物发现生成指定的分子库</h2>
-                            <p class="post-nav-excerpt">本文介绍 2018 年发表在 ACS Central Science...</p>
-                        </section>
-                    </a>
-                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">文献总结｜从头药物设计中的深度学习方法</h2>
-                            <p class="post-nav-excerpt">本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep...</p>
-                        </section>
-                    </a>
                     <div class="clear"></div>
                 </aside>
 

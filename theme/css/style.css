@@ -316,7 +316,7 @@ th {
     src: local("Ubuntu Mono"), url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
 } */
 
-@font-face {
+/* @font-face {
     font-family: 'Cardo';
     font-style: normal;
     font-weight: 400;
@@ -356,7 +356,7 @@ th {
     font-style: normal;
     font-weight: 700;
     src: local("Fira Sans Bold"), local("FiraSans-Bold"), url("//fonts.gstatic.com/s/firasans/v5/DugPdSljmOTocZOR2CItOhampu5_7CjHW5spxoeN3Vs.woff2") format("woff2"), url("//fonts.gstatic.com/s/firasans/v5/DugPdSljmOTocZOR2CItOqRDOzjiPcYnFooOUGCOsRk.woff") format("woff")
-}
+} */
 
 .hljs {
     display: block;
