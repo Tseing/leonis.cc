@@ -1639,12 +1639,6 @@ img {
     overflow: hidden
 }
 
-.prompt {
-    user-select: none;
-    color: rgb(255, 255, 255);
-    height: 0px;
-}
-
 /* .post-share {
     max-width: 25%;
     float: right
