@@ -80,7 +80,7 @@ i.fa.fa-map-marker.fa-stack-1x {
 }
 
 .code_cell {
-    padding: 1em 0em 1em 4em;
+    padding: 1em 0em 1em 2em;
 }
 
 .prompt {
@@ -89,6 +89,7 @@ i.fa.fa-map-marker.fa-stack-1x {
     width: 4em;
     display: block;
     text-align: right;
+    position: absolute;
 }
 
 .prompt.input_prompt {
@@ -115,8 +116,6 @@ i.fa.fa-map-marker.fa-stack-1x {
     border: none;
     padding-top: 0em;
     padding-bottom: 0em;
-    /* overflow: unset; */
-    white-space: break-spaces;
 }
 
 .anchor-link {
@@ -199,6 +198,27 @@ i.fa.fa-map-marker.fa-stack-1x {
     #waline {
         margin: 0 1.75em;
     }
+
+    .code_cell {
+        padding: 0;
+    }
+
+    .prompt {
+        position: unset;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .input_area,
+    .output_subarea {
+        padding-left: 0;
+    }
+
+    .output_png img{
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 90%;
+    }
 }
 
 @media only screen and (max-width: 400px){
@@ -206,7 +226,34 @@ i.fa.fa-map-marker.fa-stack-1x {
         margin-left: 5%;
         margin-right: 5%;
     }
+
     .wl-text-number{
         display: none;
+    }
+
+    .prompt {
+        position: unset;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .code_cell {
+        padding: 0;
+    }
+
+    .input_area,
+    .output_subarea {
+        padding-left: 0;
+    }
+
+    .output_png img{
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 90%;
+    }
+
+    .output_text pre{
+        padding-top: .5em;
+        padding-bottom: .5em;
     }
 }
