@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜通过随机化 SMILES 序列提升分子生成模型质量"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-10-21 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜通过随机化 SMILES 序列提升分子生成模型质量",
+  "headline": "文献总结｜通过随机化 SMILES 序列提升分子生成模型质量",
+  "datePublished": "2022-10-21 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html",
+  "description": "本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。"
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 10月21日">2022年 10月21日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#smiles-xu-lie-de-yu-chu-li" title="SMILES 序列的预处理">SMILES 序列的预处理</a></li><li><a class="toc-href" href="#mo-xing-jie-gou" title="模型结构">模型结构</a></li><li><a class="toc-href" href="#shu-ju-ji" title="数据集">数据集</a></li><li><a class="toc-href" href="#xun-lian" title="训练">训练</a></li></ul></li><li><a class="toc-href" href="#ping-jie-zhi-biao_1" title="评价指标">评价指标</a><ul><li><a class="toc-href" href="#dui-sheng-cheng-mo-xing-de-ping-gu" title="对生成模型的评估">对生成模型的评估</a></li><li><a class="toc-href" href="#dui-sheng-cheng-jie-guo-de-ping-gu" title="对生成结果的评估">对生成结果的评估</a></li><li><a class="toc-href" href="#gong-ju" title="工具">工具</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#gui-fan-xing-shi-yu-sui-ji-hua-xing-shi-smiles" title="规范形式与随机化形式 SMILES">规范形式与随机化形式 SMILES</a></li><li><a class="toc-href" href="#chao-can-shu-de-you-hua" title="超参数的优化">超参数的优化</a></li><li><a class="toc-href" href="#shi-yong-uc-jsd-dui-mo-xing-ping-gu" title="使用 UC-JSD 对模型评估">使用 UC-JSD 对模型评估</a></li><li><a class="toc-href" href="#shi-yong-xiao-fen-zi-ji-de-ce-shi" title="使用小分子集的测试">使用小分子集的测试</a></li><li><a class="toc-href" href="#chembl-shu-ju-ji-de-ce-shi" title="ChEMBL 数据集的测试">ChEMBL 数据集的测试</a></li></ul></li><li><a class="toc-href" href="#tao-lun_1" title="讨论">讨论</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>本文介绍于 2019 年发表在 <i>Journal of Cheminformatics</i> 上的一篇文章，文章原标题为 <i>Randomized SMILES strings improve the quality of molecular generative models</i>。</p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-019-0393-0">doi.org/10.1186/s13321-019-0393-0</a></p>
+<h2 id="yin-yan">引言</h2>
+<p>SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>例如图片所示，对于阿司匹林分子具有三种不同的编码形式，规范形式（a）是 RDKit 工具中的默认形式。经过随机化后，起始原子发生了变化，无约束形式与有约束形式的区别在于，无约束形式先编码芳环，再编码支链，而有约束形式则先编码支链，最后编码芳环。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="smiles-xu-lie-de-yu-chu-li">SMILES 序列的预处理</h3>
+<p>对于 SMILES 的预处理在文中被称为 tokenization，其目的是使 SMILES 序列成为能够被神经网络识别的形式。其步骤包括在字列始末加上起始与终止符号、将两个字符的元素（如 Cl 和 Br）视作一个 token 等，最终将 SMILES 序列转化为 one-hot 形式。</p>
+<h3 id="mo-xing-jie-gou">模型结构</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>分子生成模型由 RNN 构成，经过处理后的 SMILES 序列将逐个 token 进入 <span class="math">\(m\)</span> 维的 embedding 层，再进入 <span class="math">\(l\)</span> 层大小为 <span class="math">\(w\)</span> 的 LSTM 或 GRU 单元，在 RNN 层间也可以设置 dropout 层，最终得到 token 的概率分布 <span class="math">\(Y_{ij}\)</span>。</p>
+<h3 id="shu-ju-ji">数据集</h3>
+<p>GDB-13 数据来自于<a href="https://gdb.unibe.ch/downloads/">官网</a>，使用 RDKit 对 SMILES 规范化。</p>
+<p>ChEMBL 25 数据来自于 ChEMBL 官网，使用 MolVS 0.1.1 数据库对其处理，主要的处理包括去重、去除含有重原子的分子等，最终数据集中的分子都编码为 one-hot 形式。</p>
+<p>在使用随机化 SMILES 序列训练模型时，将数据集中的分子转化为随机化形式，也就是说，不论分子的编码形式是哪一种，数据集所使用的分子都是相同的。</p>
+<h3 id="xun-lian">训练</h3>
+<p>将训练集中的若干 SMILES 整合为批数据后用于训练 RNN，在训练过程中使用了 Teacher&rsquo;s Forcing 方法。</p>
+<p>未预训练的模型通常没有很好的预测能力，因此每个 RNN 单元产生的错误结果势必会导致模型训练时间大大增加。Teacher&rsquo;s Forcing 方法就是为了解决这个问题，具体步骤是忽略每个 RNN 单元输出的预测结果，而是以正解的标签作为下一个 RNN 单元的输入，避免了一个 RNN 单元的错误预测影响整个网络的训练。</p>
+<h2 id="ping-jie-zhi-biao_1">评价指标</h2>
+<h3 id="dui-sheng-cheng-mo-xing-de-ping-gu">对生成模型的评估</h3>
+<p>文章假设最好的模型对于验证集、训练集和生成分子集的 NLL 分布应当是均一且相等（uniform and equal）的，所以就用 JSD（Jensen&ndash;Shannon Divergence）衡量若干概率分布的差异：</p>
+<div class="math">$$JSD=H\left(\sum_{d\in D}\alpha_i\cdot d_i\right)-\sum_{d\in D}\alpha_iH(d_i)$$</div>
+<p>其中 <span class="math">\(H(d)\)</span> 是给定概率分布的信息熵，<span class="math">\(\alpha_d\)</span> 为权值，满足 <span class="math">\(0&lt;\alpha_d&lt;1\)</span> 且 <span class="math">\(\sum\alpha_d=1\)</span>。当 <span class="math">\(d_i=d_j\)</span> 时，就有 <span class="math">\(JSD\rightarrow 0\)</span> ，但此时还有可能 <span class="math">\(i\not =j\)</span>， 所以该指标只能保证概率分布是相等的而非均一的。</p>
+<p>UC-JSD（Uniformity&ndash;Completeness JSD）解决了这个问题，考虑给定的三个 NLL 向量，有</p>
+<div class="math">$$NLLS=\{NLL_\mathrm{validation},NLL_\mathrm{training},NLL_\mathrm{sampled}\}$$</div>
+<p>并指定 <span class="math">\(\alpha_i=1/3\)</span>。当 <span class="math">\(UC_{JSD}\rightarrow0\)</span> 时，生成的分子具有相同的 NLL 或三个概率分布均一。</p>
+<h3 id="dui-sheng-cheng-jie-guo-de-ping-gu">对生成结果的评估</h3>
+<p>对于 GDB-13 数据集，文章对生成结果提出了三个要求：</p>
+<ol>
+<li>均一（uniformity）：对于各取样结果（生成分子）的概率相等</li>
+<li>完备（completeness）：能够从 GDB-13 数据集中取样出所有分子</li>
+<li>封闭（closedness）：只有 GDB-13 数据集中的分子被取样</li>
+</ol>
+<p>针对这三个要求，文章定义了三种量化指标：</p>
+<ol>
+<li><span class="math">\(\mathrm{uniformity}=ratio_\mathrm{unique}/\varphi(k)\)</span></li>
+<li><span class="math">\(\mathrm{completeness}=ratio_\mathrm{unique}/\varphi(|in|)\)</span></li>
+<li><span class="math">\(closedness=ratio_\mathrm{in}\)</span></li>
+</ol>
+<p><span class="math">\(\varphi(k)\)</span> 表示在 GDB-13 的理想模型（每个分子概率完全均一）上生成 <span class="math">\(k\)</span> 个分子中不同分子的比例。</p>
+<p>此外，具有合法 SMILES 的分子就称为 valid，在 GDB-13 数据集中的分子就称为 in，在 GDB-13 中独一的分子就称为 unique。</p>
+<div class="math">$$UCC=\mathrm{completeness}\cdot\mathrm{uniformity}\cdot\mathrm{closedness}$$</div>
+<p>作为对模型结果的整体打分。</p>
+<h3 id="gong-ju">工具</h3>
+<ul>
+<li>PyTorch 1.0.1</li>
+<li>RDKit 2019_03_01</li>
+<li>Spark 2.4.3：数据处理</li>
+<li>MOSES 和 FCD：提供评价指标</li>
+</ul>
+<h2 id="jie-guo_1">结果</h2>
+<h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi-smiles">规范形式与随机化形式 SMILES</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在 GDB-13 中随机选择 1000000 个分子用于模型训练，结果表明随机化形式 SMILES 训练的模型生成了更多 GDB-13 数据集中的分子。从生成结果的其他指标上来看，与规范形式 SMILES 训练的模型相比，随机化形式模型产生了更好的结果。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="chao-can-shu-de-you-hua">超参数的优化</h3>
+<p>在 RNN 间的 dropout 比例、批处理数据的大小都属于模型的超参数，针对于这两个超参数，文章比较了改变这两个超参数对于 3 种模型 4 个指标的影响。结果表明，在增加 dropout 比例后，规范形式的模型表现出更好的效果，其完备性上升了，但封闭性下降了，也就是说模型以产生更多错误为代价，生成了更多 GDB-13 数据集中的分子。至于批大小，随着批处理数据的增加，所有模型的效果都改善了。</p>
+<h3 id="shi-yong-uc-jsd-dui-mo-xing-ping-gu">使用 UC-JSD 对模型评估</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>由于不同模型的输出空间不同，不同模型的 UC-JSD 不能相互比较，但 UC-JSD 可以用作为对于每个 epoch 训练结果的损失函数。UC-JSD-UCC 图像可以明确显示中模型在各个 epoch 中优化的过程，最后得到的最优模型应当是具有最低 UC-JSD 与 最高 UCC 的模型。</p>
+<h3 id="shi-yong-xiao-fen-zi-ji-de-ce-shi">使用小分子集的测试</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章中分别使用 1000 个分子与 10000 个分子训练模型。使用 1000 分子训练的规范形式模型仅生成了 14.5% 的 GDB-13 数据集分子，其合法性也仅有 0.504，可以认为模型没有学习到数据集的特征。当训练集增加到 10000 个分子，模型的效果也有所提高，但随机化形式的模型效果都要高于规范形式模型。</p>
+<h3 id="chembl-shu-ju-ji-de-ce-shi">ChEMBL 数据集的测试</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章还使用 ChEMBL 的类药分子训练集测试了两种两种模型，最后绘制了两种模型对于 NLL 的核密度估计（Kernel Density Estimates）结果。结果表明，规范形式模型生成的规范形式 SMILES 能够很好地接近训练集和验证集，但是它不能很好地产生随机形式的 SMILES。与之相反，随机化形式模型不仅能产生随机化形式的 SMILES，产生规范形式 SMILES 的平均概率也很高。这个结果可以说明规范形式模型的输出空间是随机化形式模型的子集。</p>
+<h2 id="tao-lun_1">讨论</h2>
+<p>当以规范形式 SMILES 表示分子时，模型不仅要学习如何生成合法的 SMILES 序列，还需要学习如何以规范形式生成。相应地，如果使用随机化形式的 SMILES 序列，模型就可以不受限制地学习 SMILES 语法。</p>
+<p>从另一方面理解，就是随机化 SMILES 序列具有数据增强（Data Augmentation）的功能，类似于对图片进行裁切、旋转以提升模型识别的准确度，随机化 SMILES 序列可以看作是从不同的角度「观察」一个分子，这不仅能提高模型应对噪声的能力，还有利于模型更好地学习到训练集化学空间的特征。</p>
+<p>在文章中构建的模型很难生成较大的分子，可以将模型生成每个 token 的步骤看作一系列可选的行为（加原子、加键），这种模型的问题就在于随着分子增大，可选的行为激增，所以使用 SMILES 生成较大、较复杂的的分子仍有难度。</p>
+<h2 id="jie-lun">结论</h2>
+<p>文章基于 RNN 构建了分子生成模型，在不用修改仍何模型结构的情况下，使用随机化的 SMILES 序列编码分子可以显著提高模型质量。</p>
+<p>在使用 ChEMBL 训练集的测试中，文章进一步确定了相比于常用的规范形式模型，随机化形式模型具有更大的输出空间，也是性能更优的原因。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜通过随机化 SMILES 序列提升分子生成模型质量&amp;url=https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/drafts/summary-doi.org/10.1186/s13321-019-0393-0.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

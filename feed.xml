@@ -1207,8 +1207,8 @@ $$$$&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;打分模块由先验模块、DF 和打分函数构成。先验模块具有与代理模型相同的结构，对于每个由代理模型生成的 SMILES，先验模型都计算其 NLL。除此以外，生成的 SMILES 还会由与 DF 规则相结合的打分函数给出相应的分数。&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \begin{align}
-    &amp;amp;\mathrm{NLL}(S)_\mathrm{Augmented}=\mathrm{NLL}(S)_\mathrm{Prior}-\sigma\times\mathrm{MPO}(S)_\mathrm{score}\\
-    &amp;amp;\mathrm{loss}=[\mathrm{NLL}(S)_\mathrm{Augmented}-\mathrm{NLL}(S)_\mathrm{Agent}]^2
+    &amp;amp;NLL(S)_\mathrm{Augmented}=NLL(S)_\mathrm{Prior}-\sigma\times MPO(S)_\mathrm{score}\\
+    &amp;amp;loss=[NLL(S)_\mathrm{Augmented}-NLL(S)_\mathrm{Agent}]^2
 \end{align}
 $$&lt;/div&gt;
 &lt;h3 id="da-fen-han-shu"&gt;打分函数&lt;/h3&gt;
@@ -1393,7 +1393,7 @@ $$&lt;/div&gt;
 &lt;p&gt;生成分子集为 &lt;span class="math"&gt;\(G\)&lt;/span&gt;，测试集为 &lt;span class="math"&gt;\(T\)&lt;/span&gt;，MOSES 指标：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span class="math"&gt;\(\mathrm{Novelty}=1-\frac{|\mathrm{set}(G\cap T)|}{G}\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class="math"&gt;\(\mathrm{IntDiv(G)}=1-\frac{1}{|\mathrm{set}(G)|^2}\sum_{(X,Y)\in\mathrm{set}(G)}\mathrm{sim}(X,Y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(\mathrm{IntDiv}(G)=1-\frac{1}{|\mathrm{set}(G)|^2}\sum_{(X,Y)\in\mathrm{set}(G)}\mathrm{sim}(X,Y)\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;Frag：衡量训练集与测试集中不同的分子片段出现频率，用 RDKit 的 BRICS 函数计算。&lt;/li&gt;
 &lt;li&gt;SNN：生成分子中分子与训练集中其最近邻分子的平均谷本系数。&lt;/li&gt;
 &lt;/ul&gt;

@@ -727,7 +727,7 @@
 
         // Add lg-empty-html class if title doesn't exist
         if (typeof subHtml !== 'undefined' && subHtml !== null) {
-            if (subHtml === '' || subHtml === 'NoCaption') {
+            if (subHtml === '' || subHtml === 'n' || subHtml === 'NoCaption') {
                 _lgUtils2.default.addClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
             } else {
                 _lgUtils2.default.removeClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');

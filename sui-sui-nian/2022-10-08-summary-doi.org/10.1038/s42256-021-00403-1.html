@@ -293,7 +293,7 @@
 <p>生成分子集为 <span class="math">\(G\)</span>，测试集为 <span class="math">\(T\)</span>，MOSES 指标：</p>
 <ul>
 <li><span class="math">\(\mathrm{Novelty}=1-\frac{|\mathrm{set}(G\cap T)|}{G}\)</span></li>
-<li><span class="math">\(\mathrm{IntDiv(G)}=1-\frac{1}{|\mathrm{set}(G)|^2}\sum_{(X,Y)\in\mathrm{set}(G)}\mathrm{sim}(X,Y)\)</span></li>
+<li><span class="math">\(\mathrm{IntDiv}(G)=1-\frac{1}{|\mathrm{set}(G)|^2}\sum_{(X,Y)\in\mathrm{set}(G)}\mathrm{sim}(X,Y)\)</span></li>
 <li>Frag：衡量训练集与测试集中不同的分子片段出现频率，用 RDKit 的 BRICS 函数计算。</li>
 <li>SNN：生成分子中分子与训练集中其最近邻分子的平均谷本系数。</li>
 </ul>

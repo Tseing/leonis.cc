@@ -204,8 +204,8 @@
 <p>打分模块由先验模块、DF 和打分函数构成。先验模块具有与代理模型相同的结构，对于每个由代理模型生成的 SMILES，先验模型都计算其 NLL。除此以外，生成的 SMILES 还会由与 DF 规则相结合的打分函数给出相应的分数。</p>
 <div class="math">$$
 \begin{align}
-    &amp;\mathrm{NLL}(S)_\mathrm{Augmented}=\mathrm{NLL}(S)_\mathrm{Prior}-\sigma\times\mathrm{MPO}(S)_\mathrm{score}\\
-    &amp;\mathrm{loss}=[\mathrm{NLL}(S)_\mathrm{Augmented}-\mathrm{NLL}(S)_\mathrm{Agent}]^2
+    &amp;NLL(S)_\mathrm{Augmented}=NLL(S)_\mathrm{Prior}-\sigma\times MPO(S)_\mathrm{score}\\
+    &amp;loss=[NLL(S)_\mathrm{Augmented}-NLL(S)_\mathrm{Agent}]^2
 \end{align}
 $$</div>
 <h3 id="da-fen-han-shu">打分函数</h3>
