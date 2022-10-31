@@ -1,12 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-10-21T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;i&gt;Journal of Cheminformatics&lt;/i&gt; 上的一篇文章，文章原标题为 &lt;i&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/i&gt;。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-10-29T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" rel="alternate"></link><published>2022-10-29T00:00:00+08:00</published><updated>2022-10-29T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-29:/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery，文章改进了传统的遗传算法，使其在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jmedchem.2c01179"&gt;doi.org/10.1021/acs.jmedchem.2c01179&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Medicinal Chemistry&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery&lt;/em&gt;，文章改进了传统的遗传算法，ChemistGA 算法在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;基于深度学习的分子生成方法大多都是数据驱动型的方法，这些模型通常需要大量的数量用于训练模型，从而生成特定结构和特征的分子。而传统的机器学习方法，例如遗传算法，不需要大量数据，也不需要经过训练过程，只需要少量的分子数据就能生成大量分子。因此，在深度学习席卷所有行业的今天，遗传算法等机器学习方法仍具有优势。&lt;/p&gt;
+&lt;p&gt;遗传算法借鉴了生物学中遗传的概念，从初始种群（初始数据）出发，在两两个体间发生数据的交叉、突变，得到子代，再以子代作为父代不断繁衍。在繁衍的过程中，引入适应函数，适应性函数衡量了个体是否适应环境（满足目标要求），并淘汰低于阈值的个体。繁衍与淘汰的过程不断迭代，直至满足结束条件（迭代次数或子代与父代间适应性函数的差异），最终的种群就是问题的最优解。&lt;/p&gt;
+&lt;p&gt;但将遗传算法用于分子生成任务仍有一定问题，例如，染色体交叉和突变的过程通常是随机的，若将分子的片段随机交换，很容易生成大量无法合成的分子。&lt;/p&gt;
+&lt;p&gt;因此，文章结合化学合成模版和逆合成预测等模块改进了遗传算法，构造了适用于分子生成任务的模型，取得了良好的效果。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="jiao-cha"&gt;交叉&lt;/h3&gt;
+&lt;p&gt;ChemistGA 的交叉步骤不是随机的交换，而是使用了反应预测模型 molecular transformer（MT），MT 以两个分子的为输入（&lt;code&gt;SMILES.SMILES&lt;/code&gt;），输出一系列分子。MT 已经经过专门化学反应数据的预训练，因此它会基于反应事实预测两个分子相互反应可能产生的结果。就算两个分子不能反应，MT 也能给出一系列具有两分子结构特征的分子，从而避免生成不可合成的分子。&lt;/p&gt;
+&lt;h3 id="fan-jiao"&gt;反交&lt;/h3&gt;
+&lt;p&gt;使用 MT 作为分子交叉的模型无法避免最后的结果陷入局部最优解，因此引入了反应的方法。具体来说，就是在每一子代中插入一部分初始种群中的个体。&lt;/p&gt;
+&lt;h3 id="gua-ying-xing-han-shu"&gt;适应性函数&lt;/h3&gt;
+&lt;p&gt;文章使用了两种适应性函数，一种是连续适应性函数，另一种是离散适应性函数。连续适应性函数可以理解为对分子的打分，涉及 QED、SA 以及生物活性等指标。离散适应性函数也与之类似，唯一的不同在于使用 1 或 0 表示分子是否满足指标的要求。&lt;/p&gt;
+&lt;h3 id="shu-ju-ji"&gt;数据集&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;靶点&lt;/th&gt;
+&lt;th&gt;negative / positive&lt;/th&gt;
+&lt;th&gt;来源&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;DRD2&lt;/td&gt;
+&lt;td&gt;100000 / 7219&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://doi.org/10.1186/s13321-017-0235-x"&gt;Olivecrona et al.&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JNK3&lt;/td&gt;
+&lt;td&gt;50000 / 2665&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://doi.org/10.48550/arXiv.1806.02473"&gt;Li et al.&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GSK3&amp;beta;&lt;/td&gt;
+&lt;td&gt;50000 / 740&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://doi.org/10.48550/arXiv.1806.02473"&gt;Li et al.&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="huo-xing-yu-ce-mo-xing"&gt;活性预测模型&lt;/h3&gt;
+&lt;p&gt;文章针对 DRD2、JNK3 和 GSK3&amp;beta; 构建了两利活性预测模型，一种模型预测结果较为准确，另一种模型较不准确。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;准确的活性预测模型：随机森林分类&lt;/li&gt;
+&lt;li&gt;不准确的活性预测模型：3 层决策树分类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="zhi-biao"&gt;指标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Synthesizability Rate&lt;/strong&gt;：随机选择生成的 5000 个分子，使用 Retro* 算法预测其逆合成过程，可完成的分子占比就为 Synthesizability Rate。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mismatch Rate&lt;/strong&gt;：随机选择生成的 5000 个分子，使用 RECAP 算法获取分子片段，将生成分子的片段库与商用分子片段库对比得到 Mismatch Rate。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diversity&lt;/strong&gt;：&lt;span class="math"&gt;\(\mathrm{diversity}=1-\frac{2}{n(n-1)}\sum\mathrm{sim}(X,Y)\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\mathrm{sim}(X,Y)\)&lt;/span&gt; 为谷本距离。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Novelty&lt;/strong&gt;：&lt;span class="math"&gt;\(\mathrm{novelty}=\frac{1}{n}\sum1[\mathrm{sim}(G,G_\mathrm{SNN}&amp;lt;0.4&amp;gt;)]\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scaffolds&lt;/strong&gt;：使用 Murcko 化合物骨架数据计算骨架数量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="jie-guo-yu-lun-lun_1"&gt;结果与论论&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7893?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7893?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;ChemistGA 的主要工作流程是如果所示，首先计算初始种群的适应性函数，根据适应性函数选择其中的部分分子交叉，再经过突变过程后，重新计算分子的适应性函数，不断迭代。与 ChemistGA 不同，R-ChemistGA 每个周期前 4 次使用不准确的活性预测模型计算适应性函数，而第 5 次使用准确模型。&lt;/p&gt;
+&lt;p&gt;这是由于在现实情况下，我们很难得到完全准确且数据量大的化合物活性数据库，引入的噪声的目的就是为了模拟了这种现实状况。&lt;/p&gt;
+&lt;h3 id="shi-yan-fang-an-1"&gt;实验方案 1&lt;/h3&gt;
+&lt;p&gt;实验方案 1 分别使用 ChemistGA 与 GB-GA（传统遗传算法）针对 JNK3 与 GSK3&amp;beta; 生成分子，比较二者结果。&lt;/p&gt;
+&lt;p&gt;在生物活性（通过预测模型）、QED 以及 SA 几个方面，ChemistGA 都生成了更好的结果，其中的重要原因就是 GB-GA 等传统遗传算法的交叉过程是随机的，不可避免地生成了大量无效分子。&lt;/p&gt;
+&lt;h3 id="shi-yan-fang-an-2"&gt;实验方案 2&lt;/h3&gt;
+&lt;p&gt;实验方案 2 的目标是评估 ChemistGA 基于现实活性分子生成药物分子的能力，任务 1 针对于 DRD2 靶点，任务 1 针对于 JNK3 与 GSK3&amp;beta; 靶点。&lt;/p&gt;
+&lt;p&gt;分别从 REINVENT、GB-GA、RationaleRL 和 ChemistGA 几种模型中随机选择 5000 个分子用于比较结果。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7894?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7894?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;从表格上半部分的结果中，可以看出，ChemistGA 在各方面具有比较均衡结果，也就是 ChemistGA 在生成分子的多样性与可合成性间找到了平衡。而 REINVENT 产生的结果明显多样性不足，GB-GA 的结果可合成性低。任务 2 的结果也类似。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7896?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7896?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="gua-ying-xing-han-shu-de-ying-xiang"&gt;适应性函数的影响&lt;/h3&gt;
+&lt;p&gt;以上实验中的遗传算法（GB-GA 与 ChemistGA）使用的都是连续适应性函数，接下来将适应性函数换为离散适应性函数，表格的下半部分即为结果，以（F）表示。&lt;/p&gt;
+&lt;p&gt;在使用离散适应性函数后，生成结果有了一定程度上的提升，其本质原因是使用离散适应性函数相当于引入了一定的随机性。例如，在使用连续适应性函数的情况下，若有评分为 3.65、3.64 与 3.63 的三个分子，算法就会选择 3.65 与 3.64 两个分子作为父代，尽管 3.63 的分子也具有近似相同的评分，但也会被淘汰，所以该分子的结构片段就很难进入到最终的生成结果中。若使用离散适应性函数，相应的打分就为 4、4、4，那么算法就将随机选择两个分子作为父代，最后的结果也会具有更大的多样性和可合成性。&lt;/p&gt;
+&lt;h3 id="r-chemistga"&gt;R-ChemistGA&lt;/h3&gt;
+&lt;p&gt;R-ChemistGA 与 ChemistGA 唯一不同之处在于 R-ChemistGA 使用不准确的活性预测模型引入了噪声，用于模拟真实世界中的数据。&lt;/p&gt;
+&lt;p&gt;R-ChemistGA 产生的结果在各方面都与 ChemistGA 相当，同时具有更高的 novelty，说明 ChemistGA 算法不仅足够稳健，可以用不完全准确的真实数据集训练，同时还能通过使用不准确的活性预测模型的方法提升生成分子的 novelty。&lt;/p&gt;
+&lt;p&gt;可以将 R-ChemistGA 工作流程中的 5 次循环看作 1 个周期，每个周期中，前 4 次循环使用用不准确的活性预测模型淘汰分子，第 5 次循环使用准确的活性预测模型淘汰分子。&lt;/p&gt;
+&lt;p&gt;R-ChemistGA 的生成结果具有更高 novelty 的原因就在于，预测模型认为没有活性的分子会被淘汰，不会使其产生子代，但很重要的一个事实就是，没有活性的分子通过交叉得到的子代可能具有活性。因此，R-ChemistGA 相当于放宽了淘汰的标准，使其尽可能产生多的分子，在第 5 次循环才用更严格的标准淘汰掉没有活性的分子。&lt;/p&gt;
+&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章提出了两种分子生成算法，分别是 ChemistGA 与 R-ChemistGA。这两种算法都基于机器学习中的遗传算法，改进了遗传算法生成的分子难于合成等问题，让遗传算法在分子生成领域也能发挥其独特的优势。&lt;/p&gt;
+&lt;p&gt;ChemistGA 与 R-ChemistGA 的主要特点就是不需要大量数据用于训练模型，算法足够稳健，可以使用不是完全准确的真实活性数据用于分子生成，生成的分子具有较高的多样性与可合成性。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;i&gt;Journal of Cheminformatics&lt;/i&gt; 上的一篇文章，文章原标题为 &lt;i&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/i&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-019-0393-0"&gt;doi.org/10.1186/s13321-019-0393-0&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;例如图片所示，对于阿司匹林分子具有三种不同的编码形式，规范形式（a）是 RDKit 工具中的默认形式。经过随机化后，起始原子发生了变化，无约束形式与有约束形式的区别在于，无约束形式先编码芳环，再编码支链，而有约束形式则先编码支链，最后编码芳环。&lt;/p&gt;
 &lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="smiles-xu-lie-de-yu-chu-li"&gt;SMILES 序列的预处理&lt;/h3&gt;
+&lt;h3 id="yu-chu-li"&gt;预处理&lt;/h3&gt;
 &lt;p&gt;对于 SMILES 的预处理在文中被称为 tokenization，其目的是使 SMILES 序列成为能够被神经网络识别的形式。其步骤包括在字列始末加上起始与终止符号、将两个字符的元素（如 Cl 和 Br）视作一个 token 等，最终将 SMILES 序列转化为 one-hot 形式。&lt;/p&gt;
 &lt;h3 id="mo-xing-jie-gou"&gt;模型结构&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
@@ -51,19 +191,19 @@
 &lt;li&gt;MOSES 和 FCD：提供评价指标&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
-&lt;h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi-smiles"&gt;规范形式与随机化形式 SMILES&lt;/h3&gt;
+&lt;h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi"&gt;规范形式与随机化形式&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;在 GDB-13 中随机选择 1000000 个分子用于模型训练，结果表明随机化形式 SMILES 训练的模型生成了更多 GDB-13 数据集中的分子。从生成结果的其他指标上来看，与规范形式 SMILES 训练的模型相比，随机化形式模型产生了更好的结果。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;h3 id="chao-can-shu-de-you-hua"&gt;超参数的优化&lt;/h3&gt;
 &lt;p&gt;在 RNN 间的 dropout 比例、批处理数据的大小都属于模型的超参数，针对于这两个超参数，文章比较了改变这两个超参数对于 3 种模型 4 个指标的影响。结果表明，在增加 dropout 比例后，规范形式的模型表现出更好的效果，其完备性上升了，但封闭性下降了，也就是说模型以产生更多错误为代价，生成了更多 GDB-13 数据集中的分子。至于批大小，随着批处理数据的增加，所有模型的效果都改善了。&lt;/p&gt;
-&lt;h3 id="shi-yong-uc-jsd-dui-mo-xing-ping-gu"&gt;使用 UC-JSD 对模型评估&lt;/h3&gt;
+&lt;h3 id="uc-jsd-ping-gu"&gt;UC-JSD 评估&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;由于不同模型的输出空间不同，不同模型的 UC-JSD 不能相互比较，但 UC-JSD 可以用作为对于每个 epoch 训练结果的损失函数。UC-JSD-UCC 图像可以明确显示中模型在各个 epoch 中优化的过程，最后得到的最优模型应当是具有最低 UC-JSD 与 最高 UCC 的模型。&lt;/p&gt;
-&lt;h3 id="shi-yong-xiao-fen-zi-ji-de-ce-shi"&gt;使用小分子集的测试&lt;/h3&gt;
+&lt;h3 id="xiao-fen-zi-ji-ce-shi"&gt;小分子集测试&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;文章中分别使用 1000 个分子与 10000 个分子训练模型。使用 1000 分子训练的规范形式模型仅生成了 14.5% 的 GDB-13 数据集分子，其合法性也仅有 0.504，可以认为模型没有学习到数据集的特征。当训练集增加到 10000 个分子，模型的效果也有所提高，但随机化形式的模型效果都要高于规范形式模型。&lt;/p&gt;
-&lt;h3 id="chembl-shu-ju-ji-de-ce-shi"&gt;ChEMBL 数据集的测试&lt;/h3&gt;
+&lt;h3 id="chembl-shu-ju-ce-shi"&gt;ChEMBL 数据测试&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;文章还使用 ChEMBL 的类药分子训练集测试了两种两种模型，最后绘制了两种模型对于 NLL 的核密度估计（Kernel Density Estimates）结果。结果表明，规范形式模型生成的规范形式 SMILES 能够很好地接近训练集和验证集，但是它不能很好地产生随机形式的 SMILES。与之相反，随机化形式模型不仅能产生随机化形式的 SMILES，产生规范形式 SMILES 的平均概率也很高。这个结果可以说明规范形式模型的输出空间是随机化形式模型的子集。&lt;/p&gt;
 &lt;h2 id="tao-lun_1"&gt;讨论&lt;/h2&gt;

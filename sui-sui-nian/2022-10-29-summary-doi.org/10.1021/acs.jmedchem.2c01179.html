@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-10-29 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法",
+  "headline": "文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法",
+  "datePublished": "2022-10-29 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html",
+  "description": "本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 10月29日">2022年 10月29日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#jiao-cha" title="交叉">交叉</a></li><li><a class="toc-href" href="#fan-jiao" title="反交">反交</a></li><li><a class="toc-href" href="#gua-ying-xing-han-shu" title="适应性函数">适应性函数</a></li><li><a class="toc-href" href="#shu-ju-ji" title="数据集">数据集</a></li><li><a class="toc-href" href="#huo-xing-yu-ce-mo-xing" title="活性预测模型">活性预测模型</a></li><li><a class="toc-href" href="#zhi-biao" title="指标">指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo-yu-lun-lun_1" title="结果与论论">结果与论论</a><ul><li><a class="toc-href" href="#shi-yan-fang-an-1" title="实验方案 1">实验方案 1</a></li><li><a class="toc-href" href="#shi-yan-fang-an-2" title="实验方案 2">实验方案 2</a></li><li><a class="toc-href" href="#gua-ying-xing-han-shu-de-ying-xiang" title="适应性函数的影响">适应性函数的影响</a></li><li><a class="toc-href" href="#r-chemistga" title="R-ChemistGA">R-ChemistGA</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jmedchem.2c01179">doi.org/10.1021/acs.jmedchem.2c01179</a></p>
+<p>本文介绍于 2022 年发表在 <em>Journal of Medicinal Chemistry</em> 上的一篇文章，文章原标题为 <em>ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery</em>，文章改进了传统的遗传算法，ChemistGA 算法在药物分子生成的任务上具有比深度学习更优的表现效果。</p>
+<h2 id="yin-yan">引言</h2>
+<p>基于深度学习的分子生成方法大多都是数据驱动型的方法，这些模型通常需要大量的数量用于训练模型，从而生成特定结构和特征的分子。而传统的机器学习方法，例如遗传算法，不需要大量数据，也不需要经过训练过程，只需要少量的分子数据就能生成大量分子。因此，在深度学习席卷所有行业的今天，遗传算法等机器学习方法仍具有优势。</p>
+<p>遗传算法借鉴了生物学中遗传的概念，从初始种群（初始数据）出发，在两两个体间发生数据的交叉、突变，得到子代，再以子代作为父代不断繁衍。在繁衍的过程中，引入适应函数，适应性函数衡量了个体是否适应环境（满足目标要求），并淘汰低于阈值的个体。繁衍与淘汰的过程不断迭代，直至满足结束条件（迭代次数或子代与父代间适应性函数的差异），最终的种群就是问题的最优解。</p>
+<p>但将遗传算法用于分子生成任务仍有一定问题，例如，染色体交叉和突变的过程通常是随机的，若将分子的片段随机交换，很容易生成大量无法合成的分子。</p>
+<p>因此，文章结合化学合成模版和逆合成预测等模块改进了遗传算法，构造了适用于分子生成任务的模型，取得了良好的效果。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="jiao-cha">交叉</h3>
+<p>ChemistGA 的交叉步骤不是随机的交换，而是使用了反应预测模型 molecular transformer（MT），MT 以两个分子的为输入（<code>SMILES.SMILES</code>），输出一系列分子。MT 已经经过专门化学反应数据的预训练，因此它会基于反应事实预测两个分子相互反应可能产生的结果。就算两个分子不能反应，MT 也能给出一系列具有两分子结构特征的分子，从而避免生成不可合成的分子。</p>
+<h3 id="fan-jiao">反交</h3>
+<p>使用 MT 作为分子交叉的模型无法避免最后的结果陷入局部最优解，因此引入了反应的方法。具体来说，就是在每一子代中插入一部分初始种群中的个体。</p>
+<h3 id="gua-ying-xing-han-shu">适应性函数</h3>
+<p>文章使用了两种适应性函数，一种是连续适应性函数，另一种是离散适应性函数。连续适应性函数可以理解为对分子的打分，涉及 QED、SA 以及生物活性等指标。离散适应性函数也与之类似，唯一的不同在于使用 1 或 0 表示分子是否满足指标的要求。</p>
+<h3 id="shu-ju-ji">数据集</h3>
+<table>
+<thead>
+<tr>
+<th>靶点</th>
+<th>negative / positive</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRD2</td>
+<td>100000 / 7219</td>
+<td><a href="https://doi.org/10.1186/s13321-017-0235-x">Olivecrona et al.</a></td>
+</tr>
+<tr>
+<td>JNK3</td>
+<td>50000 / 2665</td>
+<td><a href="https://doi.org/10.48550/arXiv.1806.02473">Li et al.</a></td>
+</tr>
+<tr>
+<td>GSK3&beta;</td>
+<td>50000 / 740</td>
+<td><a href="https://doi.org/10.48550/arXiv.1806.02473">Li et al.</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="huo-xing-yu-ce-mo-xing">活性预测模型</h3>
+<p>文章针对 DRD2、JNK3 和 GSK3&beta; 构建了两利活性预测模型，一种模型预测结果较为准确，另一种模型较不准确。</p>
+<ul>
+<li>准确的活性预测模型：随机森林分类</li>
+<li>不准确的活性预测模型：3 层决策树分类</li>
+</ul>
+<h3 id="zhi-biao">指标</h3>
+<ul>
+<li><strong>Synthesizability Rate</strong>：随机选择生成的 5000 个分子，使用 Retro* 算法预测其逆合成过程，可完成的分子占比就为 Synthesizability Rate。</li>
+<li><strong>Mismatch Rate</strong>：随机选择生成的 5000 个分子，使用 RECAP 算法获取分子片段，将生成分子的片段库与商用分子片段库对比得到 Mismatch Rate。</li>
+<li><strong>Diversity</strong>：<span class="math">\(\mathrm{diversity}=1-\frac{2}{n(n-1)}\sum\mathrm{sim}(X,Y)\)</span>，其中 <span class="math">\(\mathrm{sim}(X,Y)\)</span> 为谷本距离。</li>
+<li><strong>Novelty</strong>：<span class="math">\(\mathrm{novelty}=\frac{1}{n}\sum1[\mathrm{sim}(G,G_\mathrm{SNN}&lt;0.4&gt;)]\)</span></li>
+<li><strong>Scaffolds</strong>：使用 Murcko 化合物骨架数据计算骨架数量。</li>
+</ul>
+<h2 id="jie-guo-yu-lun-lun_1">结果与论论</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7893?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7893?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>ChemistGA 的主要工作流程是如果所示，首先计算初始种群的适应性函数，根据适应性函数选择其中的部分分子交叉，再经过突变过程后，重新计算分子的适应性函数，不断迭代。与 ChemistGA 不同，R-ChemistGA 每个周期前 4 次使用不准确的活性预测模型计算适应性函数，而第 5 次使用准确模型。</p>
+<p>这是由于在现实情况下，我们很难得到完全准确且数据量大的化合物活性数据库，引入的噪声的目的就是为了模拟了这种现实状况。</p>
+<h3 id="shi-yan-fang-an-1">实验方案 1</h3>
+<p>实验方案 1 分别使用 ChemistGA 与 GB-GA（传统遗传算法）针对 JNK3 与 GSK3&beta; 生成分子，比较二者结果。</p>
+<p>在生物活性（通过预测模型）、QED 以及 SA 几个方面，ChemistGA 都生成了更好的结果，其中的重要原因就是 GB-GA 等传统遗传算法的交叉过程是随机的，不可避免地生成了大量无效分子。</p>
+<h3 id="shi-yan-fang-an-2">实验方案 2</h3>
+<p>实验方案 2 的目标是评估 ChemistGA 基于现实活性分子生成药物分子的能力，任务 1 针对于 DRD2 靶点，任务 1 针对于 JNK3 与 GSK3&beta; 靶点。</p>
+<p>分别从 REINVENT、GB-GA、RationaleRL 和 ChemistGA 几种模型中随机选择 5000 个分子用于比较结果。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7894?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7894?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>从表格上半部分的结果中，可以看出，ChemistGA 在各方面具有比较均衡结果，也就是 ChemistGA 在生成分子的多样性与可合成性间找到了平衡。而 REINVENT 产生的结果明显多样性不足，GB-GA 的结果可合成性低。任务 2 的结果也类似。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7896?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7896?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="gua-ying-xing-han-shu-de-ying-xiang">适应性函数的影响</h3>
+<p>以上实验中的遗传算法（GB-GA 与 ChemistGA）使用的都是连续适应性函数，接下来将适应性函数换为离散适应性函数，表格的下半部分即为结果，以（F）表示。</p>
+<p>在使用离散适应性函数后，生成结果有了一定程度上的提升，其本质原因是使用离散适应性函数相当于引入了一定的随机性。例如，在使用连续适应性函数的情况下，若有评分为 3.65、3.64 与 3.63 的三个分子，算法就会选择 3.65 与 3.64 两个分子作为父代，尽管 3.63 的分子也具有近似相同的评分，但也会被淘汰，所以该分子的结构片段就很难进入到最终的生成结果中。若使用离散适应性函数，相应的打分就为 4、4、4，那么算法就将随机选择两个分子作为父代，最后的结果也会具有更大的多样性和可合成性。</p>
+<h3 id="r-chemistga">R-ChemistGA</h3>
+<p>R-ChemistGA 与 ChemistGA 唯一不同之处在于 R-ChemistGA 使用不准确的活性预测模型引入了噪声，用于模拟真实世界中的数据。</p>
+<p>R-ChemistGA 产生的结果在各方面都与 ChemistGA 相当，同时具有更高的 novelty，说明 ChemistGA 算法不仅足够稳健，可以用不完全准确的真实数据集训练，同时还能通过使用不准确的活性预测模型的方法提升生成分子的 novelty。</p>
+<p>可以将 R-ChemistGA 工作流程中的 5 次循环看作 1 个周期，每个周期中，前 4 次循环使用用不准确的活性预测模型淘汰分子，第 5 次循环使用准确的活性预测模型淘汰分子。</p>
+<p>R-ChemistGA 的生成结果具有更高 novelty 的原因就在于，预测模型认为没有活性的分子会被淘汰，不会使其产生子代，但很重要的一个事实就是，没有活性的分子通过交叉得到的子代可能具有活性。因此，R-ChemistGA 相当于放宽了淘汰的标准，使其尽可能产生多的分子，在第 5 次循环才用更严格的标准淘汰掉没有活性的分子。</p>
+<h2 id="jie-lun_1">结论</h2>
+<p>文章提出了两种分子生成算法，分别是 ChemistGA 与 R-ChemistGA。这两种算法都基于机器学习中的遗传算法，改进了遗传算法生成的分子难于合成等问题，让遗传算法在分子生成领域也能发挥其独特的优势。</p>
+<p>ChemistGA 与 R-ChemistGA 的主要特点就是不需要大量数据用于训练模型，算法足够稳健，可以使用不是完全准确的真实活性数据用于分子生成，生成的分子具有较高的多样性与可合成性。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法&amp;url=https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2019 年发表在 Journal of Cheminformatics...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

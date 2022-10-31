@@ -178,7 +178,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#smiles-xu-lie-de-yu-chu-li" title="SMILES 序列的预处理">SMILES 序列的预处理</a></li><li><a class="toc-href" href="#mo-xing-jie-gou" title="模型结构">模型结构</a></li><li><a class="toc-href" href="#shu-ju-ji" title="数据集">数据集</a></li><li><a class="toc-href" href="#xun-lian" title="训练">训练</a></li></ul></li><li><a class="toc-href" href="#ping-jie-zhi-biao_1" title="评价指标">评价指标</a><ul><li><a class="toc-href" href="#dui-sheng-cheng-mo-xing-de-ping-gu" title="对生成模型的评估">对生成模型的评估</a></li><li><a class="toc-href" href="#dui-sheng-cheng-jie-guo-de-ping-gu" title="对生成结果的评估">对生成结果的评估</a></li><li><a class="toc-href" href="#gong-ju" title="工具">工具</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#gui-fan-xing-shi-yu-sui-ji-hua-xing-shi-smiles" title="规范形式与随机化形式 SMILES">规范形式与随机化形式 SMILES</a></li><li><a class="toc-href" href="#chao-can-shu-de-you-hua" title="超参数的优化">超参数的优化</a></li><li><a class="toc-href" href="#shi-yong-uc-jsd-dui-mo-xing-ping-gu" title="使用 UC-JSD 对模型评估">使用 UC-JSD 对模型评估</a></li><li><a class="toc-href" href="#shi-yong-xiao-fen-zi-ji-de-ce-shi" title="使用小分子集的测试">使用小分子集的测试</a></li><li><a class="toc-href" href="#chembl-shu-ju-ji-de-ce-shi" title="ChEMBL 数据集的测试">ChEMBL 数据集的测试</a></li></ul></li><li><a class="toc-href" href="#tao-lun_1" title="讨论">讨论</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#yu-chu-li" title="预处理">预处理</a></li><li><a class="toc-href" href="#mo-xing-jie-gou" title="模型结构">模型结构</a></li><li><a class="toc-href" href="#shu-ju-ji" title="数据集">数据集</a></li><li><a class="toc-href" href="#xun-lian" title="训练">训练</a></li></ul></li><li><a class="toc-href" href="#ping-jie-zhi-biao_1" title="评价指标">评价指标</a><ul><li><a class="toc-href" href="#dui-sheng-cheng-mo-xing-de-ping-gu" title="对生成模型的评估">对生成模型的评估</a></li><li><a class="toc-href" href="#dui-sheng-cheng-jie-guo-de-ping-gu" title="对生成结果的评估">对生成结果的评估</a></li><li><a class="toc-href" href="#gong-ju" title="工具">工具</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#gui-fan-xing-shi-yu-sui-ji-hua-xing-shi" title="规范形式与随机化形式">规范形式与随机化形式</a></li><li><a class="toc-href" href="#chao-can-shu-de-you-hua" title="超参数的优化">超参数的优化</a></li><li><a class="toc-href" href="#uc-jsd-ping-gu" title="UC-JSD 评估">UC-JSD 评估</a></li><li><a class="toc-href" href="#xiao-fen-zi-ji-ce-shi" title="小分子集测试">小分子集测试</a></li><li><a class="toc-href" href="#chembl-shu-ju-ce-shi" title="ChEMBL 数据测试">ChEMBL 数据测试</a></li></ul></li><li><a class="toc-href" href="#tao-lun_1" title="讨论">讨论</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -189,7 +189,7 @@
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>例如图片所示，对于阿司匹林分子具有三种不同的编码形式，规范形式（a）是 RDKit 工具中的默认形式。经过随机化后，起始原子发生了变化，无约束形式与有约束形式的区别在于，无约束形式先编码芳环，再编码支链，而有约束形式则先编码支链，最后编码芳环。</p>
 <h2 id="fang-fa">方法</h2>
-<h3 id="smiles-xu-lie-de-yu-chu-li">SMILES 序列的预处理</h3>
+<h3 id="yu-chu-li">预处理</h3>
 <p>对于 SMILES 的预处理在文中被称为 tokenization，其目的是使 SMILES 序列成为能够被神经网络识别的形式。其步骤包括在字列始末加上起始与终止符号、将两个字符的元素（如 Cl 和 Br）视作一个 token 等，最终将 SMILES 序列转化为 one-hot 形式。</p>
 <h3 id="mo-xing-jie-gou">模型结构</h3>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
@@ -234,19 +234,19 @@
 <li>MOSES 和 FCD：提供评价指标</li>
 </ul>
 <h2 id="jie-guo_1">结果</h2>
-<h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi-smiles">规范形式与随机化形式 SMILES</h3>
+<h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi">规范形式与随机化形式</h3>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在 GDB-13 中随机选择 1000000 个分子用于模型训练，结果表明随机化形式 SMILES 训练的模型生成了更多 GDB-13 数据集中的分子。从生成结果的其他指标上来看，与规范形式 SMILES 训练的模型相比，随机化形式模型产生了更好的结果。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h3 id="chao-can-shu-de-you-hua">超参数的优化</h3>
 <p>在 RNN 间的 dropout 比例、批处理数据的大小都属于模型的超参数，针对于这两个超参数，文章比较了改变这两个超参数对于 3 种模型 4 个指标的影响。结果表明，在增加 dropout 比例后，规范形式的模型表现出更好的效果，其完备性上升了，但封闭性下降了，也就是说模型以产生更多错误为代价，生成了更多 GDB-13 数据集中的分子。至于批大小，随着批处理数据的增加，所有模型的效果都改善了。</p>
-<h3 id="shi-yong-uc-jsd-dui-mo-xing-ping-gu">使用 UC-JSD 对模型评估</h3>
+<h3 id="uc-jsd-ping-gu">UC-JSD 评估</h3>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>由于不同模型的输出空间不同，不同模型的 UC-JSD 不能相互比较，但 UC-JSD 可以用作为对于每个 epoch 训练结果的损失函数。UC-JSD-UCC 图像可以明确显示中模型在各个 epoch 中优化的过程，最后得到的最优模型应当是具有最低 UC-JSD 与 最高 UCC 的模型。</p>
-<h3 id="shi-yong-xiao-fen-zi-ji-de-ce-shi">使用小分子集的测试</h3>
+<h3 id="xiao-fen-zi-ji-ce-shi">小分子集测试</h3>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章中分别使用 1000 个分子与 10000 个分子训练模型。使用 1000 分子训练的规范形式模型仅生成了 14.5% 的 GDB-13 数据集分子，其合法性也仅有 0.504，可以认为模型没有学习到数据集的特征。当训练集增加到 10000 个分子，模型的效果也有所提高，但随机化形式的模型效果都要高于规范形式模型。</p>
-<h3 id="chembl-shu-ju-ji-de-ce-shi">ChEMBL 数据集的测试</h3>
+<h3 id="chembl-shu-ju-ce-shi">ChEMBL 数据测试</h3>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章还使用 ChEMBL 的类药分子训练集测试了两种两种模型，最后绘制了两种模型对于 NLL 的核密度估计（Kernel Density Estimates）结果。结果表明，规范形式模型生成的规范形式 SMILES 能够很好地接近训练集和验证集，但是它不能很好地产生随机形式的 SMILES。与之相反，随机化形式模型不仅能产生随机化形式的 SMILES，产生规范形式 SMILES 的平均概率也很高。这个结果可以说明规范形式模型的输出空间是随机化形式模型的子集。</p>
 <h2 id="tao-lun_1">讨论</h2>
@@ -361,6 +361,13 @@
 
 
                 <aside class="post-nav">
+                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2022 年发表在 Journal of Medicinal Chemistry...</p>
+                        </section>
+                    </a>
                     <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-10-20-rdkit-draw-molecule.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>

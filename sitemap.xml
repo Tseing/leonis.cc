@@ -5,22 +5,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/</loc>
-<lastmod>2022-10-23T19:41:17-00:00</lastmod>
+<lastmod>2022-10-31T18:21:01-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/about.html</loc>
-<lastmod>2022-10-23T19:41:17-00:00</lastmod>
+<lastmod>2022-10-31T18:21:01-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-10-23T19:41:17-00:00</lastmod>
+<lastmod>2022-10-31T18:21:01-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html</loc>
+<lastmod>2022-10-29T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -187,7 +194,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/author/leo.html</loc>
-<lastmod>2022-10-21T00:00:00+08:06</lastmod>
+<lastmod>2022-10-29T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
