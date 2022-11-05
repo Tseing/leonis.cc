@@ -692,11 +692,10 @@ blockquote::after {
     opacity: 0.7;
 }
 
-em {
-    font-style: normal;
-    text-emphasis: dot;
-    text-emphasis-color: #B6321C;
-    text-emphasis-position: under right;
+em,
+i {
+    font-style: italic;
+
 }
 
 em,

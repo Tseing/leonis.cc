@@ -219,7 +219,7 @@
 <div class="math">$$f(x)=\mathrm{sign}(w^*\cdot x+b^*)$$</div>
 <h3 id="ce-lue">策略</h3>
 <h4>函数间隔与几何间隔</h4>
-<p>实例到超平面的距离能<em>相对地</em>用 <span class="math">\(|w\cdot x+b|\)</span> 衡量，称为函数间隔。样本点到超平面的函数间隔记作 <span class="math">\(\hat{\gamma}_i\)</span>，将数据集 <span class="math">\(T\)</span> 中所有样本点函数间隔的最小值称为超平面关于数据集 <span class="math">\(T\)</span> 的函数间隔，记作 <span class="math">\(\hat{\gamma}\)</span>。</p>
+<p>实例到超平面的距离能<dot>相对地</dot>用 <span class="math">\(|w\cdot x+b|\)</span> 衡量，称为函数间隔。样本点到超平面的函数间隔记作 <span class="math">\(\hat{\gamma}_i\)</span>，将数据集 <span class="math">\(T\)</span> 中所有样本点函数间隔的最小值称为超平面关于数据集 <span class="math">\(T\)</span> 的函数间隔，记作 <span class="math">\(\hat{\gamma}\)</span>。</p>
 <p>函数间隔会随着超平面参数 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 的改变而改变，但若 <span class="math">\(w\)</span> 与 <span class="math">\(b\)</span> 等比例缩放，超平面没有变化（等式左右可同时约去比例），样本点到超平面距离没有变化，而函数间隔变化了。</p>
 <p>这说明需要将函数间隔规范化，也就得到了几何间隔 <span class="math">\(\frac{w}{||w||}\)</span>，这也就是样本点到超平面的实际（几何）距离，记作 <span class="math">\(\gamma_i\)</span>，类似地，超平面关于数据集的几何间隔记作 <span class="math">\(\gamma\)</span>，得到转化公式</p>
 <div class="math">$$\begin{align}
@@ -333,7 +333,7 @@
  \end{align}$$</div>
 <p>为了求解这一最优化问题，需要将约束代入目标问题，得到</p>
 <div class="math">$$s(\alpha_1,\alpha_2)=4\alpha^2_1+\frac{13}{2}\alpha^2_2+10\alpha_1\alpha_2-2\alpha_1-2\alpha_2$$</div>
-<p>求其偏导并令其为零，得知 <span class="math">\(s(\alpha_1,\alpha_2)\)</span> 在 <span class="math">\((\frac{3}{2},-1)^\mathrm{T}\)</span> 处取得极值，但 <span class="math">\(\alpha_2=-1\)</span> 违反了 <span class="math">\(\alpha_i\geqslant0\)</span> 的约束，那么<em>最小值将在边界上取到</em>。</p>
+<p>求其偏导并令其为零，得知 <span class="math">\(s(\alpha_1,\alpha_2)\)</span> 在 <span class="math">\((\frac{3}{2},-1)^\mathrm{T}\)</span> 处取得极值，但 <span class="math">\(\alpha_2=-1\)</span> 违反了 <span class="math">\(\alpha_i\geqslant0\)</span> 的约束，那么<dot>最小值将在边界上取到</dot>。</p>
 <div class="math">$$\begin{align}
     &amp;a_1=0,\quad s(0,\frac{2}{13})=-\frac{2}{13}\\
     &amp;a_2=0,\quad s(\frac{1}{4},0)=-\frac{1}{4}

@@ -139,7 +139,7 @@
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;i&gt;Journal of Cheminformatics&lt;/i&gt; 上的一篇文章，文章原标题为 &lt;i&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/i&gt;。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/em&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-019-0393-0"&gt;doi.org/10.1186/s13321-019-0393-0&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。&lt;/p&gt;
@@ -1460,7 +1460,7 @@ $$$$&lt;/code&gt;&lt;/pre&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="碎碎念"></category><category term="RDKit"></category><category term="Python"></category></entry><entry><title>文献总结｜REINVENT 2.0：用于从头药物设计的 AI 工具</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html" rel="alternate"></link><published>2022-10-15T00:00:00+08:00</published><updated>2022-10-15T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-15:/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Chemical Information and Modeling 上的一篇 Application Note，文章原标题为 REINVENT 2.0: An AI Tool for De Novo Drug Design。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2020 年发表在 &lt;i&gt;Journal of Chemical Information and Modeling&lt;/i&gt; 上的一篇 Application Note，文章原标题为 &lt;i&gt;REINVENT 2.0: An AI Tool for De Novo Drug Design&lt;/i&gt;。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;
+</content><category term="碎碎念"></category><category term="RDKit"></category><category term="Python"></category></entry><entry><title>文献总结｜REINVENT 2.0：用于从头药物设计的 AI 工具</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html" rel="alternate"></link><published>2022-10-15T00:00:00+08:00</published><updated>2022-10-15T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-15:/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Chemical Information and Modeling 上的一篇 Application Note，文章原标题为 REINVENT 2.0: An AI Tool for De Novo Drug Design。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇 Application Note，文章原标题为 &lt;em&gt;REINVENT 2.0: An AI Tool for De Novo Drug Design&lt;/em&gt;。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.0c00915"&gt;doi.org/10.1021/acs.jcim.0c00915&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;目前的分子生成模型可以分为概率分布学习与目标主导的分子生成。概率分布学习旨在生成与特定分子集相类似的分子，而目标主导的分子生成则使用搜索算法，给出满足指定目标的分子，在此过程中，目标主导的分子生成没有在整个搜索空间中取样。&lt;/p&gt;
@@ -1557,7 +1557,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 &lt;i&gt;Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning&lt;/i&gt;，于 2021 年发表在 &lt;i&gt;Nature Machine Intelligence&lt;/i&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 &lt;em&gt;Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning&lt;/em&gt;，于 2021 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-021-00403-1"&gt;doi.org/10.1038/s42256-021-00403-1&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在药物分子生成的任务中，目标分子既需要有高类药性、低毒性，其结构又需要尽可多样和新颖，药物分子生成就是这样一个多约束优化问题。&lt;/p&gt;
@@ -1805,7 +1805,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;i&gt;ACS Central Science&lt;/i&gt; 上的一篇文献，文章原题目为 &lt;i&gt;Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks&lt;/i&gt;。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;em&gt;ACS Central Science&lt;/em&gt; 上的一篇文献，文章原题目为 &lt;em&gt;Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks&lt;/em&gt;。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acscentsci.7b00512"&gt;doi.org/10.1021/acscentsci.7b00512&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在通常的分子任务中，计算机需要完成&lt;/p&gt;
@@ -2069,7 +2069,7 @@ Network, GAN）的模型向着预先设定的特征生成分子。&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w^*\cdot x+b^*)$$&lt;/div&gt;
 &lt;h3 id="ce-lue"&gt;策略&lt;/h3&gt;
 &lt;h4&gt;函数间隔与几何间隔&lt;/h4&gt;
-&lt;p&gt;实例到超平面的距离能&lt;em&gt;相对地&lt;/em&gt;用 &lt;span class="math"&gt;\(|w\cdot x+b|\)&lt;/span&gt; 衡量，称为函数间隔。样本点到超平面的函数间隔记作 &lt;span class="math"&gt;\(\hat{\gamma}_i\)&lt;/span&gt;，将数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 中所有样本点函数间隔的最小值称为超平面关于数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 的函数间隔，记作 &lt;span class="math"&gt;\(\hat{\gamma}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;实例到超平面的距离能&lt;dot&gt;相对地&lt;/dot&gt;用 &lt;span class="math"&gt;\(|w\cdot x+b|\)&lt;/span&gt; 衡量，称为函数间隔。样本点到超平面的函数间隔记作 &lt;span class="math"&gt;\(\hat{\gamma}_i\)&lt;/span&gt;，将数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 中所有样本点函数间隔的最小值称为超平面关于数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt; 的函数间隔，记作 &lt;span class="math"&gt;\(\hat{\gamma}\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;函数间隔会随着超平面参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 的改变而改变，但若 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 等比例缩放，超平面没有变化（等式左右可同时约去比例），样本点到超平面距离没有变化，而函数间隔变化了。&lt;/p&gt;
 &lt;p&gt;这说明需要将函数间隔规范化，也就得到了几何间隔 &lt;span class="math"&gt;\(\frac{w}{||w||}\)&lt;/span&gt;，这也就是样本点到超平面的实际（几何）距离，记作 &lt;span class="math"&gt;\(\gamma_i\)&lt;/span&gt;，类似地，超平面关于数据集的几何间隔记作 &lt;span class="math"&gt;\(\gamma\)&lt;/span&gt;，得到转化公式&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
@@ -2183,7 +2183,7 @@ Network, GAN）的模型向着预先设定的特征生成分子。&lt;/p&gt;
  \end{align}$$&lt;/div&gt;
 &lt;p&gt;为了求解这一最优化问题，需要将约束代入目标问题，得到&lt;/p&gt;
 &lt;div class="math"&gt;$$s(\alpha_1,\alpha_2)=4\alpha^2_1+\frac{13}{2}\alpha^2_2+10\alpha_1\alpha_2-2\alpha_1-2\alpha_2$$&lt;/div&gt;
-&lt;p&gt;求其偏导并令其为零，得知 &lt;span class="math"&gt;\(s(\alpha_1,\alpha_2)\)&lt;/span&gt; 在 &lt;span class="math"&gt;\((\frac{3}{2},-1)^\mathrm{T}\)&lt;/span&gt; 处取得极值，但 &lt;span class="math"&gt;\(\alpha_2=-1\)&lt;/span&gt; 违反了 &lt;span class="math"&gt;\(\alpha_i\geqslant0\)&lt;/span&gt; 的约束，那么&lt;em&gt;最小值将在边界上取到&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;求其偏导并令其为零，得知 &lt;span class="math"&gt;\(s(\alpha_1,\alpha_2)\)&lt;/span&gt; 在 &lt;span class="math"&gt;\((\frac{3}{2},-1)^\mathrm{T}\)&lt;/span&gt; 处取得极值，但 &lt;span class="math"&gt;\(\alpha_2=-1\)&lt;/span&gt; 违反了 &lt;span class="math"&gt;\(\alpha_i\geqslant0\)&lt;/span&gt; 的约束，那么&lt;dot&gt;最小值将在边界上取到&lt;/dot&gt;。&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
     &amp;amp;a_1=0,\quad s(0,\frac{2}{13})=-\frac{2}{13}\\
     &amp;amp;a_2=0,\quad s(\frac{1}{4},0)=-\frac{1}{4}
@@ -2402,7 +2402,7 @@ Network, GAN）的模型向着预先设定的特征生成分子。&lt;/p&gt;
     &amp;amp;=\sum_i[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i)]
 \end{align}$$&lt;/div&gt;
 &lt;p&gt;那么求 &lt;span class="math"&gt;\(L(w)\)&lt;/span&gt; 的极大值，就能得到估计值 &lt;span class="math"&gt;\(\hat{w}\)&lt;/span&gt;，得到回归模型。也就是说，求解逻辑斯谛回归模型就是对于对数似然函数的最优化问题。&lt;/p&gt;
-&lt;p&gt;{note begin}似然函数定义为 &lt;span class="math"&gt;\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)&lt;/span&gt;，即抽样结果中各概率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是&lt;em&gt;最大似然估计&lt;/em&gt;的原理。{note end}&lt;/p&gt;
+&lt;p&gt;{note begin}似然函数定义为 &lt;span class="math"&gt;\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)&lt;/span&gt;，即抽样结果中各概率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是&lt;dot&gt;最大似然估计&lt;/dot&gt;的原理。{note end}&lt;/p&gt;
 &lt;h3 id="yan-yi-la-ge-lang-ri-han-shu"&gt;广义拉格朗日函数&lt;/h3&gt;
 &lt;p&gt;最大熵模型中使用了拉格朗日乘数法，因此有必要先介绍一下广义拉格朗日函数。回忆一下高等数学中的拉格朗日函数，若函数 &lt;span class="math"&gt;\(z=f(x,y)\)&lt;/span&gt; 有约束条件 &lt;span class="math"&gt;\(\varphi(x,y)=0\)&lt;/span&gt;，那么拉格朗日函数就为&lt;/p&gt;
 &lt;div class="math"&gt;$$L(x,y)=f(x,y)+\lambda\varphi(x,y)$$&lt;/div&gt;
@@ -2797,13 +2797,13 @@ plt.show()
 &lt;li&gt;&lt;strong&gt;有顧喙無顧身&amp;mdash;&amp;mdash;㑚記食&lt;/strong&gt; /u53 gu21 cui213 mo33 gu21 sing55 na53 gei213 siek5/：貪喫而邋遢。&lt;/li&gt;
 &lt;/ul&gt;</content><category term="故纸堆"></category><category term="平话"></category></entry><entry><title>《统计学习方法》第五章：决策树</title><link href="https://tseing.github.io/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html" rel="alternate"></link><published>2022-08-23T00:00:00+08:00</published><updated>2022-08-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-08-23:/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html</id><summary type="html">&lt;p&gt;《统计学习方法》第五章主要介绍一种具有树形结构的分类与回归模型——决策树，使用不同的特征分类能力的衡量标准，存在不同的决策树生成算法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="jue-ce-shu"&gt;决策树&lt;/h3&gt;
-&lt;p&gt;决策树是一种&lt;em&gt;分类&lt;/em&gt;与&lt;em&gt;回归&lt;/em&gt;的方法，它是由结点和有向边组成的树形结构。决策树的内部结点表示一个特征或属性，叶结点表示一个类。&lt;/p&gt;
+&lt;p&gt;决策树是一种&lt;dot&gt;分类&lt;/dot&gt;与&lt;dot&gt;回归&lt;/dot&gt;的方法，它是由结点和有向边组成的树形结构。决策树的内部结点表示一个特征或属性，叶结点表示一个类。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="决策树模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7527?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;决策树学习的目标就是根据给定的训练集生成一个决策树模型，利用该模型对实例正确分类。也就是说决策树的生成在本质上是从训练集中归纳出一组分类规则，决策树中结点之间的路径正是对应了这种分类规则。&lt;/p&gt;
 &lt;h3 id="fen-lei-yu-hui-gui-shu"&gt;分类与回归树&lt;/h3&gt;
-&lt;p&gt;分类与回归树（CART）模型是一种应用广泛的&lt;em&gt;决策树&lt;/em&gt;模型，CART 假定决策树为&lt;em&gt;二叉树&lt;/em&gt;，左分支为&amp;ldquo;是&amp;rdquo;路径，右分支为&amp;ldquo;否&amp;rdquo;路径。CART 模型将每个特征不断二分，划分为有限个单元，最后就能在这些单元上进行预测。&lt;/p&gt;
+&lt;p&gt;分类与回归树（CART）模型是一种应用广泛的&lt;dot&gt;决策树&lt;/dot&gt;模型，CART 假定决策树为&lt;dot&gt;二叉树&lt;/dot&gt;，左分支为&amp;ldquo;是&amp;rdquo;路径，右分支为&amp;ldquo;否&amp;rdquo;路径。CART 模型将每个特征不断二分，划分为有限个单元，最后就能在这些单元上进行预测。&lt;/p&gt;
 &lt;h2 id="ce-lue_1"&gt;策略&lt;/h2&gt;
-&lt;p&gt;决策树可以看作为一系列 if-then 规则的集合，那么如何选择规则的判断条件就十分重要了。选择判断条件就是在选择训练数据的特征，可以想象，如果利用一个特征作为分类条件得到的结果与&lt;em&gt;随机分类&lt;/em&gt;的结果没有很大差别，那么这个特征是没有分类能力的。为了生成精确的决策树模型，我们需要设立用于衡量所选特征分类能力的准则。&lt;/p&gt;
+&lt;p&gt;决策树可以看作为一系列 if-then 规则的集合，那么如何选择规则的判断条件就十分重要了。选择判断条件就是在选择训练数据的特征，可以想象，如果利用一个特征作为分类条件得到的结果与&lt;dot&gt;随机分类&lt;/dot&gt;的结果没有很大差别，那么这个特征是没有分类能力的。为了生成精确的决策树模型，我们需要设立用于衡量所选特征分类能力的准则。&lt;/p&gt;
 &lt;p&gt;常用选择特征的准则包括信息增益、信息增益比、平方误差和基尼指数。&lt;/p&gt;
 &lt;h3 id="xin-xi-zeng-yi"&gt;信息增益&lt;/h3&gt;
 &lt;p&gt;设一个离散随机分布为&lt;/p&gt;
@@ -2876,7 +2876,7 @@ plt.show()
 &lt;li&gt;对于第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个结点，以 &lt;span class="math"&gt;\(D_i\)&lt;/span&gt; 为训练集，以 &lt;span class="math"&gt;\(A-\{A_g\}\)&lt;/span&gt; 为特征集，递归 1~5 步，返回子树 &lt;span class="math"&gt;\(T_i\)&lt;/span&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;算法 5.4（C4.5 算法）&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用&lt;em&gt;信息增益比&lt;/em&gt;代替 ID3 算法中的信息增益，就是 C4.5 算法。&lt;/p&gt;
+&lt;p&gt;使用&lt;dot&gt;信息增益比&lt;/dot&gt;代替 ID3 算法中的信息增益，就是 C4.5 算法。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;算法 5.4（最小二乘回归树生成算法）&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;输入：训练数据集 &lt;span class="math"&gt;\(D\)&lt;/span&gt;&lt;br/&gt;
@@ -3415,7 +3415,7 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 &lt;div class="math"&gt;$$P(AB)=P(A)P(B|A)=P(B)P(A|B)$$&lt;/div&gt;
 &lt;p&gt;该式就称为乘法公式。&lt;/p&gt;
 &lt;h4&gt;全概率公式&lt;/h4&gt;
-&lt;p&gt;若将&lt;em&gt;样本空间&lt;/em&gt; &lt;span class="math"&gt;\(\Omega\)&lt;/span&gt; 分割为&lt;em&gt;互不相容&lt;/em&gt;的各事件 &lt;span class="math"&gt;\(B_1,B_2,\cdots B_n\)&lt;/span&gt;，那么 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 事件的概率就应当是 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的&lt;em&gt;所有&lt;/em&gt;条件概率与相应条件发生概率乘积之和：&lt;/p&gt;
+&lt;p&gt;若将&lt;dot&gt;样本空间&lt;/dot&gt; &lt;span class="math"&gt;\(\Omega\)&lt;/span&gt; 分割为&lt;dot&gt;互不相容&lt;/dot&gt;的各事件 &lt;span class="math"&gt;\(B_1,B_2,\cdots B_n\)&lt;/span&gt;，那么 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 事件的概率就应当是 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 的&lt;dot&gt;所有&lt;/dot&gt;条件概率与相应条件发生概率乘积之和：&lt;/p&gt;
 &lt;div class="math"&gt;$$P(A)=\sum_{i=1}^nP(B_i)P(A|B_i)$$&lt;/div&gt;
 &lt;p&gt;考虑 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(B\)&lt;/span&gt; 为两个事件的情况，利用全概系公式可以将事件 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 发生的概率写为&lt;/p&gt;
 &lt;div class="math"&gt;$$P(A)=P(B)P(A|B)+P(\bar{B})P(A|\bar{B})$$&lt;/div&gt;
@@ -3428,12 +3428,12 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 &lt;div class="math"&gt;$$P(Y_i|X)=\frac{P(X|Y_i)P(Y_i)}{\sum_{j=1}^nP(X|Y_j)P(Y_j)}$$&lt;/div&gt;
 &lt;p&gt;该式即为贝叶斯公式。&lt;/p&gt;
 &lt;h3 id="po-su-bei-xie-si-fa-mo-xing"&gt;朴素贝叶斯法模型&lt;/h3&gt;
-&lt;p&gt;假设训练集 &lt;span class="math"&gt;\(T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}\)&lt;/span&gt; 是由 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt; &lt;em&gt;独立同分布&lt;/em&gt;产生，其中输入为特征向量，输出为类标记。&lt;/p&gt;
+&lt;p&gt;假设训练集 &lt;span class="math"&gt;\(T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}\)&lt;/span&gt; 是由 &lt;span class="math"&gt;\(P(X,Y)\)&lt;/span&gt; &lt;dot&gt;独立同分布&lt;/dot&gt;产生，其中输入为特征向量，输出为类标记。&lt;/p&gt;
 &lt;p&gt;先验概率分布为&lt;/p&gt;
 &lt;div class="math"&gt;$$P(Y=c_k),\qquad k=1,2,\cdots,K$$&lt;/div&gt;
 &lt;p&gt;条件概率分布为&lt;/p&gt;
 &lt;div class="math"&gt;$$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)$$&lt;/div&gt;
-&lt;p&gt;对条件概率分布作&lt;em&gt;条件独立性&lt;/em&gt;的假设，即认为某特征向量事件的各分量事件相互独立，因此该向量代表事件的发生概率为该向量的各分量概率乘积：&lt;/p&gt;
+&lt;p&gt;对条件概率分布作&lt;dot&gt;条件独立性&lt;/dot&gt;的假设，即认为某特征向量事件的各分量事件相互独立，因此该向量代表事件的发生概率为该向量的各分量概率乘积：&lt;/p&gt;
 &lt;div class="math"&gt;$$\begin{align}
     P(X=x|Y=c_k)&amp;amp;=P(X^{(1)}=x^{(1)},\cdots,X^{(n)}=x^{(n)}|Y=c_k)\\
     &amp;amp;=\prod_{j=1}^nP(X^{j}=x^{(j)}|Y=c_k)
@@ -3561,7 +3561,7 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 &lt;div class="math"&gt;$$
 T=\{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N) \}
 $$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(x_i\in\mathbf{R}^n\)&lt;/span&gt; 为特征向量，&lt;span class="math"&gt;\(y_i\in\{c_1,c_2,\cdots,c_K\}\)&lt;/span&gt; 为实例类别。k 近邻法根据&lt;em&gt;距离度量&lt;/em&gt;，在包括最邻近的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个点的邻域 &lt;span class="math"&gt;\(N_k(x)\)&lt;/span&gt; 中确定 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的 类别 &lt;span class="math"&gt;\(y\)&lt;/span&gt;：&lt;/p&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(x_i\in\mathbf{R}^n\)&lt;/span&gt; 为特征向量，&lt;span class="math"&gt;\(y_i\in\{c_1,c_2,\cdots,c_K\}\)&lt;/span&gt; 为实例类别。k 近邻法根据&lt;dot&gt;距离度量&lt;/dot&gt;，在包括最邻近的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个点的邻域 &lt;span class="math"&gt;\(N_k(x)\)&lt;/span&gt; 中确定 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的 类别 &lt;span class="math"&gt;\(y\)&lt;/span&gt;：&lt;/p&gt;
 &lt;div class="math"&gt;$$y=\arg \max_{c_j}\sum_{x_i\in N_k(x)}I(y_i=c_i),\qquad i=1,2,\cdots,N;\ j=1,2,3,\cdots,K$$&lt;/div&gt;
 &lt;p&gt;其中 &lt;span class="math"&gt;\(I\)&lt;/span&gt; 为指示函数，条件为真时为 &lt;span class="math"&gt;\(1\)&lt;/span&gt;，条件为假时为 &lt;span class="math"&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h2 id="ce-lue"&gt;策略&lt;/h2&gt;
@@ -3576,7 +3576,7 @@ $$&lt;/div&gt;
 &lt;p&gt;k 近邻法的分类遵循多数表决规则，即输入实例附近 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个邻近的训练实例的大多数类决定了预测结果。因此 k 近邻法中的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 值决定了在一定的距离度量内选取分类「参考点」的数量，可以想知，若选取的 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 值太小，分类结果会对最近邻的几个点敏感，模型就趋于复杂，更容易发生过拟合。&lt;/p&gt;
 &lt;h2 id="suan-fa_1"&gt;算法&lt;/h2&gt;
 &lt;h3 id="gou-zao-kd-shu"&gt;构造 kd 树&lt;/h3&gt;
-&lt;p&gt;kd 树是一种二叉树，kd 树通过对 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中每一个维度&lt;em&gt;逐次地&lt;/em&gt;二分，最终将整个特征空间划分为若干超矩形，kd 树的每一个结点（训练实例）对应于一个超矩形。&lt;/p&gt;
+&lt;p&gt;kd 树是一种二叉树，kd 树通过对 &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt; 空间中每一个维度&lt;dot&gt;逐次地&lt;/dot&gt;二分，最终将整个特征空间划分为若干超矩形，kd 树的每一个结点（训练实例）对应于一个超矩形。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;算法 3.2&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;输入：数据集 &lt;span class="math"&gt;\(T\)&lt;/span&gt;&lt;br/&gt;
@@ -3684,7 +3684,7 @@ $$&lt;/div&gt;
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="统计学习方法"></category><category term="Machine learning"></category><category term="Algorithm"></category></entry><entry><title>《统计学习方法》第二章：感知机</title><link href="https://tseing.github.io/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html" rel="alternate"></link><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-07-27:/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html</id><summary type="html">&lt;p&gt;《统计学习方法》第二章介绍了一种二分类模型——感知机，感知机具有直观的几何模型，有助于理解分类原理。感知机采用随机梯度下降策略选择最佳模型，随机梯度下降也是常用的一种最优化方法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
 &lt;h3 id="ding-yi"&gt;定义&lt;/h3&gt;
-&lt;p&gt;感知机是&lt;em&gt;二分类&lt;/em&gt;的&lt;em&gt;线性&lt;/em&gt;分类模型，感知机定义为&lt;/p&gt;
+&lt;p&gt;感知机是&lt;dot&gt;二分类&lt;/dot&gt;的&lt;dot&gt;线性&lt;/dot&gt;分类模型，感知机定义为&lt;/p&gt;
 &lt;div class="math"&gt;$$f(x)=\mathrm{sign}(w\cdot x+b)$$&lt;/div&gt;
 &lt;div class="math"&gt;$$\begin{equation}
     \mathrm{sign}(x)=
@@ -3756,7 +3756,7 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$-y_i(w\cdot x_i+b)&amp;gt;0$$&lt;/div&gt;
 &lt;p&gt;若超平面 &lt;span class="math"&gt;\(S\)&lt;/span&gt; 误分类的点的集合为 &lt;span class="math"&gt;\(M\)&lt;/span&gt;，那么误分类点到超平面的距离之和为&lt;/p&gt;
 &lt;div class="math"&gt;$$\sum_{x_i\in M}\left[-\frac{1}{||w||}y_i(w\cdot x_i+b)\right]$$&lt;/div&gt;
-&lt;p&gt;略去 &lt;span class="math"&gt;\(\frac{1}{||w||}\)&lt;/span&gt;（见第七章），得到&lt;em&gt;经验风险函数&lt;/em&gt;：&lt;/p&gt;
+&lt;p&gt;略去 &lt;span class="math"&gt;\(\frac{1}{||w||}\)&lt;/span&gt;（见第七章），得到&lt;dot&gt;经验风险函数&lt;/dot&gt;：&lt;/p&gt;
 &lt;div class="math"&gt;$$L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$&lt;/div&gt;
 &lt;p&gt;感知机的学习策略就是在假设空间中选取 &lt;span class="math"&gt;\(L(w,b)\)&lt;/span&gt; 最小的模型参数 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(b\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
@@ -3796,7 +3796,7 @@ $$&lt;/div&gt;
 &lt;p&gt;经过数次以下迭代步骤：&lt;/p&gt;
 &lt;div class="math"&gt;$$w\leftarrow w+\eta y_ix_i$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b\leftarrow b+\eta y_i$$&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;最终的&lt;/em&gt; &lt;span class="math"&gt;\(w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;dot&gt;最终的&lt;/dot&gt; &lt;span class="math"&gt;\(w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(b\)&lt;/span&gt; 可以表示为&lt;/p&gt;
 &lt;div class="math"&gt;$$w=\sum_{i=1}^N \alpha_iy_ix_i$$&lt;/div&gt;
 &lt;div class="math"&gt;$$b=\sum_{i=1}^N\alpha_iy_i$$&lt;/div&gt;
 &lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha_i=n_i\eta\)&lt;/span&gt;，&lt;span class="math"&gt;\(n_i\)&lt;/span&gt; 表示点 &lt;span class="math"&gt;\((x_i,y_i)\)&lt;/span&gt; 被误分类的次数。也就是说，在迭代的每一次过程中，被误分类的点 &lt;span class="math"&gt;\((x_i,y_i)\)&lt;/span&gt; 都不断向超平面靠近，直至位于超平面的另一侧。&lt;/p&gt;

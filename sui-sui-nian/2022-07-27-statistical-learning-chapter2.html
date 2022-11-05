@@ -186,7 +186,7 @@
             <section class="post-content">
                 <h2 id="mo-xing">模型</h2>
 <h3 id="ding-yi">定义</h3>
-<p>感知机是<em>二分类</em>的<em>线性</em>分类模型，感知机定义为</p>
+<p>感知机是<dot>二分类</dot>的<dot>线性</dot>分类模型，感知机定义为</p>
 <div class="math">$$f(x)=\mathrm{sign}(w\cdot x+b)$$</div>
 <div class="math">$$\begin{equation}
     \mathrm{sign}(x)=
@@ -258,7 +258,7 @@
 <div class="math">$$-y_i(w\cdot x_i+b)&gt;0$$</div>
 <p>若超平面 <span class="math">\(S\)</span> 误分类的点的集合为 <span class="math">\(M\)</span>，那么误分类点到超平面的距离之和为</p>
 <div class="math">$$\sum_{x_i\in M}\left[-\frac{1}{||w||}y_i(w\cdot x_i+b)\right]$$</div>
-<p>略去 <span class="math">\(\frac{1}{||w||}\)</span>（见第七章），得到<em>经验风险函数</em>：</p>
+<p>略去 <span class="math">\(\frac{1}{||w||}\)</span>（见第七章），得到<dot>经验风险函数</dot>：</p>
 <div class="math">$$L(w,b)=-\sum_{x_i\in M}y_i(w\cdot x_i+b)$$</div>
 <p>感知机的学习策略就是在假设空间中选取 <span class="math">\(L(w,b)\)</span> 最小的模型参数 <span class="math">\(w\)</span> 和 <span class="math">\(b\)</span>。</p>
 <h2 id="suan-fa">算法</h2>
@@ -298,7 +298,7 @@
 <p>经过数次以下迭代步骤：</p>
 <div class="math">$$w\leftarrow w+\eta y_ix_i$$</div>
 <div class="math">$$b\leftarrow b+\eta y_i$$</div>
-<p><em>最终的</em> <span class="math">\(w\)</span> 和 <span class="math">\(b\)</span> 可以表示为</p>
+<p><dot>最终的</dot> <span class="math">\(w\)</span> 和 <span class="math">\(b\)</span> 可以表示为</p>
 <div class="math">$$w=\sum_{i=1}^N \alpha_iy_ix_i$$</div>
 <div class="math">$$b=\sum_{i=1}^N\alpha_iy_i$$</div>
 <p>其中 <span class="math">\(\alpha_i=n_i\eta\)</span>，<span class="math">\(n_i\)</span> 表示点 <span class="math">\((x_i,y_i)\)</span> 被误分类的次数。也就是说，在迭代的每一次过程中，被误分类的点 <span class="math">\((x_i,y_i)\)</span> 都不断向超平面靠近，直至位于超平面的另一侧。</p>

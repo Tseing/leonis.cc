@@ -4,6 +4,12 @@
     --waline-badge-font-size: 0.65em !important;
 }
 
+dot {
+    text-emphasis: dot;
+    text-emphasis-color: #B6321C;
+    text-emphasis-position: under right;
+}
+
 .wl-card .wl-admin-actions {
     font-size: 0.8em !important;
 }
