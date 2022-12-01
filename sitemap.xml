@@ -5,22 +5,57 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/</loc>
-<lastmod>2022-11-05T20:53:25-00:00</lastmod>
+<lastmod>2022-12-01T21:59:07-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/about.html</loc>
-<lastmod>2022-11-05T20:53:25-00:00</lastmod>
+<lastmod>2022-12-01T21:59:07-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-11-05T20:53:25-00:00</lastmod>
+<lastmod>2022-12-01T21:59:07-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-12-01-install-cuda.html</loc>
+<lastmod>2022-12-01T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html</loc>
+<lastmod>2022-11-25T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html</loc>
+<lastmod>2022-11-20T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html</loc>
+<lastmod>2022-11-14T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html</loc>
+<lastmod>2022-11-05T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -194,7 +229,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/author/leo.html</loc>
-<lastmod>2022-10-29T00:00:00+08:06</lastmod>
+<lastmod>2022-12-01T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="RNN">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-11-20 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="RNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型",
+  "headline": "文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型",
+  "datePublished": "2022-11-20 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html",
+  "description": "本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 11月20日">2022年 11月20日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#shu-ju-chu-li" title="数据处理">数据处理</a></li><li><a class="toc-href" href="#mo-xing-xun-lian" title="模型训练">模型训练</a></li></ul></li><li><a class="toc-href" href="#shi-yan_1" title="实验">实验</a><ul><li><a class="toc-href" href="#xue-xi-ce-lue" title="学习策略">学习策略</a></li><li><a class="toc-href" href="#fen-ge-ce-lue" title="分割策略">分割策略</a></li><li><a class="toc-href" href="#ju-you-duo-ge-lian-jie-wei-dian-de-gu-jia" title="具有多个连接位点的骨架">具有多个连接位点的骨架</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jcim.1c00469">doi.org/10.1021/acs.jcim.1c00469</a></p>
+<p>本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。</p>
+<h2 id="yin-yan">引言</h2>
+<p>先导化合物优化的目的是优化掉那些阻止化合物成药的特征的同时，保留下化合物中符合预期的特征。由于预期活性常常与特定的分子骨架相关，可以把这种任务归结为保留特定的分子骨架，同时改变其他特定部分，最终使化合物满足成为候选药物的多种要求，该任务可以通过筛选具有相同母核的专一化合物库完成。</p>
+<p>化合物库是具有一系列分子的集合，文章对其中的分子具有两个要求：</p>
+<ol>
+<li>针对一个或多个分子骨架，所有分子都包含该子结构；</li>
+<li>所有分子都能通过一连串相同的化学合成转化得到。</li>
+</ol>
+<p>第2个条件能够减少了合成中反应试剂与反应条件的数量，更适用于化合物的自动化设计与合成，能够提高在先导化合物优化方面的生产效率。</p>
+<p>文章设计了一种基于 REINVENT 的模型完成构建该化合物库的任务，模型能够使用相应的化学反对具有结构改造连接位点的输入骨架进行改造，这种生成化合物库的方法能够让用户在很大程度上控制模型的输出，生成实际上更加合理的分子。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="shu-ju-chu-li">数据处理</h3>
+<p>化合物数据可以从公开数据库ChEMBL获取，数据库中的分子都以SMILES序列的形式描述，化合物数据主要用于训练先验模型。</p>
+<p>首先清理数据，从数据集中移除非目标的化合物，例如分子量过大、过小的分子和具有不常见 SMILES 标记的数据。接着要对分子数据进行分割，以往的规则，例如 RECAP 规则，是对化合物中单键进行分割，但这样的分割并不能满足通过化学反应切分的要求。文章使用了 Arús-Pous 等提出的数据预处理方法，该方法通过 27 条基于反应的规则分割分子，满足了要求。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8026?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8026?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="mo-xing-xun-lian">模型训练</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8027?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8027?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>先验模型使用分割分子的 SMILES 数据集训练，训练先验模型的目的是使其学会 SMILES 序列的语义从而生成合法的 SMILES 结果。由于先验模型不针对于具有任务，所以只需要训练一次。</p>
+<p>为了将模型用于具体任务，需要将先验模型转化为专一的先验模型，使用的具体策略是 RL。在 RL 循环中，先验模型不断给出化合物，同时根据它的输出，先验模型接收到特定任务的奖惩。在RL运行过程中，所有高分化合物都保存到虚拟化合物库中，就是最后的结果数据。</p>
+<p>RL 过程中还引入了多样性过滤器（diversity filter, DF）与反应过滤器（reaction filter, RF），DF 会给予那些重复生成相同分子的 RL 代理模型相应的惩罚，这有助于增加生成分子的多样性。RF 能够保证给出的化合物库中的化合物都能通过选定的化学反应合成，有利于构建反应专一的化合物库。用户也可以设定 RF 中的参数，设定进行结构改造的化学反应。</p>
+<h2 id="shi-yan_1">实验</h2>
+<p>实验部分的目标是</p>
+<ol>
+<li>确定 RL 循环中最优的学习策略；</li>
+<li>与使用 RECAP 规则的模型对比，展示模型能够基于反应进行骨架的结构改造；</li>
+<li>展示模型对具有各种数量连接位点的骨架进行结构改造的能力。</li>
+</ol>
+<h3 id="xue-xi-ce-lue">学习策略</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8028?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8028?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>首先使用 QSAR 预测模型与没有 RF 的模型生成分子，结果如上表所示。接着使用QSAR 预测模型与有 RF 的模型生成分子，结果如下表所示。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8029?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8029?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>可以看出 DAP 策略在两种模型中都是最优的策略，表现都超过了其他策略。最终选择 DAP 策略作为后续实验中的策略。引入 RF 的作用可以从下图中看出，在引入 RF 后，更优策略与其他策略的差距明显增大。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8030?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8030?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="fen-ge-ce-lue">分割策略</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8031?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8031?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>分别使用 QSAR 预测与 ROCS 3D 相似性评估分子生成模型不同分割策略的结果，一种是基于反应的分割策略，另一种是基于 RECAP 规则的分割策略，实验结果如表如示。不管是哪种打分模型，基于反应的分子分割方式都具有更高的分数，相比 RECAP 规则，基于反应的分割方式更具有优势。</p>
+<p>两种打分模型之间，ROCS 的分数要低于 QSAR，这是因为 ROCS 考虑了分子的 3D 特征，而模型很难从 SMILES 输入中学习到分子的 3D 特征。此外，使用 ROCS 模型的生成模型更加稳定，最终生成了更加多样的分子。这是因为简单的 QSAR 预测模型具有较大的约束，有很强的偏向性，将模型引入了更小的化学区域，最终对分子的结构改造较为单一。ROCS 虽然具有较低的分数，但它能让模型同时拥有对目标的指引和探索空间的自由，二者适当的结合使模型获得了更优的结果。</p>
+<h3 id="ju-you-duo-ge-lian-jie-wei-dian-de-gu-jia">具有多个连接位点的骨架</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8032?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8032?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>最后使用具有多个（1~4）连接位点的分子骨架作为输入数据，得到了先前实验类似的结果，说明模型可以对具有不同连接位点的分子骨架进行结构改造。</p>
+<h2 id="jie-lun_1">结论</h2>
+<p>针对于基于特定目标对分子骨架进行结构优化的任务，文章构造了一种灵活的工具 LibINVENT。它能够快速生成具有可用于先导化合物优化且易于合成的化合物库。RL 策略能够让模型在目标的化学空间生成分子，能够满足多种特定目标。用户还可以灵活地设定任务，指定化学空间中需要目标区域，让模型生成指定的化合物库，这使得 LibINVENT 具有很大的应用前景。</p>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型&amp;url=https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a><a href="https://tseing.github.io/tag/rnn.html">RNN</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">文献总结｜使用课程学习改进从头药物设计</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2022 年发表在 Nature Machine Intelligence...</p>
+                        </section>
+                    </a>
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜SyntaLinker：使用 Conditional Transformer 神经网络自动连接分子片段</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2020 年发表在 Chemical Science 上的一篇文章，文章原标题为...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

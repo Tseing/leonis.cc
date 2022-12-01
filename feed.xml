@@ -1,5 +1,500 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-10-29T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" rel="alternate"></link><published>2022-10-29T00:00:00+08:00</published><updated>2022-10-29T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-29:/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery，文章改进了传统的遗传算法，使其在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jmedchem.2c01179"&gt;doi.org/10.1021/acs.jmedchem.2c01179&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-12-01T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为深度学习环境配置 CUDA</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-01-install-cuda.html" rel="alternate"></link><published>2022-12-01T00:00:00+08:00</published><updated>2022-12-01T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-01:/sui-sui-nian/2022-12-01-install-cuda.html</id><summary type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;
+&lt;h2 id="zhun-bei-gong-zuo"&gt;准备工作&lt;/h2&gt;
+&lt;p&gt;在普遍情况下，设备都安装了相应的显卡驱动，那么使用 &lt;code&gt;nvidia-smi&lt;/code&gt; 即可查看驱动信息，确定支持的 CUDA 版本。&lt;/p&gt;
+&lt;p&gt;若没有安装驱动，那么需要在终端中输入 &lt;code&gt;lspci | grep -i nvidia&lt;/code&gt; 检测设备的 GPU 型号，接着查找适用的 CUDA 版本，在安装 CUDA 时也会自动安装上匹配的驱动。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html"&gt;CUDA 文档&lt;/a&gt;中给出了GPU 驱动与 CUDA 版本的对应关系，一定要选择适配的版本。&lt;/p&gt;
+&lt;p&gt;在安装 CUDA 前，还要确保设备安装了 gcc 和 make，如果需要使用 C++ 进行 CUDA 编程，还需要安装 g++。这里我只安装 gcc 和 make：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;sudo apt update             # 更新 apt
+sudo apt install gcc make   # 安装 gcc 和 make
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="xia-zai-cuda"&gt;下载 CUDA&lt;/h2&gt;
+&lt;p&gt;确定需要安装的 CUDA 版本后，例如我的设备是 11.4，直接搜索 CUDA 11.4 进入&lt;a href="https://developer.nvidia.com/cuda-11-4-0-download-archive"&gt;下载页面&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在下载页面中需要选择相应的架构和发行版，如果不确定设备架构可以在终端中输入 &lt;code&gt;uname -m&lt;/code&gt;，然后根据输出结果选择即可。&lt;/p&gt;
+&lt;p&gt;我的设备是 Ubuntu 20.04，选择 Installer Type 为 &lt;code&gt;runfile(local)&lt;/code&gt;，网页就给出了下载命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;# 下载 CUDA
+wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda_11.4.0_470.42.01_linux.run
+# 安装 CUDA
+sudo sh&amp;nbsp;cuda_11.4.0_470.42.01_linux.run
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="an-zhuang-cuda"&gt;安装 CUDA&lt;/h2&gt;
+&lt;p&gt;下载需要较长时间，待下载完成后执行文件开始安装。若已经安装 GPU 驱动，会有以下提示，选择 &lt;code&gt;Continue&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&amp;boxv; Existing package manager installation of the driver found. It is strongly    &amp;boxv;
+&amp;boxv; recommended that you remove this before continuing.                          &amp;boxv;
+&amp;boxv; Abort                                                                        &amp;boxv;
+&amp;boxv; Continue                                                                     &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv; Up/Down: Move | 'Enter': Select                                              &amp;boxv;
+&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来输入 &lt;code&gt;accept&lt;/code&gt; 接受用户条款。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&amp;boxv;  End User License Agreement                                                  &amp;boxv;
+&amp;boxv;  --------------------------                                                  &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;  NVIDIA Software License Agreement and CUDA Supplement to                    &amp;boxv;
+&amp;boxv;  Software License Agreement. Last updated: October 8, 2021                   &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;  The CUDA Toolkit End User License Agreement applies to the                  &amp;boxv;
+&amp;boxv;  NVIDIA CUDA Toolkit, the NVIDIA CUDA Samples, the NVIDIA                    &amp;boxv;
+&amp;boxv;  Display Driver, NVIDIA Nsight tools (Visual Studio Edition),                &amp;boxv;
+&amp;boxv;  and the associated documentation on CUDA APIs, programming                  &amp;boxv;
+&amp;boxv;  model and development tools. If you do not agree with the                   &amp;boxv;
+&amp;boxv;  terms and conditions of the license agreement, then do not                  &amp;boxv;
+&amp;boxv;  download or use the software.                                               &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;  Last updated: October 8, 2021.                                              &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;  Preface                                                                     &amp;boxv;
+&amp;boxv;  -------                                                                     &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxv;
+&amp;boxv; Do you accept the above EULA? (accept/decline/quit):                         &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后出现下方的界面，需要选择安装的内容。若设备已经安装驱动，在这里需要&lt;strong&gt;取消&lt;/strong&gt; &lt;code&gt;Driver&lt;/code&gt; 的选择，否则会出现安装错误。在这个步骤中，我只选择了 &lt;code&gt;CUDA Toolkit 11.4&lt;/code&gt; 与 &lt;code&gt;CUDA Documentation 11.4&lt;/code&gt;，选择 &lt;code&gt;Intsall&lt;/code&gt; 开始安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&amp;boxv; CUDA Installer                                                               &amp;boxv;
+&amp;boxv; - [X] Driver                                                                 &amp;boxv;
+&amp;boxv;      [X] 470.42.01                                                           &amp;boxv;
+&amp;boxv; + [X] CUDA Toolkit 11.4                                                      &amp;boxv;
+&amp;boxv;   [X] CUDA Samples 11.4                                                      &amp;boxv;
+&amp;boxv;   [X] CUDA Demo Suite 11.4                                                   &amp;boxv;
+&amp;boxv;   [X] CUDA Documentation 11.4                                                &amp;boxv;
+&amp;boxv;   Options                                                                    &amp;boxv;
+&amp;boxv;   Install                                                                    &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv;                                                                              &amp;boxv;
+&amp;boxv; Up/Down: Move | Left/Right: Expand | 'Enter': Select | 'A': Advanced options &amp;boxv;
+&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{note begin}安装过程中出现的 &lt;code&gt;boost::filesystem::copy_file: No such file or directory&lt;/code&gt; 错误是由于存储空间不足导致的。{note end}&lt;/p&gt;
+&lt;h2 id="huan-jing-bian-liang"&gt;环境变量&lt;/h2&gt;
+&lt;p&gt;当输出 &lt;code&gt;Summary&lt;/code&gt; 信息后即表示安装完成，在输出信息中还会提示修改环境变量:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Please make sure that
+ -   PATH includes /usr/local/cuda-11.4/
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-11.4/lib64, or, add /usr/local/cuda-11.4/lib64 to /etc/ld.so.conf and run ldconfig as root
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用 &lt;code&gt;vim ~/.bashrc&lt;/code&gt;，在文件末添加以下内容并保存：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;# CUDA
+export PATH="/usr/local/cuda-11.4/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后使用 &lt;code&gt;source ~/.bashrc&lt;/code&gt; 更新修改内容，在终端中输入 &lt;code&gt;nvcc -V&lt;/code&gt;，输出 nvcc 的版本信息就说明安装完成。&lt;/p&gt;
+&lt;p&gt;{warn begin}本文最后更新于 2022 年 12 月 1 日，请确定内容是否过时。{warn end}&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/79059379"&gt;Linux 下的 CUDA 安装和使用指南 - 知乎&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="CUDA"></category></entry><entry><title>文献总结｜使用课程学习改进从头药物设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html" rel="alternate"></link><published>2022-11-25T00:00:00+08:00</published><updated>2022-11-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-25:/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Machine Intelligence 上的一篇文章，文章原标题为 Improving De Novo Molecular Design with Curriculum Learning，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-022-00494-4"&gt;doi.org/10.1038/s42256-022-00494-4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Improving De Novo Molecular Design with Curriculum Learning&lt;/em&gt;，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;强化学习是深度学习中的常用策略，而强化学习在面对较为复杂的任务时，奖励函数的计算将消耗大量资源，不仅效率低下，还有很大可能无法完成相应任务。课程学习是强化学习的一种替代方法，它将复杂任务分为连续的若干任务，通过这种方式节省了计算资源，同时模型也更容易学习简单的任务。&lt;/p&gt;
+&lt;p&gt;包括 REINVENT 在内的许多药物分子生成模型都使用了强化学习策略，其中的奖励函数通常包括例如分子对接打分和理化性质预测等复杂的因素，使用这样复杂的奖励函数，模型很难通过学习过程找到最优解，最终偏离预期目标。&lt;/p&gt;
+&lt;p&gt;因此文章在 REINVENT 模型中引入了课程学习策略，设计了以生成 PDK1 抑制剂为目标的复杂任务，对比与强化学习策略效果的差异。文章结果表明，课程学习绕过了包含分子对接在内的复杂奖励函数，大大提高了计算效率。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="ke-cheng-xue-xi-yuan-li"&gt;课程学习原理&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8089?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8089?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;课程学习的过程可以分为课程阶段与输出阶段，在课程阶段中，模型需要学习逐渐复杂的连续的任务，在输出阶段中，模型输出满足满足最终要求的分子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;打分函数&lt;/strong&gt; &lt;span class="math"&gt;\(S:\rm{SMILES}\rightarrow[0,1]\)&lt;/span&gt; 由加权几何平均构成：&lt;/p&gt;
+&lt;div class="math"&gt;$$S(x)=\left[\prod^n_{i=1}c_i(x)^{w_i}\right]^{1/\sum^n_{i=1}w_i}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(c_i:\rm{SMILES}\rightarrow[0,1]\)&lt;/span&gt;，&lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 是 &lt;span class="math"&gt;\(c_i\)&lt;/span&gt; 的相应权值。&lt;span class="math"&gt;\(S(x)\)&lt;/span&gt; 是生成化合物 &lt;span class="math"&gt;\(x\)&lt;/span&gt; 的打分函数，基梯度用于更新代理模型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;课程&lt;/strong&gt; &lt;span class="math"&gt;\(C\)&lt;/span&gt; 由目标序列构成，&lt;span class="math"&gt;\(O=\{O_{C_1},\cdots,O_{C_{n-1}},O_{C_n},O_P\}\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(C\)&lt;/span&gt; 表示课程目标，&lt;span class="math"&gt;\(P\)&lt;/span&gt; 表示生成目标。对于每个目标，都有相应的 &lt;span class="math"&gt;\(S(x)\)&lt;/span&gt; 用于更新代理模型。&lt;/p&gt;
+&lt;p&gt;课程阶段由若干个课程单元构成，每个单元中的强化学习目标是输出满足该单元课程学习目标 &lt;span class="math"&gt;\(O_{C_i}\)&lt;/span&gt; 的分子，只有打分高于阈值的分子才会进入下一个课程单元，经过连续的课程单元，生成分子的复杂性也增加（任务复杂性也增加）。完成全部连续的课程学习目标 &lt;span class="math"&gt;\(O_{C_n}\)&lt;/span&gt; 后，进入生成阶段，此时强化学习的目标是生成任务的目标 &lt;span class="math"&gt;\(O_P\)&lt;/span&gt;，最后输出符合预期的分子。&lt;/p&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;文章中使用的模型是 REINVENT 生成模型，主要由 RNN 构成，REINVENT 模型的先验模型已经使用 ChEMBL 数据集进行预训练，能够生成合法的 SMILES 分子。&lt;/p&gt;
+&lt;p&gt;模型中同样使用了 REINVENT 原有的多样性过滤器，在课程阶段，为了保证能够准确获得先验知识，不使用过滤器，为了使输出分子具有尽可能的多样性，在输出阶段使用过滤器。&lt;/p&gt;
+&lt;p&gt;关于 REINVENT 的更多细节，参考&lt;a href="https://tseing.github.io/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html"&gt;前文&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;文章设计了三种实验对比强化学习与课程学习的效果差异：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实验 1&lt;/strong&gt;：生成具有目标骨架的分子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实验 2&lt;/strong&gt;：生成满足分子对接约束的分子，使用谷本相似性（2D）作为打分函数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实验 3&lt;/strong&gt;：生成满足分子对接约束的分子，使用 ROCS 3D 相似性作务打分函数。&lt;/p&gt;
+&lt;p&gt;对于实验 2 和实验 3，将进入生成阶段的阈值设为低（0.5）和高（2D: 0.8, 3D: 0.75）两种模式，对比结果差异。&lt;/p&gt;
+&lt;h4&gt;实验 1&lt;/h4&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8090?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8090?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;实验 1 的目标是生成包含二氢吡唑喹唑啉结构的分子。在使用 RL 策略的模型中，在 2000 个 epoch 的过程中，分子打分基本上都是 0.5（不包含该子结构），表明模型没能生成具有该结构的分子。而在使用 CL 策略的模型中，尽管目标十分复杂，在经过 5 个课程目标后，分子的阈值超过了 0.8，生成了具有该结构的分子。&lt;/p&gt;
+&lt;p&gt;CL 过程中，分子打分不断上升，当分数超过 0.8 的阈值，即完成当前课程目标后，分子打分迅速下降，进入下一个课程目标。还可以从化合物的结构中看出，随着 CL 过程的进行，分子结构变得更加复杂，最终满足任务目标。上述结果明确展示了 CL 逐个完成连续目标的过程。&lt;/p&gt;
+&lt;p&gt;此外，通过 CL 过程生成目标分子只经过了 1500 个 epoch，计算效率远远高于 RL 过程。&lt;/p&gt;
+&lt;h4&gt;实验 2 和 3&lt;/h4&gt;
+&lt;p&gt;实验 2 和 3 都加入了分子对接的约束，目标是生成与 PDK1 受体 Ala 162 具有两个氢键作用且相比参考配体具有更强的预测活性（对接打分）和类药性（QED） 的分子，两个实验的唯一区别在于分别使用了 2D 和 3D 的打分函数。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8091?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8091?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在 0-100 epoch 中，RL 过程的分数一直很低，直到 100-200 epoch，RL 过程生成分子的分数才开始上升，但分数还是显著低于 CL 方法生成的分子。&lt;/p&gt;
+&lt;p&gt;可以看出，使用谷本相似性或 ROCS 相似性作为模型的打分函数，都能指引模型完成复杂的生成目标。从完成生成目标的过程看来，两种打分函数没有什么区别，表现出相似的性能。&lt;/p&gt;
+&lt;p&gt;而使用低分模式与高分模式谷本相似性的模型有所区别，使用低分模式的模型在刚开始阶段的分数很低，但是在 50 个 epoch 内迅速上升，赶上高分模型的打分。使用低分模式与高分模式 ROCS 相似性的模型也有相似的表现，但 ROCS 相似性模型开始阶段的分数没有谷本相似性模型高，这是由于从 SMILES 数据中学习 3D 构象有一定困难。&lt;/p&gt;
+&lt;p&gt;在生成满足分子对接约束分子的任务上，CL 策略也顺利完成了目标。&lt;/p&gt;
+&lt;h4&gt;优化效果&lt;/h4&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8092?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8092?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;对多种策略生成的结果分子进行分子对接，评估分子活性，可以看出，与相比 RL，CL 过程能够生成更大量的预期分子，在诸多 CL 过程中，使用高分模式的模型生成的分子活性更高（约 -11 kcal/mol）。&lt;/p&gt;
+&lt;h4&gt;骨架多样性&lt;/h4&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8093?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8093?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用 Bemis-Murcko 分子骨架评估不同方式生成分子的多样性，在结果中也可以明显看出，CL 过程生成了更多独特的分子骨架，以谷本相似性作为打分函数的模型生成分子的多样性更高，高分模式生成分子的多样性更高。&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章基于 REINVENT 模型，引入了课程学习策略，大大加快了模型解决多参数优化的问题的效率。强化学习策略在面对复杂任务时通常效率低下，甚至无法解决，实验结果证明引入 CL 策略的模型顺利解决了生成目标，完成了构造具有特定结构分子与生成满足对接要求分子的两种任务。课程学习策略有助于分子生成模型完成复杂任务并提高计算效率。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry><entry><title>文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" rel="alternate"></link><published>2022-11-20T00:00:00+08:00</published><updated>2022-11-20T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-20:/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.1c00469"&gt;doi.org/10.1021/acs.jcim.1c00469&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;先导化合物优化的目的是优化掉那些阻止化合物成药的特征的同时，保留下化合物中符合预期的特征。由于预期活性常常与特定的分子骨架相关，可以把这种任务归结为保留特定的分子骨架，同时改变其他特定部分，最终使化合物满足成为候选药物的多种要求，该任务可以通过筛选具有相同母核的专一化合物库完成。&lt;/p&gt;
+&lt;p&gt;化合物库是具有一系列分子的集合，文章对其中的分子具有两个要求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;针对一个或多个分子骨架，所有分子都包含该子结构；&lt;/li&gt;
+&lt;li&gt;所有分子都能通过一连串相同的化学合成转化得到。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第2个条件能够减少了合成中反应试剂与反应条件的数量，更适用于化合物的自动化设计与合成，能够提高在先导化合物优化方面的生产效率。&lt;/p&gt;
+&lt;p&gt;文章设计了一种基于 REINVENT 的模型完成构建该化合物库的任务，模型能够使用相应的化学反对具有结构改造连接位点的输入骨架进行改造，这种生成化合物库的方法能够让用户在很大程度上控制模型的输出，生成实际上更加合理的分子。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="shu-ju-chu-li"&gt;数据处理&lt;/h3&gt;
+&lt;p&gt;化合物数据可以从公开数据库ChEMBL获取，数据库中的分子都以SMILES序列的形式描述，化合物数据主要用于训练先验模型。&lt;/p&gt;
+&lt;p&gt;首先清理数据，从数据集中移除非目标的化合物，例如分子量过大、过小的分子和具有不常见 SMILES 标记的数据。接着要对分子数据进行分割，以往的规则，例如 RECAP 规则，是对化合物中单键进行分割，但这样的分割并不能满足通过化学反应切分的要求。文章使用了 Arús-Pous 等提出的数据预处理方法，该方法通过 27 条基于反应的规则分割分子，满足了要求。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8026?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8026?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="mo-xing-xun-lian"&gt;模型训练&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8027?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8027?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;先验模型使用分割分子的 SMILES 数据集训练，训练先验模型的目的是使其学会 SMILES 序列的语义从而生成合法的 SMILES 结果。由于先验模型不针对于具有任务，所以只需要训练一次。&lt;/p&gt;
+&lt;p&gt;为了将模型用于具体任务，需要将先验模型转化为专一的先验模型，使用的具体策略是 RL。在 RL 循环中，先验模型不断给出化合物，同时根据它的输出，先验模型接收到特定任务的奖惩。在RL运行过程中，所有高分化合物都保存到虚拟化合物库中，就是最后的结果数据。&lt;/p&gt;
+&lt;p&gt;RL 过程中还引入了多样性过滤器（diversity filter, DF）与反应过滤器（reaction filter, RF），DF 会给予那些重复生成相同分子的 RL 代理模型相应的惩罚，这有助于增加生成分子的多样性。RF 能够保证给出的化合物库中的化合物都能通过选定的化学反应合成，有利于构建反应专一的化合物库。用户也可以设定 RF 中的参数，设定进行结构改造的化学反应。&lt;/p&gt;
+&lt;h2 id="shi-yan_1"&gt;实验&lt;/h2&gt;
+&lt;p&gt;实验部分的目标是&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;确定 RL 循环中最优的学习策略；&lt;/li&gt;
+&lt;li&gt;与使用 RECAP 规则的模型对比，展示模型能够基于反应进行骨架的结构改造；&lt;/li&gt;
+&lt;li&gt;展示模型对具有各种数量连接位点的骨架进行结构改造的能力。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="xue-xi-ce-lue"&gt;学习策略&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8028?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8028?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;首先使用 QSAR 预测模型与没有 RF 的模型生成分子，结果如上表所示。接着使用QSAR 预测模型与有 RF 的模型生成分子，结果如下表所示。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8029?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8029?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;可以看出 DAP 策略在两种模型中都是最优的策略，表现都超过了其他策略。最终选择 DAP 策略作为后续实验中的策略。引入 RF 的作用可以从下图中看出，在引入 RF 后，更优策略与其他策略的差距明显增大。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8030?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8030?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="fen-ge-ce-lue"&gt;分割策略&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8031?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8031?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;分别使用 QSAR 预测与 ROCS 3D 相似性评估分子生成模型不同分割策略的结果，一种是基于反应的分割策略，另一种是基于 RECAP 规则的分割策略，实验结果如表如示。不管是哪种打分模型，基于反应的分子分割方式都具有更高的分数，相比 RECAP 规则，基于反应的分割方式更具有优势。&lt;/p&gt;
+&lt;p&gt;两种打分模型之间，ROCS 的分数要低于 QSAR，这是因为 ROCS 考虑了分子的 3D 特征，而模型很难从 SMILES 输入中学习到分子的 3D 特征。此外，使用 ROCS 模型的生成模型更加稳定，最终生成了更加多样的分子。这是因为简单的 QSAR 预测模型具有较大的约束，有很强的偏向性，将模型引入了更小的化学区域，最终对分子的结构改造较为单一。ROCS 虽然具有较低的分数，但它能让模型同时拥有对目标的指引和探索空间的自由，二者适当的结合使模型获得了更优的结果。&lt;/p&gt;
+&lt;h3 id="ju-you-duo-ge-lian-jie-wei-dian-de-gu-jia"&gt;具有多个连接位点的骨架&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8032?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8032?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;最后使用具有多个（1~4）连接位点的分子骨架作为输入数据，得到了先前实验类似的结果，说明模型可以对具有不同连接位点的分子骨架进行结构改造。&lt;/p&gt;
+&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
+&lt;p&gt;针对于基于特定目标对分子骨架进行结构优化的任务，文章构造了一种灵活的工具 LibINVENT。它能够快速生成具有可用于先导化合物优化且易于合成的化合物库。RL 策略能够让模型在目标的化学空间生成分子，能够满足多种特定目标。用户还可以灵活地设定任务，指定化学空间中需要目标区域，让模型生成指定的化合物库，这使得 LibINVENT 具有很大的应用前景。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry><entry><title>文献总结｜SyntaLinker：使用 Conditional Transformer 神经网络自动连接分子片段</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html" rel="alternate"></link><published>2022-11-14T00:00:00+08:00</published><updated>2022-11-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-14:/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Chemical Science 上的一篇文章，文章原标题为 SyntaLinker: automatic fragment linking with deep conditional transformer neural networks，文章将基于语义模型 Transformer 识别并连接分子片段，最终设计了一种分子片段连接工具 SyntaLinker，它能够有效完成有约束的分子片段连接任务。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1039/d0sc03126g"&gt;doi.org/10.1039/d0sc03126g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Chemical Science&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;SyntaLinker: automatic fragment linking with deep conditional transformer neural networks&lt;/em&gt;，文章将基于语义模型 Transformer 识别并连接分子片段，最终设计了一种分子片段连接工具 SyntaLinker，它能够有效完成有约束的分子片段连接任务。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;基于片段的药物设计（Fragment-Based Drug Design , FBDD）是计算机辅助药物设计的一种基本手段，在药物设计中 FBDD 需要完成的任务包括&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;寻找合适的分子片段；&lt;/li&gt;
+&lt;li&gt;基于分子片段生长并优化片段，最终得到类药分子。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中，使分子片段不断生长并连接组成分子的任务仍具有很大困难，因为很大的一个挑战就在于如何保持各片段连接后各片段与受体的结合方式不发生改变。从这一点看来，连接片段的任务是 FBDD 中的关键难题。&lt;/p&gt;
+&lt;p&gt;文章借用深度学习的方法来解决这一问题，文章以 SMILES 表示分子片段，将片段连接视作自然语言处理中的句子填空任务，并设计了一种新的 conditional transformer 模型用于完成该任务。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="fen-zi-biao-shi"&gt;分子表示&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7969?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7969?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;如图所示，文章使用 SMILES 表示分子片段，用 &lt;code&gt;[*]&lt;/code&gt; 表示分子片段的连接位置，用 &lt;code&gt;.&lt;/code&gt; 分隔两个分子片段。文章还设计了两种有约束任务，在最短连接键长（shortest linker bond distance, SLBD）约束模式下，在 SMILES 最前面以 &lt;code&gt;[L_n]&lt;/code&gt; 表示两个分子片段连接部分应当具有 &lt;span class="math"&gt;\(n\)&lt;/span&gt; 个化学键。在多约束模式下，考虑的约束条件除了 SLBD 以外，还包括氢键给体、氢键受体、可旋转键和环状结构，若需要约束连接部分是否存在相应结构，则按四个约束的次序分别以 &lt;span class="math"&gt;\(1\)&lt;/span&gt; 表示存在，以 &lt;span class="math"&gt;\(0\)&lt;/span&gt; 表示不存在，如图中的 &lt;code&gt;[L_4 1 1 1 0]&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7975?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7975?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;SyntaLinker 模型的结构基于 transformer 模型，能够根据用户指定的条件生成分子，transformer 模型的原理可以参考&lt;a href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html"&gt;先前的文章&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;输入的 SMILES 字符串以 one-hot 矩阵形式表示，再通过 word embedding 算法转化为 embedding 向量构成的矩阵。输入的 embedding 被编码器层处理为潜在表达，潜在表达被解码器用 softmax 函数转化为各词的概率序列，直至遇到结束符 &lt;code&gt;&amp;lt;/s&amp;gt;&lt;/code&gt;，就完成了分子的生成。最后，使用生成分子与目标分子间的交叉熵损失训练模型：&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{L}(Y,M)=-\sum_{i=1}^ky_i\log m_i$$&lt;/div&gt;
+&lt;h3 id="shu-ju-chu-li"&gt;数据处理&lt;/h3&gt;
+&lt;p&gt;分子数据来自于 ChEMBL，并使用 Lipinski 五规则、泛筛选干扰化合物（pan assay interference compounds, PAINS）结构和 SA score（synthetic accessibility score）初步筛去不合理的分子。&lt;/p&gt;
+&lt;p&gt;文章使用匹配分子对（matched molecular pairs, MMPs）划分算法将原始分子数据转化为用于训练的分子片段数据。MMPs 划分算法在每个分子的两个非官能团的无环单键处切割，最后得到片段甲、连接部分、片段乙和完整分子四个部分数据，将其称为片段分子四部分数据（fragment molecule quadruples, FMQs）。
+接着所有 FMQs 都要经过 RO3（Rule of three）规则、SLBE 和 SA score 的筛选，最终分子片段满足 SLBD 小于 15 的条件从而避免连接部分过于复杂，并满足以下 SA score 要求避免分子难以合成：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathrm{SAscore\_filter}(x)=
+    \begin{cases}
+        &amp;amp;\mathrm{SA_{fragment\ 1}&amp;lt;5}\\
+        &amp;amp;\mathrm{SA_{fragment\ 2}&amp;lt;5}\\
+        &amp;amp;\mathrm{SA_{linker}}&amp;lt;(\mathrm{SA_{fragment\ 1}}+\mathrm{SA_{fragment\ 2}})
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;h3 id="zhi-biao"&gt;指标&lt;/h3&gt;
+&lt;p&gt;使用通过片段数据生成分子的合法性、独特性、回复性和新颖性评价模型：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;合法性（validity）&lt;/strong&gt; 指通过一对分子片段生成合法化学结构分子的比例，定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{Validity}=\frac{\mathrm{\#\ of\ chemically\ valid\ SMILES\ with\ fragments}}{\mathrm{\#\ of\ generated\ SMILES}}$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;独特性（uniqueness）&lt;/strong&gt; 指生成分子中具有特有化合结构分子的数量，定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{Uniqueness}=\frac{\mathrm{\#\ of\ non\mbox{-}duplicate;\ valid\ structures}}{\mathrm{\#\ of\ valid\ structures}}$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;回复性（recovery）&lt;/strong&gt; 指生成分子中生成的训练集中真实分子所占比例;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;新颖性（novelty）&lt;/strong&gt; 指生成分子中生成的化学结构合法且未出现在训练集中的连接部分所占比例，定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{Uniqueness}=\frac{\mathrm{\#\ of\ novel\ linkers\ not\ in\ training set}}{\mathrm{\#\ of\ unique\ structures}}$$&lt;/div&gt;
+&lt;h2 id="jie-guo-yu-tao-lun_1"&gt;结果与讨论&lt;/h2&gt;
+&lt;h3 id="sheng-cheng-fen-zi"&gt;生成分子&lt;/h3&gt;
+&lt;p&gt;文章设置了无约束的 SyntaLinker_n、SLBD 约束的 SyntaLinker 和 多约束的 SyntaLinker_multi 三种模式，从每对分子片段生成 10 个最优分子，根据生成分子评估三种模式。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7970?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7970?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用 ChEMBL 数据集验证生成分子，可以判断三种模式都初步完成了连接分子片段的任务，生成了大比例符合要求的分子，其中多约束的 SyntaLinker_multi 在多方面具有较好的效果。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7971?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7971?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;为了与 DeLinker 模型对比，再从每对分子片段生成 250 个最优分子，生成的分子数据用  CASF 验证集验证。与 DeLinker 模型生成的数据相比，SyntaLinker 的三种模式都具有更优的性能，特别是在新颖性方面的优势，说明 SyntaLinker 能生成结构更新颖的连接部分。在SyntaLinker 的三种模式中，仍然是多约束的 SyntaLinker_multi 具有更好效果。&lt;/p&gt;
+&lt;h3 id="yue-shu-neng-li"&gt;约束能力&lt;/h3&gt;
+&lt;p&gt;与上文设置类似，分别使用 SyntaLinker 的三种模式基于每对分子生成 10 个和 250 个分子，使用 ChEMBL 和 CASF-2016 验证集验证各模型生成的分子是否满足约束条件。SyntaLinker 中的约束条件可以分为两部分，一部分是化学键约束，需要考察生成分子的连接部分满足 SLBD 条件，另一部分是药效团约束，需要考察生成分子是否根据预设的条件生成了类药性高的分子。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7972?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7972?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;note&gt;(a) The percentage of compounds among top 10 solutions in the ChEMBL test set; (b) the percentage of compounds among top 250 solutions in the ChEMBL test set; (c) the percentage of compounds among top 10 solutions in the CASF set; (d) the percentage of compounds among top 250 solutions in the CASF set.&lt;/note&gt;&lt;/p&gt;
+&lt;p&gt;首先考察各模型的化学键约束，可以看出，具有化学键约束的 SyntaLinker 与 SyntaLinker_multi 在所有评估结果中，生成满足约束分子的比例都要更高，表明两种模型确实能够完成有约束的分子片断连接任务。随着每对片段生成分子数量的增加，满足约束分子的比例也有所减少，但相比无约束的 SyntaLinker_n，有约束的 SyntaLinker 与 SyntaLinker_multi 仍具有优势。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7973?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7973?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;接着考察各模型的药效团约束，药效团约束的结果也表现出相似的趋势，具有约束的 SyntaLinker_multi 生成满足约束的分子占比更多，而无约束的 SyntaLinker 与 SyntaLinker_n 则占比更少。随着每对片段生成分子数从 10 增加到 250，满足多约束的困难增加，满足条件的分子相应减少。&lt;/p&gt;
+&lt;h3 id="quan-zhong-fen-xi"&gt;权重分析&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7974?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7974?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章根据模型权重绘制了热图，从中可以看出模型处理分子对 SMILES 的流程。上方是输入模型的 SMILES ，左方是生成分子的 SMILES，权值大体呈左上至右下的对角线排列，这与输入和输出 SMILES 相似度较高的特性吻合。值得住意的是，表明分子连接位置的 &lt;code&gt;*&lt;/code&gt; 几乎没有权值，说明模型从语义上学习到 &lt;code&gt;*&lt;/code&gt; 是不会出现在输出中的输入标记。此外，还可以注意到表示两分子片段的 &lt;code&gt;.&lt;/code&gt; 在输出的连接（蓝色）部分具有很大权重，表明模型能够认识这个分隔符并将其转化为连接部分。输入 SMILES 开头部分的 &lt;code&gt;L_3&lt;/code&gt; 在连接（蓝色）部分也具有较大权值，可以佐证模型根据约束条件生成连接部分。&lt;/p&gt;
+&lt;h3 id="fen-zi-dui-jie-an-li"&gt;分子对接案例&lt;/h3&gt;
+&lt;p&gt;除了对生成分子进行评估，文章还结合分子对接等技术验证了 SyntaLinker 应用在药物发现中的可行性。例如，文章使用已有 FBDD 案例相同的分子片段，借助 SyntaLinker 模型生成最终分子，使用 MOE 对生成分子打分，其分数甚至高于原有案例中设计出的分子。&lt;/p&gt;
+&lt;p&gt;SyntaLinker 模型还可以用于先导化合物的优化，文章选择 dequalinium 作为先导化合物，使用 MMPs 将其划分为分子对，使用 SyntaLinker 模型根据分子对数据生成分子，经过分子对接的验证，生成分子性能确实得到了优化。&lt;/p&gt;
+&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章基于 conditional transformer 模型设计子 SyntaLinker 模型，SyntaLinker 模型能够根据给定的分子对数据生成相应的连接部分，最终生成一个新分子，完成了 FBDD 中分子连接的任务。同时，transformer 能够基于语义处理序列，这使得 SyntaLinker 模型生成的分子能够很好地满足指定的约束。最后文章还尝试了将 SyntaLinker 模型与分子对接相应合，拓展了将其应用于从分子片段构建虚拟库、优化优导化合物的可能性。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜使用强化学习和基于图的深度生成模型进行从头药物设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html" rel="alternate"></link><published>2022-11-05T00:00:00+08:00</published><updated>2022-11-05T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-05:/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 De Novo Drug Design Using Reinforcement Learning with Graph-Based Deep Generative Models，文章借鉴了 REINVENT 模型的强化学习策略，将其用于基于图的分子生成模型，得到了较好的结果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c00838"&gt;doi.org/10.1021/acs.jcim.2c00838&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;De Novo Drug Design Using Reinforcement Learning with Graph-Based Deep Generative Models&lt;/em&gt;，文章借鉴了 REINVENT 模型的强化学习策略，将其用于基于图的分子生成模型，得到了较好的结果。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;强化学习是机器学习中常用的一种策略，强化学习通过奖惩函数确定某环境下执行相应行为的优劣，从而做出决策。强化学习常常用来 fine-tune 深度生成模型，使其生成的分子逐渐向具有目标特征的分子靠近。&lt;/p&gt;
+&lt;p&gt;GraphINVENT 是基于图神经网络的分子生成模型，REINVENT 是使用强化学习和 RNN 基于序列的分子生成模型。文章从这两个模型中受到启发，将 GraphINVENT 基于图的分子生成模型与 REINVENT 的强化学习策略相结合，提出了本文的模型。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7927?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7927?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章中提出的模型主要由三个部分构成：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;基于图的分子生成模型；&lt;/li&gt;
+&lt;li&gt;具有记忆力感知损失函数（memory-aware loss）的强化学习框架；&lt;/li&gt;
+&lt;li&gt;打分模型。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="fen-zi-sheng-cheng-mo-xing"&gt;分子生成模型&lt;/h3&gt;
+&lt;p&gt;分子生成模型来自于 GraphINVENT 模型，使用了门控图神经网络（GGNN）。GGNN 通过不断选取行为，从而修改输入的分子图。行为集合中包括 3 种可选的行为：添加原子、添加键和结束，将行为集合记作 &lt;span class="math"&gt;\(\mathcal{A}\)&lt;/span&gt;。那么生成分子图 &lt;span class="math"&gt;\(\mathcal{G}\)&lt;/span&gt; 的任务就可以描述为一个马尔可夫过程：代理模型依据一定的行为概率分布（action probability distributions, APD）不断选择行为，最终生成 &lt;span class="math"&gt;\(\mathcal{G}\)&lt;/span&gt;。行为概率分布由当前的状态决定，也就是说，通过前一步骤添加原子或键决定下一步可能的行为。&lt;/p&gt;
+&lt;p&gt;每个步骤的 APD 可以记作 &lt;span class="math"&gt;\(\mathrm{APD}_i\)&lt;/span&gt;，&lt;span class="math"&gt;\(f:\mathcal{G}_i\rightarrow \mathrm{APD}_i\)&lt;/span&gt;，GGNN 模型就是将在 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 步骤生成的子图 &lt;span class="math"&gt;\(\mathcal{G}_i\)&lt;/span&gt; 映射到&lt;span class="math"&gt;\(\mathrm{APD}_i\)&lt;/span&gt; 的函数 &lt;span class="math"&gt;\(f\)&lt;/span&gt;，若用 &lt;span class="math"&gt;\(a_i\)&lt;/span&gt; 表示每个步骤的行为，那么完整的图生成过程就可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{G}_0\rightarrow a_0\sim\mathrm{APD}_0\rightarrow\mathcal{G}_1\rightarrow\cdots\rightarrow a_{n-1}\sim\mathrm{APD}_{n-1}\rightarrow\mathcal{G}_n$$&lt;/div&gt;
+&lt;p&gt;在 GGNN 训练中使用目标 &lt;span class="math"&gt;\(\mathrm{APD}_\mathrm{t}\)&lt;/span&gt; 与预测 &lt;span class="math"&gt;\(\mathrm{APD}_\mathrm{p}\)&lt;/span&gt; 的 KL 散度作为损失函数:&lt;/p&gt;
+&lt;div class="math"&gt;$$D_\mathrm{KL}(\mathrm{APD}_\mathrm{t}||\mathrm{APD}_\mathrm{p})=\sum_{a\in\mathcal{A}}\mathrm{APD}_\mathrm{t}(a)\log\frac{\mathrm{APD}_\mathrm{t}(a)}{\mathrm{APD}_\mathrm{p}(a)}$$&lt;/div&gt;
+&lt;h3 id="qiang-hua-xue-xi-kuang-jia"&gt;强化学习框架&lt;/h3&gt;
+&lt;p&gt;强化学习的目的是基于先验策略 &lt;span class="math"&gt;\(\pi_\mathrm{prior}\)&lt;/span&gt; 更新策略，使行为序列的预期打分增加，具体来说，就是在每个学习步骤中更新代理模型，保证其一直是最佳的代理模型。最佳代理模型提醒（the best agent reminder， BAR）损失函数定义为：&lt;/p&gt;
+&lt;div class="math"&gt;$$J(\boldsymbol{\theta})=(1-\alpha)J_\mathbb{A}(\mathbb{A},\mathbb{P};\boldsymbol{\theta})+\alpha J_\tilde{\mathbb{A}}(\mathbb{A},\tilde{\mathbb{A}};\boldsymbol{\theta})$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha\in[0,1]\)&lt;/span&gt; 是设定的比例系数，&lt;span class="math"&gt;\(\mathbb{P}\)&lt;/span&gt; 是先验模型，&lt;span class="math"&gt;\(\mathbb{A}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\tilde{\mathbb{A}}\)&lt;/span&gt; 分别是当前模型与最优模型（详见强化学习的策略梯度算法）。&lt;/p&gt;
+&lt;h3 id="da-fen-han-shu"&gt;打分函数&lt;/h3&gt;
+&lt;p&gt;为了执行不同的优化任务，使用了不同的打分函数。&lt;/p&gt;
+&lt;h4&gt;增加或减少分子的大小&lt;/h4&gt;
+&lt;p&gt;为了改变生成分子的大小，提出了以下打分函数：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    S_\mathrm{size}(A)=
+    \begin{cases}
+        0, &amp;amp;\mathrm{if\ not\ \{PT,\ valid\ and\ unique\}}\\
+        1-\frac{|n_\mathrm{nodes}-n^*_\mathrm{nodes}|}{\max_\mathrm{nodes}-n^*_\mathrm{nodes}}, &amp;amp;\mathrm{otherwise}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(n^*_\mathrm{nodes}\)&lt;/span&gt; 是分子中目标重原子数量，若要增加分子大小，设定高 &lt;span class="math"&gt;\(n^*_\mathrm{nodes}\)&lt;/span&gt;，若要减小分子大小，设定低&lt;span class="math"&gt;\(n^*_\mathrm{nodes}\)&lt;/span&gt;。&lt;span class="math"&gt;\(\max_\mathrm{nodes}\)&lt;/span&gt; 是分子中最大节点数量，&lt;span class="math"&gt;\(n_\mathrm{nodes}\)&lt;/span&gt; 是分子中重原子数量，&lt;span class="math"&gt;\(A\)&lt;/span&gt; 指当前步骤的行为，&lt;span class="math"&gt;\(\mathrm{PT}\)&lt;/span&gt;  指结束构造分子的行为。&lt;/p&gt;
+&lt;h4&gt;增加分子类药性&lt;/h4&gt;
+&lt;p&gt;类药性使用 RDKit 的 QED 进行评估，打分函数定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    S_\mathrm{QED}(A)=
+    \begin{cases}
+        0, &amp;amp;\mathrm{if\ not\ \{PT,\ valid\ and\ unique\}}\\
+        \mathrm{QED}(\mathrm{Mol}(A)), &amp;amp;\mathrm{otherwise}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;h4&gt;增加分子活性&lt;/h4&gt;
+&lt;p&gt;使用支持向量机模型预测分子对于 DRD2 的活性，打分函数定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    S_\mathrm{QED}(A)=
+    \begin{cases}
+        1, &amp;amp;\mathrm{if\ PT,\ valid,\ unique,}\\
+        &amp;amp;\quad \mathrm{QED}&amp;gt;0.5\ \mathrm{and\ activity} &amp;gt; 0.5\\
+        0, &amp;amp;\mathrm{otherwise}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;训练模型的 DRD2 活性分子数据来自于 ChEMBL。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;h3 id="bu-tong-da-fen-han-shu"&gt;不同打分函数&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7928?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7928?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;从使用不同打分函数生成的分子数据中可以看出，在训练过程中，生成分子的均分不断提高，合法分子和 PT 分子的比例也不断升高，说明打分函数都能够正确地奖惩生成分子，可以用于分子生成模型的训练。另外，选择减小分子尺寸或提高分子类药性或提高活性的打分函数后，独特分子的比例有所下降，这主要是因为指定的打分函数使模型进入了一个更小的化学空间。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7929?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7929?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章分别从先验模型与单个 fine-tune 过的模型中选取 10000 个分子，在 10 个不同 fine-tune 过的模型中各选取 1000 个分子进行评估。针对平均 QED 这一指标，经过 fine-tune 的模型表现出了接近的数值且要高于先验模型。最重要的是，先验模型无法生成具有 DRD2 活性的分子，而在这一点上，经过 fine-tune 的模型生成的活性分子数量显著更高。最后，来自于 10 个不同模型的 10000 个分子中，活性分子与独特分子的占比都很高，说明 10 个模型间重叠程度小，将比单个模型更有潜力。&lt;/p&gt;
+&lt;h3 id="ke-he-cheng-xing"&gt;可合成性&lt;/h3&gt;
+&lt;p&gt;文章使用 AiZynthFinder 分析分子的可合成性，AiZynthFinder 能通过循环树搜索的方式将分子通过化学反应分割为商用试剂分子。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7930?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7930?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;可以看出，预训练模型生成的可合成分子的比例要低于训练集，可以认为 GraphINVENT 模型没能学习到可合成性这一特征。在经过 fine-tune 的模型中，除了增大分子尺寸的模型以外，都生成了较多可合成分子。主要原因是，一方面，减小分子的尺寸就是在提高分子的可合成性，另一方面，具有高类药性与 DRD2 活性的分子大多具有相似的化学结构或片段，这也使得该类分子具有较高可合成性。&lt;/p&gt;
+&lt;h3 id="tao-lun"&gt;讨论&lt;/h3&gt;
+&lt;p&gt;模型在训练过程中并没有使用任何真实活性分子的数据，fine-tune 之前的模型无法生成具有真实活性的分子，而经过 fine-tune 的模型能够生成一部分真实具有活性的分子，表明在实际药物发现中尚未发现真实活性分子情况下，文章中所使用的模型具有应用潜力。&lt;/p&gt;
+&lt;p&gt;文章中使用记忆力机制能够使模型在训练中更加平滑地偏向于最优代理模型，也能够使模型不会忘记生成较优分子的行为序列，从而引导模型更好地完成生成分子任务。文章使用的 BAR 损失函数能够很好完成多种分子生成任务。&lt;/p&gt;
+&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章将策略梯度强化学习应用于基于图的从头药物设计工具，并且使用该模型生成了具有目标特征的分子。在该模型中所使用的 BAR 损失函数能够用于模型训练，并提升了分子生成模型的性能。此外，模型中使用的 4 种打分函数也完成了 4 种生成具有相应特征分子的任务。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category><category term="RL"></category></entry><entry><title>文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" rel="alternate"></link><published>2022-10-29T00:00:00+08:00</published><updated>2022-10-29T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-29:/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery，文章改进了传统的遗传算法，使其在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jmedchem.2c01179"&gt;doi.org/10.1021/acs.jmedchem.2c01179&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Medicinal Chemistry&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery&lt;/em&gt;，文章改进了传统的遗传算法，ChemistGA 算法在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;基于深度学习的分子生成方法大多都是数据驱动型的方法，这些模型通常需要大量的数量用于训练模型，从而生成特定结构和特征的分子。而传统的机器学习方法，例如遗传算法，不需要大量数据，也不需要经过训练过程，只需要少量的分子数据就能生成大量分子。因此，在深度学习席卷所有行业的今天，遗传算法等机器学习方法仍具有优势。&lt;/p&gt;
@@ -139,7 +634,7 @@
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/em&gt;。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/em&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-019-0393-0"&gt;doi.org/10.1186/s13321-019-0393-0&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。&lt;/p&gt;
@@ -1557,7 +2052,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 &lt;em&gt;Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning&lt;/em&gt;，于 2021 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category><category term="RL"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 &lt;em&gt;Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning&lt;/em&gt;，于 2021 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-021-00403-1"&gt;doi.org/10.1038/s42256-021-00403-1&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在药物分子生成的任务中，目标分子既需要有高类药性、低毒性，其结构又需要尽可多样和新颖，药物分子生成就是这样一个多约束优化问题。&lt;/p&gt;
@@ -1805,7 +2300,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;em&gt;ACS Central Science&lt;/em&gt; 上的一篇文献，文章原题目为 &lt;em&gt;Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks&lt;/em&gt;。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;em&gt;ACS Central Science&lt;/em&gt; 上的一篇文献，文章原题目为 &lt;em&gt;Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks&lt;/em&gt;。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acscentsci.7b00512"&gt;doi.org/10.1021/acscentsci.7b00512&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在通常的分子任务中，计算机需要完成&lt;/p&gt;
@@ -1923,7 +2418,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category></entry><entry><title>用 Markdown 创作 pptx 的尝试</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" rel="alternate"></link><published>2022-09-27T00:00:00+08:00</published><updated>2022-09-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-27:/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html</id><summary type="html">&lt;p&gt;总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry><entry><title>用 Markdown 创作 pptx 的尝试</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" rel="alternate"></link><published>2022-09-27T00:00:00+08:00</published><updated>2022-09-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-27:/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html</id><summary type="html">&lt;p&gt;总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。&lt;/p&gt;
 &lt;h2 id="an-zhuang"&gt;安装&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://marp.app/#get-started"&gt;Marp 官网&lt;/a&gt;提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。&lt;/p&gt;
 &lt;p&gt;安装完成后打开拓展设置，将 &lt;code&gt;Markdown &amp;gt; Marp:Export Type&lt;/code&gt; 修改为 &lt;code&gt;pptx&lt;/code&gt;，输出文件格式就默认为 pptx（若要调试 CSS 样式，输出 html 更为方便），其余设置按需修改。&lt;/p&gt;
