@@ -61,7 +61,7 @@
   <!-- Livvic -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
   <!-- Ubuntu Mono -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css"> -->
   <!-- Cardo -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
@@ -182,7 +182,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#ying-yong-gai-lan" title="应用概览">应用概览</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#duo-yang-xing-guo-lu-qi" title="多样性过滤器">多样性过滤器</a></li><li><a class="toc-href" href="#qiang-hua-xue-xi" title="强化学习">强化学习</a></li><li><a class="toc-href" href="#da-fen-han-shu" title="打分函数">打分函数</a></li><li><a class="toc-href" href="#zhuan-yi-xue-xi" title="转移学习">转移学习</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#ying-yong-gai-lan" title="应用概览">应用概览</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#duo-yang-xing-guo-lu-qi" title="多样性过滤器">多样性过滤器</a></li><li><a class="toc-href" href="#qiang-hua-xue-xi" title="强化学习">强化学习</a></li><li><a class="toc-href" href="#da-fen-han-shu" title="打分函数">打分函数</a></li><li><a class="toc-href" href="#qian-yi-xue-xi" title="迁移学习">迁移学习</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -217,9 +217,9 @@ $$</div>
 <div class="math">$$S(x)=\left[\prod_ip_i(x)^{w_i}\right]^{1/\sum_iw_i}$$</div>
 <div class="math">$$S(x)=\frac{\sum_iw_i\times p_i(x)}{\sum_iw_i}$$</div>
 <p>其中 <span class="math">\(p_i\)</span> 是用户指定的参数，<span class="math">\(w_i\)</span> 是对应的权重，可选的参数包括谷本近似程度、杰卡德距离、QED、分子量、TPSA、可旋转键等等。</p>
-<h3 id="zhuan-yi-xue-xi">转移学习</h3>
+<h3 id="qian-yi-xue-xi">迁移学习</h3>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7792?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7792?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>REINVENT 支持在生成模型中加入转移学习模块，以寻找小数据集相关的分子为目的时，可以加入转移学习的步骤。使用小数据集预训练模型，经过转移学习能够得到与小数据集具有相当高相似程度的分子。</p>
+<p>REINVENT 支持在生成模型中加入迁移学习模块，以寻找小数据集相关的分子为目的时，可以加入迁移学习的步骤。使用小数据集预训练模型，经过迁移学习能够得到与小数据集具有相当高相似程度的分子。</p>
 <h2 id="jie-lun_1">结论</h2>
 <p>REINVENT 是一个开箱即用的开源分子生成工具，它可以用与解决与「利用（exploitation）」和「探索（exploration）」相关的药物发现问题。除此之外，由于 REINVENT 的灵活性，用户可以便捷地构建分子生成的模型，REINVENT 也能用于与其他模型对比性能的差异。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {

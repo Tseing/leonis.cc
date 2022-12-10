@@ -130,7 +130,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: "Ubuntu Mono", monospace, monospace;
+    font-family: "Fira Mono", monospace, monospace;
     font-size: 18px
 }
 
@@ -307,14 +307,15 @@ th {
     font-style: normal;
     font-weight: 400;
     src: local("Noto Serif SC"), url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap");
-}
+} */
 
 @font-face {
     font-family: 'Ubuntu Mono';
     font-style: normal;
+    font-display: swap;
     font-weight: 400;
-    src: local("Ubuntu Mono"), url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
-} */
+    src: url('../font/UbuntuMono-Regular.woff') format('woff');
+  }
 
 /* @font-face {
     font-family: 'Cardo';

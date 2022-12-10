@@ -61,7 +61,7 @@
   <!-- Livvic -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
   <!-- Ubuntu Mono -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu-mono@4.5.11/400.min.css"> -->
   <!-- Cardo -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
@@ -180,7 +180,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#zhuan-yi-xue-xi" title="转移学习">转移学习</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#ping-jie-zhi-biao" title="评价指标">评价指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#sheng-cheng-xin-fen-zi" title="生成新分子">生成新分子</a></li><li><a class="toc-href" href="#zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku" title="针对特定靶定生成活性分子库">针对特定靶定生成活性分子库</a></li><li><a class="toc-href" href="#mo-ni-she-ji-he-cheng-ce-shi-de-xun-huan" title="模拟「设计-合成-测试」的循环">模拟「设计-合成-测试」的循环</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#qian-yi-xue-xi" title="迁移学习">迁移学习</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#ping-jie-zhi-biao" title="评价指标">评价指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#sheng-cheng-xin-fen-zi" title="生成新分子">生成新分子</a></li><li><a class="toc-href" href="#zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku" title="针对特定靶定生成活性分子库">针对特定靶定生成活性分子库</a></li><li><a class="toc-href" href="#mo-ni-she-ji-he-cheng-ce-shi-de-xun-huan" title="模拟「设计-合成-测试」的循环">模拟「设计-合成-测试」的循环</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -218,8 +218,8 @@
 <div class="math">$$P_\theta(s_{t+1}|s_t,\cdots,s_1)=\frac{\exp(y^k_t)}{\sum^K_{k'=1}\exp(y^{k'}_t)}$$</div>
 <p>得到序列的下一个字符 <span class="math">\(s_{t+1}\)</span>，再将该字符加入到输入向量中，继续得到 <span class="math">\(y_{t+1}\)</span>，从而得到 <span class="math">\(s_{t+2}\)</span>，用这种迭代的方式生成分子的描述序列。</p>
 <p><img alt="symbol generation" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7695?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<h3 id="zhuan-yi-xue-xi">转移学习</h3>
-<p>文章的两个目标是生成尽可能大的多样分子数据用于虚拟筛选和针对特定靶点生成可能具有活性的分子数据。对于第一个目标，首先使用一个较大的训练集训练模型，使模型学会 SMILES 语法后，让模型生成大量分子数据。对于第二个目标，就需要用到转移学习，使用更小的具有某特征的数据集训练再次训练模型，该操作称为 fine-tune，模型就能从中学习到特征，生成对某靶点可能具有活性的分子。</p>
+<h3 id="qian-yi-xue-xi">迁移学习</h3>
+<p>文章的两个目标是生成尽可能大的多样分子数据用于虚拟筛选和针对特定靶点生成可能具有活性的分子数据。对于第一个目标，首先使用一个较大的训练集训练模型，使模型学会 SMILES 语法后，让模型生成大量分子数据。对于第二个目标，就需要用到迁移学习，使用更小的具有某特征的数据集训练再次训练模型，该操作称为 fine-tune，模型就能从中学习到特征，生成对某靶点可能具有活性的分子。</p>
 <h3 id="shu-ju">数据</h3>
 <p>140 万个分子的 SMILES 数据来自于 ChEMBL 数据库。</p>
 <h3 id="ping-jie-zhi-biao">评价指标</h3>
@@ -232,7 +232,7 @@
 <p><img alt="t-SNE of novel molecules" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7696?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>可以看出生成分子集与训练集有很大的重叠，二者物理化学性质相似，该模型学习到了训练集中的特征。</p>
 <h3 id="zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku">针对特定靶定生成活性分子库</h3>
-<p>针对于 5-HT~2A~ 受体，在 ChEMBL 数据库中选择 pIC~50~ &gt; 7 的 732 个分子作为训练集，用于 fine-tune 之前已经训练好的模型。随着 fine-tune 的 epochs 不断增加，生成分子中具有活性的分子占比随之增加。</p>
+<p>针对于 5-HT<sub>2A</sub> 受体，在 ChEMBL 数据库中选择 pIC<sub>50</sub> &gt; 7 的 732 个分子作为训练集，用于 fine-tune 之前已经训练好的模型。随着 fine-tune 的 epochs 不断增加，生成分子中具有活性的分子占比随之增加。</p>
 <p><img alt="epochs" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7697?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>此外，文章中还针金黄色葡萄球菌生成了具有活性的分子，使用 1000 个数据得到预训练的模型后，只需要使用 50 个数据进行 fine-tune 操作也能得到可观的结果，这有利于在数据较少的情况下生成特定特征的分子。</p>
 <p><img alt="fine-tune table" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7699?authkey=ALYpzW-ZQ_VBXTU"/></p>

@@ -1,5 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-12-01T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为深度学习环境配置 CUDA</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-01-install-cuda.html" rel="alternate"></link><published>2022-12-01T00:00:00+08:00</published><updated>2022-12-01T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-01:/sui-sui-nian/2022-12-01-install-cuda.html</id><summary type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-12-03T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜通过生成深度学习发现 RIPK1 抑制剂</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s41467-022-34692-w"&gt;doi.org/10.1038/s41467-022-34692-w&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Communications&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor&lt;/em&gt;，文章通过构建 RNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;
+&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
+&lt;p&gt;包括 RNN 在内的许多深度生成模型在生成分子方而都有很好的表现，但大部分模型的作用都是生成满足预定目标的最可能分子（基于目标）。基于 目标的模型依赖于目标函数，就很可能生成更符合目标函数（数值上更优）而实际不可用的分子，因此还需要大量的湿实验验证。&lt;/p&gt;
+&lt;p&gt;为了避免这一问题，文章构造了基于分布的 cRNN 模型，基于分布的模型能够生成与训练集化学分布相同的新分子，从而避免目标函数的影响。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8143?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8143?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章中的模型基于分布学习的 cRNN 架构，并且使用了 LSTM 策略。此外，文章还在模型中引入了三种策略用于增强模型对特定靶点（PIPK1）的针对性：迁移学习、正则化强化和取样强化。&lt;/p&gt;
+&lt;h4&gt;迁移学习&lt;/h4&gt;
+&lt;p&gt;首先使用包含约 1600 万分子的 ZINC12 数据库（源数据）预训练模型，再使用 1030 个已知的 RIPK1 抑制剂（目标数据） fine-tune 模型，这一过程就是迁移学习。&lt;/p&gt;
+&lt;p&gt;从测试结果（subplot c）可以看出，使用迁移学习策略后，模型不仅重构出了源数据中的分子，也重构出了目标数据中的分子，具有更好的泛化能力。&lt;/p&gt;
+&lt;h4&gt;正则化强化&lt;/h4&gt;
+&lt;p&gt;正则化强化是为了提升模型的生成能力，主要操作就是在模型训练过程中的状态向量引入高斯噪声，可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$h^\mathrm{noise}_0=h_0+\varepsilon,\ \varepsilon_m\in\mathcal{N}(\mu,\sigma^2)$$&lt;/div&gt;
+&lt;p&gt;从测试结果（subplot d）可以看出，使用正则化强化后，模型生成分子的能力得到提升。&lt;/p&gt;
+&lt;h4&gt;取样强化&lt;/h4&gt;
+&lt;p&gt;在模型生成分子的过程中，是通过对状态向量取样，从而在潜在的化学空间中得到新分子。因此在对状态向量取样的过程中引入强化策略，也能提升模型表现。取样强化的策略包括单点取样、线性插值取样、球面插值取样三种方法，可以分别表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$h^i_{0,\mathrm{new}}=\mathrm{Sample}(h^i_0)=h^i_0+\varepsilon_s,\ \varepsilon_s\in\mathcal{N}(\mu,\sigma^2)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$h^{ij,\alpha}_{0,\mathrm{new}}=\mathrm{Linear}(h^i_0,h^j_0;\alpha)=(1-\alpha)h^i_0+\alpha h^j_0,\ \alpha\in(0,1)$$&lt;/div&gt;
+&lt;div class="math"&gt;$$h^{ij,\beta}_{0,\rm{new}}=\mathrm{Slerp}(h^i_0,h^j_0;\beta)=\frac{\sin[(1-\beta)\theta]}{\sin\theta}h^i_0+\frac{\sin(\beta\theta)}{\sin\theta}h^j_0,\ \beta\in(0,1)$$&lt;/div&gt;
+&lt;p&gt;具体来说，就是在对状态向量取样引入临近插值点的状态向量影响。&lt;/p&gt;
+&lt;h2 id="jie-guo"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8144?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8144?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用模型得到 79323 个分子，通过 UMAP 数据降维展示了分子在化学空间的分布（subplot a），其中蓝色为生成分子，红色为源数据，紫色为目标数据，可以看出生成分子的化学空间不仅包含了源数据空间，而且有包含目标分子空间的趋势，这主要由于模型的迁移学习过程。&lt;/p&gt;
+&lt;p&gt;对生成分子的理化性质进行评估，可以发现在四种性质指标上，生成分子与源数据和目标分子都十分接近，可以认为模型同时学习到了两种数据集的特征。&lt;/p&gt;
+&lt;p&gt;以独特骨架/总骨架分析生成分子的分子骨架多样性，生成分子的 26.4% 显著高于源数据（1.2%）与目标分子（14.1%）。&lt;/p&gt;
+&lt;p&gt;接下来使用生成的分子进行虚拟对接：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;删去具有相同 Murcko 骨架或与已知 RIPK1 抑制剂具有相同骨架的分子；&lt;/li&gt;
+&lt;li&gt;使用 RDKit 计算分子类药性，删去低于阈值的分子；&lt;/li&gt;
+&lt;li&gt;使用 RIPK1 进行药效团模型，保留具有要求药效团的分子；&lt;/li&gt;
+&lt;li&gt;基于 RECAP 绘制分子结果相似性与对接分数的树状图。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8145?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8145?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在树状图中选择局部对接打分最后的分子，经过合成性评估，选择其中 8 个分子进行后续合成与药理学实验，最终确定 RI-962 为潜在的 RIPK 抑制剂。&lt;/p&gt;
+&lt;h2 id="tao-lun"&gt;讨论&lt;/h2&gt;
+&lt;p&gt;文章中使用的分子生成模型是基于 cRNN 的模型，cRNN 通过学习训练集中分子的潜在特征从而生成新分子，不通过人为指定分子生成的目标，这种基于分布的分子生成方法减少了基于目标分子生成方法由于目标函数所导致的不准确性。&lt;/p&gt;
+&lt;p&gt;基于分布的分子生成方法是一种数据驱动的深度学习方法，所以模型需要大量数据用于训练，而在现实中，目标分子的数据集一般较小。文章使用了迁移学习的方法，先使用较大的 ZINC12 数据集训练，再使用较小的目标分子集 fine-tune 模型，得到了很好的效果。&lt;/p&gt;
+&lt;p&gt;文章在模型中还使用了正则化强化和取样强化的策略，都提升了 cRNN 模型的表现。此外，文章建立了「分子生成-虚拟筛选-化学合成-药理试验」的药物发现全过程流程，最终得到了潜在的 RIPK 抑制剂 RI-962。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="CRNN"></category></entry><entry><title>为深度学习环境配置 CUDA</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-01-install-cuda.html" rel="alternate"></link><published>2022-12-01T00:00:00+08:00</published><updated>2022-12-01T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-01:/sui-sui-nian/2022-12-01-install-cuda.html</id><summary type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;
 &lt;h2 id="zhun-bei-gong-zuo"&gt;准备工作&lt;/h2&gt;
 &lt;p&gt;在普遍情况下，设备都安装了相应的显卡驱动，那么使用 &lt;code&gt;nvidia-smi&lt;/code&gt; 即可查看驱动信息，确定支持的 CUDA 版本。&lt;/p&gt;
 &lt;p&gt;若没有安装驱动，那么需要在终端中输入 &lt;code&gt;lspci | grep -i nvidia&lt;/code&gt; 检测设备的 GPU 型号，接着查找适用的 CUDA 版本，在安装 CUDA 时也会自动安装上匹配的驱动。&lt;/p&gt;
@@ -20,7 +120,7 @@ sudo sh&amp;nbsp;cuda_11.4.0_470.42.01_linux.run
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="an-zhuang-cuda"&gt;安装 CUDA&lt;/h2&gt;
 &lt;p&gt;下载需要较长时间，待下载完成后执行文件开始安装。若已经安装 GPU 驱动，会有以下提示，选择 &lt;code&gt;Continue&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
 &amp;boxv; Existing package manager installation of the driver found. It is strongly    &amp;boxv;
 &amp;boxv; recommended that you remove this before continuing.                          &amp;boxv;
 &amp;boxv; Abort                                                                        &amp;boxv;
@@ -31,7 +131,7 @@ sudo sh&amp;nbsp;cuda_11.4.0_470.42.01_linux.run
 &amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来输入 &lt;code&gt;accept&lt;/code&gt; 接受用户条款。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
 &amp;boxv;  End User License Agreement                                                  &amp;boxv;
 &amp;boxv;  --------------------------                                                  &amp;boxv;
 &amp;boxv;                                                                              &amp;boxv;
@@ -58,7 +158,7 @@ sudo sh&amp;nbsp;cuda_11.4.0_470.42.01_linux.run
 &amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;然后出现下方的界面，需要选择安装的内容。若设备已经安装驱动，在这里需要&lt;strong&gt;取消&lt;/strong&gt; &lt;code&gt;Driver&lt;/code&gt; 的选择，否则会出现安装错误。在这个步骤中，我只选择了 &lt;code&gt;CUDA Toolkit 11.4&lt;/code&gt; 与 &lt;code&gt;CUDA Documentation 11.4&lt;/code&gt;，选择 &lt;code&gt;Intsall&lt;/code&gt; 开始安装。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
+&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
 &amp;boxv; CUDA Installer                                                               &amp;boxv;
 &amp;boxv; - [X] Driver                                                                 &amp;boxv;
 &amp;boxv;      [X] 470.42.01                                                           &amp;boxv;
@@ -1986,9 +2086,9 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$S(x)=\left[\prod_ip_i(x)^{w_i}\right]^{1/\sum_iw_i}$$&lt;/div&gt;
 &lt;div class="math"&gt;$$S(x)=\frac{\sum_iw_i\times p_i(x)}{\sum_iw_i}$$&lt;/div&gt;
 &lt;p&gt;其中 &lt;span class="math"&gt;\(p_i\)&lt;/span&gt; 是用户指定的参数，&lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 是对应的权重，可选的参数包括谷本近似程度、杰卡德距离、QED、分子量、TPSA、可旋转键等等。&lt;/p&gt;
-&lt;h3 id="zhuan-yi-xue-xi"&gt;转移学习&lt;/h3&gt;
+&lt;h3 id="qian-yi-xue-xi"&gt;迁移学习&lt;/h3&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7792?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7792?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;REINVENT 支持在生成模型中加入转移学习模块，以寻找小数据集相关的分子为目的时，可以加入转移学习的步骤。使用小数据集预训练模型，经过转移学习能够得到与小数据集具有相当高相似程度的分子。&lt;/p&gt;
+&lt;p&gt;REINVENT 支持在生成模型中加入迁移学习模块，以寻找小数据集相关的分子为目的时，可以加入迁移学习的步骤。使用小数据集预训练模型，经过迁移学习能够得到与小数据集具有相当高相似程度的分子。&lt;/p&gt;
 &lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
 &lt;p&gt;REINVENT 是一个开箱即用的开源分子生成工具，它可以用与解决与「利用（exploitation）」和「探索（exploration）」相关的药物发现问题。除此之外，由于 REINVENT 的灵活性，用户可以便捷地构建分子生成的模型，REINVENT 也能用于与其他模型对比性能的差异。&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
@@ -2334,8 +2434,8 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$P_\theta(s_{t+1}|s_t,\cdots,s_1)=\frac{\exp(y^k_t)}{\sum^K_{k'=1}\exp(y^{k'}_t)}$$&lt;/div&gt;
 &lt;p&gt;得到序列的下一个字符 &lt;span class="math"&gt;\(s_{t+1}\)&lt;/span&gt;，再将该字符加入到输入向量中，继续得到 &lt;span class="math"&gt;\(y_{t+1}\)&lt;/span&gt;，从而得到 &lt;span class="math"&gt;\(s_{t+2}\)&lt;/span&gt;，用这种迭代的方式生成分子的描述序列。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="symbol generation" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7695?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
-&lt;h3 id="zhuan-yi-xue-xi"&gt;转移学习&lt;/h3&gt;
-&lt;p&gt;文章的两个目标是生成尽可能大的多样分子数据用于虚拟筛选和针对特定靶点生成可能具有活性的分子数据。对于第一个目标，首先使用一个较大的训练集训练模型，使模型学会 SMILES 语法后，让模型生成大量分子数据。对于第二个目标，就需要用到转移学习，使用更小的具有某特征的数据集训练再次训练模型，该操作称为 fine-tune，模型就能从中学习到特征，生成对某靶点可能具有活性的分子。&lt;/p&gt;
+&lt;h3 id="qian-yi-xue-xi"&gt;迁移学习&lt;/h3&gt;
+&lt;p&gt;文章的两个目标是生成尽可能大的多样分子数据用于虚拟筛选和针对特定靶点生成可能具有活性的分子数据。对于第一个目标，首先使用一个较大的训练集训练模型，使模型学会 SMILES 语法后，让模型生成大量分子数据。对于第二个目标，就需要用到迁移学习，使用更小的具有某特征的数据集训练再次训练模型，该操作称为 fine-tune，模型就能从中学习到特征，生成对某靶点可能具有活性的分子。&lt;/p&gt;
 &lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
 &lt;p&gt;140 万个分子的 SMILES 数据来自于 ChEMBL 数据库。&lt;/p&gt;
 &lt;h3 id="ping-jie-zhi-biao"&gt;评价指标&lt;/h3&gt;
@@ -2348,7 +2448,7 @@ $$&lt;/div&gt;
 &lt;p&gt;&lt;img alt="t-SNE of novel molecules" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7696?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;可以看出生成分子集与训练集有很大的重叠，二者物理化学性质相似，该模型学习到了训练集中的特征。&lt;/p&gt;
 &lt;h3 id="zhen-dui-te-ding-ba-ding-sheng-cheng-huo-xing-fen-zi-ku"&gt;针对特定靶定生成活性分子库&lt;/h3&gt;
-&lt;p&gt;针对于 5-HT~2A~ 受体，在 ChEMBL 数据库中选择 pIC~50~ &amp;gt; 7 的 732 个分子作为训练集，用于 fine-tune 之前已经训练好的模型。随着 fine-tune 的 epochs 不断增加，生成分子中具有活性的分子占比随之增加。&lt;/p&gt;
+&lt;p&gt;针对于 5-HT&lt;sub&gt;2A&lt;/sub&gt; 受体，在 ChEMBL 数据库中选择 pIC&lt;sub&gt;50&lt;/sub&gt; &amp;gt; 7 的 732 个分子作为训练集，用于 fine-tune 之前已经训练好的模型。随着 fine-tune 的 epochs 不断增加，生成分子中具有活性的分子占比随之增加。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="epochs" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7697?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
 &lt;p&gt;此外，文章中还针金黄色葡萄球菌生成了具有活性的分子，使用 1000 个数据得到预训练的模型后，只需要使用 50 个数据进行 fine-tune 操作也能得到可观的结果，这有利于在数据较少的情况下生成特定特征的分子。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="fine-tune table" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7699?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;
