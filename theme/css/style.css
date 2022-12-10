@@ -309,13 +309,13 @@ th {
     src: local("Noto Serif SC"), url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap");
 } */
 
-@font-face {
+/* @font-face {
     font-family: 'Ubuntu Mono';
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url('../font/UbuntuMono-Regular.woff') format('woff');
-  }
+    src: url('https://cdn.jsdelivr.net/npm/@openfonts/ubuntu-mono_all@1.44.2/files/ubuntu-mono-all-400.woff2') format('woff2');
+  } */
 
 /* @font-face {
     font-family: 'Cardo';
