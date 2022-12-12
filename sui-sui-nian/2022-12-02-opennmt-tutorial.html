@@ -194,15 +194,18 @@
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;OpenNMT 不支持过旧的 GPU，之前在 <code>GTX 970</code> 的设备上就无法训练模型，这个问题可能除了换设备无解😭</p></div></p>
 <h2 id="kuai-su-shang-shou">快速上手</h2>
 <h4>安装 OpenNMT</h4>
-<p>OpenNMT 有 PyTorch 与 TensorFlow 两个版本，PyTorch 在环境搭建上方便很多，所以我选择 PyTorch 版本。先创建虚拟环境，再直接通过 <code>pip</code> 安装 OpenNMT-py，Python 版本为 <code>3.9</code>，OpenNMT-py 为 ``。</p>
+<p>OpenNMT 有 PyTorch 与 TensorFlow 两个版本，PyTorch 在环境搭建上方便很多，所以我选择 PyTorch 版本。先创建虚拟环境，再直接通过 <code>pip</code> 安装 OpenNMT-py，Python 版本为 <code>3.9</code>，OpenNMT-py 为 <code>3.0.2</code>。</p>
 <pre><code># 创建虚拟环境
 conda create -n nlp python==3.9
 # 激活虚拟环境
 conda activate nlp
 # 安装 OpenNMT
-pip install OpenNMT-py==
+pip install OpenNMT-py==3.0.2
 </code></pre>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 <code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}</code>，将其中的 <code>{some-package}</code> 替换为需要安装的包名称。</p></div></p>
+<p>直接安装 <code>OpenNMT-py</code> 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 <code>nvcc -V</code> 查询 CUDA 版本，再在 <a href="https://pytorch.org/get-started/previous-versions/">Pytorch 官网</a>找到相应的版本。例如我的 CUDA 版本为 <code>11.4</code>，那么就需要重新安装以下版本的包解决依赖问题：</p>
+<pre><code>pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+</code></pre>
 <h4>准备数据</h4>
 <p>快速上手一节搭建的是一个简单的双语翻译模型，因此需要准备两种语言的数据，分别分源语言（<code>src</code>）和目标语言（<code>tgt</code>），数据文件中每行包含一句话，以空格分隔不同的词。再考虑到训练集和验证集，那么一共需要 4 种数据文件：</p>
 <ul>
@@ -217,6 +220,74 @@ pip install OpenNMT-py==
 tar xf toy-ende.tar.gz
 </code></pre>
 <p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data"><i class="fa fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
+<p>接着通过 <code>vim toy_en_de.yaml</code> 在目录下创建 <code>.yaml</code> 配置文件，内容为</p>
+<pre><code class="language-yaml"># toy_en_de.yaml
+
+## Where the samples will be written
+save_data: toy-ende/run/example
+## Where the vocab(s) will be written
+src_vocab: toy-ende/run/example.vocab.src
+tgt_vocab: toy-ende/run/example.vocab.tgt
+# Prevent overwriting existing files in the folder
+overwrite: False
+
+# Corpus opts:
+data:
+    corpus_1:
+        path_src: toy-ende/src-train.txt
+        path_tgt: toy-ende/tgt-train.txt
+    valid:
+        path_src: toy-ende/src-val.txt
+        path_tgt: toy-ende/tgt-val.txt
+</code></pre>
+<p>创建文件后的文件结构为</p>
+<pre><code>.
+&boxvr;&boxh;&boxh; toy-ende
+&boxv;   &boxvr;&boxh;&boxh; src-test.txt
+&boxv;   &boxvr;&boxh;&boxh; src-train.txt
+&boxv;   &boxvr;&boxh;&boxh; src-val.txt
+&boxv;   &boxvr;&boxh;&boxh; tgt-test.txt
+&boxv;   &boxvr;&boxh;&boxh; tgt-train.txt
+&boxv;   &boxur;&boxh;&boxh; tgt-val.txt
+&boxur;&boxh;&boxh; toy_en_de.yaml
+</code></pre>
+<p>设置完成后，运行以下命令开始构建词库：</p>
+<pre><code>onmt_build_vocab -config toy_en_de.yaml -n_sample 10000
+</code></pre>
+<p>其中 <code>n_sample</code> 设定了从语料中获取多少行的数据用于构建词库。</p>
+<p>{mote begin}若使用虚拟环境，需要进入虚拟环境后才能运行上述命令，若使用 Anaconda，也需要先激活环境。Pytorch 与 CUDA 版本不匹配会导致 <code>undefined symbol: cublasLtGetStatusString, version libcublasLt.so</code> 错误。</p></div></p>
+<h4>训练模型</h4>
+<p>训练模型也十分简单，在 <code>.yaml</code> 文件中追加以下内容：</p>
+<pre><code class="language-yaml"># Vocabulary files that were just created
+src_vocab: toy-ende/run/example.vocab.src
+tgt_vocab: toy-ende/run/example.vocab.tgt
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+
+# Where to save the checkpoints
+save_model: toy-ende/run/model
+save_checkpoint_steps: 500
+train_steps: 1000
+valid_steps: 500
+</code></pre>
+<p>使用 <code>onmt_train -config toy_en_de.yaml</code> 开始训练，该配置会生成默认的 2 层具有 500 个隐藏单元的 LSTM 模型。</p>
+<h4>模型预测</h4>
+<pre><code>onmt_translate -model toy-ende/run/model_step_1000.pt -src toy-ende/src-test.txt -output toy-ende/pred_1000.txt -gpu 0 -verbose
+</code></pre>
+<p>上面的命令使用训练得到的模型 <code>toy-ende/run/model_step_1000.pt</code> 预测 <code>toy-ende/src-test.txt</code> 测试集数据，并反结果输出到 <code>toy-ende/pred_1000.txt</code>，<code>-gpu</code> 指定了使用的 GPU，<code>-verbose</code> 指定在终端中输出每个步骤的详细结果。</p>
+<p>使用 <code>head -n 5 toy-ende/src-test.txt</code> 和 <code>head -n 5 toy-ende/pred_1000.txt</code> 查看一下预测结果：</p>
+<pre><code class="language-txt"># test
+Orlando Bloom and Miranda Kerr still love each other
+Actors Orlando Bloom and Model Miranda Kerr want to go their separate ways .
+However , in an interview , Bloom has said that he and Kerr still love each other .
+Miranda Kerr and Orlando Bloom are parents to two-year-old Flynn .
+Actor Orlando Bloom announced his separation from his wife , supermodel Miranda Kerr .
+
+# pred
+
+</code></pre>
             </section>
 
             <section class="post-info">

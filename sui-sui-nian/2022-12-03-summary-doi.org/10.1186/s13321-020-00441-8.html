@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@openfonts/ubuntu-mono_all@1.44.2/index.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="RNN">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-12-03 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="RNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型",
+  "headline": "文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型",
+  "datePublished": "2022-12-03 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html",
+  "description": "本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 12月03日">2022年 12月03日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#shu-ju-yu-chu-li" title="数据预处理">数据预处理</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a><ul><li><a class="toc-href" href="#shi-yan-1" title="实验 1">实验 1</a></li><li><a class="toc-href" href="#shi-yan-2" title="实验 2">实验 2</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-020-00441-8">doi.org/10.1186/s13321-020-00441-8</a></p>
+<p>本文介绍于 2020 年发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 <em>SMILES‑based deep generative scaffold decorator for de‑novo drug design</em>，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。</p>
+<h2 id="yin-yan">引言</h2>
+<p>对先导化合物进行结构优化是药物设计中的重要步骤，利用深度学习手段对分子结构进行改造能够大大提升药物设计的效率。以往提出的结构改造模型有基于 SMILES 的双向 RNN 模型，其问题在于只能连接分子中的两个指定位点，也有基于图的深度模型，但需要消耗大量的计算资源和训练时间。</p>
+<p>文章提出了一种用于分子结构改造的深度生成模型，首先由 RNN 模型生成分子骨架，再由改造模型在分子骨架中的改造位点上进行合适的改造，生成新的分子。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="mo-xing">模型</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8212?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8212?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章提出的模型主要由分子骨架生成模型与分子骨架改造模型两部分构成。分子骨架生成模型是基于 RNN 的模型，使用 MMP 算法将分子的 SMILES 分割为分子片段并将其作为训练数据，分子骨架生成模型就能够生成具有结构改造位点标记 <code>[*]</code> 的分子骨架。</p>
+<p>分子改造模型也是 RNN 模型，但具有注意力机制的编码器-解码器架构，编码器-解码器架构主要用于处理 seq2seq 任务，在这里，编码器-解码器将具有结构改造位点标记的分子骨架转化为用于结构改造的取代基。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8213?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8213?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>使用该模型对分子进行结构改造的主要流程如上图所示，首先手动输入或由模型生成带有改造位点的分子骨架，接着再由改造模型进行改造。改造模型具有两种模式，一种是一步模式，另一种是多步模式。在多步模式中，通过多步骤完成分子的改造，先将分子结构转化为改造基团，再将改造基团连入分子结构，然后再次将分子结构送入改造模型，直至所有改造位点完成改造。单步模式中，模型将分子结构转化为多个改造基团，以分隔符 <code>|</code> 区分，将多个改造基团全部连入分子，一次性完成改造。</p>
+<p>文章设定了两个实验用于测试模型的表现：</p>
+<ul>
+<li><strong>实验 1</strong>：使用 DRD2 受体调节剂数据训练结构改造模型，用活性预测模型确定模型输出活性分子的数量；</li>
+<li><strong>实验 2</strong>：使用类药分子作为训练数据，测试模型表现。</li>
+</ul>
+<h3 id="shu-ju-yu-chu-li">数据预处理</h3>
+<p>实验 1 所使用的数据是 DRD2 受体调节剂数据，来自于 ExCAPE-DB，使用 MMP 算法将分子分割为分子骨架与改造基团。</p>
+<p>实验 2 使用的数据是 ChEMBL 中的类药分子，同样使用 MMP 算法，但在分割的同时增加了 RECAP 规则的约束，RECAP 规则能让分子骨架与改造基团的分割更符合化学合成的规则。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8214?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8214?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8215?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8215?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在训练集中随机选择了 5 个分子骨架（1-5），并将其从训练集中去除，将这 5 个分子骨架相关的分子片段数据作为验证集。</p>
+<p>在骨架生成模型生成的数据中选择 5 个未出现在数据集中的不同分子骨架（6-10）作为改造模型的输入。</p>
+<h2 id="jie-guo_1">结果</h2>
+<h3 id="shi-yan-1">实验 1</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8216?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8216?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>使用 1-10 分子骨架作为输入的生成分子结果如上图所示。从 subplot a 可以看出，分子骨架不同，所产生的结构改造数量也不同，这种不同不是由结构改造位点数量导致的，而且在单步模式下具有更多的结构改造。在 subplot c 和 d 中可以看出，在不同结构上生成结构改造的新颖性不同，这主要是由于模型对每个结构改造位点上所具有知识的不同，此外在生成新颖性的结构中，也有相当一部分分子具有预测活性，表明模型在进行结构改造的同时依然具有 DRD2 的知识，模型能够基于 SMILES 语境做出结构改造。</p>
+<p>尽管单步模式能够针对分子骨架产生更多的结构改造，但多步模型产生的所有分子中的活性分子占比更高，因此多模型在对分子进行结构改造上具有更好的表现。可以认为这是因为多步改造能够更好地利用训练数据中的知识，例如单步模式下，模型只会运用到对多个改造位点进行改造的知识，而在多模式下，模型会逐次运用到对三个、两个、一点改造位点改造的数据，使得生成的分子更能满足 DRD2 受体的活性要求。</p>
+<h3 id="shi-yan-2">实验 2</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8217?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8217?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8218?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8218?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>实验 2 生成新分子的结果如图所示，其中上图为多步模式，下图为单步模式，non-dataset scaff. 表示分子具有未出现在数据集中的新骨架（6-10），val. set scaff. 表示分子具有训练集中的骨架（1-5）。</p>
+<p>可以看出，在多步模式下，尽管输入了不同的分子骨架，结构改造后新分子的性质仍然能和训练集保持一致，表现了模式良好的泛化能力，能够用于生成类药分子。而在单步模式下，模型利用的知识受限，生成新分子的性质偏离了训练数据。</p>
+<h2 id="jie-lun_1">结论</h2>
+<p>文章基于 RNN 构建了一种新的分子改造模型，没有使用额外的深度学习方法，仅由 RNN 的分子骨架生成模型与 RNN 编码器-解码器的分子改造模型构成。通过 MMP 算法处理分子的 SMILES 数据后，即可用于该模型的训练，该模型能够基于 SMILES 语境进行合适的分子改造。该模型的结构较为简单，还有进一步改进的空间。</p>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型&amp;url=https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a><a href="https://tseing.github.io/tag/rnn.html">RNN</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">文献总结｜通过生成深度学习发现 RIPK1 抑制剂</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2022 年发表在 Nature Communications...</p>
+                        </section>
+                    </a>
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-12-01-install-cuda.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">为深度学习环境配置 CUDA</h2>
+                            <p class="post-nav-excerpt">最近在折腾 OpenNMT 框架，CUDA 与 PyTorch...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
