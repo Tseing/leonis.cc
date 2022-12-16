@@ -101,7 +101,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="OneDrive"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
 
 <!-- Twitter Card -->
 
@@ -118,7 +118,7 @@
     "name": "Leo",
     "url": "https://tseing.github.io/author/leo.html"
   },
-  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "url": "https://tseing.github.io/sui-sui-nian/2022-07-14-onedrive-as-image-host.html",
   "description": "在博客中插入图片一直是一件头疼事，互联网上的各类图床工具都难令人完全满意。使用 OneDrive 作为图床或是一个很好的选择，这在 Windows 上已经有了成熟的方案，而在 Linux 上就有些麻烦，需要借助些额外的工具。"
 }
@@ -169,7 +169,7 @@
             | <time datetime="2022年 7月14日">2022年 7月14日</time>
         </span>
         <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
       </div>
     </header>
 
@@ -228,7 +228,6 @@ $ ~/zfile/bin/restart.sh     # 重启项目
 <p>如果有一台 VPS，在 VPS 上启动 ZFile 后，通过 <code>vps-ip:[port]</code> 也能进入同样的管理界面。只需要将图片文件上传至 OneDrive，使用ZFile就可以得到文件的直链，不止是图片，这种方法还可以在 <code>.md</code> 中插入音频或是视频文件，甚至搭建个人下载站，而且完全不占用服务器存储。值得注意的是，ZFile获得的文件「直链」并不是真正的直链，而是经过一次转发，可能会影响访问速度。</p>
 <p><img alt="ZFile获取直链流程" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7369?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>因为 ZFile 向 OneDrive 请求得到是预览链接或临时下载链接 <code>1drv.com/...</code>，该链接在一段时间后就会失效，也不能直接用作图床。当用户每次访问 ZFile 直链 <code>vps-ip:[port]/...</code> 时，实际得到的都是 ZFile 转发得到的 OneDrive 临时链接。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 07 月 14 日，请确定内容是否过时。</p></div></p>
             </section>
 
             <section class="post-info">

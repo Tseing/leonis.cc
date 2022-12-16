@@ -65,6 +65,10 @@ i.fa.fa-map-marker.fa-stack-1x {
     color: #00b0ff
 }
 
+.note-info pre {
+    max-width: 95%;
+}
+
 .cite {
     font-family: "Noto Serif KR", "Noto Serif SC";
     font-weight: 700;

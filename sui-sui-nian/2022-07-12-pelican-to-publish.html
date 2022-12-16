@@ -76,7 +76,7 @@
 
 
 
-    <meta name="description" content="经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 Github Pages 上发布博客文章的流程。">
+    <meta name="description" content="经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 GitHub Pages 上发布博客文章的流程。">
 
     <meta name="author" content="Leo">
 
@@ -89,7 +89,7 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="使用 Pelican 发布文章的流程"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 Github Pages 上发布博客文章的流程。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 GitHub Pages 上发布博客文章的流程。"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-07-12-pelican-to-publish.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -99,7 +99,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Pelican"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content">
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
 
 <!-- Twitter Card -->
 
@@ -116,9 +116,9 @@
     "name": "Leo",
     "url": "https://tseing.github.io/author/leo.html"
   },
-  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content",
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "url": "https://tseing.github.io/sui-sui-nian/2022-07-12-pelican-to-publish.html",
-  "description": "经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 Github Pages 上发布博客文章的流程。"
+  "description": "经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署免不了又是一通的麻烦事。暂且不论这些，先记录下使用 Pelican 在 GitHub Pages 上发布博客文章的流程。"
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -167,7 +167,7 @@
             | <time datetime="2022年 7月12日">2022年 7月12日</time>
         </span>
         <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNuU3h7utB_z6MEPLq/root/content')">
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
       </div>
     </header>
 
@@ -214,10 +214,10 @@ status: # draft, hidden, or published
 <pre><code class="language-shell">$ source ./venv/bin/activate
 $ pelican content -s publishconf.py
 </code></pre>
-<p>最后将 <code>output</code> 文件夹同步至 Github 中 <code>&lt;username&gt;.github.io</code> 仓库即完成文章的发布。</p>
+<p>最后将 <code>output</code> 文件夹同步至 GitHub 中 <code>&lt;username&gt;.github.io</code> 仓库即完成文章的发布。</p>
 <h2 id="fa-bu">发布</h2>
 <p>使用终端在 <code>blog</code> 文件夹中输入 <code>pelican -lr</code> 即可自动部署到本地服务器，默认端口为 8000，通过 <code>localhost:8000</code> 访问。</p>
-<p>测试完成后将内容推送至 Github:</p>
+<p>测试完成后将内容推送至 GitHub:</p>
 <pre><code class="language-shell">$ git add .
 $ git commit
 $ git push
@@ -225,7 +225,6 @@ $ git push
 <h2 id="ke-long-yu-tong-bu">克隆与同步</h2>
 <p>由于我有 Windows 与 Linux 两个平台的设备，所以需要在两个平台上同步博客的内容，方便我在任意设备上都可以写文章。</p>
 <p>在终端中使用 <code>git clone --recursive</code> 命令克隆仓库，<code>git clone</code> 命令只会克隆主仓库，导致子模块失效，<code>--recursive</code> 能递归地克隆包括子模块在内的整个仓库。使用 <code>git pull --recurse-submodules</code> 命令能够拉取包含子模块在内的全部更新，即可完成同步。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 14 日，请确定内容是否过时。</p></div></p>
 <hr/>
 <h2 id="references">References</h2>
 <ul>

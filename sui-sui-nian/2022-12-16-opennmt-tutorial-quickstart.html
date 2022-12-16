@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>机器翻译框架 OpenNMT 入门：快速上手</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@openfonts/ubuntu-mono_all@1.44.2/index.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Linux">
+    <meta name="tags" content="OpenNMT">
+    <meta name="tags" content="NLP">
+    <meta name="tags" content="Python">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="机器翻译框架 OpenNMT 入门：快速上手"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-12-16 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="OpenNMT"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="NLP"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Python"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "机器翻译框架 OpenNMT 入门：快速上手",
+  "headline": "机器翻译框架 OpenNMT 入门：快速上手",
+  "datePublished": "2022-12-16 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html",
+  "description": "拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。"
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">机器翻译框架 OpenNMT 入门：快速上手</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 12月16日">2022年 12月16日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#zhun-bei-gong-zuo" title="准备工作">准备工作</a></li><li><a class="toc-href" href="#kuai-su-shang-shou" title="快速上手">快速上手</a></li><li><a class="toc-href" href="#wen-yan-fan-yi" title="文言翻译">文言翻译</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>拆解项目代码的时候发现使用到了 <code>onmt</code> 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。</p>
+<p>OpenNMT 官方描述该框架为 an open source neural machine translation system，点进 <a href="https://opennmt.net/">OpenNMT 的官网</a>可以看到更多资料，因此也不需要我多描述。总结一下就是，OpenNMT 是搭建自然语言处理模型的开源框架，其中自然包括常见的 RNN 和 Transformer 等模型。如果在自然语言处理方面有需要，OpenNMT 绝对是一个轻量有效的框架。</p>
+<p>OpenNMT 的中文学习资料较少，于是我只能参考<a href="https://opennmt.net/OpenNMT-py/main.html">官方文档</a>学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。</p>
+<h2 id="zhun-bei-gong-zuo">准备工作</h2>
+<p>首先介绍一下我的运行环境，我的设备搭载一块 <code>GTX 1080</code> GPU，系统为 <code>Ubuntu 20.04</code>，需要提前在设备上安装好 CUDA，我使用 Anaconda 配置 Python 环境。</p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;OpenNMT 不支持过旧的 GPU，之前在 <code>GTX 970</code> 的设备上就无法训练模型，这个问题可能除了换设备无解😭</p></div></p>
+<h2 id="kuai-su-shang-shou">快速上手</h2>
+<h4>安装 OpenNMT</h4>
+<p>OpenNMT 有 PyTorch 与 TensorFlow 两个版本，PyTorch 在环境搭建上方便很多，所以我选择 PyTorch 版本。先创建虚拟环境，再直接通过 <code>pip</code> 安装 OpenNMT-py，Python 版本为 <code>3.9</code>，OpenNMT-py 为 <code>3.0.2</code>。</p>
+<pre><code class="language-sh"># 创建虚拟环境
+conda create -n nlp python==3.9
+# 激活虚拟环境
+conda activate nlp
+# 安装 OpenNMT
+pip install OpenNMT-py==3.0.2
+</code></pre>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 <code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}</code>，将其中的 <code>{some-package}</code> 替换为需要安装的包名称。</p></div></p>
+<p>直接安装 <code>OpenNMT-py</code> 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 <code>nvcc -V</code> 查询 CUDA 版本，再在 <a href="https://pytorch.org/get-started/previous-versions/">Pytorch 官网</a>找到相应的版本。例如我的 CUDA 版本为 <code>11.4</code>，那么就需要重新安装以下版本的包解决依赖问题：</p>
+<pre><code class="language-sh">pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+</code></pre>
+<h4>准备数据</h4>
+<p>快速上手一节搭建的是一个简单的双语翻译模型，因此需要准备两种语言的数据，分别为源语言<code>src</code> 和目标语言 <code>tgt</code>，数据文件中每行包含一句话，以空格分隔不同的词。再考虑到训练集和验证集，那么一共需要 4 种数据文件：</p>
+<ul>
+<li><code>src-train.txt</code></li>
+<li><code>tgt-train.txt</code></li>
+<li><code>src-val.txt</code></li>
+<li><code>tgt-val.txt</code></li>
+</ul>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;可以想象到，如果处理的是英语、法语等以空格分隔单词的语言，只需要将文本数据处理为每行一句话的格式即可。但对于汉语、日语等不以特殊标记分隔词语的语言，数据需要经过额外的分词步骤后才可以使用。</p></div></p>
+<p>官方提供了英语-德语的数据文件，可以直接下载：</p>
+<pre><code class="language-sh">wget https://s3.amazonaws.com/opennmt-trainingdata/toy-ende.tar.gz
+tar xf toy-ende.tar.gz
+</code></pre>
+<p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data"><i class="fa fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
+<p>接着通过 <code>vim toy_en_de.yaml</code> 在目录下创建 <code>.yaml</code> 配置文件，内容为</p>
+<pre><code class="language-yaml"># toy_en_de.yaml
+
+## Where the samples will be written
+save_data: toy-ende/run/example
+## Where the vocab(s) will be written
+src_vocab: toy-ende/run/example.vocab.src
+tgt_vocab: toy-ende/run/example.vocab.tgt
+# Prevent overwriting existing files in the folder
+overwrite: False
+
+# Corpus opts:
+data:
+    corpus_1:
+        path_src: toy-ende/src-train.txt
+        path_tgt: toy-ende/tgt-train.txt
+    valid:
+        path_src: toy-ende/src-val.txt
+        path_tgt: toy-ende/tgt-val.txt
+</code></pre>
+<p>创建文件后的文件结构为</p>
+<pre><code class="language-sh">.
+&boxvr;&boxh;&boxh; toy-ende
+&boxv;   &boxvr;&boxh;&boxh; src-test.txt
+&boxv;   &boxvr;&boxh;&boxh; src-train.txt
+&boxv;   &boxvr;&boxh;&boxh; src-val.txt
+&boxv;   &boxvr;&boxh;&boxh; tgt-test.txt
+&boxv;   &boxvr;&boxh;&boxh; tgt-train.txt
+&boxv;   &boxur;&boxh;&boxh; tgt-val.txt
+&boxur;&boxh;&boxh; toy_en_de.yaml
+</code></pre>
+<p>设置完成后，运行以下命令开始构建词库：</p>
+<pre><code class="language-sh">onmt_build_vocab -config toy_en_de.yaml -n_sample 10000
+</code></pre>
+<p>其中 <code>n_sample</code> 设定了从语料中获取多少行的数据用于构建词库。</p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;若使用虚拟环境，需要进入虚拟环境后才能运行上述命令，若使用 Anaconda，也需要先激活环境。Pytorch 与 CUDA 版本不匹配会导致 <code>undefined symbol: cublasLtGetStatusString, version libcublasLt.so</code> 错误。</p></div></p>
+<h4>训练模型</h4>
+<p>训练模型也十分简单，在 <code>.yaml</code> 文件中追加以下内容：</p>
+<pre><code class="language-yaml"># Vocabulary files that were just created
+src_vocab: toy-ende/run/example.vocab.src
+tgt_vocab: toy-ende/run/example.vocab.tgt
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+
+# Where to save the checkpoints
+save_model: toy-ende/run/model
+save_checkpoint_steps: 500
+train_steps: 1000
+valid_steps: 500
+</code></pre>
+<p>使用 <code>onmt_train -config toy_en_de.yaml</code> 开始训练，该配置会生成默认的 2 层具有 500 个隐藏单元的 LSTM 模型。</p>
+<h4>模型预测</h4>
+<p>使用类似的命令进行模型预测，模型预测能够将文本文件中的内容翻译并保存到输出文件中：</p>
+<pre><code>onmt_translate -model toy-ende/run/model_step_1000.pt -src toy-ende/src-test.txt -output toy-ende/pred_1000.txt -gpu 0 -verbose
+</code></pre>
+<ul>
+<li>上面的命令使用了训练得到的模型 <code>toy-ende/run/model_step_1000.pt</code></li>
+<li>预测 <code>toy-ende/src-test.txt</code> 测试集数据</li>
+<li>将结果输出到 <code>toy-ende/pred_1000.txt</code>，</li>
+<li><code>-gpu</code> 指定了使用的 GPU</li>
+<li><code>-verbose</code> 指定在终端中输出每个步骤的详细结果</li>
+</ul>
+<p>使用 <code>head -n 2 toy-ende/src-test.txt</code> 和 <code>head -n 2 toy-ende/pred_1000.txt</code> 查看一下预测结果：</p>
+<pre><code class="language-txt"># test
+Orlando Bloom and Miranda Kerr still love each other
+Actors Orlando Bloom and Model Miranda Kerr want to go their separate ways .
+
+# pred
+Die &lt;unk&gt; der &lt;unk&gt; der &lt;unk&gt; , die die &lt;unk&gt; der &lt;unk&gt; &hellip;&hellip;
+</code></pre>
+<p>由于训练时间很短，数据集很小，预测结果不会好，再加上不认识德语，也无法判断结果的优劣，所以接下来尝试在更大的中文语料上进行翻译任务。</p>
+<h2 id="wen-yan-fan-yi">文言翻译</h2>
+<p>B 站上有一个展示 OpenNMT 的<a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651">视频</a>，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 <a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb">GitHub</a> 上，可以和本文相互参照，本文中的代码也可以在 <a href="https://github.com/Tseing/OpenNMT-wenyan"><i class="fa fa-github"></i> Tseing/OpenNMT-wenyan </a> 找到。</p>
+<h4>准备数据</h4>
+<p>白话文与文言文的平行语料来自于 <a href="https://github.com/NiuTrans/Classical-Modern"><i class="fa fa-github"></i> NiuTrans/Classical-Modern</a>，包含了大量内容：</p>
+<pre><code class="language-txt"># Classical-Modern/source/
+元史  北齐书  南齐书  后汉书  太平广记  宋史    新五代史  旧五代史  明史  梁书      汉书              辽史  陈书  魏书
+北史  南史    史记    周书    宋书      徐霞客  新唐书    旧唐书    晋书  水经注全  短篇章和资治通鉴  金史  隋书
+</code></pre>
+<p>下载数据后可以先用 <code>head Classical-Modern/source/史记</code> 与 <code>head Classical-Modern/target/史记翻译</code> 查看一下语料：</p>
+<pre><code class="language-txt"># 史记
+後为太常，坐法当死，赎免为庶人。
+上曰：剑，人之所施易，独至今乎？
+然终不自明也。
+然亦无所毁。
+
+# 史记翻译
+因为触犯法律判处死刑，纳米粟入官赎罪后成了平民。
+景帝说：剑是人们所喜爱之物，往往用来送人或交换他物，难道你能保存到现在吗？
+说过后他终究不再做其他辩解。
+然后也没有讲别人的什么坏话。
+</code></pre>
+<p>原始语料是将文言翻译为白话，因此 <code>source</code> 中存储了原文，<code>target</code> 中存储了翻译，每行一句话，两个文件一一对应。我们需要预处理数据，将所有文本都作为数据集。</p>
+<pre><code class="language-py">import os
+
+source_root = 'Classical-Modern/source'
+target_root = 'Classical-Modern/target'
+
+for f in os.listdir(source_root):
+    print("processing " + f)
+    source_file = os.path.join(source_root, f)
+    target_file = os.path.join(target_root, f + '翻译')
+
+    # 统计各文本中行数
+    with open(source_file, "r", encoding="utf-8") as source_f:
+        source_len = sum(1 for _ in source_f)
+    with open(target_file, "r", encoding="utf-8") as target_f:
+        target_len = sum(1 for _ in target_f)
+
+    # 对比平行语料行数，确保一致
+    assert source_len == target_len
+    try:
+        with open('dataset/source_raw.txt', "a+", encoding="utf-8") as source_f:
+            source_f.write(open(source_file, "r", encoding="utf-8").read())
+        with open('dataset/target_raw.txt', "a+", encoding="utf-8") as target_f:
+            target_f.write(open(target_file, "r", encoding="utf-8").read())
+    except FileNotFoundError:
+        os.mkdir('dataset')
+</code></pre>
+<p>检查一下处理的结果：</p>
+<pre><code class="language-txt"># dataset/source_raw.txt
+密计不行。
+使者利金，遂相许。
+遣说诸小贼，所至辄降，让始敬焉，召与计事。
+宇文温每谓密曰：不杀元真，公难未已。
+
+# dataset/target_raw.txt
+李密的意见没有被采纳。
+押送的人贪图金钱，便满口答应。
+派人游说小股义军，被劝说的人都归顺了翟让，翟让开始看重了他，叫他同自己一起讨论重大问题。
+宇文温常对李密说：不杀邴元真，您的祸害就不会排除。
+</code></pre>
+<p>接下来要对文本分词，对于文言文来说，单字词的占比非常高，将每个单字作为一个词就是一种比较方便的分词方法，所以在每个字符后插入空格即可。而白话文中有大量的双字词，甚至三字词、四字词，必须使用专门的分词引擎，这里我使用了 <a href="http://thulac.thunlp.org/">THULAC</a>，直接通过 <code>pip install thualac</code> 就能安装。</p>
+<pre><code class="language-py">import thulac
+
+# 对文言文本分词
+with open('dataset/source_raw.txt', 'r', encoding='utf-8') as f:
+    # 目标是 白话-&gt;文言，因此将文言作为目标 target.txt
+    with open('dataset/target.txt', 'w+', encoding='utf-8') as s:
+        print("separating wenyan text...")
+        while True:
+            line = f.readline()
+            if line:
+                line_seq = " ".join([char for char in line])
+                s.write(line_seq)
+            else:
+                break
+
+# 对白话文本分词，将白话作为源语言 source.txt
+print("separating modern text...")
+sep_model = thulac.thulac(seg_only=True)
+sep_model.cut_f('dataset/target_raw.txt', 'dataset/source.txt')
+</code></pre>
+<ul>
+<li>使用 <code>thulac</code> 首先要加载分词模型，<code>seg_only</code> 指定只分词，不输出词性</li>
+<li><code>cut_f(input, output)</code> 用于对文件 <code>input</code> 分词，并将结果保存到 <code>output</code></li>
+</ul>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;使用 thulac 处理文件时一般会输出 <code>UnicodeDecodeError</code> 错误，主要是读取文件时的编码错误，是 thulac 本身的一个 bug，请看下文的解决方法<del>（也可能官方修好了）</del>。</p>
+<p>找到错误信息中的 <code>site-packages\thulac\__init__.py</code> 文件，第 187 行与第 188 行的代码为</p>
+<pre><code class="language-py">input_f = open(input_file, 'r')
+output_f = open(output_file, 'w')
+</code></pre>
+<p>将其修改为</p>
+<pre><code class="language-py">input_f = open(input_file, 'r', encoding='utf-8')
+output_f = open(output_file, 'w', encoding='utf-8')
+</code></pre>
+<p></p></div></p>
+<p>同样再检查一下处理的结果：</p>
+<pre><code class="language-txt"># dataset/source.txt
+李密 的 意见 没有 被 采纳 。
+押送 的 人 贪图 金钱 ， 便 满口答应 。
+派 人 游说 小 股义军 ， 被 劝说 的 人 都 归顺 了 翟让 ， 翟让 开始 看重 了 他 ， 叫 他 同 自己 一起 讨论 重大 问题 。
+宇文 温常 对 李密 说 ： 不 杀 邴元真 ， 您 的 祸害 就 不 会 排除 。
+
+# dataset/target.txt
+密 计 不 行 。
+使 者 利 金 ， 遂 相 许 。
+遣 说 诸 小 贼 ， 所 至 辄 降 ， 让 始 敬 焉 ， 召 与 计 事 。
+宇 文 温 每 谓 密 曰 ： 不 杀 元 真 ， 公 难 未 已 。
+</code></pre>
+<p>分词结果虽然有错误，但总体效果还可以，最后将全部文本划分为训练集与验证集。由于文本数据非常大，不适合读取后转换为列表进行操作，我写了一个划分 <code>.txt</code> 文本的脚本，可以在 GitHub 上找到，代码不复杂，就不展开介绍了。划分数据集后的文件结构与 OpenNMT 要求的数据一致，就可以直接使用了。</p>
+<pre><code class="language-sh">dataset
+&boxvr;&boxh;&boxh; src-train.txt
+&boxvr;&boxh;&boxh; src-val.txt
+&boxvr;&boxh;&boxh; source.txt
+&boxvr;&boxh;&boxh; source_raw.txt
+&boxvr;&boxh;&boxh; target.txt
+&boxvr;&boxh;&boxh; target_raw.txt
+&boxvr;&boxh;&boxh; tgt-train.txt
+&boxur;&boxh;&boxh; tgt-val.txt
+</code></pre>
+<h4>构建词库</h4>
+<p>同样创建 <code>.yaml</code> 配置文件，内容为</p>
+<pre><code class="language-yaml"># wenyan.yaml
+
+## Where the samples will be written
+save_data: run/wenyan
+## Where the vocab(s) will be written
+src_vocab: run/wenyan.vocab.src
+tgt_vocab: run/wenyan.vocab.tgt
+src_vocab_size: 200000
+tgt_vocab_size: 200000
+overwrite: True
+
+# Corpus opts:
+data:
+    corpus_1:
+        path_src: dataset/src-train.txt
+        path_tgt: dataset/tgt-train.txt
+    valid:
+        path_src: dataset/src-val.txt
+        path_tgt: dataset/tgt-val.txt
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+queue_size: 100
+bucket_size: 2048
+
+# Train batch
+batch_size: 32
+# Validation batch
+valid_batch_size: 16
+
+# Where to save the checkpoints
+save_model: run/model
+save_checkpoint_steps: 10000
+train_steps: 1000000
+valid_steps: 10000
+</code></pre>
+<ul>
+<li><code>queue_size</code> 为读取数据的消息队列大小</li>
+<li><code>bucket_size</code> 为读取数据的缓冲区大小，用于避免无法实时读取数据</li>
+<li><code>batch_size</code> 为训练过程中处理的批大小</li>
+<li><code>valid_batch_size</code> 为验证过程中处理的批大小</li>
+</ul>
+<pre><code class="language-sh">onmt_build_vocab -config wenyan.yaml -n_sample -1
+</code></pre>
+<p>同样使用该命令开始构建词库，将 <code>-n_sample</code> 指定为 <code>-1</code> 能让模型使用整个数据集的数据构建词库。可以使用 <code>head run/wenyan.vocab.src</code> 查看一下构建的词库：</p>
+<pre><code class="language-txt">，      2041007
+。      920182
+的      700401
+不      279935
+、      224914
+了      195770
+是      176242
+他      175822
+在      156216
+说      143227
+</code></pre>
+<h4>训练模型</h4>
+<p>使用 <code>onmt_train -config wenyan.yaml</code> 开始训练模型。</p>
+<p>由于数据集很大，训练模型需要非常长的时间，中途可能训练中断或卡死。由于在训练过程中保存了 <code>checkpoints</code>，也不需要重头训练，可以从保存的断点继续训练。可以使用以下的自动化脚本，将其保存为 <code>train.py</code>，就可以通过 <code>python train.py</code> 自动继续训练。</p>
+<pre><code class="language-py">import os
+
+model_root = 'run/wenyan'
+try:
+    checkpoints = [x for x in os.listdir(model_root) if x.endswith('.pt')]
+except FileNotFoundError:
+    os.mkdir(model_root)
+    checkpoints = [x for x in os.listdir(model_root) if x.endswith('.pt')]
+
+last_checkpoint = None
+if len(checkpoints) &gt; 0:
+    checkpoints = sorted(checkpoints, key=lambda x: int(x[:-3].split('_')[-1]))
+    last_checkpoint = checkpoints[-1]
+    last_checkpoint = os.path.join(model_root, last_checkpoint)
+
+if last_checkpoint is not None:
+    print('last_checkpoint', last_checkpoint, os.path.exists(last_checkpoint))
+    if isinstance(last_checkpoint, str) and os.path.exists(last_checkpoint):
+        # 中断后继续训练使用
+        os.system('onmt_train -config wenyan.yaml --train_from="%s"' % last_checkpoint)
+    else:
+        os.system('onmt_train -config wenyan.yaml')
+else:
+    os.system('onmt_train -config wenyan.yaml')
+</code></pre>
+<p>在 <code>.yaml</code> 文件中添加 <code>log_file</code> 可以将日志文件保存到相应目录，这里我没有添加，直接用终端中的输出数据分析。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>ACC 和 PPL 是自然语言处理中常用的指标，当然还有更好用的 BELU 等指标。可以看出训练过程收敛得非常快，PPL 迅速下降，ACC 也在第 20 个模型后保持稳定了，检查一下日志文件发现果然在第 23 个模型后学习率变成 0 了。这就说明不需要指定那么多的训练步骤，降低到 300000 可能是比较合适的。</p>
+<h4>模型预测</h4>
+<p>那么就选最后一个模型作为最终用于预测的模型，将其他模型全部删除。</p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;可以在 <code>.yaml</code> 文件中通过参数 <code>keep_checkpoint</code> 指定需要保存的模型数量，在训练过程中会自动删去多余的模型，节省存储空间。</p></div></p>
+<p>在目录中新建一个文本 <code>input.txt</code>，写入需要翻译的语句，每行一句话：</p>
+<pre><code class="language-txt">这样的事情是很难令人相信的。
+传说西北方有一座海岛，居住着神仙，留下这部书。
+可惜这本书的字已经看不清了。
+后来皇帝下旨找遍了天下具有智识的儒生。
+命令大臣在几十年里翻遍了所有的藏书。
+最后确定封面上写着《算法：C语言实现》。
+</code></pre>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;每句话以换行（<code>\n</code>）分隔，注意最后一行不能有空行，否则会报错。</p></div></p>
+<p>接着需要对输入文本分词，同样使用 <code>thulac</code>，新建一个 <code>input_sep.py</code>：</p>
+<pre><code class="language-py">import thulac
+
+sep_model = thulac.thulac(seg_only=True)
+sep_model.cut_f('input.txt', 'input_sep.txt')
+</code></pre>
+<p>运行 <code>python input_sep.py</code> 完成分词后，使用以下命令开始翻译：</p>
+<pre><code class="language-sh">onmt_translate --model 'run/model_final.pt' --src input_sep.txt --output output.txt
+</code></pre>
+<p>使用 <code>cat output.txt</code> 就可以看到输出了，结果非常生草🤣</p>
+<pre><code class="language-txt">如 此 者 ， 难 信 也 。
+传 西 北 有 一 海 岛 ， 居 神 仙 ， 留 此 书 。
+惜 此 书 已 不 明 矣 。
+后 诏 遍 遍 天 下 有 知 儒 生 。
+命 大 臣 数 十 年 ， 尽 有 书 藏 。
+最 后 定 上 书 《 法 术 法 》 。
+</code></pre>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://opennmt.net/OpenNMT-py/main.html">OpenNMT-py Documentation</a></li>
+<li><a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/">OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog</a></li>
+<li><a href="https://www.bilibili.com/video/BV1NL4y1t73c/">开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=机器翻译框架 OpenNMT 入门：快速上手&amp;url=https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/linux.html">Linux</a><a href="https://tseing.github.io/tag/opennmt.html">OpenNMT</a><a href="https://tseing.github.io/tag/nlp.html">NLP</a><a href="https://tseing.github.io/tag/python.html">Python</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜通过生成深度学习发现 RIPK1 抑制剂</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2022 年发表在 Nature Communications...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

@@ -5,22 +5,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/</loc>
-<lastmod>2022-12-12T22:06:47-00:00</lastmod>
+<lastmod>2022-12-16T16:29:57-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/about.html</loc>
-<lastmod>2022-12-12T22:06:47-00:00</lastmod>
+<lastmod>2022-12-16T16:29:57-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tseing.github.io/pages/shan-qiang-bian.html</loc>
-<lastmod>2022-12-12T22:06:47-00:00</lastmod>
+<lastmod>2022-12-16T16:29:57-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html</loc>
+<lastmod>2022-12-16T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -243,7 +250,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tseing.github.io/author/leo.html</loc>
-<lastmod>2022-12-03T00:00:00+08:06</lastmod>
+<lastmod>2022-12-16T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
