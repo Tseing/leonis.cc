@@ -351,8 +351,131 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
 &lt;li&gt;&lt;a href="https://opennmt.net/OpenNMT-py/main.html"&gt;OpenNMT-py Documentation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/"&gt;OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.bilibili.com/video/BV1NL4y1t73c/"&gt;开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry><entry><title>文献总结｜通过生成深度学习发现 RIPK1 抑制剂</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s41467-022-34692-w"&gt;doi.org/10.1038/s41467-022-34692-w&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Communications&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor&lt;/em&gt;，文章通过构建 RNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry><entry><title>文献总结｜DRlinker：使用深度强化学习优化连接片段设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-16-summary-doi.org/10.1021/acs.jcim.2c00982.html" rel="alternate"></link><published>2022-12-16T00:00:00+08:00</published><updated>2022-12-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-16:/sui-sui-nian/2022-12-16-summary-doi.org/10.1021/acs.jcim.2c00982.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c00982"&gt;doi.org/10.1021/acs.jcim.2c00982&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章从 SyntaLinker 分子连接模型受到启发，同样使用了强大的 Transformer 模型，但与之不同的是 DRlinker 还引入了强化学习的策略。使用 ChEMBL 数据训练 Transformer，得到先验模型，先验模型能够根据输入的分子片段给出新分子。接着引入基于策略的强化学习，通过打分函数等优化方法训练先验模型，得到代理模型。&lt;/p&gt;
+&lt;p&gt;也就是说，代理模型与先验模型具有相同的结构，先验模型首先初始化了代理模型，接着代理模型的强化学习策略使其输出满足打分函数的约束，所以最终的模型可以根据输入的分子片段给出满足指定约束的新分子。&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;由于 DRlinker 是对 SyntaLinker 的改进，所使用的数据也与 SyntaLinker 一致，数据都来源于 ChEMBL 数据库，处据处理方法也一致。从 ChEMBL 数据库得到的分子数据首先使用 Lipinski 五规则、假阳性化合物和 SA 分数等标准过滤掉其中不具有类药性的分子，接着使用 MMP 算法将分子切分为片段。&lt;/p&gt;
+&lt;p&gt;训练方法也与 SyntaLinker 一致，将切分的分子片段组合为 「片段 1，连接部分，片段 2，分子」的四部分数据，令 Transformer 模型完成将「片段 1，片段 2」转为分「分子」的 seq2seq 任务。&lt;/p&gt;
+&lt;h3 id="da-fen-han-shu"&gt;打分函数&lt;/h3&gt;
+&lt;p&gt;DRlinker 输出满足约束的新分子并完成不同任务是通过指定不同的打分函数决定的，打分函数决定了模型中强化学习过程中训练的方向，指产生的分子偏向于目标分子。&lt;/p&gt;
+&lt;p&gt;为了评估 DRlinker 完成不同任务的表现，文章中使用了以下几个打分函数：&lt;/p&gt;
+&lt;h4&gt;连接部分长度&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{LinkerLen}=
+    \begin{cases}
+        \max\left(0,1-\frac{1}{a}|\mathrm{LinkerLen}(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 是参数，&lt;span class="math"&gt;\(m\)&lt;/span&gt; 是生成的分子。&lt;/p&gt;
+&lt;h4&gt;log P&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_{\log P}=
+    \begin{cases}
+        \max\left(0,1-\frac{1}{a}|\log P(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;h4&gt;生物活性&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{activity}=
+    \begin{cases}
+        P_\mathrm{active}(m)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(P_\mathrm{active}\)&lt;/span&gt; 是 JAK3 活性的活性预测模型，通过随机森林预测分子活性。&lt;/p&gt;
+&lt;h4&gt;多目标约束&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{QED\&amp;amp;SA}=
+    \begin{cases}
+        \max(0,\mathrm{QED}(m)-0.1\times\mathrm{SA}(m))&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;多目标约束用于评估模型针对多个目标进行优化时的表现。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h4&gt;连接部分长度&lt;/h4&gt;
+&lt;p&gt;指定模型生成连接部分长度为 5 和 10 的新分子，结果为 subplot a，可以看出与 SyntaLinker 和 DeLinker 相比，DRLinker 生成的分子分布更加集中在 5 和 10，DRLinker 能够更加准确地生成目标分子。这是由于 SyntaLinker 不具有强化学习策略，是通过在训练数据连接部分长度为 5 的分子中添加例如 &lt;code&gt;L_5&lt;/code&gt; 的前缀标记，利用 Transformer 的自注意力机制分配权重，使生成分子连接部分的长度与 &lt;code&gt;L_n&lt;/code&gt; 的前缀标记相关。使用这种方法虽然能使分子大致符合目标，但显然是不能使分子准确满足目标。&lt;/p&gt;
+&lt;h4&gt;log P&lt;/h4&gt;
+&lt;p&gt;指定模型分别生成 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 为 1、2 和 3 的分子，分子分布为 subplot b，可以从先验模型生成分子到代理模型生成分子的分布中看出，经过强化学习，模型生成分子能够满足约束，集中在任务指定的 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 附近。subplot c 列举了模型生成的分子，也可以看出，随着目标 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 增大，生成分子的连接部分具有更多的芳香基团等疏水基团。&lt;/p&gt;
+&lt;h4&gt;生物活性与多目标约束&lt;/h4&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用活性预测模型的预测活性作为打分函数，可以指定生成活性较高的新分子，使用 RDKit 的评估指标分析生成分子，可以看出在生成的分子在满足合法性、新颖性等要求的同时，相对于 SyntaLinker 活性还有所提升（Impv）。&lt;/p&gt;
+&lt;p&gt;此外还可以使用优化 QED 和 SA 两种目标的打分函数，生成分子的 QED 与 SA 都有相应的提高，达到了使生成分子满足多目标约束的目的。&lt;/p&gt;
+&lt;p&gt;以上两种应用都不是通过指定要求的目标生成分子，而是指定了优化目标，可以理解为一种优化分子结构的方式，这是 SyntaLinker 所不具有的功能。&lt;/p&gt;
+&lt;h2 id="zong-jie"&gt;总结&lt;/h2&gt;
+&lt;p&gt;DRlinker 在 SyntaLinker 的基础上引入了强化学习策略，使模型能够根据脂定的打分函数生成满足目标约束的分子，从实验结果来看，模型不仅能够使生成的分子满足单一目标，还能满足多目标的约束。但强化学习的策略也存在一定问题，例如必须要根据目标构造打分函数，打分函数不同也会造成结果不同，打分函数没有严格的标准而经验成分较多等等。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RL"></category></entry><entry><title>文献总结｜通过生成深度学习发现 RIPK1 抑制剂</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s41467-022-34692-w"&gt;doi.org/10.1038/s41467-022-34692-w&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Communications&lt;/em&gt; 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 RNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;包括 RNN 在内的许多深度生成模型在生成分子方而都有很好的表现，但大部分模型的作用都是生成满足预定目标的最可能分子（基于目标）。基于 目标的模型依赖于目标函数，就很可能生成更符合目标函数（数值上更优）而实际不可用的分子，因此还需要大量的湿实验验证。&lt;/p&gt;
 &lt;p&gt;为了避免这一问题，文章构造了基于分布的 cRNN 模型，基于分布的模型能够生成与训练集化学分布相同的新分子，从而避免目标函数的影响。&lt;/p&gt;
@@ -452,7 +575,7 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="CRNN"></category></entry><entry><title>文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1186/s13321-020-00441-8.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-020-00441-8"&gt;doi.org/10.1186/s13321-020-00441-8&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;SMILES‑based deep generative scaffold decorator for de‑novo drug design&lt;/em&gt;，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;对先导化合物进行结构优化是药物设计中的重要步骤，利用深度学习手段对分子结构进行改造能够大大提升药物设计的效率。以往提出的结构改造模型有基于 SMILES 的双向 RNN 模型，其问题在于只能连接分子中的两个指定位点，也有基于图的深度模型，但需要消耗大量的计算资源和训练时间。&lt;/p&gt;
 &lt;p&gt;文章提出了一种用于分子结构改造的深度生成模型，首先由 RNN 模型生成分子骨架，再由改造模型在分子骨架中的改造位点上进行合适的改造，生成新的分子。&lt;/p&gt;
@@ -578,7 +701,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/79059379"&gt;Linux 下的 CUDA 安装和使用指南 - 知乎&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="CUDA"></category></entry><entry><title>文献总结｜使用课程学习改进从头药物设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html" rel="alternate"></link><published>2022-11-25T00:00:00+08:00</published><updated>2022-11-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-25:/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Machine Intelligence 上的一篇文章，文章原标题为 Improving De Novo Molecular Design with Curriculum Learning，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-022-00494-4"&gt;doi.org/10.1038/s42256-022-00494-4&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Improving De Novo Molecular Design with Curriculum Learning&lt;/em&gt;，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Improving De Novo Molecular Design with Curriculum Learning，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;强化学习是深度学习中的常用策略，而强化学习在面对较为复杂的任务时，奖励函数的计算将消耗大量资源，不仅效率低下，还有很大可能无法完成相应任务。课程学习是强化学习的一种替代方法，它将复杂任务分为连续的若干任务，通过这种方式节省了计算资源，同时模型也更容易学习简单的任务。&lt;/p&gt;
 &lt;p&gt;包括 REINVENT 在内的许多药物分子生成模型都使用了强化学习策略，其中的奖励函数通常包括例如分子对接打分和理化性质预测等复杂的因素，使用这样复杂的奖励函数，模型很难通过学习过程找到最优解，最终偏离预期目标。&lt;/p&gt;
@@ -684,7 +807,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry><entry><title>文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html" rel="alternate"></link><published>2022-11-20T00:00:00+08:00</published><updated>2022-11-20T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-20:/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.1c00469"&gt;doi.org/10.1021/acs.jcim.1c00469&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 LibINVENT: Reaction-based Generative Scaffold Decoration for in Silico Library Design，文章基于 RNN 与 RL 构建了能够对分子进行结构改造的模型，模型在经过分子片段数据的训练后，模型能够在分子相应改造位点上连接不同化学结构，是构建虚拟化合物库的有利工具。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;先导化合物优化的目的是优化掉那些阻止化合物成药的特征的同时，保留下化合物中符合预期的特征。由于预期活性常常与特定的分子骨架相关，可以把这种任务归结为保留特定的分子骨架，同时改变其他特定部分，最终使化合物满足成为候选药物的多种要求，该任务可以通过筛选具有相同母核的专一化合物库完成。&lt;/p&gt;
 &lt;p&gt;化合物库是具有一系列分子的集合，文章对其中的分子具有两个要求：&lt;/p&gt;
@@ -726,7 +849,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
 &lt;p&gt;最后使用具有多个（1~4）连接位点的分子骨架作为输入数据，得到了先前实验类似的结果，说明模型可以对具有不同连接位点的分子骨架进行结构改造。&lt;/p&gt;
 &lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
 &lt;p&gt;针对于基于特定目标对分子骨架进行结构优化的任务，文章构造了一种灵活的工具 LibINVENT。它能够快速生成具有可用于先导化合物优化且易于合成的化合物库。RL 策略能够让模型在目标的化学空间生成分子，能够满足多种特定目标。用户还可以灵活地设定任务，指定化学空间中需要目标区域，让模型生成指定的化合物库，这使得 LibINVENT 具有很大的应用前景。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry><entry><title>文献总结｜SyntaLinker：使用 Conditional Transformer 神经网络自动连接分子片段</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html" rel="alternate"></link><published>2022-11-14T00:00:00+08:00</published><updated>2022-11-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-14:/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Chemical Science 上的一篇文章，文章原标题为 SyntaLinker: automatic fragment linking with deep conditional transformer neural networks，文章将基于语义模型 Transformer 识别并连接分子片段，最终设计了一种分子片段连接工具 SyntaLinker，它能够有效完成有约束的分子片段连接任务。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1039/d0sc03126g"&gt;doi.org/10.1039/d0sc03126g&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Chemical Science&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;SyntaLinker: automatic fragment linking with deep conditional transformer neural networks&lt;/em&gt;，文章将基于语义模型 Transformer 识别并连接分子片段，最终设计了一种分子片段连接工具 SyntaLinker，它能够有效完成有约束的分子片段连接任务。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Chemical Science&lt;/em&gt; 上的一篇文章，文章原标题为 SyntaLinker: automatic fragment linking with deep conditional transformer neural networks，文章将基于语义模型 Transformer 识别并连接分子片段，最终设计了一种分子片段连接工具 SyntaLinker，它能够有效完成有约束的分子片段连接任务。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;基于片段的药物设计（Fragment-Based Drug Design , FBDD）是计算机辅助药物设计的一种基本手段，在药物设计中 FBDD 需要完成的任务包括&lt;/p&gt;
 &lt;ol&gt;
@@ -849,7 +972,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜使用强化学习和基于图的深度生成模型进行从头药物设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html" rel="alternate"></link><published>2022-11-05T00:00:00+08:00</published><updated>2022-11-05T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-11-05:/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 De Novo Drug Design Using Reinforcement Learning with Graph-Based Deep Generative Models，文章借鉴了 REINVENT 模型的强化学习策略，将其用于基于图的分子生成模型，得到了较好的结果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c00838"&gt;doi.org/10.1021/acs.jcim.2c00838&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;De Novo Drug Design Using Reinforcement Learning with Graph-Based Deep Generative Models&lt;/em&gt;，文章借鉴了 REINVENT 模型的强化学习策略，将其用于基于图的分子生成模型，得到了较好的结果。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 De Novo Drug Design Using Reinforcement Learning with Graph-Based Deep Generative Models，文章借鉴了 REINVENT 模型的强化学习策略，将其用于基于图的分子生成模型，得到了较好的结果。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;强化学习是机器学习中常用的一种策略，强化学习通过奖惩函数确定某环境下执行相应行为的优劣，从而做出决策。强化学习常常用来 fine-tune 深度生成模型，使其生成的分子逐渐向具有目标特征的分子靠近。&lt;/p&gt;
 &lt;p&gt;GraphINVENT 是基于图神经网络的分子生成模型，REINVENT 是使用强化学习和 RNN 基于序列的分子生成模型。文章从这两个模型中受到启发，将 GraphINVENT 基于图的分子生成模型与 REINVENT 的强化学习策略相结合，提出了本文的模型。&lt;/p&gt;
@@ -981,7 +1104,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category><category term="RL"></category></entry><entry><title>文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html" rel="alternate"></link><published>2022-10-29T00:00:00+08:00</published><updated>2022-10-29T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-29:/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Medicinal Chemistry 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery，文章改进了传统的遗传算法，使其在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jmedchem.2c01179"&gt;doi.org/10.1021/acs.jmedchem.2c01179&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Medicinal Chemistry&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery&lt;/em&gt;，文章改进了传统的遗传算法，ChemistGA 算法在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Medicinal Chemistry&lt;/em&gt; 上的一篇文章，文章原标题为 ChemistGA: A Chemical Synthesizable Accessible Molecular Generation Algorithm for Real-World Drug Discovery，文章改进了传统的遗传算法，ChemistGA 算法在药物分子生成的任务上具有比深度学习更优的表现效果。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;基于深度学习的分子生成方法大多都是数据驱动型的方法，这些模型通常需要大量的数量用于训练模型，从而生成特定结构和特征的分子。而传统的机器学习方法，例如遗传算法，不需要大量数据，也不需要经过训练过程，只需要少量的分子数据就能生成大量分子。因此，在深度学习席卷所有行业的今天，遗传算法等机器学习方法仍具有优势。&lt;/p&gt;
 &lt;p&gt;遗传算法借鉴了生物学中遗传的概念，从初始种群（初始数据）出发，在两两个体间发生数据的交叉、突变，得到子代，再以子代作为父代不断繁衍。在繁衍的过程中，引入适应函数，适应性函数衡量了个体是否适应环境（满足目标要求），并淘汰低于阈值的个体。繁衍与淘汰的过程不断迭代，直至满足结束条件（迭代次数或子代与父代间适应性函数的差异），最终的种群就是问题的最优解。&lt;/p&gt;
@@ -1120,7 +1243,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 &lt;em&gt;Randomized SMILES strings improve the quality of molecular generative models&lt;/em&gt;。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry><entry><title>文献总结｜通过随机化 SMILES 序列提升分子生成模型质量</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html" rel="alternate"></link><published>2022-10-21T00:00:00+08:00</published><updated>2022-10-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-21:/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2019 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2019 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-019-0393-0"&gt;doi.org/10.1186/s13321-019-0393-0&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。&lt;/p&gt;
@@ -2441,7 +2564,7 @@ $$$$&lt;/code&gt;&lt;/pre&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="碎碎念"></category><category term="RDKit"></category><category term="Python"></category></entry><entry><title>文献总结｜REINVENT 2.0：用于从头药物设计的 AI 工具</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html" rel="alternate"></link><published>2022-10-15T00:00:00+08:00</published><updated>2022-10-15T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-15:/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Chemical Information and Modeling 上的一篇 Application Note，文章原标题为 REINVENT 2.0: An AI Tool for De Novo Drug Design。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇 Application Note，文章原标题为 &lt;em&gt;REINVENT 2.0: An AI Tool for De Novo Drug Design&lt;/em&gt;。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;
+</content><category term="碎碎念"></category><category term="RDKit"></category><category term="Python"></category></entry><entry><title>文献总结｜REINVENT 2.0：用于从头药物设计的 AI 工具</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html" rel="alternate"></link><published>2022-10-15T00:00:00+08:00</published><updated>2022-10-15T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-15:/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Chemical Information and Modeling 上的一篇 Application Note，文章原标题为 REINVENT 2.0: An AI Tool for De Novo Drug Design。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇 Application Note，文章原标题为 REINVENT 2.0: An AI Tool for De Novo Drug Design。文章主要介绍了一种开源、便于使用的分子生成工具的原理及其使用案例。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.0c00915"&gt;doi.org/10.1021/acs.jcim.0c00915&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;目前的分子生成模型可以分为概率分布学习与目标主导的分子生成。概率分布学习旨在生成与特定分子集相类似的分子，而目标主导的分子生成则使用搜索算法，给出满足指定目标的分子，在此过程中，目标主导的分子生成没有在整个搜索空间中取样。&lt;/p&gt;
@@ -2538,7 +2661,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category><category term="RL"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 &lt;em&gt;Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning&lt;/em&gt;，于 2021 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category><category term="RL"></category></entry><entry><title>文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成</title><link href="https://tseing.github.io/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html" rel="alternate"></link><published>2022-10-08T00:00:00+08:00</published><updated>2022-10-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-10-08:/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html</id><summary type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 Nature Machine Intelligence 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍了来自浙江大学侯廷军老师的工作，文章原标题为 Multi-constraint molecular generation based on conditional transformer, knowledge distillation and reinforcement learning，于 2021 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上。文章基于 transformer 建立了分子生成模型，并借助知识蒸馏与强化学习算法，提出了一种新的分子生成模型，该模型能够顺利完成药物分子生成这样的多约束优化问题。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-021-00403-1"&gt;doi.org/10.1038/s42256-021-00403-1&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在药物分子生成的任务中，目标分子既需要有高类药性、低毒性，其结构又需要尽可多样和新颖，药物分子生成就是这样一个多约束优化问题。&lt;/p&gt;
@@ -2786,7 +2909,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;em&gt;ACS Central Science&lt;/em&gt; 上的一篇文献，文章原题目为 &lt;em&gt;Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks&lt;/em&gt;。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜使用循环神经网络为药物发现生成指定的分子库</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html" rel="alternate"></link><published>2022-09-30T00:00:00+08:00</published><updated>2022-09-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-30:/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html</id><summary type="html">&lt;p&gt;本文介绍 2018 年发表在 ACS Central Science 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文介绍 2018 年发表在 &lt;em&gt;ACS Central Science&lt;/em&gt; 上的一篇文献，文章原题目为 Generating Focused Molecule Libraries for Drug Discovery with Recurrent Neural Networks。文章利用基于 LSTM 的循环神经网络构建了分子生成模型，在输入具有特定活性化合物训练集后，该模型能够产生新分子库，新分子库中的许多分子具有与训练集相似的活性。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acscentsci.7b00512"&gt;doi.org/10.1021/acscentsci.7b00512&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;在通常的分子任务中，计算机需要完成&lt;/p&gt;
@@ -2954,7 +3077,7 @@ pptx by Marp
 &lt;img alt="page2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7688?authkey=ALYpzW-ZQ_VBXTU"/&gt;
 &lt;img alt="page3" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7689?authkey=ALYpzW-ZQ_VBXTU"/&gt;
 &lt;img alt="page4" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7690?authkey=ALYpzW-ZQ_VBXTU"/&gt;
-&lt;img alt="page5" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7691?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;</content><category term="碎碎念"></category><category term="Marp"></category><category term="Markdown"></category></entry><entry><title>文献总结｜从头药物设计中的深度学习方法</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" rel="alternate"></link><published>2022-09-21T00:00:00+08:00</published><updated>2022-09-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-21:/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html</id><summary type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural Biology 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 &lt;i&gt;Deep learning approaches for de novo drug design: An overview&lt;/i&gt;，发表在 &lt;i&gt;Current Opinion in Structural Biology&lt;/i&gt; 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;
+&lt;img alt="page5" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7691?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/p&gt;</content><category term="碎碎念"></category><category term="Marp"></category><category term="Markdown"></category></entry><entry><title>文献总结｜从头药物设计中的深度学习方法</title><link href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html" rel="alternate"></link><published>2022-09-21T00:00:00+08:00</published><updated>2022-09-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-09-21:/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html</id><summary type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 Current Opinion in Structural Biology 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 &lt;em&gt;Current Opinion in Structural Biology&lt;/em&gt; 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。&lt;/p&gt;
 &lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1016/j.sbi.2021.10.001"&gt;doi.org/10.1016/j.sbi.2021.10.001&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;从头药物设计（分子生成）的主要目标是从现有的化合物库中生成新颖且具有指定特征的分子。与虚拟筛选相比，虚拟筛选通过多种筛选方法不断缩小化合物范围，最终获得目标分子，而基于深度学习的生成模型则是通过总结和提取现有分子的特征，然后将其转换成新颖的化合物。&lt;/p&gt;
