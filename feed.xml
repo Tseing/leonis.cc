@@ -1,5 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-12-16T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>机器翻译框架 OpenNMT 入门：快速上手</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" rel="alternate"></link><published>2022-12-16T00:00:00+08:00</published><updated>2022-12-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-16:/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html</id><summary type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;</summary><content type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 &lt;code&gt;onmt&lt;/code&gt; 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2022-12-21T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>CS224n 自然语言处理第一节：简介与词向量</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-21-cs224n-lecture1.html" rel="alternate"></link><published>2022-12-21T00:00:00+08:00</published><updated>2022-12-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-21:/sui-sui-nian/2022-12-21-cs224n-lecture1.html</id><summary type="html">&lt;p&gt;CS224n Lecture 1: Introduction and Word Vectors&lt;/p&gt;</summary><content type="html">&lt;h2 id="one-hot-bian-ma"&gt;one-hot 编码&lt;/h2&gt;
+&lt;p&gt;在传统 NLP 中，词可以使用 one-hot 向量表示，&lt;strong&gt;one-hot&lt;/strong&gt; 指向量中只有一个 1，其余都是 0。例如词库为向量&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{vocab}=[\mathrm{hotel\ conference\ motel}]$$&lt;/div&gt;
+&lt;p&gt;那么单词的 one-hot 向量就是&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{motel}=[0\ 0\ 1]$$&lt;/div&gt;
+&lt;div class="math"&gt;$$\mathrm{hotel}=[1\ 0\ 0]$$&lt;/div&gt;
+&lt;p&gt;这样得到不同词向量是&lt;strong&gt;正交&lt;/strong&gt;的，无法判断词之间的相似性。&lt;/p&gt;
+&lt;h2 id="word2vec"&gt;word2vec&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;分布式语义&lt;/strong&gt;（distributional semantics）：一个词的语义由最常出现的邻近词决定。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;分布式语义是 NLP 中的一个基本概念，基于这个假设，我们可以通过上下文来表示指定的词，得到的词向量又称为&lt;strong&gt;词嵌入&lt;/strong&gt;（word embeddings）。&lt;/p&gt;
+&lt;p&gt;word2vec 是基于分布式语义得到词向量的一种重要方法，其基本设想是&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;拥有一个较大的语料数据库&lt;/li&gt;
+&lt;li&gt;文本中的每一个词都能通过向量表示&lt;/li&gt;
+&lt;li&gt;在文本中的位置 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 上，有中心词 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 和上下文词 &lt;span class="math"&gt;\(o\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;使用 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(o\)&lt;/span&gt; 的词向量相似性计算给定 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 时 &lt;span class="math"&gt;\(o\)&lt;/span&gt; 的概率&lt;/li&gt;
+&lt;li&gt;不断调整词向量直至&lt;dot&gt;最大化&lt;/dot&gt;该概率（最大似然法）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8285?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8285?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在文本中的位置 &lt;span class="math"&gt;\(t=1,\cdots,T\)&lt;/span&gt; 上，对中心词 &lt;span class="math"&gt;\(w_j\)&lt;/span&gt; 固定窗口大小为 &lt;span class="math"&gt;\(m\)&lt;/span&gt;，那么文本数据的似然为&lt;/p&gt;
+&lt;div class="math"&gt;$$L(\theta)=\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$&lt;/div&gt;
+&lt;p&gt;最大似然的目标就是 &lt;span class="math"&gt;\(\max L(\theta)\)&lt;/span&gt;，在这里取负对数将其转化为&lt;/p&gt;
+&lt;div class="math"&gt;$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$&lt;/div&gt;
+&lt;p&gt;优化目标就变为 &lt;span class="math"&gt;\(\min J(\theta)\)&lt;/span&gt;，更加符合最优化的习惯，这里的 &lt;span class="math"&gt;\(J(\theta)\)&lt;/span&gt; 就是 word2vec 的损失函数。&lt;/p&gt;
+&lt;p&gt;为了便于计算，当 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 为中心词时用 &lt;span class="math"&gt;\(v_w\)&lt;/span&gt; 表示，当 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 为上下文词时用 &lt;span class="math"&gt;\(u_w\)&lt;/span&gt; 表示。&lt;/p&gt;
+&lt;p&gt;{note begin}每一个词 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 都会具有两个不同的向量 &lt;span class="math"&gt;\(v_w\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(u_w\)&lt;/span&gt;，在计算结束后，这两个向量会非常相似，通常取这两个向量的平均得到词向量。{note end}&lt;/p&gt;
+&lt;p&gt;那么对于指定的中心词 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 和上下文词 &lt;span class="math"&gt;\(o\)&lt;/span&gt;，就有&lt;/p&gt;
+&lt;div class="math"&gt;$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$&lt;/div&gt;
+&lt;p&gt;该式可以与 softmax 函数类比：&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathrm{softmax}(x_i)=\frac{\exp(x_i)}{\sum_{j=1}^n\exp(x_j)}=p_i$$&lt;/div&gt;
+&lt;p&gt;其本质是将中心词 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 和上下文词 &lt;span class="math"&gt;\(o\)&lt;/span&gt; 的相似性 &lt;span class="math"&gt;\(u_o^Tv_c\)&lt;/span&gt; 转化为&lt;dot&gt;概率&lt;/dot&gt;形式。&lt;/p&gt;
+&lt;p&gt;采用梯度下降的方法实现 &lt;span class="math"&gt;\(\min J(\theta)\)&lt;/span&gt;，所以需要计算每个目标词 &lt;span class="math"&gt;\(v_c\)&lt;/span&gt; 的 &lt;span class="math"&gt;\(\frac{\partial}{\partial v_c}\log P(o|c)\)&lt;/span&gt;，推导过程如下：&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{align}
+    \frac{\partial}{\partial v_c}\log P(o|c)&amp;amp;=\frac{\partial}{\partial v_c}\log\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}\\
+    &amp;amp;=\frac{\partial}{\partial v_c}\left[\log \exp(u_o^Tv_c)-\log\sum_{w\in V}\exp(u_w^Tv_c)\right]\\
+    &amp;amp;=\frac{\partial}{\partial v_c}u_o^Tv_c-\frac{\partial}{\partial v_c}\log\sum_{w\in V}\exp(u_w^Tv_c)
+\end{align}$$&lt;/div&gt;
+&lt;p&gt;注意 &lt;span class="math"&gt;\(v_c\)&lt;/span&gt; 为向量，由向量求导法则 &lt;span class="math"&gt;\(\frac{\mathrm{d}Ax}{\mathrm{d}x}=A^T\)&lt;/span&gt;，可以得到&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{align}
+    \frac{\partial}{\partial v_c}\log P(o|c)&amp;amp;=u_o-\frac{\partial}{\partial v_c}\log\sum_{w\in V}\exp(u_w^Tv_c)\\
+    &amp;amp;=u_o-\frac{1}{\sum_{w\in V}\exp(u_w^Tv_c)}\left[\frac{\partial}{\partial v_c}\sum_{x\in V}\exp(u_x^Tv_c)\right]\\
+    &amp;amp;=u_o-\frac{1}{\sum_{w\in V}\exp(u_w^Tv_c)}\sum_{x\in V}\frac{\partial}{\partial v_c}\exp(u_x^Tv_c)\\
+    &amp;amp;=u_o-\frac{1}{\sum_{w\in V}\exp(u_w^Tv_c)}\sum_{x\in V}\exp(u_x^Tv_c)u_x\\
+    &amp;amp;=u_o-\sum_{x\in V}\frac{\exp(u_x^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}u_x\\
+    &amp;amp;=u_o-\sum_{x\in V}P(x|c)u_x
+\end{align}
+$$&lt;/div&gt;
+&lt;p&gt;实际上 &lt;span class="math"&gt;\(\sum_{x\in V}P(x|c)u_x\)&lt;/span&gt; 就是 &lt;span class="math"&gt;\(u_x\)&lt;/span&gt; 的期望，使用 softmax 的好处就在于能将最优化问题转化为最小化形如「观察值 &amp;ndash; 预测值」的误差。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1214/"&gt;CS224n: Natural Language Processing with Deep Learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="NLP"></category><category term="CS224n"></category></entry><entry><title>文献总结｜DRlinker：使用深度强化学习优化连接片段设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-18-summary-doi.org/10.1021/acs.jcim.2c00982.html" rel="alternate"></link><published>2022-12-18T00:00:00+08:00</published><updated>2022-12-18T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-18:/sui-sui-nian/2022-12-18-summary-doi.org/10.1021/acs.jcim.2c00982.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c00982"&gt;doi.org/10.1021/acs.jcim.2c00982&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章从 SyntaLinker 分子连接模型受到启发，同样使用了强大的 Transformer 模型，但与之不同的是 DRlinker 还引入了强化学习的策略。使用 ChEMBL 数据训练 Transformer，得到先验模型，先验模型能够根据输入的分子片段给出新分子。接着引入基于策略的强化学习，通过打分函数等优化方法训练先验模型，得到代理模型。&lt;/p&gt;
+&lt;p&gt;也就是说，代理模型与先验模型具有相同的结构，先验模型首先初始化了代理模型，接着代理模型的强化学习策略使其输出满足打分函数的约束，所以最终的模型可以根据输入的分子片段给出满足指定约束的新分子。&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;由于 DRlinker 是对 SyntaLinker 的改进，所使用的数据也与 SyntaLinker 一致，数据都来源于 ChEMBL 数据库，处据处理方法也一致。从 ChEMBL 数据库得到的分子数据首先使用 Lipinski 五规则、假阳性化合物和 SA 分数等标准过滤掉其中不具有类药性的分子，接着使用 MMP 算法将分子切分为片段。&lt;/p&gt;
+&lt;p&gt;训练方法也与 SyntaLinker 一致，将切分的分子片段组合为 「片段 1，连接部分，片段 2，分子」的四部分数据，令 Transformer 模型完成将「片段 1，片段 2」转为分「分子」的 seq2seq 任务。&lt;/p&gt;
+&lt;h3 id="da-fen-han-shu"&gt;打分函数&lt;/h3&gt;
+&lt;p&gt;DRlinker 输出满足约束的新分子并完成不同任务是通过指定不同的打分函数决定的，打分函数决定了模型中强化学习过程中训练的方向，指产生的分子偏向于目标分子。&lt;/p&gt;
+&lt;p&gt;为了评估 DRlinker 完成不同任务的表现，文章中使用了以下几个打分函数：&lt;/p&gt;
+&lt;h4&gt;连接部分长度&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{LinkerLen}=
+    \begin{cases}
+        \max\left(0,1-\frac{1}{a}|\mathrm{LinkerLen}(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 是参数，&lt;span class="math"&gt;\(m\)&lt;/span&gt; 是生成的分子。&lt;/p&gt;
+&lt;h4&gt;log P&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_{\log P}=
+    \begin{cases}
+        \max\left(0,1-\frac{1}{a}|\log P(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;h4&gt;生物活性&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{activity}=
+    \begin{cases}
+        P_\mathrm{active}(m)&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(P_\mathrm{active}\)&lt;/span&gt; 是 JAK3 活性的活性预测模型，通过随机森林预测分子活性。&lt;/p&gt;
+&lt;h4&gt;多目标约束&lt;/h4&gt;
+&lt;div class="math"&gt;$$\begin{equation}
+    \mathcal{R}(m)_\mathrm{QED\&amp;amp;SA}=
+    \begin{cases}
+        \max(0,\mathrm{QED}(m)-0.1\times\mathrm{SA}(m))&amp;amp;,\ \mathrm{if\ valid}\\
+        0&amp;amp;,\ \mathrm{if\ invalid}
+    \end{cases}
+\end{equation}$$&lt;/div&gt;
+&lt;p&gt;多目标约束用于评估模型针对多个目标进行优化时的表现。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h4&gt;连接部分长度&lt;/h4&gt;
+&lt;p&gt;指定模型生成连接部分长度为 5 和 10 的新分子，结果为 subplot a，可以看出与 SyntaLinker 和 DeLinker 相比，DRLinker 生成的分子分布更加集中在 5 和 10，DRLinker 能够更加准确地生成目标分子。这是由于 SyntaLinker 不具有强化学习策略，是通过在训练数据连接部分长度为 5 的分子中添加例如 &lt;code&gt;L_5&lt;/code&gt; 的前缀标记，利用 Transformer 的自注意力机制分配权重，使生成分子连接部分的长度与 &lt;code&gt;L_n&lt;/code&gt; 的前缀标记相关。使用这种方法虽然能使分子大致符合目标，但显然是不能使分子准确满足目标。&lt;/p&gt;
+&lt;h4&gt;log P&lt;/h4&gt;
+&lt;p&gt;指定模型分别生成 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 为 1、2 和 3 的分子，分子分布为 subplot b，可以从先验模型生成分子到代理模型生成分子的分布中看出，经过强化学习，模型生成分子能够满足约束，集中在任务指定的 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 附近。subplot c 列举了模型生成的分子，也可以看出，随着目标 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 增大，生成分子的连接部分具有更多的芳香基团等疏水基团。&lt;/p&gt;
+&lt;h4&gt;生物活性与多目标约束&lt;/h4&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用活性预测模型的预测活性作为打分函数，可以指定生成活性较高的新分子，使用 RDKit 的评估指标分析生成分子，可以看出在生成的分子在满足合法性、新颖性等要求的同时，相对于 SyntaLinker 活性还有所提升（Impv）。&lt;/p&gt;
+&lt;p&gt;此外还可以使用优化 QED 和 SA 两种目标的打分函数，生成分子的 QED 与 SA 都有相应的提高，达到了使生成分子满足多目标约束的目的。&lt;/p&gt;
+&lt;p&gt;以上两种应用都不是通过指定要求的目标生成分子，而是指定了优化目标，可以理解为一种优化分子结构的方式，这是 SyntaLinker 所不具有的功能。&lt;/p&gt;
+&lt;h2 id="zong-jie"&gt;总结&lt;/h2&gt;
+&lt;p&gt;DRlinker 在 SyntaLinker 的基础上引入了强化学习策略，使模型能够根据脂定的打分函数生成满足目标约束的分子，从实验结果来看，模型不仅能够使生成的分子满足单一目标，还能满足多目标的约束。但强化学习的策略也存在一定问题，例如必须要根据目标构造打分函数，打分函数不同也会造成结果不同，打分函数没有严格的标准而经验成分较多等等。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RL"></category></entry><entry><title>机器翻译框架 OpenNMT 入门：快速上手</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" rel="alternate"></link><published>2022-12-16T00:00:00+08:00</published><updated>2022-12-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-16:/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html</id><summary type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;</summary><content type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 &lt;code&gt;onmt&lt;/code&gt; 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;
 &lt;p&gt;OpenNMT 官方描述该框架为 an open source neural machine translation system，点进 &lt;a href="https://opennmt.net/"&gt;OpenNMT 的官网&lt;/a&gt;可以看到更多资料，因此也不需要我多描述。总结一下就是，OpenNMT 是搭建自然语言处理模型的开源框架，其中自然包括常见的 RNN 和 Transformer 等模型。如果在自然语言处理方面有需要，OpenNMT 绝对是一个轻量有效的框架。&lt;/p&gt;
 &lt;p&gt;OpenNMT 的中文学习资料较少，于是我只能参考&lt;a href="https://opennmt.net/OpenNMT-py/main.html"&gt;官方文档&lt;/a&gt;学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。&lt;/p&gt;
 &lt;h2 id="zhun-bei-gong-zuo"&gt;准备工作&lt;/h2&gt;
@@ -351,130 +591,7 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
 &lt;li&gt;&lt;a href="https://opennmt.net/OpenNMT-py/main.html"&gt;OpenNMT-py Documentation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/"&gt;OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.bilibili.com/video/BV1NL4y1t73c/"&gt;开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry><entry><title>文献总结｜DRlinker：使用深度强化学习优化连接片段设计</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-16-summary-doi.org/10.1021/acs.jcim.2c00982.html" rel="alternate"></link><published>2022-12-16T00:00:00+08:00</published><updated>2022-12-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-16:/sui-sui-nian/2022-12-16-summary-doi.org/10.1021/acs.jcim.2c00982.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c00982"&gt;doi.org/10.1021/acs.jcim.2c00982&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。&lt;/p&gt;
-&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章从 SyntaLinker 分子连接模型受到启发，同样使用了强大的 Transformer 模型，但与之不同的是 DRlinker 还引入了强化学习的策略。使用 ChEMBL 数据训练 Transformer，得到先验模型，先验模型能够根据输入的分子片段给出新分子。接着引入基于策略的强化学习，通过打分函数等优化方法训练先验模型，得到代理模型。&lt;/p&gt;
-&lt;p&gt;也就是说，代理模型与先验模型具有相同的结构，先验模型首先初始化了代理模型，接着代理模型的强化学习策略使其输出满足打分函数的约束，所以最终的模型可以根据输入的分子片段给出满足指定约束的新分子。&lt;/p&gt;
-&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;由于 DRlinker 是对 SyntaLinker 的改进，所使用的数据也与 SyntaLinker 一致，数据都来源于 ChEMBL 数据库，处据处理方法也一致。从 ChEMBL 数据库得到的分子数据首先使用 Lipinski 五规则、假阳性化合物和 SA 分数等标准过滤掉其中不具有类药性的分子，接着使用 MMP 算法将分子切分为片段。&lt;/p&gt;
-&lt;p&gt;训练方法也与 SyntaLinker 一致，将切分的分子片段组合为 「片段 1，连接部分，片段 2，分子」的四部分数据，令 Transformer 模型完成将「片段 1，片段 2」转为分「分子」的 seq2seq 任务。&lt;/p&gt;
-&lt;h3 id="da-fen-han-shu"&gt;打分函数&lt;/h3&gt;
-&lt;p&gt;DRlinker 输出满足约束的新分子并完成不同任务是通过指定不同的打分函数决定的，打分函数决定了模型中强化学习过程中训练的方向，指产生的分子偏向于目标分子。&lt;/p&gt;
-&lt;p&gt;为了评估 DRlinker 完成不同任务的表现，文章中使用了以下几个打分函数：&lt;/p&gt;
-&lt;h4&gt;连接部分长度&lt;/h4&gt;
-&lt;div class="math"&gt;$$\begin{equation}
-    \mathcal{R}(m)_\mathrm{LinkerLen}=
-    \begin{cases}
-        \max\left(0,1-\frac{1}{a}|\mathrm{LinkerLen}(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
-        0&amp;amp;,\ \mathrm{if\ invalid}
-    \end{cases}
-\end{equation}$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 是参数，&lt;span class="math"&gt;\(m\)&lt;/span&gt; 是生成的分子。&lt;/p&gt;
-&lt;h4&gt;log P&lt;/h4&gt;
-&lt;div class="math"&gt;$$\begin{equation}
-    \mathcal{R}(m)_{\log P}=
-    \begin{cases}
-        \max\left(0,1-\frac{1}{a}|\log P(m)-\mathrm{Target}|\right)&amp;amp;,\ \mathrm{if\ valid}\\
-        0&amp;amp;,\ \mathrm{if\ invalid}
-    \end{cases}
-\end{equation}$$&lt;/div&gt;
-&lt;h4&gt;生物活性&lt;/h4&gt;
-&lt;div class="math"&gt;$$\begin{equation}
-    \mathcal{R}(m)_\mathrm{activity}=
-    \begin{cases}
-        P_\mathrm{active}(m)&amp;amp;,\ \mathrm{if\ valid}\\
-        0&amp;amp;,\ \mathrm{if\ invalid}
-    \end{cases}
-\end{equation}$$&lt;/div&gt;
-&lt;p&gt;&lt;span class="math"&gt;\(P_\mathrm{active}\)&lt;/span&gt; 是 JAK3 活性的活性预测模型，通过随机森林预测分子活性。&lt;/p&gt;
-&lt;h4&gt;多目标约束&lt;/h4&gt;
-&lt;div class="math"&gt;$$\begin{equation}
-    \mathcal{R}(m)_\mathrm{QED\&amp;amp;SA}=
-    \begin{cases}
-        \max(0,\mathrm{QED}(m)-0.1\times\mathrm{SA}(m))&amp;amp;,\ \mathrm{if\ valid}\\
-        0&amp;amp;,\ \mathrm{if\ invalid}
-    \end{cases}
-\end{equation}$$&lt;/div&gt;
-&lt;p&gt;多目标约束用于评估模型针对多个目标进行优化时的表现。&lt;/p&gt;
-&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h4&gt;连接部分长度&lt;/h4&gt;
-&lt;p&gt;指定模型生成连接部分长度为 5 和 10 的新分子，结果为 subplot a，可以看出与 SyntaLinker 和 DeLinker 相比，DRLinker 生成的分子分布更加集中在 5 和 10，DRLinker 能够更加准确地生成目标分子。这是由于 SyntaLinker 不具有强化学习策略，是通过在训练数据连接部分长度为 5 的分子中添加例如 &lt;code&gt;L_5&lt;/code&gt; 的前缀标记，利用 Transformer 的自注意力机制分配权重，使生成分子连接部分的长度与 &lt;code&gt;L_n&lt;/code&gt; 的前缀标记相关。使用这种方法虽然能使分子大致符合目标，但显然是不能使分子准确满足目标。&lt;/p&gt;
-&lt;h4&gt;log P&lt;/h4&gt;
-&lt;p&gt;指定模型分别生成 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 为 1、2 和 3 的分子，分子分布为 subplot b，可以从先验模型生成分子到代理模型生成分子的分布中看出，经过强化学习，模型生成分子能够满足约束，集中在任务指定的 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 附近。subplot c 列举了模型生成的分子，也可以看出，随着目标 &lt;span class="math"&gt;\(\log P\)&lt;/span&gt; 增大，生成分子的连接部分具有更多的芳香基团等疏水基团。&lt;/p&gt;
-&lt;h4&gt;生物活性与多目标约束&lt;/h4&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;使用活性预测模型的预测活性作为打分函数，可以指定生成活性较高的新分子，使用 RDKit 的评估指标分析生成分子，可以看出在生成的分子在满足合法性、新颖性等要求的同时，相对于 SyntaLinker 活性还有所提升（Impv）。&lt;/p&gt;
-&lt;p&gt;此外还可以使用优化 QED 和 SA 两种目标的打分函数，生成分子的 QED 与 SA 都有相应的提高，达到了使生成分子满足多目标约束的目的。&lt;/p&gt;
-&lt;p&gt;以上两种应用都不是通过指定要求的目标生成分子，而是指定了优化目标，可以理解为一种优化分子结构的方式，这是 SyntaLinker 所不具有的功能。&lt;/p&gt;
-&lt;h2 id="zong-jie"&gt;总结&lt;/h2&gt;
-&lt;p&gt;DRlinker 在 SyntaLinker 的基础上引入了强化学习策略，使模型能够根据脂定的打分函数生成满足目标约束的分子，从实验结果来看，模型不仅能够使生成的分子满足单一目标，还能满足多目标的约束。但强化学习的策略也存在一定问题，例如必须要根据目标构造打分函数，打分函数不同也会造成结果不同，打分函数没有严格的标准而经验成分较多等等。&lt;/p&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RL"></category></entry><entry><title>文献总结｜通过生成深度学习发现 RIPK1 抑制剂</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s41467-022-34692-w"&gt;doi.org/10.1038/s41467-022-34692-w&lt;/a&gt;&lt;/p&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry><entry><title>文献总结｜通过生成深度学习发现 RIPK1 抑制剂</title><link href="https://tseing.github.io/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="alternate"></link><published>2022-12-03T00:00:00+08:00</published><updated>2022-12-03T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-12-03:/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s41467-022-34692-w"&gt;doi.org/10.1038/s41467-022-34692-w&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Communications&lt;/em&gt; 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 RNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。&lt;/p&gt;
 &lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
 &lt;p&gt;包括 RNN 在内的许多深度生成模型在生成分子方而都有很好的表现，但大部分模型的作用都是生成满足预定目标的最可能分子（基于目标）。基于 目标的模型依赖于目标函数，就很可能生成更符合目标函数（数值上更优）而实际不可用的分子，因此还需要大量的湿实验验证。&lt;/p&gt;
