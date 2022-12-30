@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜从头药物设计和生成模型</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://tseing.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://tseing.github.io/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://tseing.github.io/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://tseing.github.io/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <!-- <style>
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+SC:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Noto+Serif+KR:wght@700&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Livvic&display=swap');
+    @import url('https://fonts.lug.ustc.edu.cn/css2?family=Ubuntu+Mono&display=swap');
+  </style> -->
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- load fonts -->
+  <!-- Noto Sans SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@4.5.12/700.min.css">
+  <!-- Noto Sans KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-kr@4.5.12/700.min.css">
+  <!-- Noto Serif SC -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@4.5.12/700.min.css">
+  <!-- Noto Serif KR -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@4.5.13/700.min.css">
+  <!-- Livvic -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/livvic@4.5.11/400.min.css">
+  <!-- Ubuntu Mono -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@openfonts/ubuntu-mono_all@1.44.2/index.css">
+  <!-- Cardo -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/700.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cardo@4.5.9/400-italic.min.css">
+  <!-- Fira Sans -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/400.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/500.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-sans@4.5.10/700.min.css">
+  <!-- awesome-font icon -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="本文介绍于 2021 年发表在 Drug Discovery Today 上的一篇综述，文章原标题为 De novo molecular design and generative...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="Review">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜从头药物设计和生成模型"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2021 年发表在 Drug Discovery Today 上的一篇综述，文章原标题为 De novo molecular design and generative..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-12-25 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Review"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜从头药物设计和生成模型",
+  "headline": "文献总结｜从头药物设计和生成模型",
+  "datePublished": "2022-12-25 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://tseing.github.io/author/leo.html"
+  },
+  "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html",
+  "description": "本文介绍于 2021 年发表在 Drug Discovery Today 上的一篇综述，文章原标题为 De novo molecular design and generative..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://tseing.github.io/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://tseing.github.io/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://tseing.github.io/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://tseing.github.io/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://tseing.github.io/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://tseing.github.io/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://tseing.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜从头药物设计和生成模型</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://tseing.github.io/author/leo.html">Leo</a>
+            | <time datetime="2022年 12月25日">2022年 12月25日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#yin-yan" title="引言">引言</a></li><li><a class="toc-href" href="#ping-gu-zhi-biao" title="评估指标">评估指标</a></li><li><a class="toc-href" href="#fen-zi-miao-shu-yu-sheng-cheng" title="分子描述与生成">分子描述与生成</a><ul><li><a class="toc-href" href="#ji-yu-yuan-zi" title="基于原子">基于原子</a></li><li><a class="toc-href" href="#ji-yu-pian-duan" title="基于片段">基于片段</a></li><li><a class="toc-href" href="#ji-yu-fan-ying" title="基于反应">基于反应</a></li></ul></li><li><a class="toc-href" href="#tiao-zhan-yu-qian-jing_1" title="挑战与前景">挑战与前景</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1016/j.drudis.2021.05.019">doi.org/10.1016/j.drudis.2021.05.019</a></p>
+<p>本文介绍于 2021 年发表在 <em>Drug Discovery Today</em> 上的一篇综述，文章原标题为 De novo molecular design and generative models，文章综述了分子生成模型在药物分子设计中的应用，特别介绍了用于从头药物设计的不同分子生成方法以及未来的前景。</p>
+<h2 id="yin-yan">引言</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8417?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8417?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>传统的虚拟筛选方法是对已经获得到化学分子进行评估，确定具有活性的分子。而分子生成的目标与此不同，分子生成是需要在从头药物设计中生成用于虚拟筛选的化学结构。</p>
+<p>在化学空间中分散着大量的目标分子，分子生成模型需要利用算法通过化学空间，在具有最优目标特征的目标化学空间上生成需要的化学结构。由于在化学空间中具有许多目标化学空间，分子生成模型的一个关键问题就是如何去平衡探索更多化学空间而生成更多新分子和利用已有的局部最优化学空间。</p>
+<h2 id="ping-gu-zhi-biao">评估指标</h2>
+<p>分子生成模型常常使用优化分子的特定性质作为生成任务的目标，例如优化分子的类药性（QED）和脂水分配系数等，但这样的指标不能用于全面评估分子生成的结果。针对于分子生成任务，目前有两种标准的评估指标：</p>
+<ol>
+<li>Molecular Sets（MOSES）评估：用于评估生成分子的分布以及合法性、独特性、分子片段多样性等，可以用于将生成分子的化学空间与已知化学空间进行对比，适用于多种分子生成任务；</li>
+<li>GuacaMol 评估：除了具有针对生成分子分布的评估，还可以用于评估目标导向的分子生成任务。</li>
+</ol>
+<h2 id="fen-zi-miao-shu-yu-sheng-cheng">分子描述与生成</h2>
+<p>分子生成任务中的分子通常可以以 SMILES 和基于图的表示两种类型方式描述。SMILES 将分子描述为文本序列，虽然有利于使用自然语言处理中的许多方法进行处理，但将分子转化为文本序列时丢失了许多几何信息，而且使用 SMILES 数据训练模型时，生成模型还学习到了 SMILES 语法和语义这一类信息，而没有学习到更为基本的分子结构信息。基于图的分子描述形式在本质上更接近分子的化学结构，但处理这种描述形式的分子需要更大算法且处理方法有限。</p>
+<p>除上述分子描述形式的不同，分子生成的方法还可以细分为基于原子、基于片段和基于反应三种形式。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8418?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8418?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="ji-yu-yuan-zi">基于原子</h3>
+<p>基于原子的生成方法逐个原子生成分子，除了 SMILES 语法等约束以外几乎没有额外的分子知识，是一种较为简单的分子生成方法。</p>
+<p>例如在遗传算法中，可以交叉两种分子中的若干个原子生成新分子。或是在 RNN 中，通过模型训练过程中学习到的权重，指定原子后得到后续原子，再将后续原子作为输入，直至生成整个分子。由于这种方法是通过学习隐藏的特征生成分子，随机性很大，常常会使用强化学习的方法使生成分子更有专一性。</p>
+<h3 id="ji-yu-pian-duan">基于片段</h3>
+<p>使用一定的规则将分子分割为分子片段，基于片段的分子生成将分子视作片段的集合，这种方法在探索化学空间时利用了分子片段的约束，能够更好地保留训练数据中的子结构。</p>
+<p>例如在遗传算法或 RNN 模型中，模型生成分子的原理没有改变，但遗传算法在交叉两种分子时交叉的是属于某片段的若干原子，RNN 模型除了具有基于原子方法中的权重以外，还学习到了通过片段结构组织若干原子的权重，在获取分子特征上更具优势。</p>
+<h3 id="ji-yu-fan-ying">基于反应</h3>
+<p>基于反应的分子生成是一种基于规则的方法，基于数据库数据或是使用逆合成模型，将分子拆分为化学反应片段，将其作为训练数据。</p>
+<p>在分子生成过程中，模型以不具有目标分子性质但可获得的反应物为原料，通过多步的化学反应最终得到目标分子。这种模型通常使用强化学习的方法，实现目标优化，在分子可合成性的表现很好。但这种模型的一大缺陷在于需要人工制定反应模版，这大大限制了其应用。</p>
+<h2 id="tiao-zhan-yu-qian-jing_1">挑战与前景</h2>
+<p>药物化学中常用的设计策略是固定分子的特定结构不变，对分子结构进行改造，这有利于研究分子的构效关系，这种设计策略在分子生成任务中可以理解为在局部最优化学空间附近进行探索。</p>
+<p>在分子生成中实现这种分子改造，目前采取的两种思路是基于分子的知识改造分子和生成大量分子后过滤掉具有非目标结构的分子。相比之下，前一种方式更具有效率而且能生成更符合目标的分子，是目前研究的方向。基于图的分子描述形式能够更直接地学习到所需要的分子知识，文本形式的分子描述需要更好地提取出这种分子知识。</p>
+<p>分子生成的结果不能以单一指标衡量，药物分子的设计也不能只考虑单一特征，分子生成通常是多目标优化的任务。但实际中分子生成模型针对于多目标任务的表现并不好，这主要是由于针对这种多目标优化任务与药物成药性还有一定偏差。所以尽管有些模型在数值上表现更好，但无法真正用于药物设计，研究新的评估指标是解决这一问题的重要方向。</p>
+<p>文章还提出了以下几个未来重要研究方向：</p>
+<ol>
+<li>继续改进目前的模型，通过算法上的改进提高生成目标分子的成功率；</li>
+<li>发展专门的生成模型，例如针对于 3D 蛋白结合位点 3D 空间匹配的模型；</li>
+<li>研究可解释性的模型，用于分子生成的深度学习模型仍被视为黑箱，药物化学家需要通过可解释性模型给出的知识指导药物设计。</li>
+</ol>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜从头药物设计和生成模型&amp;url=https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://tseing.github.io/tag/literature-summary.html">Literature Summary</a><a href="https://tseing.github.io/tag/cadd.html">CADD</a><a href="https://tseing.github.io/tag/review.html">Review</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://tseing.github.io/images/avatar.jpeg" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://tseing.github.io/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about artificial intelligence isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a href="https://tseing.github.io"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-12-21-cs224n-lecture1.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">CS224n 自然语言处理第一节：简介与词向量</h2>
+                            <p class="post-nav-excerpt">CS224n Lecture 1: Introduction and Word Vectors</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://tseing.github.io/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://tseing.github.io/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://tseing.github.io/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
