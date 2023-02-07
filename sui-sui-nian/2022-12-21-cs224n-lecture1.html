@@ -197,8 +197,8 @@
 <p>word2vec 是基于分布式语义得到词向量的一种重要方法，其基本设想是</p>
 <ul>
 <li>拥有一个较大的语料数据库</li>
-<li>文本中的每一个词都能通过向量表示</li>
-<li>在文本中的位置 <span class="math">\(t\)</span> 上，有中心词 <span class="math">\(c\)</span> 和上下文词 <span class="math">\(o\)</span></li>
+<li>文本中的每一个词都能通过向量表示，语义相似的词具有相似的向量</li>
+<li>在文本中的位置 <span class="math">\(t\)</span> 上，有中心词 <span class="math">\(c\)</span> 和上下文词 <span class="math">\(o\)</span>（为了简化计算，<span class="math">\(c\)</span> 对应的 <span class="math">\(o\)</span> 通常由窗口 <span class="math">\(m\)</span> 决定）</li>
 <li>使用 <span class="math">\(c\)</span> 和 <span class="math">\(o\)</span> 的词向量相似性计算给定 <span class="math">\(c\)</span> 时 <span class="math">\(o\)</span> 的概率</li>
 <li>不断调整词向量直至<dot>最大化</dot>该概率（最大似然法）</li>
 </ul>
@@ -208,14 +208,14 @@
 <p>最大似然的目标就是 <span class="math">\(\max L(\theta)\)</span>，在这里取负对数将其转化为</p>
 <div class="math">$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$</div>
 <p>优化目标就变为 <span class="math">\(\min J(\theta)\)</span>，更加符合最优化的习惯，这里的 <span class="math">\(J(\theta)\)</span> 就是 word2vec 的损失函数。</p>
-<p>为了便于计算，当 <span class="math">\(w\)</span> 为中心词时用 <span class="math">\(v_w\)</span> 表示，当 <span class="math">\(w\)</span> 为上下文词时用 <span class="math">\(u_w\)</span> 表示。</p>
+<p><span class="math">\(J(\theta)\)</span> 中的条件概率一项如何计算呢？这里为了便于计算，当 <span class="math">\(w\)</span> 为中心词时用 <span class="math">\(v_w\)</span> 表示，当 <span class="math">\(w\)</span> 为上下文词时用 <span class="math">\(u_w\)</span> 表示。</p>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;每一个词 <span class="math">\(w\)</span> 都会具有两个不同的向量 <span class="math">\(v_w\)</span> 和 <span class="math">\(u_w\)</span>，在计算结束后，这两个向量会非常相似，通常取这两个向量的平均得到词向量。</p></div></p>
-<p>那么对于指定的中心词 <span class="math">\(c\)</span> 和上下文词 <span class="math">\(o\)</span>，就有</p>
+<p>那么对于任意指定的中心词 <span class="math">\(c\)</span> 和相应的上下文词 <span class="math">\(o\)</span>，就有条件概率</p>
 <div class="math">$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$</div>
-<p>该式可以与 softmax 函数类比：</p>
+<p>该条件概率同时也表示当两个词的向量点积越大，两个词临近的概率 <span class="math">\(P(o|c)\)</span> 越大，这正是 word2vec 的基本思想。该式可以与 softmax 函数类比：</p>
 <div class="math">$$\mathrm{softmax}(x_i)=\frac{\exp(x_i)}{\sum_{j=1}^n\exp(x_j)}=p_i$$</div>
-<p>其本质是将中心词 <span class="math">\(c\)</span> 和上下文词 <span class="math">\(o\)</span> 的相似性 <span class="math">\(u_o^Tv_c\)</span> 转化为<dot>概率</dot>形式。</p>
-<p>采用梯度下降的方法实现 <span class="math">\(\min J(\theta)\)</span>，所以需要计算每个目标词 <span class="math">\(v_c\)</span> 的 <span class="math">\(\frac{\partial}{\partial v_c}\log P(o|c)\)</span>，推导过程如下：</p>
+<p>其本质就是将中心词 <span class="math">\(c\)</span> 和上下文词 <span class="math">\(o\)</span> 的相似性 <span class="math">\(u_o^Tv_c\)</span> 转化为<dot>概率</dot>形式（非负且和为 1）。</p>
+<p>在得到 <span class="math">\(P(o|c)\)</span> 后，就可以采用梯度下降的方法实现 <span class="math">\(\min J(\theta)\)</span>，所以需要计算每个目标词 <span class="math">\(v_c\)</span> 的 <span class="math">\(\frac{\partial}{\partial v_c}\log P(o|c)\)</span>，推导过程如下：</p>
 <div class="math">$$\begin{align}
     \frac{\partial}{\partial v_c}\log P(o|c)&amp;=\frac{\partial}{\partial v_c}\log\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}\\
     &amp;=\frac{\partial}{\partial v_c}\left[\log \exp(u_o^Tv_c)-\log\sum_{w\in V}\exp(u_w^Tv_c)\right]\\
