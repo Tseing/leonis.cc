@@ -2,19 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2023-02-08T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>CS224n 自然语言处理第二节: 词向量与词义感知</title><link href="https://tseing.github.io/sui-sui-nian/2023-02-08-cs224n-lecture2.html" rel="alternate"></link><published>2023-02-08T00:00:00+08:00</published><updated>2023-02-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2023-02-08:/sui-sui-nian/2023-02-08-cs224n-lecture2.html</id><summary type="html">&lt;p&gt;CS224n Lecture 2: Word Vectors, Word Senses, and Neural Classifiers&lt;/p&gt;</summary><content type="html">&lt;h2 id="word2vec-de-ji-suan"&gt;word2vec 的计算&lt;/h2&gt;
 &lt;p&gt;在前一节中，介绍了 word2vec 的 Skip-grams 模式，即通过中心词预测上下文词的工作方式，接下来使用该方式计算词向量，具体步骤包括&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;初始化词向量（普遍使用 one-hot 编码）&lt;/p&gt;
+&lt;li&gt;初始化词向量（普遍使用 one-hot 编码）&lt;/li&gt;
+&lt;li&gt;计算每个词的条件概率
+   &lt;div class="math"&gt;$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;计算每个词的条件概率&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;通过迭代优化的方法（梯度下降、随机梯度下降），改变词向量的值，最小化损失函数
+   &lt;div class="math"&gt;$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$&lt;/div&gt;
+   最终得到基于分布式语义的词向量结果。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="math"&gt;$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;通过迭代优化的方法（梯度下降、随机梯度下降），改变词向量的值，最小化损失函数&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="math"&gt;$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$&lt;/div&gt;
-&lt;p&gt;最终得到基于分布式语义的词向量结果。&lt;/p&gt;
 &lt;h3 id="fu-cai-yang"&gt;负采样&lt;/h3&gt;
 &lt;p&gt;计算 &lt;span class="math"&gt;\(\sum_{w\in V}\exp(u_w^Tv_c)\)&lt;/span&gt; 具有巨大的开销，负采样是一种优化词向量计算效率的一种方法，负采样的思路是将由中心词预测多个上下文词的多分类问题转化为二分类问题，即判断目标词是否为中心词。&lt;/p&gt;
 &lt;p&gt;首先定义 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 为词对 &lt;span class="math"&gt;\((c,o)\)&lt;/span&gt; 的集合（中心词 center，上下文 outside），那么对于任意词对 &lt;span class="math"&gt;\((c,w)\)&lt;/span&gt;，它们之间互为上下文的概率为&lt;/p&gt;
@@ -32,8 +27,8 @@
 &lt;h2 id="gong-xian-ju-zhen_1"&gt;共现矩阵&lt;/h2&gt;
 &lt;p&gt;与 word2vec 利用概率预测得到词向量不同，共现矩阵是一种通过直接计数得到词向量的方法。设定一个大小为 &lt;span class="math"&gt;\(m\)&lt;/span&gt; 的窗口，让该窗口经过语料中的所有中心词，并统计所有中心词所属窗口中不同上下文词的数量，将结果列为表格，就是一个 &lt;span class="math"&gt;\(|W|\times |W|\)&lt;/span&gt; 的矩阵，称为共现矩阵， &lt;span class="math"&gt;\(|W|\)&lt;/span&gt; 为语料中的词汇数量。在共现矩阵中，元素 &lt;span class="math"&gt;\(x_{ij}\)&lt;/span&gt; 就表示词 &lt;span class="math"&gt;\(w_j\)&lt;/span&gt; 作为中心词 &lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 上下文词的数量。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;I like deep learning.
-I like NLP.
+&lt;p&gt;I like deep learning.&lt;br/&gt;
+I like NLP.&lt;br/&gt;
 I enjoy flying.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;例如以上三句话构成的语料，设定窗口大小为 1，可以得到以下共现矩阵：&lt;/p&gt;

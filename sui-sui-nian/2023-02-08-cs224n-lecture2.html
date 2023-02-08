@@ -185,19 +185,14 @@
                 <h2 id="word2vec-de-ji-suan">word2vec 的计算</h2>
 <p>在前一节中，介绍了 word2vec 的 Skip-grams 模式，即通过中心词预测上下文词的工作方式，接下来使用该方式计算词向量，具体步骤包括</p>
 <ol>
-<li>
-<p>初始化词向量（普遍使用 one-hot 编码）</p>
+<li>初始化词向量（普遍使用 one-hot 编码）</li>
+<li>计算每个词的条件概率
+   <div class="math">$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$</div>
 </li>
-<li>
-<p>计算每个词的条件概率</p>
-</li>
+<li>通过迭代优化的方法（梯度下降、随机梯度下降），改变词向量的值，最小化损失函数
+   <div class="math">$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$</div>
+   最终得到基于分布式语义的词向量结果。</li>
 </ol>
-<div class="math">$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$</div>
-<ol>
-<li>通过迭代优化的方法（梯度下降、随机梯度下降），改变词向量的值，最小化损失函数</li>
-</ol>
-<div class="math">$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$</div>
-<p>最终得到基于分布式语义的词向量结果。</p>
 <h3 id="fu-cai-yang">负采样</h3>
 <p>计算 <span class="math">\(\sum_{w\in V}\exp(u_w^Tv_c)\)</span> 具有巨大的开销，负采样是一种优化词向量计算效率的一种方法，负采样的思路是将由中心词预测多个上下文词的多分类问题转化为二分类问题，即判断目标词是否为中心词。</p>
 <p>首先定义 <span class="math">\(D\)</span> 为词对 <span class="math">\((c,o)\)</span> 的集合（中心词 center，上下文 outside），那么对于任意词对 <span class="math">\((c,w)\)</span>，它们之间互为上下文的概率为</p>
@@ -215,8 +210,8 @@
 <h2 id="gong-xian-ju-zhen_1">共现矩阵</h2>
 <p>与 word2vec 利用概率预测得到词向量不同，共现矩阵是一种通过直接计数得到词向量的方法。设定一个大小为 <span class="math">\(m\)</span> 的窗口，让该窗口经过语料中的所有中心词，并统计所有中心词所属窗口中不同上下文词的数量，将结果列为表格，就是一个 <span class="math">\(|W|\times |W|\)</span> 的矩阵，称为共现矩阵， <span class="math">\(|W|\)</span> 为语料中的词汇数量。在共现矩阵中，元素 <span class="math">\(x_{ij}\)</span> 就表示词 <span class="math">\(w_j\)</span> 作为中心词 <span class="math">\(w_i\)</span> 上下文词的数量。</p>
 <blockquote>
-<p>I like deep learning.
-I like NLP.
+<p>I like deep learning.<br/>
+I like NLP.<br/>
 I enjoy flying.</p>
 </blockquote>
 <p>例如以上三句话构成的语料，设定窗口大小为 1，可以得到以下共现矩阵：</p>
