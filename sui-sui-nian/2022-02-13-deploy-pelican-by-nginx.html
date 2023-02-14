@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>用 Markdown 创作 pptx 的尝试</title>
+  <title>Pelican + Nginx 在服务器上搭载静态博客</title>
 
 
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" rel="canonical" />
+<link href="https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://tseing.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -76,29 +76,32 @@
 
 
 
-    <meta name="description" content="总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。">
 
     <meta name="author" content="Leo">
 
-    <meta name="tags" content="Marp">
-    <meta name="tags" content="Markdown">
+    <meta name="tags" content="Blog">
+    <meta name="tags" content="Pelian">
+    <meta name="tags" content="Nginx">
+    <meta name="tags" content="Linux">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="用 Markdown 创作 pptx 的尝试"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="Pelican + Nginx 在服务器上搭载静态博客"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-09-27 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2022-02-13 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://tseing.github.io/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Marp"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Markdown"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Pelian"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Nginx"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
 
 <!-- Twitter Card -->
@@ -107,9 +110,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "用 Markdown 创作 pptx 的尝试",
-  "headline": "用 Markdown 创作 pptx 的尝试",
-  "datePublished": "2022-09-27 00:00:00+08:00",
+  "name": "Pelican + Nginx 在服务器上搭载静态博客",
+  "headline": "Pelican + Nginx 在服务器上搭载静态博客",
+  "datePublished": "2022-02-13 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -117,8 +120,8 @@
     "url": "https://tseing.github.io/author/leo.html"
   },
   "image": "https://tseing.github.io/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
-  "url": "https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html",
-  "description": "总是遇到一些时候，一个又一个的 presentation 接踵而来，制作幻灯片就变成了令人头疼的事情。Marp 是一款支持使用 Markdown 语法生成 pptx 的工具，使用它或许可以解放双手。"
+  "url": "https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html",
+  "description": ""
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -160,11 +163,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">用 Markdown 创作 pptx 的尝试</h1>
+        <h1 class="post-title">Pelican + Nginx 在服务器上搭载静态博客</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://tseing.github.io/author/leo.html">Leo</a>
-            | <time datetime="2022年 9月27日">2022年 9月27日</time>
+            | <time datetime="2022年 2月13日">2022年 2月13日</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
@@ -178,79 +181,77 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#an-zhuang" title="安装">安装</a></li><li><a class="toc-href" href="#chuang-zuo-huan-deng-pian" title="创作幻灯片">创作幻灯片</a></li><li><a class="toc-href" href="#yi-ge-wo-chuang-jian-de-mo-ban" title="一个我创建的模版">一个我创建的模版</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#pei-zhi-nginx" title="配置 Nginx">配置 Nginx</a></li><li><a class="toc-href" href="#cong-github-pull-jing-tai-wang-ye" title="从 GitHub pull 静态网页">从 GitHub pull 静态网页</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。</p>
-<h2 id="an-zhuang">安装</h2>
-<p><a href="https://marp.app/#get-started">Marp 官网</a>提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。</p>
-<p>安装完成后打开拓展设置，将 <code>Markdown &gt; Marp:Export Type</code> 修改为 <code>pptx</code>，输出文件格式就默认为 pptx（若要调试 CSS 样式，输出 html 更为方便），其余设置按需修改。</p>
-<p>接下来测试一下 Marp 的功能是否正常，新建一个 <code>.md</code> 文件，内容如下：</p>
-<pre><code class="language-markdown">---
-marp: true
----
-
-# Hello, Marp!
-
-pptx by Marp
+                <p>去年黑色星期五低价购置了一个海外服务器，由于后来太忙，一直没有时间折腾，终于有一段空闲的时间了。想到的我博客一直部署在 GitHub Pages 上，访问速度慢不说，还会由于各种的原因时常无法连接，所以动手把它搬到自己的服务器上吧。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>上图是我的部署方案，首先使用 Pelican（或其他静态博客生成器）在本地生成静态网页，再将静态网页 push 到 GitHub 仓库，这两步也是在 GitHub Pages 上部署、更新博客的步骤，所以对我而言没有额外的负担。</p>
+<p>接着在服务器上 pull 静态网页，然后使用 Nginx 作为 HTTP 服务器就可以通过域名或是公网 IP 访问到网站了。虽然 Pelican 也自带有 HTTP 服务器，可以不使用 Nginx，但我觉得它的性能和通用性方面不够好，而且我主要在 PC 上写文章，在服务器上安装 Pelican 并在服务器上生成静态网页未免太繁琐。</p>
+<p>最后为了便于管理服务器上的文件和排查问题，可以使用 SFTP 直接上传和下载服务器文件。</p>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;在境内服务器上部署网站必须经过 TCP 备案，否则会被拦截或是限流，引起非常多的麻烦。</p></div></p>
+<h2 id="pei-zhi-nginx">配置 Nginx</h2>
+<p>在 Debian 系统上可以使用以下命令安装 Nginx：</p>
+<pre><code class="language-bash"># Debian
+$ sudo apt install nginx
 </code></pre>
-<p>接着点击右上角的 <code>打开侧边预览</code> 按钮，或使用快捷键 <code>Ctrl+K V</code> （摁下 Ctrl+K 后再摁 V）打开预览界面。点击右上角 Marp 的图标，选择 <code>Toggle Marp Feature For Current Markdown</code> 后理应出现像下图一样的幻灯片预览。</p>
-<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>有的朋友会发现仍然是 Markdown 文档的样式，而非幻灯片分页的形式，这可能是因为之前安装了其他的 Markdown 预览插件。最简单的方法就是使用 VS Code 自带的预览工具，以我的 Markdown Preview Enhanced 插件为例，在它的插件设置中找到 <code>Hide Default VSCode Markdown Preview Button</code>，取消取定，重新启动后就会看见右上角有两个预览图标，一个是 VS Code 默认预览，另一个是 Markdown Preview Enhanced 插件，使用默认预览就能正常显示了。</p>
-<h2 id="chuang-zuo-huan-deng-pian">创作幻灯片</h2>
-<p>Marp 中比较特殊的语法可以参考<a href="https://github.com/marp-team/marp-vscode">官方文档</a>与<a href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html">博客 CAI</a>，其他语法与 Markdown 无异。</p>
-<p>全局的样式定义在主题 CSS 文件中，有时候需要修改单独页面的主题，Marp 提供了局部样式的方式：</p>
-<pre><code class="language-html">&lt;style scoped&gt;
-    &lt;!-- Your style Here.
-    Such as: --&gt;
-    p{
-        font-size: 30px;
+<p>安装完成后可 <code>nginx -v</code> 检查 Nginx 的版本。使用 <code>http://服务器 IP</code> 访问 Web 服务器，不出意外的话，会出现如下页面，提示已经成功安装了 Nginx：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>如果没有出现 Nginx 的欢迎页面，就需要检查服务器防火墙的设置，由于各个系统的防火墙设置不同，这里就不给出设置的方法了。</p>
+<p>然后需要在 <code>/etc/nginx/sites-available</code> 中建立我们站点的 Nginx 配置:</p>
+<pre><code>$ cd /etc/nginx/sites-available
+$ suddo touch blog
+</code></pre>
+<p>在 Nginx 设计中，在 <code>sites-available</code> 目录下存放站点的配置文件，并将其链接到 <code>sites-enabled</code> 目录下。<code>sites-enabled</code> 目录下存放了启用站点的配置，若要关闭该站点的配置，删除该链接即可。</p>
+<p>通过以下命令进入 <code>sites-enabled</code> 并建立软链接：</p>
+<pre><code>$ cd /etc/nginx/sites-enabled
+$ ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
+</code></pre>
+<p>接着再回到 <code>sites-available</code> 中，使用 <code>vim blog</code> 编辑配置，粘贴以下内容：</p>
+<pre><code>server {
+    listen       80;
+    server_name  _;
+    root         /home/Leo/web/blog;
+
+    location / {
     }
-&lt;/style&gt;
-</code></pre>
-<p>Marp 使用与 Markdown 相同的方式插入图片，例如</p>
-<pre><code class="language-markdown">![img](url) ![img](url)
-
----
-
-![img](url)
-![img](url)
-</code></pre>
-<p>若将两个以上插入图片的语句写在同一行，那么两张图片会被包装在同一个 <code>&lt;p&gt;&lt;/p&gt;</code> 标签中，也就类似于在文本框中插入两张图片，若宽度足够，两张图片会左右排列在同一行。</p>
-<p>若用第二种方式，也就是将两个以上插入图片的语句分行书写，那么各个图片在各自的 <code>&lt;p&gt;&lt;/p&gt;</code> 标签中，也就是分行排列。</p>
-<p>正是因为图片在 <code>&lt;p&gt;</code> 标签中，继承了 <code>text-align: left</code> 的属性，也就是左侧对齐。对于我而言，图片居中更为重要，所以在样式文件中加入以下代码：</p>
-<pre><code class="language-css">img[alt~="center"] {
-    display: block;
-    margin: 0px auto;
 }
 </code></pre>
-<p>在撰写文章时，使用 <code>![center](url)</code> 就能使图片居中了。但是因为 <code>display: block</code> 属性，居中的同时就不能左右排列两张图片了，所以欲使两张图片并排共同居中可能还要想点办法<del>（为什么要用 Markdown 做排版软件做的事 ..&bull;&breve;_&breve;&bull;.. ）</del>。</p>
-<h2 id="yi-ge-wo-chuang-jian-de-mo-ban">一个我创建的模版</h2>
-<p>Marp 中的样式是由 CSS 文件定义的，因此只要会使用 CSS，就能创建自己的主题。我制作了一个适用于各种汇报和答辩的 slide 主题，主题项目已经发布到 GitHub 了， <a href="https://github.com/Tseing/Marp-Theme-NKU"><i class="fa fa-github fa-lg"></i> Marp-Theme-NKU</a> 仓库页面有更详细的介绍和安装方法。</p>
-<p><img alt="page1" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7687?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7688?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page3" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7689?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page4" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7690?authkey=ALYpzW-ZQ_VBXTU"/>
-<img alt="page5" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7691?authkey=ALYpzW-ZQ_VBXTU"/></p>
+<p>其中 <code>listen 80</code> 指监听 80 端口，也就是 HTTP 服务的端口，<code>server_name</code> 是网站的 url 地址，如果需要通过域名访问，例如填入 <code>example.com</code> 即可，<code>root</code> 是静态站点的文件目录，在该目录下存放了站点的 HTML 和 CSS 文件，<code>location</code> 设置了网站路由，不需要修改。</p>
+<p>最后需要将同一文件夹内 <code>default</code> 文件中的所有内容都注释掉。</p>
+<h2 id="cong-github-pull-jing-tai-wang-ye">从 GitHub pull 静态网页</h2>
+<p>在本地电脑上，使用 Pelican（或其他静态网页生成器）生成静态网页，Pelican 的命令是 <code>pelican content -s publishconf.py</code>，然后就会生成 <code>output</code> 文件夹，只需要将该文件夹 push 到 GitHub 仓库中，这里的操作十分简单，也不展开介绍了。</p>
+<p>在服务器中进入 <code>root</code> 文件夹，也就是 <code>/home/Leo/web/blog</code> 中，</p>
+<pre><code>git init
+git remote add origin https://github.com/Tseing/tseing.github.io.git
+git pull origin master
+</code></pre>
+<p>使用 <code>sudo git init</code> 初始化后，从链接的 GitHub 仓库中 pull 静态文件。最后使用 <code>sudo nginx -s reload</code> 重启 Nginx 服务，在 <code>http://服务器 IP</code> 上就能看到博客页面啦。</p>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/87e26e644a5a">使用 Nginx 搭建静态网站 - 简书</a></li>
+<li><a href="https://www.cnblogs.com/jenkin1991/p/8301983.html">nginx 配置详解 - 博客园</a></li>
+</ul>
             </section>
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=用 Markdown 创作 pptx 的尝试&amp;url=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=Pelican + Nginx 在服务器上搭载静态博客&amp;url=https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://tseing.github.io/tag/marp.html">Marp</a><a href="https://tseing.github.io/tag/markdown.html">Markdown</a>                </aside>
+<a href="https://tseing.github.io/tag/blog.html">Blog</a><a href="https://tseing.github.io/tag/pelian.html">Pelian</a><a href="https://tseing.github.io/tag/nginx.html">Nginx</a><a href="https://tseing.github.io/tag/linux.html">Linux</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -276,18 +277,11 @@ pptx by Marp
 
 
                 <aside class="post-nav">
-                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html">
+                    <a class="post-nav-next" href="https://tseing.github.io/sui-sui-nian/2022-07-12-pelican-to-publish.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-left"></i>
-                                <h2 class="post-nav-title">文献总结｜使用循环神经网络为药物发现生成指定的分子库</h2>
-                            <p class="post-nav-excerpt">本文介绍 2018 年发表在 ACS Central Science...</p>
-                        </section>
-                    </a>
-                    <a class="post-nav-prev" href="https://tseing.github.io/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">文献总结｜从头药物设计中的深度学习方法</h2>
-                            <p class="post-nav-excerpt">本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep...</p>
+                                <h2 class="post-nav-title">使用 Pelican 发布文章的流程</h2>
+                            <p class="post-nav-excerpt">经过一番折腾，我的博客终于可以工作啦。但也所谓的「工作」也只是能显示罢了，后续的美化和插件部署...</p>
                         </section>
                     </a>
                     <div class="clear"></div>

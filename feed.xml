@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2023-02-08T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>CS224n 自然语言处理第二节: 词向量与词义感知</title><link href="https://tseing.github.io/sui-sui-nian/2023-02-08-cs224n-lecture2.html" rel="alternate"></link><published>2023-02-08T00:00:00+08:00</published><updated>2023-02-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2023-02-08:/sui-sui-nian/2023-02-08-cs224n-lecture2.html</id><summary type="html">&lt;p&gt;CS224n Lecture 2: Word Vectors, Word Senses, and Neural Classifiers&lt;/p&gt;</summary><content type="html">&lt;h2 id="word2vec-de-ji-suan"&gt;word2vec 的计算&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://tseing.github.io/" rel="alternate"></link><link href="https://tseing.github.io/feed.xml" rel="self"></link><id>https://tseing.github.io/</id><updated>2023-02-11T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜通过深度神经网络捕获化学家的直觉实现分子优化</title><link href="https://tseing.github.io/sui-sui-nian/2023-02-11-summary-doi.org/10.1186/s13321-021-00497-0.html" rel="alternate"></link><published>2023-02-11T00:00:00+08:00</published><updated>2023-02-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2023-02-11:/sui-sui-nian/2023-02-11-summary-doi.org/10.1186/s13321-021-00497-0.html</id><summary type="html">&lt;p&gt;本文介绍于 2021 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Molecular optimization by capturing chemist’s intuition using deep neural networks，文章使用通过 MMP 算法生成的分子对数据和分子性质数据训练了 Transformer 和 seq2seq 等模型，这些模型能够通过结构改造得到具有目标性质的分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-021-00497-0"&gt;doi.org/10.1186/s13321-021-00497-0&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2021 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Molecular optimization by capturing chemist&amp;rsquo;s intuition using deep neural networks，文章使用通过 MMP 算法生成的分子对数据和分子性质数据训练了 Transformer 和 seq2seq 等模型，这些模型能够通过结构改造得到具有目标性质的分子。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="xun-lian-shu-ju"&gt;训练数据&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;分子使用 SMILES 编码，原始分子的数据来自 ChEMBL，使用 MMP 算法对原始分子做化学改造，得到改造后的分子，也是训练模型时的目标分子，使用分子性质预测模型计算原始分子与目标分子的 LogD、溶解度以及 ADMET 性质。根据化学改造前后分子性质的变化，在原始分子前加上相应的性质标记，处理得到的两个分子构成一对 source-target 分子，作为训练集。&lt;/p&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章中所使用的 Transformer 和 seq2seq 都是在机器翻译领域取得了优异成绩的模型，机器翻译的任务中，需要将一段文本转换为另一段文本，将其应用在分子优化中，就是将原始分子序列优化为目标分子序列的任务视作为机器翻译，让模型找到原始分子与目标分子间的关系。&lt;/p&gt;
+&lt;p&gt;将 MMP 处理得到的分子对记作 &lt;span class="math"&gt;\(\{X,Y,Z\}\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 表示原始分子，&lt;span class="math"&gt;\(Y\)&lt;/span&gt; 表示目标分子，&lt;span class="math"&gt;\(Z\)&lt;/span&gt; 表示从 &lt;span class="math"&gt;\(X\)&lt;/span&gt; 到 &lt;span class="math"&gt;\(Y\)&lt;/span&gt; 发生的性质改变，模型的训练过程就是要建立 &lt;span class="math"&gt;\((X,Z)\rightarrow Y\)&lt;/span&gt; 的映射。&lt;/p&gt;
+&lt;p&gt;Transformer 与 seq2seq 两种模型的原理不同，seq2seq 模型具有编码器-解码器的构造，编码器将输入序列编码为变量，解码器通过该变量与前一时刻中的输出一起给出当前输出，直至序列结束，完成翻译过程，编码器-解码器的内部使用 RNN 实现。由于  RNN 结构的长期依赖问题，seq2seq 在处理长文本序列时能力有限。Transformer 也具有编码器-解码器的构造，但 Transformer 没有使用 RNN 并引入了 self-attention 机制，具有比 seq2seq 更强的文本处理能力。&lt;/p&gt;
+&lt;h3 id="ping-gu-zhi-biao"&gt;评估指标&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;目标 1：评估模型是否对指定的三个分子性质进行了优化&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;考虑到性质预测模型的误差，三个性质都在以下范围内的分子视为完成了性质优化：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(|\log D_\mathrm{generated}-\log D_\mathrm{target}|\leq 0.4\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(\mathrm{solubility_{low}}\leq 2.3\ \mathrm{or}\ \mathrm{solubility_{high}}\geq 1.1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class="math"&gt;\(\mathrm{clearance}=1.3\pm0.35\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;目标 2：评估模型是否基于 MMP 对分子做了化学改造&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用 MMP 分析生成分子，检查分子结构是否符合要求。&lt;/p&gt;
+&lt;p&gt;为了评估模型生成分子的效果，文章制作了以下三个测试集：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Test-Original：从数据集中取出 10% 作为该测试集，但其中所有组合 &lt;span class="math"&gt;\((X,Z)\)&lt;/span&gt; 都未在训练集中出现过。&lt;/li&gt;
+&lt;li&gt;Test-Molecule：Test-Origina 的子集，其中所有数据的分子都未在训练集中出现过，即 &lt;span class="math"&gt;\(\{(X,Z)_\mathrm{test}|X\notin \mathcal{X}_\mathrm{train}\}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;Test-Property：由 Test-Original 中具有特定性质要求的组合构成，性质要求为 &lt;code&gt;LogD_change_=(-1.1,-0.9]&lt;/code&gt;、&lt;code&gt;Solubility_low&amp;rarr;high&lt;/code&gt; 和 &lt;code&gt;CLint_high&amp;rarr;low&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;使用三种测试集在不同模型上生成分子的结果如上图所示，首先可以看出，仅使用 MMP 算法对分子进行改造，也能得到一定数量具有目标特征的分子，说明 MMP 算法能够较好处理分子优化的问题，但 MMP 仅是对测试分子做没有方向性的、随机的改造，所以在生成分子的结果中，MMP 算法得到满足要求的分子也最少。&lt;/p&gt;
+&lt;p&gt;相比 MMP 算法，深度学习模型 HierG2G、seq2seq 和 Transformer 具有更好的效果，生成了更多满足要求的分子。其中 seq2seq 和 Transformer 具有比较接近的结果，且表现都优于 HierG2G，这可能是由于 HierG2G 是一种基于图的模型，对于「序列到序列」这一类型的任务表现不如专门用于文本处理的 seq2seq 和 Transformer。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;统计各个模型生成的分子，在满足目标性质与基于 MMP 对分子进行改造两方面的目标上，Transformer 生成分子中满足要求的分子都在高于另外两种模型，更好地完成了分子优化任务。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;考察训练集与使用不同测试集通过 Transformer 生成分子集中分子对之间的化学改造方式，上图展示了出现频率最高的 20 种改造方式。可以看出，在训练集、从 Test-Original 和 Test-Molecule 生成的分子集中，出现频率较高的几种分子改造方式都比较接近，这可以说明 Transformer 从训练集中学习到了 MMP 改造方式并将其应用于测试集从而生成分子。&lt;/p&gt;
+&lt;p&gt;Test-Property 中的分子改造方式与其他三种数据集中的方式差别较大，这是因为 Test-Property 数据集指定了特定的性质优化要求，在给定的性质单一优化方向下，Transformer 在学习到的 MMP 改造方式中选择最合适的方式，使生成分子的性质符合目标要求。这种工作方式与化学家改造分子的方式类似。&lt;/p&gt;
+&lt;p&gt;文章中使用模型所生成的分子如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章使用 MMP 算法构建分子对数据集，MMP 算法模拟了现实中对单键切断并替换官能团的分子改造方式，因此可以训练得到与现实相似的分子改造模型。文章还考虑了分子改造的性质变化，现实中的分子改造大多是为了获得特定的性质，因此在结合了分子改造与性质变化后，文章构造了一种能够针对目标性质进行结构优化的模型，类似于现实中化学家对分子的优化。在试验的多种模型中，Transformer 获得了最佳的效果。但模型仍有许多改善的空间，例如只能对单点进行结构改造，能够指定的分子性质约束太少等等。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RNN"></category></entry><entry><title>CS224n 自然语言处理第二节: 词向量与词义感知</title><link href="https://tseing.github.io/sui-sui-nian/2023-02-08-cs224n-lecture2.html" rel="alternate"></link><published>2023-02-08T00:00:00+08:00</published><updated>2023-02-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2023-02-08:/sui-sui-nian/2023-02-08-cs224n-lecture2.html</id><summary type="html">&lt;p&gt;CS224n Lecture 2: Word Vectors, Word Senses, and Neural Classifiers&lt;/p&gt;</summary><content type="html">&lt;h2 id="word2vec-de-ji-suan"&gt;word2vec 的计算&lt;/h2&gt;
 &lt;p&gt;在前一节中，介绍了 word2vec 的 Skip-grams 模式，即通过中心词预测上下文词的工作方式，接下来使用该方式计算词向量，具体步骤包括&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;初始化词向量（普遍使用 one-hot 编码）&lt;/li&gt;
@@ -7182,4 +7283,52 @@ $ git push
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.getpelican.com/en/latest/settings.html"&gt;Pelican Settings Document&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://zodiac911.github.io/blog/static-blog.html#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82"&gt;Pelican + GitHubPages 搭建个人博客 &amp;middot; Zodiac Wang&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category></entry></feed>
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category></entry><entry><title>Pelican + Nginx 在服务器上搭载静态博客</title><link href="https://tseing.github.io/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html" rel="alternate"></link><published>2022-02-13T00:00:00+08:00</published><updated>2022-02-13T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:tseing.github.io,2022-02-13:/sui-sui-nian/2022-02-13-deploy-pelican-by-nginx.html</id><summary type="html"></summary><content type="html">&lt;p&gt;去年黑色星期五低价购置了一个海外服务器，由于后来太忙，一直没有时间折腾，终于有一段空闲的时间了。想到的我博客一直部署在 GitHub Pages 上，访问速度慢不说，还会由于各种的原因时常无法连接，所以动手把它搬到自己的服务器上吧。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;上图是我的部署方案，首先使用 Pelican（或其他静态博客生成器）在本地生成静态网页，再将静态网页 push 到 GitHub 仓库，这两步也是在 GitHub Pages 上部署、更新博客的步骤，所以对我而言没有额外的负担。&lt;/p&gt;
+&lt;p&gt;接着在服务器上 pull 静态网页，然后使用 Nginx 作为 HTTP 服务器就可以通过域名或是公网 IP 访问到网站了。虽然 Pelican 也自带有 HTTP 服务器，可以不使用 Nginx，但我觉得它的性能和通用性方面不够好，而且我主要在 PC 上写文章，在服务器上安装 Pelican 并在服务器上生成静态网页未免太繁琐。&lt;/p&gt;
+&lt;p&gt;最后为了便于管理服务器上的文件和排查问题，可以使用 SFTP 直接上传和下载服务器文件。&lt;/p&gt;
+&lt;p&gt;{warn begin}在境内服务器上部署网站必须经过 TCP 备案，否则会被拦截或是限流，引起非常多的麻烦。{warn end}&lt;/p&gt;
+&lt;h2 id="pei-zhi-nginx"&gt;配置 Nginx&lt;/h2&gt;
+&lt;p&gt;在 Debian 系统上可以使用以下命令安装 Nginx：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;# Debian
+$ sudo apt install nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;安装完成后可 &lt;code&gt;nginx -v&lt;/code&gt; 检查 Nginx 的版本。使用 &lt;code&gt;http://服务器 IP&lt;/code&gt; 访问 Web 服务器，不出意外的话，会出现如下页面，提示已经成功安装了 Nginx：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;如果没有出现 Nginx 的欢迎页面，就需要检查服务器防火墙的设置，由于各个系统的防火墙设置不同，这里就不给出设置的方法了。&lt;/p&gt;
+&lt;p&gt;然后需要在 &lt;code&gt;/etc/nginx/sites-available&lt;/code&gt; 中建立我们站点的 Nginx 配置:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd /etc/nginx/sites-available
+$ suddo touch blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 Nginx 设计中，在 &lt;code&gt;sites-available&lt;/code&gt; 目录下存放站点的配置文件，并将其链接到 &lt;code&gt;sites-enabled&lt;/code&gt; 目录下。&lt;code&gt;sites-enabled&lt;/code&gt; 目录下存放了启用站点的配置，若要关闭该站点的配置，删除该链接即可。&lt;/p&gt;
+&lt;p&gt;通过以下命令进入 &lt;code&gt;sites-enabled&lt;/code&gt; 并建立软链接：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd /etc/nginx/sites-enabled
+$ ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接着再回到 &lt;code&gt;sites-available&lt;/code&gt; 中，使用 &lt;code&gt;vim blog&lt;/code&gt; 编辑配置，粘贴以下内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server {
+    listen       80;
+    server_name  _;
+    root         /home/Leo/web/blog;
+
+    location / {
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中 &lt;code&gt;listen 80&lt;/code&gt; 指监听 80 端口，也就是 HTTP 服务的端口，&lt;code&gt;server_name&lt;/code&gt; 是网站的 url 地址，如果需要通过域名访问，例如填入 &lt;code&gt;example.com&lt;/code&gt; 即可，&lt;code&gt;root&lt;/code&gt; 是静态站点的文件目录，在该目录下存放了站点的 HTML 和 CSS 文件，&lt;code&gt;location&lt;/code&gt; 设置了网站路由，不需要修改。&lt;/p&gt;
+&lt;p&gt;最后需要将同一文件夹内 &lt;code&gt;default&lt;/code&gt; 文件中的所有内容都注释掉。&lt;/p&gt;
+&lt;h2 id="cong-github-pull-jing-tai-wang-ye"&gt;从 GitHub pull 静态网页&lt;/h2&gt;
+&lt;p&gt;在本地电脑上，使用 Pelican（或其他静态网页生成器）生成静态网页，Pelican 的命令是 &lt;code&gt;pelican content -s publishconf.py&lt;/code&gt;，然后就会生成 &lt;code&gt;output&lt;/code&gt; 文件夹，只需要将该文件夹 push 到 GitHub 仓库中，这里的操作十分简单，也不展开介绍了。&lt;/p&gt;
+&lt;p&gt;在服务器中进入 &lt;code&gt;root&lt;/code&gt; 文件夹，也就是 &lt;code&gt;/home/Leo/web/blog&lt;/code&gt; 中，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git init
+git remote add origin https://github.com/Tseing/tseing.github.io.git
+git pull origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用 &lt;code&gt;sudo git init&lt;/code&gt; 初始化后，从链接的 GitHub 仓库中 pull 静态文件。最后使用 &lt;code&gt;sudo nginx -s reload&lt;/code&gt; 重启 Nginx 服务，在 &lt;code&gt;http://服务器 IP&lt;/code&gt; 上就能看到博客页面啦。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.jianshu.com/p/87e26e644a5a"&gt;使用 Nginx 搭建静态网站 - 简书&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cnblogs.com/jenkin1991/p/8301983.html"&gt;nginx 配置详解 - 博客园&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelian"></category><category term="Nginx"></category><category term="Linux"></category></entry></feed>
