@@ -95,7 +95,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-02-13-deploy-pelican-by-nginx.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-02-13 00:00:00-04:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-02-13 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
@@ -113,7 +113,7 @@
   "@type": "Article",
   "name": "Pelican + Nginx 在服务器上搭载静态博客",
   "headline": "Pelican + Nginx 在服务器上搭载静态博客",
-  "datePublished": "2023-02-13 00:00:00-04:00",
+  "datePublished": "2023-02-13 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -182,7 +182,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#pei-zhi-nginx" title="配置 Nginx">配置 Nginx</a></li><li><a class="toc-href" href="#cong-github-pull-jing-tai-wang-ye" title="从 GitHub pull 静态网页">从 GitHub pull 静态网页</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#pei-zhi-nginx" title="配置 Nginx">配置 Nginx</a></li><li><a class="toc-href" href="#cong-github-pull-jing-tai-wang-ye" title="从 GitHub pull 静态网页">从 GitHub pull 静态网页</a></li><li><a class="toc-href" href="#guan-bi-github-pages" title="关闭 GitHub Pages">关闭 GitHub Pages</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -201,22 +201,22 @@ $ sudo apt install nginx
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>如果没有出现 Nginx 的欢迎页面，就需要检查服务器防火墙的设置，由于各个系统的防火墙设置不同，这里就不给出设置的方法了。</p>
 <p>然后需要在 <code>/etc/nginx/sites-available</code> 中建立我们站点的 Nginx 配置:</p>
-<pre><code>$ cd /etc/nginx/sites-available
-$ suddo touch blog
+<pre><code class="language-bash">$ cd /etc/nginx/sites-available
+$ sudo touch blog
 </code></pre>
 <p>在 Nginx 设计中，在 <code>sites-available</code> 目录下存放站点的配置文件，并将其链接到 <code>sites-enabled</code> 目录下。<code>sites-enabled</code> 目录下存放了启用站点的配置，若要关闭该站点的配置，删除该链接即可。</p>
 <p>通过以下命令进入 <code>sites-enabled</code> 并建立软链接：</p>
-<pre><code>$ cd /etc/nginx/sites-enabled
+<pre><code class="language-bash">$ cd /etc/nginx/sites-enabled
 $ ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
 </code></pre>
 <p>接着再回到 <code>sites-available</code> 中，使用 <code>vim blog</code> 编辑配置，粘贴以下内容：</p>
-<pre><code>server {
+<pre><code class="language-nginx">server {
     listen       80;
     server_name  _;
     root         /home/Leo/web/blog;
 
     location / {
-    }
+    };
 }
 </code></pre>
 <p>其中 <code>listen 80</code> 指监听 80 端口，也就是 HTTP 服务的端口，<code>server_name</code> 是网站的 url 地址，如果需要通过域名访问，例如填入 <code>example.com</code> 即可，<code>root</code> 是静态站点的文件目录，在该目录下存放了站点的 HTML 和 CSS 文件，<code>location</code> 设置了网站路由，不需要修改。</p>
@@ -224,11 +224,21 @@ $ ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
 <h2 id="cong-github-pull-jing-tai-wang-ye">从 GitHub pull 静态网页</h2>
 <p>在本地电脑上，使用 Pelican（或其他静态网页生成器）生成静态网页，Pelican 的命令是 <code>pelican content -s publishconf.py</code>，然后就会生成 <code>output</code> 文件夹，只需要将该文件夹 push 到 GitHub 仓库中，这里的操作十分简单，也不展开介绍了。</p>
 <p>在服务器中进入 <code>root</code> 文件夹，也就是 <code>/home/Leo/web/blog</code> 中，</p>
-<pre><code>git init
+<pre><code class="language-bash">git init
 git remote add origin https://github.com/Tseing/tseing.github.io.git
 git pull origin master
 </code></pre>
 <p>使用 <code>sudo git init</code> 初始化后，从链接的 GitHub 仓库中 pull 静态文件。最后使用 <code>sudo nginx -s reload</code> 重启 Nginx 服务，在 <code>http://服务器 IP</code> 上就能看到博客页面啦。</p>
+<p>可以把在服务器上发布文章的流程总结为以下几步：</p>
+<ol>
+<li>在本地使用 Markdown 撰写文章；</li>
+<li>使用 Pelican 生成静态网页；</li>
+<li>将生成的静态网页 push 至 GitHub 仓库；</li>
+<li>连接服务器，在相应目录下 pull GitHub 仓库中的更新。</li>
+</ol>
+<p>这样的流程比较繁琐，每次更新都需要连接到服务器上操作，要简化这样的流程并实现自动化部署就需要借助 webhook 的功能。简单来说，在 GitHub 仓库设置中开启 webhook，用户对仓库执行每个动作（这里为 push）后，仓库都会向目标服务器发送一段 JSON 报文（回调），那么服务器只需要一直运行着监听该报文的脚本，一旦收到 push 成功的报文就执行 pull 操作。这样就简化了工作流程，push 静态网页后，服务器上的内容也会自动更新。</p>
+<p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook"><i class="fa fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html">这篇文章</a>。</p>
+<h2 id="guan-bi-github-pages">关闭 GitHub Pages</h2>
 <hr/>
 <h2 id="references">References</h2>
 <ul>
