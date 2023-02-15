@@ -238,7 +238,14 @@ git pull origin master
 </ol>
 <p>这样的流程比较繁琐，每次更新都需要连接到服务器上操作，要简化这样的流程并实现自动化部署就需要借助 webhook 的功能。简单来说，在 GitHub 仓库设置中开启 webhook，用户对仓库执行每个动作（这里为 push）后，仓库都会向目标服务器发送一段 JSON 报文（回调），那么服务器只需要一直运行着监听该报文的脚本，一旦收到 push 成功的报文就执行 pull 操作。这样就简化了工作流程，push 静态网页后，服务器上的内容也会自动更新。</p>
 <p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook"><i class="fa fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html">这篇文章</a>。</p>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;旧版 webhook 存在一些令人困恼的 bug，例如无法读取相对路径，请使用最新版本。</p></div></p>
 <h2 id="guan-bi-github-pages">关闭 GitHub Pages</h2>
+<p>在一切部署工作都完成之后，也是时候和 GitHub Pages 说再见了。避免搜索引擎抓取数据时出现大量重复网页，所以就关闭原来 GitHub Pages 上的博客吧。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<blockquote>
+<p><cite>Hello world!</cite><br/>
+&mdash;&mdash; <em>From my server (https://leonis.cc)</em></p>
+</blockquote>
 <hr/>
 <h2 id="references">References</h2>
 <ul>
@@ -319,8 +326,8 @@ git pull origin master
 
 
           <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="{{ SITEURL }}/feed.xml"" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "{{ SITEURL }}/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
         </section>
       </div>
