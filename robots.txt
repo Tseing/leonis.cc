@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /tag/
+Disallow: /author/
+
+User-agent: Baidu
+Disallow: /
+
+Sitemap: https://leonis.cc/sitemap.xml
+Sitemap: https://www.leonis.cc/sitemap.xml

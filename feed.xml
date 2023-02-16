@@ -56,8 +56,8 @@ git pull origin master
 &lt;p&gt;在一切部署工作都完成之后，也是时候和 GitHub Pages 说再见了。避免搜索引擎抓取数据时出现大量重复网页，所以就关闭原来 GitHub Pages 上的博客吧。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;cite&gt;Hello world!&lt;/cite&gt;&lt;br/&gt;
-&amp;mdash;&amp;mdash; &lt;em&gt;From my server (https://leonis.cc)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p class="cite"&gt;Hello world!&lt;/p&gt;&lt;br/&gt;
+&amp;mdash;&amp;mdash; &lt;em&gt;From my server&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr/&gt;
 &lt;h2 id="references"&gt;References&lt;/h2&gt;
@@ -89,7 +89,7 @@ git pull origin master
 &lt;ol&gt;
 &lt;li&gt;Test-Original：从数据集中取出 10% 作为该测试集，但其中所有组合 &lt;span class="math"&gt;\((X,Z)\)&lt;/span&gt; 都未在训练集中出现过。&lt;/li&gt;
 &lt;li&gt;Test-Molecule：Test-Origina 的子集，其中所有数据的分子都未在训练集中出现过，即 &lt;span class="math"&gt;\(\{(X,Z)_\mathrm{test}|X\notin \mathcal{X}_\mathrm{train}\}\)&lt;/span&gt;。&lt;/li&gt;
-&lt;li&gt;Test-Property：由 Test-Original 中具有特定性质要求的组合构成，性质要求为 &lt;code&gt;LogD_change_=(-1.1,-0.9]&lt;/code&gt;、&lt;code&gt;Solubility_low&amp;rarr;high&lt;/code&gt; 和 &lt;code&gt;CLint_high&amp;rarr;low&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;Test-Property：由 Test-Original 中具有特定性质要求的组合构成，性质要求为 &lt;code&gt;LogD_change_=(-1.1,-0.9]&lt;/code&gt;、&lt;code&gt;Solubility_low&amp;rarr;high&lt;/code&gt; 和 &lt;code&gt;CLint_high&amp;rarr;low&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
