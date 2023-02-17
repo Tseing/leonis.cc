@@ -2,8 +2,7 @@ User-agent: *
 Disallow: /tag/
 Disallow: /author/
 
-User-agent: Baidu
+User-agent: Baiduspider
 Disallow: /
 
 Sitemap: https://leonis.cc/sitemap.xml
-Sitemap: https://www.leonis.cc/sitemap.xml
