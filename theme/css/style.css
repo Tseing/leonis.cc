@@ -968,16 +968,26 @@ img {
 
 .blog-logo {
     position: fixed;
-    max-width: 2em;
+    display: inline-flex;
     left: 0;
     top: 0;
     margin: 1em;
     z-index: 200
 }
 
+.blog-logo a {
+    opacity: 70%;
+}
+
 .blog-logo img {
     display: block;
-    margin: 0 auto
+    margin: 0 auto;
+    height: 1.8em;
+    filter: none;
+}
+
+.cover-inactive .blog-logo {
+    position: absolute;
 }
 
 .blog-name {
@@ -1144,6 +1154,10 @@ img {
 .cover-active .nav-button a:focus {
     color: #fff;
     border-color: #fff
+}
+
+.cover-active .blog-logo a:hover {
+    opacity: 100%;
 }
 
 .nav-button a i {
@@ -2073,6 +2087,9 @@ img {
     html {
         font-size: 50%;
     }
+    .blog-logo {
+        position: absolute;
+    }
     .container {
         padding-top: 0;
     }
@@ -2123,6 +2140,9 @@ img {
 }
 
 @media only screen and (max-width: 1000px) and (orientation: portrait){
+    .blog-logo {
+        position: absolute;
+    }
     .container {
         padding-top: 0;
     }
@@ -2228,6 +2248,9 @@ img {
 @media only screen and (max-width: 400px){
     html {
         font-size: 52.5%;
+    }
+    .blog-logo {
+        position: absolute;
     }
     .container {
         padding-top: 0;
