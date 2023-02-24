@@ -206,7 +206,7 @@
 <p>但是由于 Pelican 文档中给出的相关介绍太少，再读了几遍源码之后仍觉得无从下手，最后我并没有使用官方推荐的方法，用了更简单粗暴的办法，可能以后有精力了会尝试再改成 Reader 模块。</p>
 <h2 id="dou-ban-pa-chong">豆瓣爬虫</h2>
 <p>从指定的 URL 获取图书信息就要用爬虫了，网上关于爬虫的介绍多如牛毛，我只简单讲述一下我的设计过程。爬网解析 HTML 页面可以使用 Beautiful Soup 和 lxml 两个库，因为我需要使用的这个爬虫将在 Pelican 生成网页的过程中调用，虽然 Beautiful Soup 的功能强大也更好上手，但它的性能是不如 lxml 的，所以最后我还是选择使用 lxml。</p>
-<p>爬虫并不复杂，通过 request 获取 HTML 信息后，使用 xpath 定位到目标信息的节点，例如目标信息的结构为</p>
+<p>爬虫并不复杂，通过 request 获取 HTML 信息后，使用 Xpath 定位到目标信息的节点，例如目标信息的结构为</p>
 <pre><code class="language-html">&lt;div id="info" class=""&gt;
     &lt;span&gt;
       &lt;span class="pl"&gt; 作者&lt;/span&gt;:
@@ -237,8 +237,8 @@
         meta["出版社"] = "暂无"
     return meta
 </code></pre>
-<p><code>regex</code> 是需要匹配的 xpath 路径，<code>//div[@id="info"]</code> 为全文查找属性为 <code>id="info"</code> 的 <code>&lt;div&gt;</code> 节点。<code>child::span[contains(text(), "出版社")]</code> 为在其子节点查找包含「出版社」文字的 <code>&lt;span&gt;</code> 节点，在这个节点之后的一个节点就是出版社信息了。</p>
-<p>用类似的方法就可以得到全部的出版信息，我把所有 xpath 路径列在下方，随时可以取用，但是注意如果豆瓣更改了网页结构可能就会失效。</p>
+<p><code>regex</code> 是需要匹配的 Xpath 路径，<code>//div[@id="info"]</code> 为全文查找属性为 <code>id="info"</code> 的 <code>&lt;div&gt;</code> 节点。<code>child::span[contains(text(), "出版社")]</code> 为在其子节点查找包含「出版社」文字的 <code>&lt;span&gt;</code> 节点，在这个节点之后的一个节点就是出版社信息了。</p>
+<p>用类似的方法就可以得到全部的出版信息，我把所有 Xpath 路径列在下方，随时可以取用，但是注意如果豆瓣更改了网页结构可能就会失效。</p>
 <pre><code class="language-python"># 封面图片
 regex = '//img[@rel="v:photo"]/@src'
 # 作者
@@ -335,7 +335,7 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
 <blockquote>
 <p><cite>中国互联网公司之间，是没有 API 的，通用的 API 就是硬爬。</cite></p>
 </blockquote>
-<p>不禁苦笑，真是「萧瑟秋风今又是，换了人间」，我们正在见证着互联网走向封闭。</p>
+<p>不禁苦笑，真是「萧瑟秋风今又是，换了人间」，我们正在见证着互联网走向封闭，明天又会是什么样呢？</p>
             </section>
 
             <section class="post-info">

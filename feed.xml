@@ -16,7 +16,7 @@
 &lt;p&gt;但是由于 Pelican 文档中给出的相关介绍太少，再读了几遍源码之后仍觉得无从下手，最后我并没有使用官方推荐的方法，用了更简单粗暴的办法，可能以后有精力了会尝试再改成 Reader 模块。&lt;/p&gt;
 &lt;h2 id="dou-ban-pa-chong"&gt;豆瓣爬虫&lt;/h2&gt;
 &lt;p&gt;从指定的 URL 获取图书信息就要用爬虫了，网上关于爬虫的介绍多如牛毛，我只简单讲述一下我的设计过程。爬网解析 HTML 页面可以使用 Beautiful Soup 和 lxml 两个库，因为我需要使用的这个爬虫将在 Pelican 生成网页的过程中调用，虽然 Beautiful Soup 的功能强大也更好上手，但它的性能是不如 lxml 的，所以最后我还是选择使用 lxml。&lt;/p&gt;
-&lt;p&gt;爬虫并不复杂，通过 request 获取 HTML 信息后，使用 xpath 定位到目标信息的节点，例如目标信息的结构为&lt;/p&gt;
+&lt;p&gt;爬虫并不复杂，通过 request 获取 HTML 信息后，使用 Xpath 定位到目标信息的节点，例如目标信息的结构为&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;div id="info" class=""&amp;gt;
     &amp;lt;span&amp;gt;
       &amp;lt;span class="pl"&amp;gt; 作者&amp;lt;/span&amp;gt;:
@@ -47,8 +47,8 @@
         meta["出版社"] = "暂无"
     return meta
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;regex&lt;/code&gt; 是需要匹配的 xpath 路径，&lt;code&gt;//div[@id="info"]&lt;/code&gt; 为全文查找属性为 &lt;code&gt;id="info"&lt;/code&gt; 的 &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 节点。&lt;code&gt;child::span[contains(text(), "出版社")]&lt;/code&gt; 为在其子节点查找包含「出版社」文字的 &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; 节点，在这个节点之后的一个节点就是出版社信息了。&lt;/p&gt;
-&lt;p&gt;用类似的方法就可以得到全部的出版信息，我把所有 xpath 路径列在下方，随时可以取用，但是注意如果豆瓣更改了网页结构可能就会失效。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;regex&lt;/code&gt; 是需要匹配的 Xpath 路径，&lt;code&gt;//div[@id="info"]&lt;/code&gt; 为全文查找属性为 &lt;code&gt;id="info"&lt;/code&gt; 的 &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 节点。&lt;code&gt;child::span[contains(text(), "出版社")]&lt;/code&gt; 为在其子节点查找包含「出版社」文字的 &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; 节点，在这个节点之后的一个节点就是出版社信息了。&lt;/p&gt;
+&lt;p&gt;用类似的方法就可以得到全部的出版信息，我把所有 Xpath 路径列在下方，随时可以取用，但是注意如果豆瓣更改了网页结构可能就会失效。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;# 封面图片
 regex = '//img[@rel="v:photo"]/@src'
 # 作者
@@ -145,7 +145,7 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
 &lt;blockquote&gt;
 &lt;p&gt;&lt;cite&gt;中国互联网公司之间，是没有 API 的，通用的 API 就是硬爬。&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;不禁苦笑，真是「萧瑟秋风今又是，换了人间」，我们正在见证着互联网走向封闭。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelian"></category><category term="Python"></category><category term="XPath"></category></entry><entry><title>文献总结｜通过大规模化学语言表示捕获分子结构和性质</title><link href="https://leonis.cc/sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html" rel="alternate"></link><published>2023-02-17T00:00:00+08:00</published><updated>2023-02-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-17:/sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Large-scale chemical language representations capture molecular structure and properties，文章使用大量来自 PubChem 和 ZINC 的分子训练了基于 Transformer 的化学语言模型，该模型将原始的 SMILES 序列转化为向量，文章结果表明，使用这种方式实现的分子词嵌入在许多任务上都表现优异。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-022-00580-7"&gt;doi.org/10.1038/s42256-022-00580-7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;不禁苦笑，真是「萧瑟秋风今又是，换了人间」，我们正在见证着互联网走向封闭，明天又会是什么样呢？&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelian"></category><category term="Python"></category><category term="XPath"></category></entry><entry><title>文献总结｜通过大规模化学语言表示捕获分子结构和性质</title><link href="https://leonis.cc/sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html" rel="alternate"></link><published>2023-02-17T00:00:00+08:00</published><updated>2023-02-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-17:/sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html</id><summary type="html">&lt;p&gt;本文介绍于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Large-scale chemical language representations capture molecular structure and properties，文章使用大量来自 PubChem 和 ZINC 的分子训练了基于 Transformer 的化学语言模型，该模型将原始的 SMILES 序列转化为向量，文章结果表明，使用这种方式实现的分子词嵌入在许多任务上都表现优异。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-022-00580-7"&gt;doi.org/10.1038/s42256-022-00580-7&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 IBM 研究中心于 2022 年发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Large-scale chemical language representations capture molecular structure and properties，文章使用大量来自 PubChem 和 ZINC 的分子训练了基于 Transformer 的化学语言模型，该模型将原始的 SMILES 序列转化为向量，文章结果表明，使用这种方式实现的分子词嵌入在许多任务上都表现优异。&lt;/p&gt;
 &lt;p&gt;在深度学习领域，SMILES 是最为常用的分子表示形式，但越来越多研究结果表明，SMILES 无法反映分子的拓扑结果，在许多任务上都有局限性。这使得许多研究人员转向使用基于图的分子表示方式，然而由于缺少用于训练的标记数据，研究这一类模型也具有很大挑战。&lt;/p&gt;
 &lt;p&gt;预训练语言模型是近年 NLP 领域中的热点，先使用大量语料训练语言模型，再微调该预训练模型并用于解决具体任务。借鉴这一概念，文章的目标就是使用庞大的分子数据集（11 亿个分子）训练化学语言模型，让该模型能够捕获分子的深层特征，并用它来完成各种分子预测的下游任务。&lt;/p&gt;
