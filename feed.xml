@@ -1,5 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-02-22T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客写插件——在文章中插入豆瓣图书</title><link href="https://leonis.cc/sui-sui-nian/2023-02-22-create-pelican-plugin.html" rel="alternate"></link><published>2023-02-22T00:00:00+08:00</published><updated>2023-02-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-22:/sui-sui-nian/2023-02-22-create-pelican-plugin.html</id><summary type="html">&lt;p&gt;突然想把豆瓣图书信息插入到文章中，便于在博客里记录阅读笔记。寻找了一圈无果，只好自己动手写个插件，也正好研究了下 Pelican 插件的工作方式。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在博客上记录读书笔记是一件寻常事，但是怎么在文章中插入图书信息却是件恼人的事。直接用书名号引出？不不不，这也太不够美观了。参考一下国内图书信息最全面的豆瓣：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-02-25T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜在大数据集中有效识别匹配分子对（MMPs）的算法</title><link href="https://leonis.cc/sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html" rel="alternate"></link><published>2023-02-25T00:00:00+08:00</published><updated>2023-02-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-25:/sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html</id><summary type="html">&lt;p&gt;本文介绍于 2010 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 Computationally Efficient Algorithm to Identify Matched Molecular Pairs (MMPs) in Large Data Sets，文章介绍了一种在大规模数据中识别匹配分子对的算法，这种算法也就是目前用于生成匹配分子对的最常用方法。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/ci900450m"&gt;doi.org/10.1021/ci900450m&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2010 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 Computationally Efficient Algorithm to Identify Matched Molecular Pairs (MMPs) in Large Data Sets，文章介绍了一种在大规模数据中识别匹配分子对的算法，这种算法也就是目前用于生成匹配分子对的最常用方法。&lt;/p&gt;
+&lt;p&gt;匹配分子对（Matched Molecular Pairs, MMP）是指化合物 A 与化合物 B 之间只在单一位置具有结构差异的一对分子，所以 MMP 中的分子可以很容易地从一个化合物改变为另一个化合物。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8602?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8602?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在面对先导化合物优化等问题时，传统且主流的做法仍然是依靠化学团队的经验。然而目前已经拥有化合物优化的海量数据，如果能得到其中蕴藏的经验和知识，将给予化学家很大的帮助并加快化合物优化的效率。MMP 就提供了从一批分子中获取化合物优化知识的一种方法，所以针对于识别分子数据集中 MMP 的算法，文章提出了两个要求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;应当能识别数据集中所有的 MMP；&lt;/li&gt;
+&lt;li&gt;计算效率高，能够适用于具有大量分子的数据集。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;p&gt;文章中提出的识别 MMP 算法可以归纳为以下几步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;每次在一个化合中一处两个非氢原子间的非环单键处切断，在每个切断位点执行该操作，直至将数据集中所有分子分割为所有可能的片段。&lt;/li&gt;
+&lt;li&gt;每次切断后，都要索引两个片段。具体来说，分子 &lt;span class="math"&gt;\(\rm{A&amp;mdash;B}\)&lt;/span&gt; 切断为 &lt;span class="math"&gt;\(\rm{A*}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\rm{* B}\)&lt;/span&gt; 后，需要建立 &lt;span class="math"&gt;\(\{\rm{key:value}\}\)&lt;/span&gt; 的索引，即 &lt;span class="math"&gt;\(\{\rm{A*:* B}\}\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(\{\rm{* B:A*}\}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;下一次切断得到的片段若与已建立索引的 &lt;span class="math"&gt;\(\rm{key}\)&lt;/span&gt; 相同，就更新到相应的字典中。例如又得到了 &lt;span class="math"&gt;\(\rm{A* }\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\rm{* C}\)&lt;/span&gt;，那么索引就会更新为 &lt;span class="math"&gt;\(\{\rm{A*:* B,* C}\}\)&lt;/span&gt;，新增 &lt;span class="math"&gt;\(\{\rm{* C: A*}\}\)&lt;/span&gt;，保留 &lt;span class="math"&gt;\(\{\rm{* B: A*}\}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;在处理完所有分子后，相同 &lt;span class="math"&gt;\(\rm{key}\)&lt;/span&gt; 索引中的片段就揭示了 MMP 的化学转化，例如 &lt;span class="math"&gt;\(\rm{*B\rightarrow*C}\)&lt;/span&gt;，将键值对重新组合后同时也得到了目标的 MMP，例如 &lt;span class="math"&gt;\([\rm{A&amp;mdash;B,A&amp;mdash;C}]\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这种方法还可以推广到在同一分子中多次切断，识别单次切断可能会遗漏的 MMP。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8603?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8603?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;对于化学家而言，例如 &lt;span class="math"&gt;\(\rm{*B\rightarrow*C}\)&lt;/span&gt; 的转化规则，若该结构太大，那么通过这种转化得到的 MMP 也是没有实际意义的。所以为了避免用于替换的子结构过大，还可以设定只切断不超过 n 个非氢原子的子结构。&lt;/p&gt;
+&lt;h2 id="jie-guo-yu-tao-lun"&gt;结果与讨论&lt;/h2&gt;
+&lt;p&gt;文章所使用的分子数据库包含有 333332 个化合物，通过该算法使用单核 CPU 经过约 850 min 后，得到了 5310964 对 MMP。&lt;/p&gt;
+&lt;p&gt;在得到的 MMP 中也存在一些问题，例如羧酸到酰胺是一类常见的结构转化，但在得到的结果中，羧酸到酰胺的转化的结果也会混入到醇到胺的转化中，因为这两种结构转化从分子表示上来看都是将羟基替换为氨基，而这两种结构转化的性质截然不同，就会导致下游的分子性质预测、结构改造任务出现问题。&lt;/p&gt;
+&lt;p&gt;一种妥善的解决方法就是在切断步骤中，不切断官能团间的单键，保证 MMP 中的分子都具有相同的官能团，不互相混淆。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8604?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8604?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;另一个问题是一些化学转化是在环结构上进行结构改造，由于切断的操作只会在单键之间执行，所以对于这一类的化学转化，MMP 必须找到单键切下整个环结构。而对于一些稠环结构，很容易就超出了设定的 n 个非氢原子的约束，无法获得这一类化学转化。&lt;/p&gt;
+&lt;p&gt;一个改进的方向就是设定若切下的子结构为纯粹的环结构，那么不计算原子数量直接建立索引，这样既获得到环结构上的化学转化，又避免了混入超过 n 原子的无意义转化。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8605?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8605?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;最后，文章只将在一个分子中切断 1 次的操作推广到了 3 次。实验结果发现，在一个分子中切断 3 次后，就可以找到数据集中几乎全部的 MMP，切断次数越多，效果提升越少，计算开销越大，所以在实际使用中，3 次切断就已经是可行的。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8606?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8606?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章提出了一种适用于在较大的分子数据集中识别 MMP 的算法，这种算法能够帮助人们从过去所累积的分子改造数据中获取化学改造的知识，结合分子的各种实际评估数据，这种方法能够更全面地构建出药物分子的构效关系，解决实际中先导化物优化方面的问题。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry><entry><title>为 Pelican 博客写插件——在文章中插入豆瓣图书</title><link href="https://leonis.cc/sui-sui-nian/2023-02-22-create-pelican-plugin.html" rel="alternate"></link><published>2023-02-22T00:00:00+08:00</published><updated>2023-02-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-22:/sui-sui-nian/2023-02-22-create-pelican-plugin.html</id><summary type="html">&lt;p&gt;突然想把豆瓣图书信息插入到文章中，便于在博客里记录阅读笔记。寻找了一圈无果，只好自己动手写个插件，也正好研究了下 Pelican 插件的工作方式。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在博客上记录读书笔记是一件寻常事，但是怎么在文章中插入图书信息却是件恼人的事。直接用书名号引出？不不不，这也太不够美观了。参考一下国内图书信息最全面的豆瓣：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;错不了，就要像这样把图书封面、出版社还有 ISBN 等等全部展示出来，才能让人满意。但是一个个截图也太麻烦了，而且信息没法更新，将这些信息都嵌入在网页中才是最好的实现方式。比较流行的博客框架例如 Hexo 和 WordPress 都有实现类似功能的插件，而我使用的是比较小众的 Pelican，只好自己动手了。&lt;/p&gt;
 &lt;h2 id="mu-biao"&gt;目标&lt;/h2&gt;
