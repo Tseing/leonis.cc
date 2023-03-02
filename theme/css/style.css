@@ -1,5 +1,26 @@
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap");
+
+
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cardo&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap");
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -298,26 +319,74 @@ th {
 /* @font-face {
     font-family: 'Noto Sans SC';
     font-style: normal;
-    font-weight: 300;
-    src: local("Noto Sans SC-Light"), url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap");
+    font-weight: 400;
+    src: local("Noto Sans SC"), url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap");
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 500;
+    src: url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap");
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 700;
+    src: local("Noto Sans SC-Bold"), url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap");
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: local("Noto Sans KR"), url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    src: url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap");
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    src: local("Noto Sans KR-Bold"), url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 }
 
 @font-face {
     font-family: 'Noto Serif SC';
     font-style: normal;
-    font-weight: 400;
-    src: local("Noto Serif SC"), url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap");
-} */
+    font-weight: 700;
+    src: local("Noto Serif SC-Bold"), url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap");
+}
 
-/* @font-face {
+ @font-face {
+    font-family: 'Noto Serif KR';
+    font-style: normal;
+    font-weight: 700;
+    src: local("Noto Serif KR-Bold"), url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap");
+}
+
+@font-face {
+    font-family: "Livvic";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Livvic"), url("https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap");
+}
+
+@font-face {
     font-family: 'Ubuntu Mono';
     font-style: normal;
-    font-display: swap;
     font-weight: 400;
-    src: url('https://cdn.jsdelivr.net/npm/@openfonts/ubuntu-mono_all@1.44.2/files/ubuntu-mono-all-400.woff2') format('woff2');
-  } */
+    src: local("Ubuntu Mono"), url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap');
+}
 
-/* @font-face {
+@font-face {
     font-family: 'Cardo';
     font-style: normal;
     font-weight: 400;
