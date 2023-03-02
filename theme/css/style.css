@@ -972,7 +972,7 @@ img {
     left: 0;
     top: 0;
     margin: 1em;
-    z-index: 200
+    z-index: 200;
 }
 
 .blog-logo a {
@@ -984,6 +984,7 @@ img {
     margin: 0 auto;
     height: 1.8em;
     filter: none;
+    color: white;
 }
 
 .cover-inactive .blog-logo {
