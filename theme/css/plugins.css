@@ -10,6 +10,84 @@ dot {
     text-emphasis-position: under right;
 }
 
+.links {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.links > a{
+    border: none;
+}
+
+.links a:hover,
+.links a:focus {
+    color: inherit;
+    transition: none;
+}
+
+.link {
+    display: flex;
+    margin: 1em 2em;
+    width: 350px;
+    border-radius: 5px;
+    border: solid 1px #eee;
+}
+
+.link img {
+    margin: 10px;
+    filter: none;
+    height: 150px;
+    width: 150px;
+}
+
+.link .link-content {
+    margin: 0 1em;
+    max-width: 160px;
+    max-height: 160px;
+    line-height: 1em;
+}
+
+.link .link-content .name {
+    position: absolute;
+    margin-top: 50px;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    font-family: "Noto Serif KR", "Noto Serif SC";
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.link-content .text {
+    font-size: 0.9em;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 3.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.links .link:hover,
+.links .link:focus {
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    transition: .2s ease-in-out box-shadow;
+}
+
+.links .link:hover .name,
+.links .link:focus .name {
+    margin-top: 20px;
+    transition: .4s .1s ease-in-out margin-top;
+
+}
+
+.links .link:hover .text,
+.links .link:focus .text {
+    visibility: visible;
+    opacity: inherit;
+    transition: .5s .1s cubic-bezier(0.4, 0, 1, 1) opacity;
+
+}
+
 .wl-card .wl-admin-actions {
     font-size: 0.8em !important;
 }
@@ -237,6 +315,13 @@ i.fa.fa-map-marker.fa-stack-1x {
         margin-bottom: 0;
         width: 90%;
     }
+    .link .name {
+        margin-top: 20px!important;
+    }
+    .link-content .text {
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width: 400px){
@@ -274,5 +359,12 @@ i.fa.fa-map-marker.fa-stack-1x {
     .output_text pre{
         padding-top: .5em;
         padding-bottom: .5em;
+    }
+    .link .name {
+        margin-top: 20px!important;
+    }
+    .link-content .text {
+        visibility: visible;
+        opacity: 1;
     }
 }
