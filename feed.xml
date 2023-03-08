@@ -7016,8 +7016,8 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 &lt;p&gt;Windows 下安装 &lt;code&gt;prettymaps&lt;/code&gt; 的错误是 &lt;code&gt;GDAL&lt;/code&gt; 与 &lt;code&gt;Fiona&lt;/code&gt; 两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。&lt;/p&gt;
 &lt;p&gt;由于以上原因在 Windows 下未能成功安装 &lt;code&gt;prettymaps&lt;/code&gt; 的推荐解决步骤如下：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;安装 &lt;a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunGGuDYayQdVADT3?e=RAJEsi"&gt;GDAL-3.3.2-cp39-cp39-win_amd64.whl&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;安装 &lt;a href="http://1drv.stdfirm.com/u/s!AtseC45rsRhNunAkPiG4AOb9V8yi?e=fAgNhp"&gt;Fiona-1.8.20-cp39-cp39-win_amd64.whl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;安装 &lt;a href="https://www.jianguoyun.com/p/DWCBLasQ2du5CxjCovsEIAA"&gt;GDAL-3.3.2-cp39-cp39-win_amd64.whl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;安装 &lt;a href="https://www.jianguoyun.com/p/DbxmgnYQ2du5CxjEovsEIAA"&gt;Fiona-1.8.20-cp39-cp39-win_amd64.whl&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;pip install prettymaps&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr/&gt;

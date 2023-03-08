@@ -230,6 +230,10 @@ del {
     text-decoration: line-through 1.5px #f26a3dc7;
 }
 
+::selection {
+    background-color: #cce2ff;
+}
+
 @font-face {
     font-family: 'icons';
     src: url("../font/icons.eot?51058516");
