@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成</title>
+  <title>文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</title>
 
 
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html" rel="canonical" />
+<link href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -42,33 +42,33 @@
 
 
 
-    <meta name="description" content="本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 MolGPT: Molecular Generation Using a Transformer-Decoder...">
+    <meta name="description" content="本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for...">
 
     <meta name="author" content="Leo">
 
     <meta name="tags" content="Literature Summary">
     <meta name="tags" content="CADD">
     <meta name="tags" content="Transformer">
-    <meta name="tags" content="GPT">
+    <meta name="tags" content="VAE">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 MolGPT: Molecular Generation Using a Transformer-Decoder..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for..."/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-03-03 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-03-11 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Transformer"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GPT"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="VAE"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
 
 <!-- Twitter Card -->
@@ -77,9 +77,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成",
-  "headline": "文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成",
-  "datePublished": "2023-03-03 00:00:00+08:00",
+  "name": "文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法",
+  "headline": "文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法",
+  "datePublished": "2023-03-11 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -87,8 +87,8 @@
     "url": "https://leonis.cc/author/leo.html"
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
-  "url": "https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html",
-  "description": "本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 MolGPT: Molecular Generation Using a Transformer-Decoder..."
+  "url": "https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html",
+  "description": "本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for..."
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -130,11 +130,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成</h1>
+        <h1 class="post-title">文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://leonis.cc/author/leo.html">Leo</a>
-            | <time datetime="2023年 3月03日">2023年 3月03日</time>
+            | <time datetime="2023年 3月11日">2023年 3月11日</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
@@ -148,40 +148,43 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li></ul></li><li><a class="toc-href" href="#jie-guo-yu-tao-lun_1" title="结果与讨论">结果与讨论</a><ul><li><a class="toc-href" href="#xing-zhi-tiao-jian" title="性质条件">性质条件</a></li><li><a class="toc-href" href="#xing-zhi-yu-gu-jia-tiao-jian" title="性质与骨架条件">性质与骨架条件</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li></ul></li><li><a class="toc-href" href="#jie-guo-yu-tao-lun_1" title="结果与讨论">结果与讨论</a><ul><li><a class="toc-href" href="#sheng-cheng-fen-zi-jie-guo" title="生成分子结果">生成分子结果</a></li><li><a class="toc-href" href="#an-li-yan-jiu" title="案例研究">案例研究</a></li></ul></li><li><a class="toc-href" href="#jie-lun_1" title="结论">结论</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jcim.1c00600">doi.org/10.1021/acs.jcim.1c00600</a></p>
-<p>本文介绍于 2022 年发表在 <em>Journal of Chemical Information and Modeling</em> 上的一篇文章，文章原标题为 MolGPT: Molecular Generation Using a Transformer-Decoder Model，在生成预训练（Generative Pre-training, GPT）模型已经在自然语言处理领域得到了成功应用的背景下，这篇文章首次将 GPT 模型应用于完成分子生成的任务，实现了分子性质和结构两个方面的优化。</p>
+                <p>本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。</p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.2209.06158">doi.org/10.48550/arXiv.2209.06158</a></p>
+<p>随着人工智能技术的发展，深度学习也进入到基于结构的药物设计（Structure Based Drug Design, SBDD）领域。SBDD 基于受体蛋白的结构设计与之适配的分子，是药物化学中的重要方法，而在深度学习辅助下的 SBDD 也将大大提升药物设计的效率，但目前这一方向还存在两个问题：</p>
+<ol>
+<li>用于训练模型的「靶点-药物分子对」有限；</li>
+<li>SBDD AI 模型还不能很好利用靶点活性口袋的 3 维信息。</li>
+</ol>
+<p>针对以上两个问题，文章首先使用分子数据预训练 Transformer 生成模型，使其学习到分子数据中更通用的特征，避免标签不足；其次，文章设计了一种变种的 Transformer encoder，通过 encoder 获得氨基酸序列中的 3 维结构信息，文章将最后得到的模型称为 TamGent（Target-aware molecule generator with Transformer）。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="shu-ju">数据</h3>
-<p>分子数据来自于 MOSES 和 GuacaMol 的数据集，其中包括源于 Zinc 的 190 万个类先导化合物与源于 ChEMBL 的 160 万个分子，分子为 SMILES 形式，使用 RDKit 提取分子的骨架用于模型训练。</p>
-<p>此外，使用 RDKit 计算出分子的logP、SA、拓扑极性表面积（TPSA）和 QED，用于训练具有性质约束的模型。</p>
+<p>文章使用来自于 PubChem 数据库中的 1000 万个分子的 SMILES 序列预训练用于分子生成的 Transformer decoder 模型，使用来源于文献（<a href="https://arxiv.org/abs/2205.07249">Luo et al.</a>）的 12.3 万个靶点-配体对训练配体生成模型。</p>
 <h3 id="mo-xing">模型</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8625?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8625?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>在得到原始分子的分子骨架与性质信息后，将分子性质与分子骨架序列连接在一起，称为「条件」，那么原始分子就成为需要 MolGPT 根据条件生成的「目标分子」。</p>
-<p>在训练过程中，将条件和目标分子序列一同送入 MolGPT，使模型建立条件与目标分子的关系。GPT 模型通过顺序读取每个 token，由当前 token 预测下一个 token，从而获得采样的权重。</p>
-<p>具体来说，分子 SMILES 词嵌入为 256 维的向量后，将性质条件和骨架条件也分别词嵌入为 256 维的向量，将其直接拼接在 SMILES 向量的起始端，就构成了实际输入模型的信息。</p>
-<p>在推理过程中，模型对训练集中的所有 token 根据权重随机取样得到第一个字符，接着模型就根据输入的条件（即目标性质与需要改造的分子骨架）和第一个字符生成下一个字符，直至生成整个分子。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8626?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8626?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>在 Transformer 中，encoder 模块对输入编码得到状态向量 <span class="math">\(c\)</span>，再由 decoder 模块对状态 <span class="math">\(c\)</span> 解码并运算产生输出，由于输入的情况是多种多样的，将其转化为等长的 <span class="math">\(c\)</span> 就有很大的局限性。GPT 模型减去了 Transformer 中的 encoder 模块，而保留了 Transformer 中例如 self-attention 在内的其他机制，具有更好的长文本处理能力。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>使用 <span class="math">\(\boldsymbol{a}=(a_1,a_2,\cdots,a_N)\)</span> 表示氨基酸序列，其中 <span class="math">\(a_i\)</span> 为长度为 20 的 ont-hot 向量，可以用于表示 20 种氨基酸，使用 <span class="math">\(\boldsymbol{r}=(r_1,r_2,\cdots,r_N)\)</span> 表示相应的 3 维坐标，其中 <span class="math">\(r_i\in\mathbb{R}^3\)</span>。将配体分子的 SMILES 编码转化为向量 <span class="math">\(\boldsymbol{y}=(y_1,y_2,\cdots,y_M)\)</span>，那么模型训练的目标就是学习从 <span class="math">\(\boldsymbol{x}=(\boldsymbol{a},\boldsymbol{r})\)</span> 到 <span class="math">\(\boldsymbol{y}\)</span> 的映射。</p>
+<p>TamGent 的架构参考了变分自编码器的工作模式，也就是主要由活性口袋 encoder 和配体分子 decoder 构成，encoder 与 decoder 都使用了 Transformer 中的结构。</p>
+<p>配体分子 decoder 部分与 Transformer 完全一样，具有 self-attention 机制，能够根据生成的 toekn 生成下一个 token，完成分子生成，因此使用 1000 万个分子数据预训练该模型，使其能够根据数据集中分子的普遍特征生成分子。</p>
+<p>活性口袋 encoder 部分修改了其中的 attention 机制，文章中称为 distance-aware attention。具体来说，就是认为距离较远的氨基酸与配体的相互作用更小，所以将输入的氨基酸序列和坐标转化为特征矩阵后，再与 <span class="math">\(\exp(-\mathrm{distance}^2/\tau)\)</span> 相乘，距离越远的氨基酸的权重就会越小。</p>
+<p>在推断过程中，将氨基酸序列及其坐标输入模型，embedding 为特征矩阵后进入活性口袋 encoder 部分计算 distance-aware attention，得到活性口袋的表示，最后将其作为配体分子 decoder 部分中的 pocket-SMILES attention，生成分子得到预测的活性配体结果。</p>
 <h2 id="jie-guo-yu-tao-lun_1">结果与讨论</h2>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8632?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8632?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>首先使模型在不给定条件的情况下生成分子，即 MolGPT 根据从训练数据集中学习到的化学空间中的分子分布生成生成分子，生成的分子与训练集分子具有相似的特征。</p>
-<p>文章分析了 MolGPT 生成一个分子的过程，上图中的黑色横线表示当前步骤生成的字符（token），其他 token 上颜色的深浅表示了与生成该 token 之间的权重关系。</p>
-<p>可以看出，MolGPT 首先从已经学习到的分布中随机抽取出 <code>C</code>，接着根据它继续生成后续 token，每个 token 都是由先前生成的 token 决定。同时还可以发现 MolGPT 在生成分子的过程中具有一定的「化学知识」，例如第一行中生成 <code>O</code> 时，明显由前面的 <code>=</code> 与 <code>N</code> 决定，所以 MolGPT 不仅能够在双键上连接氧原子，还会构建酰胺结构使分子更稳定。</p>
-<h3 id="xing-zhi-tiao-jian">性质条件</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8627?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8627?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>文章接着只使用性质条件作为输入分子的条件，测试模型是否能按照要求生成满足约束的分子，结果如上图所示，与训练集中分子的性质分布不同，生成的分子集中在设定的性质条件（黑线）两侧，评估生成分子，各组分子的 validity、unique 和 novelty 都在0.97 以上，具有很好的效果。</p>
-<p>此外文章还同时使用多种性质约束作为模型条件，在保持较高的 validity、unique 和 novelty 条件下，生成的分子散落在设置性质条件的周围，所以模型对也能很好地处理多性质约束的分子生成。</p>
-<h3 id="xing-zhi-yu-gu-jia-tiao-jian">性质与骨架条件</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8628?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8628?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>接下来文章测试了将性质与分子骨架同时作为模型的生成条件，分析了生成分子的性质分布以及生成分子与设定分子骨架的谷本相似度。与仅性质条件的结果相比，额外加入分子骨架条件后生成分子的性质虽然有一些偏移（如上图 g），但仍然能大致满足性质约束。同时生成的分子与设定的分子骨架具有极高的相似性，从这两个可以证明 MolGPT 可以用于对给定的分子骨架进行指定性质的优化。</p>
-<p>最后文章展示了使用 MolGPT 实现分子骨架优化的例子：</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8631?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8631?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="sheng-cheng-fen-zi-jie-guo">生成分子结果</h3>
+<p>文章使用 DrugBank 数据库中 1641 个靶点-配体对的数据用于测试模型效果，随机抽取其中的 100 个靶点-配体对，使用 TamGent、3DGen 和 SECSE 三种模型针对每个靶点生成 20 个分子，对比生成效果。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>三种模型生成分子的对接打分中，TamGent 生成的分子明显更低，说明分子与靶点具有更好的亲和力，同时其平均值也与标签数据最为接近。对比三种模型生成的分子与标签分子的相似性，同样是 TamGent 具有更大的相似性，生成的分子最接近标签分子。同时，在 QED、MD 和 SA 几项的分子指标上，TamGent 也都高于其他两种模型，以上几点可以表明 TamGent 在 DrugBank 数据上根据靶点生成分子具有明显的优势。</p>
+<h3 id="an-li-yan-jiu">案例研究</h3>
+<p>接下来文章使用 TamGent 针对于具体的靶点生成配体，分析模型表现。文章选择 SARS-CoV-2 主糖蛋白酶（<em>M</em> <sup>pro</sup>）作为靶点生成分子，收集了 415 个高分辨率结构后，使用模型生成了 4563 个分子，其中找到了先前报道过的一种 <em>M</em> <sup>pro</sup> 候选抑制剂（GC-376）和 6 个可能的先导化合物片段。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>上图展示了相应分子的二维分布，其中灰色表示在 PubChem 中随机选取的 3 万个分子，蓝色表示 TamGent 生成的分子，黄色表示在先前报道中提到了可能的 <em>M</em> <sup>pro</sup> 抑制剂。</p>
+<p>明显可以看出 TamGent 生成的分子与随机选取的分子具有不同的分布并且成簇聚集，主要分为 ① 和 ② 两簇。在第 ① 簇中，生成分子与 GC-376 的谷本相似度达到 0.82，并且此前报道的 6 种候选抑制剂都位于该簇中。但在第 ② 簇中没有找到对接分数较好的分子，只在分子中找到了一些可能的活性片段。</p>
+<p>最后文章选出了第 ① 簇中两个结构不同的分子与 <em>M</em> <sup>pro</sup> 对接，两种分子都能很好地填充活性口袋，对接分数分别为 -10.2 和 -9.5，而先前的 GC-376 是 -9.4，说明 TamGent 能够根据口性口袋生成具有良好活性的分子。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun_1">结论</h2>
-<p>文章使用 GPT 构建了分子生成模型 MolGPT，MolGPT 生成的分子具有很高的 validity 和 uniqueness，在对 MolGPT 生成分子过程中的权重分析发现，MolGPT 能够很好学习到 SMILES 中所包含的化学语义。在实际应用上，MolGPT 可以根据指定的多种分子性质和（或）指定的分子骨架生成目标的分子，生成的分子能够很好满足预先设定的要求，有助于指导化合物优化的方向。</p>
+<p>文章参考变分自编码器的结构使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免模型依赖于有限的「靶点-药物分子对」。在分子生成任务中，TamGent 生成分子的效果优于以往的两种模型，使用 TamGent 针对 SARS-CoV-2 主糖蛋白酶生成活性分子，甚至找到了比先前报道的候选抑制剂具有更好对接打分的分子，表现出 TamGent 的优异性能。</p>
+<p>对于 TamGent，文章提出了 3 点改进措施，第一是使用更多实验测试得到的「靶点-药物分子对」进一步优化模型，第二是在模型中整合考虑 ADMET 待药理性质，第三是在具体靶点上微调模型，使其帮助提升针对相应靶点的药物研发效率。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -248,20 +251,20 @@
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成&amp;url=https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法&amp;url=https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/transformer.html">Transformer</a><a href="https://leonis.cc/tag/gpt.html">GPT</a>                </aside>
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/transformer.html">Transformer</a><a href="https://leonis.cc/tag/vae.html">VAE</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -287,18 +290,11 @@
 
 
                 <aside class="post-nav">
-                    <a class="post-nav-next" href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-left"></i>
-                                <h2 class="post-nav-title">文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</h2>
-                            <p class="post-nav-excerpt">本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为...</p>
-                        </section>
-                    </a>
-                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">文献总结｜在大数据集中有效识别匹配分子对（MMPs）的算法</h2>
-                            <p class="post-nav-excerpt">本文介绍于 2010 年发表在 Journal of Chemical...</p>
+                                <h2 class="post-nav-title">文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2022 年发表在 Journal of Chemical...</p>
                         </section>
                     </a>
                     <div class="clear"></div>

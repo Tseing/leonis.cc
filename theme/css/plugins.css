@@ -5,9 +5,8 @@
 }
 
 dot {
-    text-emphasis: dot;
-    text-emphasis-color: #B6321C;
-    text-emphasis-position: under right;
+    text-decoration: underline dotted 2px #f26a3d;
+    text-underline-offset: 5px;
 }
 
 .links {
