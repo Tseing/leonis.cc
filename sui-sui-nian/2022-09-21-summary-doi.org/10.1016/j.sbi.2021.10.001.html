@@ -151,10 +151,10 @@
         <div class="inner">
             <section class="post-content">
                 <p>本文主要介绍来自浙江大学的 Mingyang Wang 等人的综述，综述名称为 Deep learning approaches for de novo drug design: An overview，发表在 <em>Current Opinion in Structural Biology</em> 上。文章主要介绍了深度学习技术在从头药物设计领域的应用与分子生成方法，同时还指出了深度学习技术在药物设计方面目前所面临的问题。</p>
-<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1016/j.sbi.2021.10.001">doi.org/10.1016/j.sbi.2021.10.001</a></p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1016/j.sbi.2021.10.001" rel="noopener" target="_blank">doi.org/10.1016/j.sbi.2021.10.001</a></p>
 <h2 id="yin-yan">引言</h2>
 <p>从头药物设计（分子生成）的主要目标是从现有的化合物库中生成新颖且具有指定特征的分子。与虚拟筛选相比，虚拟筛选通过多种筛选方法不断缩小化合物范围，最终获得目标分子，而基于深度学习的生成模型则是通过总结和提取现有分子的特征，然后将其转换成新颖的化合物。</p>
-<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7638?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="fen-zi-miao-shu-yu-sheng-cheng-mo-xing-ping-jie-zhi-biao">分子描述与生成模型评价指标</h2>
 <h3 id="fen-zi-miao-shu">分子描述</h3>
 <p>数据集和生成算法都会影响生成模型的预测性能，除此之外，模型的预测性能很大程度上也依赖于如何将配体和蛋白-配体复合物描述成合适的形式并用于特征用学习。</p>
@@ -196,7 +196,7 @@
 <h4>针对生成模型的整体评价工具</h4>
 <p>一些整体评价工具套件常用于评价整体的生成模型，这些工具大多集成了内置的指标，常用的工具包括 MOSES 与 GuacaMol。</p>
 <h2 id="fen-zi-sheng-cheng-zhong-zui-xin-de-shen-du-xue-xi-kuang-jia_1">分子生成中最新的深度学习框架</h2>
-<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7639?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p class="intro">（a）VAE 生成模型使用包括编码器 q(z|x) 与解码器 (x|z) 的分子通过最大化 LB（下界）训练模型；（b）RNN 模型通过最大化合理分子字符序列组合的概率 (y1y2&hellip;yt) 生成分子；（c）GAN 模型中，鉴别器 D 否决生成器 G（D(x)&rarr;0, D(G(z))&rarr;0），而生成器要生成更&ldquo;真实&rdquo;的分子来欺骗鉴别器（D(G(z))&rarr;1)）;（d）RL 框架使用预测器来奖励生成器的每个状态 s，最大化末了状态 S 的总分 R；（e）不同的分子描述形式。</p>
 <h3 id="ji-yu-enc-dec-de-mo-xing">基于 Enc-Dec 的模型</h3>
 <p>Enc-Dec 是一种无监督学习的模型，编码器将分子映射成潜在空间中的向量，解码器将概率分布映射回原始空间，基于 Enc-Dec 的模型就通过在潜在空间中抽样来生成分子。最早基于 Enc-Dec 的模型属于变分自编码器（Variational Autoencoder, VAE），后来又产生了许多种变种。</p>
@@ -243,10 +243,10 @@ Network, GAN）的模型向着预先设定的特征生成分子。</p>
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -293,10 +293,10 @@ Network, GAN）的模型向着预先设定的特征生成分子。</p>
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

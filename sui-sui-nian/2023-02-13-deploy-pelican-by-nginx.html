@@ -153,7 +153,7 @@
         <div class="inner">
             <section class="post-content">
                 <p>去年黑色星期五低价购置了一个海外服务器，由于后来太忙，一直没有时间折腾，终于有一段空闲的时间了。想到的我博客一直部署在 GitHub Pages 上，访问速度慢不说，还会由于各种的原因时常无法连接，所以动手把它搬到自己的服务器上吧。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>上图是我的部署方案，首先使用 Pelican（或其他静态博客生成器）在本地生成静态网页，再将静态网页 push 到 GitHub 仓库，这两步也是在 GitHub Pages 上部署、更新博客的步骤，所以对我而言没有额外的负担。</p>
 <p>接着在服务器上 pull 静态网页，然后使用 Nginx 作为 HTTP 服务器就可以通过域名或是公网 IP 访问到网站了。虽然 Pelican 也自带有 HTTP 服务器，可以不使用 Nginx，但我觉得它的性能和通用性方面不够好，而且我主要在 PC 上写文章，在服务器上安装 Pelican 并在服务器上生成静态网页未免太繁琐。</p>
 <p>最后为了便于管理服务器上的文件和排查问题，可以使用 SFTP 直接上传和下载服务器文件。</p>
@@ -164,7 +164,7 @@
 $ sudo apt install nginx
 </code></pre>
 <p>安装完成后可 <code>nginx -v</code> 检查 Nginx 的版本。使用 <code>http://服务器 IP</code> 访问 Web 服务器，不出意外的话，会出现如下页面，提示已经成功安装了 Nginx：</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>如果没有出现 Nginx 的欢迎页面，就需要检查服务器防火墙的设置，由于各个系统的防火墙设置不同，这里就不给出设置的方法了。</p>
 <p>然后需要在 <code>/etc/nginx/sites-available</code> 中建立我们站点的 Nginx 配置:</p>
 <pre><code class="language-bash">$ cd /etc/nginx/sites-available
@@ -203,11 +203,11 @@ git pull origin master
 <li>连接服务器，在相应目录下 pull GitHub 仓库中的更新。</li>
 </ol>
 <p>这样的流程比较繁琐，每次更新都需要连接到服务器上操作，要简化这样的流程并实现自动化部署就需要借助 webhook 的功能。简单来说，在 GitHub 仓库设置中开启 webhook，用户对仓库执行每个动作（这里为 push）后，仓库都会向目标服务器发送一段 JSON 报文（回调），那么服务器只需要一直运行着监听该报文的脚本，一旦收到 push 成功的报文就执行 pull 操作。这样就简化了工作流程，push 静态网页后，服务器上的内容也会自动更新。</p>
-<p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook"><i class="fa fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html">这篇文章</a>。</p>
+<p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook" rel="noopener" target="_blank"><i class="fa fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html" rel="noopener" target="_blank">这篇文章</a>。</p>
 <p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;旧版 webhook 存在一些令人困恼的 bug，例如无法读取相对路径，请使用最新版本。</p></div></p>
 <h2 id="guan-bi-github-pages">关闭 GitHub Pages</h2>
 <p>在一切部署工作都完成之后，也是时候和 GitHub Pages 说再见了。避免搜索引擎抓取数据时出现大量重复网页，所以就关闭原来 GitHub Pages 上的博客吧。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <blockquote>
 <p><p class="cite">Hello world!</p><br/>
 &mdash;&mdash; <em>From my server</em></p>
@@ -215,8 +215,8 @@ git pull origin master
 <hr/>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://www.jianshu.com/p/87e26e644a5a">使用 Nginx 搭建静态网站 - 简书</a></li>
-<li><a href="https://www.cnblogs.com/jenkin1991/p/8301983.html">nginx 配置详解 - 博客园</a></li>
+<li><a href="https://www.jianshu.com/p/87e26e644a5a" rel="noopener" target="_blank">使用 Nginx 搭建静态网站 - 简书</a></li>
+<li><a href="https://www.cnblogs.com/jenkin1991/p/8301983.html" rel="noopener" target="_blank">nginx 配置详解 - 博客园</a></li>
 </ul>
             </section>
 
@@ -249,10 +249,10 @@ git pull origin master
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -299,10 +299,10 @@ git pull origin master
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

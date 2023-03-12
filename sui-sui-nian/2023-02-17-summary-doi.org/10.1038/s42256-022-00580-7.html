@@ -150,11 +150,11 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-022-00580-7">doi.org/10.1038/s42256-022-00580-7</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-022-00580-7" rel="noopener" target="_blank">doi.org/10.1038/s42256-022-00580-7</a></p>
 <p>本文介绍于 IBM 研究中心于 2022 年发表在 <em>Nature Machine Intelligence</em> 上的一篇文章，文章原标题为 Large-scale chemical language representations capture molecular structure and properties，文章使用大量来自 PubChem 和 ZINC 的分子训练了基于 Transformer 的化学语言模型，该模型将原始的 SMILES 序列转化为向量，文章结果表明，使用这种方式实现的分子词嵌入在许多任务上都表现优异。</p>
 <p>在深度学习领域，SMILES 是最为常用的分子表示形式，但越来越多研究结果表明，SMILES 无法反映分子的拓扑结果，在许多任务上都有局限性。这使得许多研究人员转向使用基于图的分子表示方式，然而由于缺少用于训练的标记数据，研究这一类模型也具有很大挑战。</p>
 <p>预训练语言模型是近年 NLP 领域中的热点，先使用大量语料训练语言模型，再微调该预训练模型并用于解决具体任务。借鉴这一概念，文章的目标就是使用庞大的分子数据集（11 亿个分子）训练化学语言模型，让该模型能够捕获分子的深层特征，并用它来完成各种分子预测的下游任务。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8580?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8580?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8580?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8580?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="mo-xing">模型</h3>
 <p>文章所使用的模型称为 MoLFormer，该模型通过对 Transformer 改造得到，减小了计算开销，适用于处理大量数据。在 Transformer 中，输入序列中的每个位置上的 token 都会通过位置嵌入将位置信息加入到词向量中。由于 self-attention 机制，Transformer 在每个位置 <span class="math">\(m\)</span> 上需要计算：</p>
@@ -167,12 +167,12 @@
 <p>来自 PubChem 的 1.1 亿个分子和来自 ZINC 的 10 亿个分子构成了训练数据，所有分子经过 RDKit 规范化后用于分词，总共得到 2357 个不重复的 token，设置 202 token 为模型输出的最长序列。</p>
 <h2 id="jie-guo_1">结果</h2>
 <p>MoLFormer 作为一种通用的预训练模型，在经过大数据集的训练后，再使用不同的标准分子数据集微调模型，完成 MoleculeNet 中的分类与回归任务，并将其结果与多种基线模型的表现对比，验证 MoLFormer 的编码效果。在 AUC-ROC 数据中，MoLFormer 在 6 组数据集上获得了 3 组最优表现，显著优于其他基线模型。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8581?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8581?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8581?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8581?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>除此之外，文章还对比了 MoLFormer 和与之类似的预训练模型 ChemBerta 编码分子的能力。文章从 PubChem 数据集中随机挑选 10000 对分子，计算每对分子指纹相似性与预训练模型得到的词嵌入相似性之间的相关系数，计算每对分子最大公共子图（Maximum Common Subgraph, MCS）中原子数量与两词嵌入欧氏距离之间的相关系数。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8591?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8591?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8591?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8591?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>实验结果中，在两个对比的指标上，MoLFormer 都具有更大的相关性，说明通过它得到的词嵌入能够更好地反映分子结构特征，即两分子的分子指纹相似性越高，表示两分子的向量也越相似；两分子的共有结构越大，表示两分子向量之间的距离也更小。</p>
 <p>最后，文章分析了 MoLFormer 学习到的注意力矩阵。随机选取分子，绘制各原子间的化学键连接矩阵和 3D 距离矩阵，与相应的 MoLFormer 全注意力矩阵和线性注意力矩阵对比，可以看出，线性注意力矩阵与分子的化学键连接矩阵和 3D 距离矩阵具有部分相似的权重，这可能解释了 MoLFormer 编码后为什么能保留分子的结构特征。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8592?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8592?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8592?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8592?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun">结论</h2>
 <p>文章使用大规模数据训练了基于 Transformer 的化学语言模型，经过实验对比，这种通用的预训练模型可以很好地通过微调迁移到其他数据集上完成包括分类、回归在内的任务，并且取得了优异的表现。此外，文章还确定了通过该模型得到的词嵌入能够反映分子的结构，同时比以往类似模型具有更好效果。</p>
 <p>文章主要对 Transformer 中的注意力机制做了改造，使用线性注意力减少计算开销，大大加快了训练速度，因此才能在 11 亿个分子的大规模数据上完成学习过程。文章还使用 RoPE 提高模型识别上下文的效果，这可能也是该模型具有更优表现的原因。目前预训练的通用语言模型如 GPT 和 Bart 等在 NLP 领域大放异彩，而对于这一类化学语言模型的研究还很少，它具有助力完成下游分子预测等任务的潜力。</p>
@@ -190,7 +190,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -269,10 +269,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -319,10 +319,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

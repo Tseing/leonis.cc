@@ -152,14 +152,14 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-021-00497-0">doi.org/10.1186/s13321-021-00497-0</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-021-00497-0" rel="noopener" target="_blank">doi.org/10.1186/s13321-021-00497-0</a></p>
 <p>本文介绍于 2021 年发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Molecular optimization by capturing chemist&rsquo;s intuition using deep neural networks，文章使用通过 MMP 算法生成的分子对数据和分子性质数据训练了 Transformer 和 seq2seq 等模型，这些模型能够通过结构改造得到具有目标性质的分子。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="xun-lian-shu-ju">训练数据</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8505?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>分子使用 SMILES 编码，原始分子的数据来自 ChEMBL，使用 MMP 算法对原始分子做化学改造，得到改造后的分子，也是训练模型时的目标分子，使用分子性质预测模型计算原始分子与目标分子的 LogD、溶解度以及 ADMET 性质。根据化学改造前后分子性质的变化，在原始分子前加上相应的性质标记，处理得到的两个分子构成一对 source-target 分子，作为训练集。</p>
 <h3 id="mo-xing">模型</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8507?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章中所使用的 Transformer 和 seq2seq 都是在机器翻译领域取得了优异成绩的模型，机器翻译的任务中，需要将一段文本转换为另一段文本，将其应用在分子优化中，就是将原始分子序列优化为目标分子序列的任务视作为机器翻译，让模型找到原始分子与目标分子间的关系。</p>
 <p>将 MMP 处理得到的分子对记作 <span class="math">\(\{X,Y,Z\}\)</span>，其中 <span class="math">\(X\)</span> 表示原始分子，<span class="math">\(Y\)</span> 表示目标分子，<span class="math">\(Z\)</span> 表示从 <span class="math">\(X\)</span> 到 <span class="math">\(Y\)</span> 发生的性质改变，模型的训练过程就是要建立 <span class="math">\((X,Z)\rightarrow Y\)</span> 的映射。</p>
 <p>Transformer 与 seq2seq 两种模型的原理不同，seq2seq 模型具有编码器-解码器的构造，编码器将输入序列编码为变量，解码器通过该变量与前一时刻中的输出一起给出当前输出，直至序列结束，完成翻译过程，编码器-解码器的内部使用 RNN 实现。由于  RNN 结构的长期依赖问题，seq2seq 在处理长文本序列时能力有限。Transformer 也具有编码器-解码器的构造，但 Transformer 没有使用 RNN 并引入了 self-attention 机制，具有比 seq2seq 更强的文本处理能力。</p>
@@ -180,16 +180,16 @@
 <li>Test-Property：由 Test-Original 中具有特定性质要求的组合构成，性质要求为 <code>LogD_change_=(-1.1,-0.9]</code>、<code>Solubility_low&rarr;high</code> 和 <code>CLint_high&rarr;low</code>。</li>
 </ol>
 <h2 id="jie-guo_1">结果</h2>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8508?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>使用三种测试集在不同模型上生成分子的结果如上图所示，首先可以看出，仅使用 MMP 算法对分子进行改造，也能得到一定数量具有目标特征的分子，说明 MMP 算法能够较好处理分子优化的问题，但 MMP 仅是对测试分子做没有方向性的、随机的改造，所以在生成分子的结果中，MMP 算法得到满足要求的分子也最少。</p>
 <p>相比 MMP 算法，深度学习模型 HierG2G、seq2seq 和 Transformer 具有更好的效果，生成了更多满足要求的分子。其中 seq2seq 和 Transformer 具有比较接近的结果，且表现都优于 HierG2G，这可能是由于 HierG2G 是一种基于图的模型，对于「序列到序列」这一类型的任务表现不如专门用于文本处理的 seq2seq 和 Transformer。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8509?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>统计各个模型生成的分子，在满足目标性质与基于 MMP 对分子进行改造两方面的目标上，Transformer 生成分子中满足要求的分子都在高于另外两种模型，更好地完成了分子优化任务。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8510?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>考察训练集与使用不同测试集通过 Transformer 生成分子集中分子对之间的化学改造方式，上图展示了出现频率最高的 20 种改造方式。可以看出，在训练集、从 Test-Original 和 Test-Molecule 生成的分子集中，出现频率较高的几种分子改造方式都比较接近，这可以说明 Transformer 从训练集中学习到了 MMP 改造方式并将其应用于测试集从而生成分子。</p>
 <p>Test-Property 中的分子改造方式与其他三种数据集中的方式差别较大，这是因为 Test-Property 数据集指定了特定的性质优化要求，在给定的性质单一优化方向下，Transformer 在学习到的 MMP 改造方式中选择最合适的方式，使生成分子的性质符合目标要求。这种工作方式与化学家改造分子的方式类似。</p>
 <p>文章中使用模型所生成的分子如下图所示：</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8511?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun">结论</h2>
 <p>文章使用 MMP 算法构建分子对数据集，MMP 算法模拟了现实中对单键切断并替换官能团的分子改造方式，因此可以训练得到与现实相似的分子改造模型。文章还考虑了分子改造的性质变化，现实中的分子改造大多是为了获得特定的性质，因此在结合了分子改造与性质变化后，文章构造了一种能够针对目标性质进行结构优化的模型，类似于现实中化学家对分子的优化。在试验的多种模型中，Transformer 获得了最佳的效果。但模型仍有许多改善的空间，例如只能对单点进行结构改造，能够指定的分子性质约束太少等等。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
@@ -206,7 +206,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -285,10 +285,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -335,10 +335,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

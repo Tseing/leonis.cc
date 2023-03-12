@@ -152,8 +152,8 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。</p>
-<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.2209.06158">doi.org/10.48550/arXiv.2209.06158</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.2209.06158" rel="noopener" target="_blank">doi.org/10.48550/arXiv.2209.06158</a></p>
+<p>本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。</p>
 <p>随着人工智能技术的发展，深度学习也进入到基于结构的药物设计（Structure Based Drug Design, SBDD）领域。SBDD 基于受体蛋白的结构设计与之适配的分子，是药物化学中的重要方法，而在深度学习辅助下的 SBDD 也将大大提升药物设计的效率，但目前这一方向还存在两个问题：</p>
 <ol>
 <li>用于训练模型的「靶点-药物分子对」有限；</li>
@@ -162,9 +162,9 @@
 <p>针对以上两个问题，文章首先使用分子数据预训练 Transformer 生成模型，使其学习到分子数据中更通用的特征，避免标签不足；其次，文章设计了一种变种的 Transformer encoder，通过 encoder 获得氨基酸序列中的 3 维结构信息，文章将最后得到的模型称为 TamGent（Target-aware molecule generator with Transformer）。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="shu-ju">数据</h3>
-<p>文章使用来自于 PubChem 数据库中的 1000 万个分子的 SMILES 序列预训练用于分子生成的 Transformer decoder 模型，使用来源于文献（<a href="https://arxiv.org/abs/2205.07249">Luo et al.</a>）的 12.3 万个靶点-配体对训练配体生成模型。</p>
+<p>文章使用来自于 PubChem 数据库中的 1000 万个分子的 SMILES 序列预训练用于分子生成的 Transformer decoder 模型，使用来源于文献（<a href="https://arxiv.org/abs/2205.07249" rel="noopener" target="_blank">Luo et al.</a>）的 12.3 万个靶点-配体对训练配体生成模型。</p>
 <h3 id="mo-xing">模型</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>使用 <span class="math">\(\boldsymbol{a}=(a_1,a_2,\cdots,a_N)\)</span> 表示氨基酸序列，其中 <span class="math">\(a_i\)</span> 为长度为 20 的 ont-hot 向量，可以用于表示 20 种氨基酸，使用 <span class="math">\(\boldsymbol{r}=(r_1,r_2,\cdots,r_N)\)</span> 表示相应的 3 维坐标，其中 <span class="math">\(r_i\in\mathbb{R}^3\)</span>。将配体分子的 SMILES 编码转化为向量 <span class="math">\(\boldsymbol{y}=(y_1,y_2,\cdots,y_M)\)</span>，那么模型训练的目标就是学习从 <span class="math">\(\boldsymbol{x}=(\boldsymbol{a},\boldsymbol{r})\)</span> 到 <span class="math">\(\boldsymbol{y}\)</span> 的映射。</p>
 <p>TamGent 的架构参考了变分自编码器的工作模式，也就是主要由活性口袋 encoder 和配体分子 decoder 构成，encoder 与 decoder 都使用了 Transformer 中的结构。</p>
 <p>配体分子 decoder 部分与 Transformer 完全一样，具有 self-attention 机制，能够根据生成的 toekn 生成下一个 token，完成分子生成，因此使用 1000 万个分子数据预训练该模型，使其能够根据数据集中分子的普遍特征生成分子。</p>
@@ -173,15 +173,15 @@
 <h2 id="jie-guo-yu-tao-lun_1">结果与讨论</h2>
 <h3 id="sheng-cheng-fen-zi-jie-guo">生成分子结果</h3>
 <p>文章使用 DrugBank 数据库中 1641 个靶点-配体对的数据用于测试模型效果，随机抽取其中的 100 个靶点-配体对，使用 TamGent、3DGen 和 SECSE 三种模型针对每个靶点生成 20 个分子，对比生成效果。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>三种模型生成分子的对接打分中，TamGent 生成的分子明显更低，说明分子与靶点具有更好的亲和力，同时其平均值也与标签数据最为接近。对比三种模型生成的分子与标签分子的相似性，同样是 TamGent 具有更大的相似性，生成的分子最接近标签分子。同时，在 QED、MD 和 SA 几项的分子指标上，TamGent 也都高于其他两种模型，以上几点可以表明 TamGent 在 DrugBank 数据上根据靶点生成分子具有明显的优势。</p>
 <h3 id="an-li-yan-jiu">案例研究</h3>
 <p>接下来文章使用 TamGent 针对于具体的靶点生成配体，分析模型表现。文章选择 SARS-CoV-2 主糖蛋白酶（<em>M</em> <sup>pro</sup>）作为靶点生成分子，收集了 415 个高分辨率结构后，使用模型生成了 4563 个分子，其中找到了先前报道过的一种 <em>M</em> <sup>pro</sup> 候选抑制剂（GC-376）和 6 个可能的先导化合物片段。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>上图展示了相应分子的二维分布，其中灰色表示在 PubChem 中随机选取的 3 万个分子，蓝色表示 TamGent 生成的分子，黄色表示在先前报道中提到了可能的 <em>M</em> <sup>pro</sup> 抑制剂。</p>
 <p>明显可以看出 TamGent 生成的分子与随机选取的分子具有不同的分布并且成簇聚集，主要分为 ① 和 ② 两簇。在第 ① 簇中，生成分子与 GC-376 的谷本相似度达到 0.82，并且此前报道的 6 种候选抑制剂都位于该簇中。但在第 ② 簇中没有找到对接分数较好的分子，只在分子中找到了一些可能的活性片段。</p>
 <p>最后文章选出了第 ① 簇中两个结构不同的分子与 <em>M</em> <sup>pro</sup> 对接，两种分子都能很好地填充活性口袋，对接分数分别为 -10.2 和 -9.5，而先前的 GC-376 是 -9.4，说明 TamGent 能够根据口性口袋生成具有良好活性的分子。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun_1">结论</h2>
 <p>文章参考变分自编码器的结构使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免模型依赖于有限的「靶点-药物分子对」。在分子生成任务中，TamGent 生成分子的效果优于以往的两种模型，使用 TamGent 针对 SARS-CoV-2 主糖蛋白酶生成活性分子，甚至找到了比先前报道的候选抑制剂具有更好对接打分的分子，表现出 TamGent 的优异性能。</p>
 <p>对于 TamGent，文章提出了 3 点改进措施，第一是使用更多实验测试得到的「靶点-药物分子对」进一步优化模型，第二是在模型中整合考虑 ADMET 待药理性质，第三是在具体靶点上微调模型，使其帮助提升针对相应靶点的药物研发效率。</p>
@@ -199,7 +199,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -278,10 +278,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -321,10 +321,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

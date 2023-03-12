@@ -155,16 +155,16 @@
                 <p>Markdown 语法简洁而高效，使用 Markdown 撰写博客文章是十分通行的做法。若要在文章中插入图片，需要使用 <code>![标题](URL)</code> 语法，Pelican 博客引擎将文章中的 <code>[标题](URL)</code> 转换为 html 标签 <code>&lt;img alt="标题" src="URL"&gt;</code>，就生成了用于发布的静态网页。</p>
 <p>这样生成的网页中，图片大小由 CSS 文件决定。设定的图片尺寸如果太小，难以看清图片细节，尺寸如果太大就会占据较大版面，也十分影响阅读。</p>
 <p>各类社交网站上的常规做法是，使用 CSS 文件决定合适的缩略图尺寸，点击缩略图后放大图片。点击缩略图放大的效果就像在暗室中使用的放映机，这个效果就被称为 Lightbox。</p>
-<p>Lightbox 功能非常常用，因此在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 <a href="https://github.com/pelican-plugins/photos">photos</a> 和 <a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery">Gallery</a> 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。</p>
+<p>Lightbox 功能非常常用，因此在网上有大量现成的插件，具有 Lightbox 功能的 Pelican 插件包括 <a href="https://github.com/pelican-plugins/photos" rel="noopener" target="_blank">photos</a> 和 <a href="https://github.com/getpelican/pelican-plugins/tree/master/gallery" rel="noopener" target="_blank">Gallery</a> 等。但是它们并不是纯粹的 Lightbox 插件，还具有图片处理、读取 EXIF 信息等功能，我觉得太「重」。</p>
 <h2 id="qing-liang-de-lightgallery-markdown">轻量的 lightgallery-markdown</h2>
-<p>兜兜转转之下，我找到了一个实现 Lightbox 功能的 <a href="https://github.com/g-provost/lightgallery-markdown">Python-Markdown 拓展</a>。其实原理也很简单，这个拓展能将 <code>![!标题](URL)</code> 转换为以下代码：</p>
+<p>兜兜转转之下，我找到了一个实现 Lightbox 功能的 <a href="https://github.com/g-provost/lightgallery-markdown" rel="noopener" target="_blank">Python-Markdown 拓展</a>。其实原理也很简单，这个拓展能将 <code>![!标题](URL)</code> 转换为以下代码：</p>
 <pre><code class="language-html">&lt;div class="lightgallery"&gt;
     &lt;a href="URL" data-sub-html="标题"&gt;
       &lt;img alt="标题" src="URL" /&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 </code></pre>
-<p>再在 <a href="https://github.com/sachinchoolur/lightgallery.js">lightgallery.js</a> 的作用下就能实现 Lightbox 功能。所以只要是使用 Python-Markdown 作为 html 生成器的博客都可以使个方法设置 Lightbox 效果。</p>
+<p>再在 <a href="https://github.com/sachinchoolur/lightgallery.js" rel="noopener" target="_blank">lightgallery.js</a> 的作用下就能实现 Lightbox 功能。所以只要是使用 Python-Markdown 作为 html 生成器的博客都可以使个方法设置 Lightbox 效果。</p>
 <h2 id="an-zhuang-python-markdown-tuo-zhan">安装 Python-Markdown 拓展</h2>
 <p>Pelican 提供了 Python-Markdown 拓展的接口，先使用 <code>pip install lightgallery</code> 安装 lightgallery-markdown，并在 <code>pelicanconf.py</code> 中添加</p>
 <pre><code class="language-python">MARKDOWN = {
@@ -178,7 +178,7 @@
 }
 </code></pre>
 <h2 id="bu-shu-lightgalleryjs">部署 lightgallery.js</h2>
-<p>在 <a href="https://github.com/sachinchoolur/lightgallery.js">lightgallery.js 项目仓库</a>中下载以下文件并放置到相应位置：</p>
+<p>在 <a href="https://github.com/sachinchoolur/lightgallery.js" rel="noopener" target="_blank">lightgallery.js 项目仓库</a>中下载以下文件并放置到相应位置：</p>
 <ul>
 <li><code>dist/js/lightgallery.min.js</code>&emsp;&rarr;&emsp;<code>themes/{theme_name}/static/js/</code></li>
 <li><code>dist/css/lightgallery.min.css</code>&emsp;&rarr;&emsp;<code>themes/{theme_name}/css/</code></li>
@@ -200,7 +200,7 @@
 </code></pre>
 <p>到了这里，已经在博客上添加了 Lightbox 功能，但还缺少最重要的放大缩小功能。</p>
 <h2 id="tian-jia-lightgalleryjs-cha-jian">添加 lightgallery.js 插件</h2>
-<p>下载 <a href="https://github.com/sachinchoolur/lg-zoom.js">lg-zoom.js</a>，将 <code>dist/lg_zoom.min.js</code> 移入 <code>themes/{theme_name}/static/js/</code>。同样在主题的 <code>base.html</code> 中引入该 JavaScript 文件即可生效。lightgallery.js 项目还具有许多插件，都可以通过这样简单的方法使其生效。</p>
+<p>下载 <a href="https://github.com/sachinchoolur/lg-zoom.js" rel="noopener" target="_blank">lg-zoom.js</a>，将 <code>dist/lg_zoom.min.js</code> 移入 <code>themes/{theme_name}/static/js/</code>。同样在主题的 <code>base.html</code> 中引入该 JavaScript 文件即可生效。lightgallery.js 项目还具有许多插件，都可以通过这样简单的方法使其生效。</p>
 <h2 id="yi-xie-xiao-xiu-gai">一些小修改</h2>
 <p>若将图片标题留空，如 <code>![!](URL)</code>，lightgallery.js 不会渲染查看图片时下方的图片信息，界面十分清爽舒服。但是这么一来，每次导出网页时Pelican 都会给出 <code>WARNING: Empty alt attribute for image content</code>。</p>
 <p>于是修改 <code>lightgallery.js</code> 文件，修改以下代码块：</p>
@@ -218,7 +218,8 @@
 <p>这时只要是标题设置为 <code>"NoCaption"</code> 的图片就不会显示下方信息栏，Pelican 也不会因为缺少标题而给出警告。</p>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;<code>lightgallery.min.js</code> 经过压缩，体积较小，加载速度更快，但代码可读性较差，不便于修改，可以先修改 <code>lightgallery.js</code> 再压缩为 <code>lightgallery.min.js</code>。</p></div></p>
 <h2 id="demo">Demo 🥳</h2>
-<p><div class="lightgallery"><a data-sub-html="<i class='fa fa-camera fa-lg'></i>&emsp;135 mm&emsp;f/5.6&emsp;1/125&emsp;ISO-800&emsp;Photo by Leo" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"><img alt="<i class='fa fa-camera fa-lg'></i>&emsp;135 mm&emsp;f/5.6&emsp;1/125&emsp;ISO-800&emsp;Photo by Leo" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="demo" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="demo" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p class="intro"><i class="fa fa-camera"></i> 135 mm&emsp;f/5.6&emsp;1/125&emsp;ISO-800&emsp;Photo by Leo</p>
 <p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 17 日，请确定内容是否过时。</p></div></p>
             </section>
 
@@ -251,10 +252,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -301,10 +302,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

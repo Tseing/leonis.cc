@@ -148,9 +148,9 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.1811.12823">doi.org/10.48550/arXiv.1811.12823</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.1811.12823" rel="noopener" target="_blank">doi.org/10.48550/arXiv.1811.12823</a></p>
 <p>本文介绍于 2020 年发布在 arXiv 上的一篇文章，文章原标题为 Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models，文章介绍了目前在评估分子生成模型方面存在的问题，并且设计了用于衡量模型表现的一套标准指标，目前 MOSES 已经广泛应用于各类分子生成任务。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8452?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8452?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8452?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8452?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>随着深度学习技术的发展，也产生了大量分子生成模型，但由于缺乏统一的评估指标，难以对比不同分子生成模型间的表现差异。此外，由于在分子生成模型中需要考虑化合物的的物理性质、生物活性、可合成性等不同方面的约束，不同的评估指标带来了混乱的同时也让模型更难泛化推广。</p>
 <p>文章提供了用于分子生成模型的工具套件 Molecular Sets (MOSES)，其中包括标准数据集、数据预处理工具、评估指标和分子生成模型。</p>
 <h2 id="fen-bu-xue-xi">分布学习</h2>
@@ -188,7 +188,7 @@
     其中 <span class="math">\(\mu\)</span> 是相应数据集的平均向量，<span class="math">\(\Sigma\)</span> 是相应的协方差矩阵。FCD 同时考虑了生成分子的化学和生物性质，FCD 也与其他指标相关，主要用于调试模型的超参数，FCD 越小时模型表现越好。</li>
 <li><strong>Properties distribution</strong> 使用 RDKit 计算了分子的分子量、LogP、SA 分数和 QED，生成相应的特征分布（如下图），通过计算生成分子各特征分布与目标特征分布间的 Wasserstein 距离，就够评估模型是否有效学习到了训练集中的特征。</li>
 </ul>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8453?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8453?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8453?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8453?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun">结论</h2>
 <p>文章提出了一套评估分布学习模型的标准指标 MOSES，使用相同训练数据训练了目前已经提出多种分子生成模型，利用 MOSES 评估不同分子生成模型，测试结果表明 MOSES 能够全面评估不同分子生成模型表现，发现分子生成任务中存在的问题。MOSES 提供了大量指标满足了分子生成任务的需求，目前是分子生成研究中的标准工具。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
@@ -205,7 +205,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -284,10 +284,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -334,10 +334,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

@@ -149,19 +149,19 @@
         <div class="inner">
             <section class="post-content">
                 <p>本文介绍于 2019 年发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Randomized SMILES strings improve the quality of molecular generative models。</p>
-<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-019-0393-0">doi.org/10.1186/s13321-019-0393-0</a></p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-019-0393-0" rel="noopener" target="_blank">doi.org/10.1186/s13321-019-0393-0</a></p>
 <h2 id="yin-yan">引言</h2>
 <p>SMILES 是深度学习邻域最常用的化学分子描述方式，在众多研究中使用的 SMILES 都是规范形式（canonical format）。而规范形式的 SMILES 常常会使模型具有一定偏向，还常常导致模型生成大量极相似的分子。文章考查了不同形式的 SMILES 编码对于模型的影响，主要包括规范形式、无约束随机形式和有约束随机形式。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7804?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>例如图片所示，对于阿司匹林分子具有三种不同的编码形式，规范形式（a）是 RDKit 工具中的默认形式。经过随机化后，起始原子发生了变化，无约束形式与有约束形式的区别在于，无约束形式先编码芳环，再编码支链，而有约束形式则先编码支链，最后编码芳环。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="yu-chu-li">预处理</h3>
 <p>对于 SMILES 的预处理在文中被称为 tokenization，其目的是使 SMILES 序列成为能够被神经网络识别的形式。其步骤包括在字列始末加上起始与终止符号、将两个字符的元素（如 Cl 和 Br）视作一个 token 等，最终将 SMILES 序列转化为 one-hot 形式。</p>
 <h3 id="mo-xing-jie-gou">模型结构</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7805?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>分子生成模型由 RNN 构成，经过处理后的 SMILES 序列将逐个 token 进入 <span class="math">\(m\)</span> 维的 embedding 层，再进入 <span class="math">\(l\)</span> 层大小为 <span class="math">\(w\)</span> 的 LSTM 或 GRU 单元，在 RNN 层间也可以设置 dropout 层，最终得到 token 的概率分布 <span class="math">\(Y_{ij}\)</span>。</p>
 <h3 id="shu-ju-ji">数据集</h3>
-<p>GDB-13 数据来自于<a href="https://gdb.unibe.ch/downloads/">官网</a>，使用 RDKit 对 SMILES 规范化。</p>
+<p>GDB-13 数据来自于<a href="https://gdb.unibe.ch/downloads/" rel="noopener" target="_blank">官网</a>，使用 RDKit 对 SMILES 规范化。</p>
 <p>ChEMBL 25 数据来自于 ChEMBL 官网，使用 MolVS 0.1.1 数据库对其处理，主要的处理包括去重、去除含有重原子的分子等，最终数据集中的分子都编码为 one-hot 形式。</p>
 <p>在使用随机化 SMILES 序列训练模型时，将数据集中的分子转化为随机化形式，也就是说，不论分子的编码形式是哪一种，数据集所使用的分子都是相同的。</p>
 <h3 id="xun-lian">训练</h3>
@@ -201,19 +201,19 @@
 </ul>
 <h2 id="jie-guo_1">结果</h2>
 <h3 id="gui-fan-xing-shi-yu-sui-ji-hua-xing-shi">规范形式与随机化形式</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7829?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在 GDB-13 中随机选择 1000000 个分子用于模型训练，结果表明随机化形式 SMILES 训练的模型生成了更多 GDB-13 数据集中的分子。从生成结果的其他指标上来看，与规范形式 SMILES 训练的模型相比，随机化形式模型产生了更好的结果。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7830?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h3 id="chao-can-shu-de-you-hua">超参数的优化</h3>
 <p>在 RNN 间的 dropout 比例、批处理数据的大小都属于模型的超参数，针对于这两个超参数，文章比较了改变这两个超参数对于 3 种模型 4 个指标的影响。结果表明，在增加 dropout 比例后，规范形式的模型表现出更好的效果，其完备性上升了，但封闭性下降了，也就是说模型以产生更多错误为代价，生成了更多 GDB-13 数据集中的分子。至于批大小，随着批处理数据的增加，所有模型的效果都改善了。</p>
 <h3 id="uc-jsd-ping-gu">UC-JSD 评估</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7831?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>由于不同模型的输出空间不同，不同模型的 UC-JSD 不能相互比较，但 UC-JSD 可以用作为对于每个 epoch 训练结果的损失函数。UC-JSD-UCC 图像可以明确显示中模型在各个 epoch 中优化的过程，最后得到的最优模型应当是具有最低 UC-JSD 与 最高 UCC 的模型。</p>
 <h3 id="xiao-fen-zi-ji-ce-shi">小分子集测试</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7832?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章中分别使用 1000 个分子与 10000 个分子训练模型。使用 1000 分子训练的规范形式模型仅生成了 14.5% 的 GDB-13 数据集分子，其合法性也仅有 0.504，可以认为模型没有学习到数据集的特征。当训练集增加到 10000 个分子，模型的效果也有所提高，但随机化形式的模型效果都要高于规范形式模型。</p>
 <h3 id="chembl-shu-ju-ce-shi">ChEMBL 数据测试</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7833?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章还使用 ChEMBL 的类药分子训练集测试了两种两种模型，最后绘制了两种模型对于 NLL 的核密度估计（Kernel Density Estimates）结果。结果表明，规范形式模型生成的规范形式 SMILES 能够很好地接近训练集和验证集，但是它不能很好地产生随机形式的 SMILES。与之相反，随机化形式模型不仅能产生随机化形式的 SMILES，产生规范形式 SMILES 的平均概率也很高。这个结果可以说明规范形式模型的输出空间是随机化形式模型的子集。</p>
 <h2 id="tao-lun_1">讨论</h2>
 <p>当以规范形式 SMILES 表示分子时，模型不仅要学习如何生成合法的 SMILES 序列，还需要学习如何以规范形式生成。相应地，如果使用随机化形式的 SMILES 序列，模型就可以不受限制地学习 SMILES 语法。</p>
@@ -236,7 +236,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -315,10 +315,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -365,10 +365,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

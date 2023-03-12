@@ -152,7 +152,7 @@
             <section class="post-content">
                 <p><code>prettymaps</code> 是一个 Python 地图绘图包，能够使用 OpenStreetMap 的地图数据，在 <code>matplotlib</code> 绘图包的助力下能够绘制出十分精美、极具艺术感的地图。但是 <code>prettymaps</code> 在 Windows 下的安装十分恼人，这篇笔记记录下了安装过程中的常见错误。</p>
 <h2 id="chang-shi-zhi-jie-shi-yong-pip-an-zhuang">尝试直接使用 pip 安装</h2>
-<p>在项目的 <a href="https://github.com/marceloprates/prettymaps">GitHub 仓库</a>中，作者提供的方法是直接通过 <code>pip install prettymaps</code> 安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装 <code>Fiona</code> 时发生错误，错误信息如下：</p>
+<p>在项目的 <a href="https://github.com/marceloprates/prettymaps" rel="noopener" target="_blank">GitHub 仓库</a>中，作者提供的方法是直接通过 <code>pip install prettymaps</code> 安装，但是在 Windows 设备上貌似不起作用。命令行信息提示在安装 <code>Fiona</code> 时发生错误，错误信息如下：</p>
 <pre><code>  Using cached Fiona-1.8.21.tar.gz (1.0 MB)
   Preparing metadata (setup.py) ... error
   error: subprocess-exited-with-error
@@ -190,7 +190,7 @@ extensions/gdal_wrap.cpp(2883): fatal error C1083: 无法打开包括文件: &ld
 <p>这是因为 Windows 缺少 Linux 自带的 GDAL core，一个解决方法就是在 Windows 上安装 GDAL core。因为这个过程无比繁琐，而且我不是 GIS 从业者，没有使用其他依赖于 GDAL core 软件的需要，所以我最后没有采取这种方法。</p>
 <p>但一开始我并未意识到安装 GDAL core 如此麻烦，以至于我也折腾了半天 GDAL core 的安装，我把这一解决方案的整个流程总结如下：</p>
 <p><code>安装 GDAL core</code> ⇨ <code>安装 GDAL bindings</code> ⇨ <code>设置 GDAL core 环境变量</code> ⇨ <code>安装 Fiona</code></p>
-<p>安装 GDAL core 与 bindings，可以前往 <a href="https://www.gisinternals.com/release.php">GISInternals</a> 下载安装文件。因为我的设备上安装了 Visual Studio 2017，我就选择了 MSVC 2017 x64 版本。</p>
+<p>安装 GDAL core 与 bindings，可以前往 <a href="https://www.gisinternals.com/release.php" rel="noopener" target="_blank">GISInternals</a> 下载安装文件。因为我的设备上安装了 Visual Studio 2017，我就选择了 MSVC 2017 x64 版本。</p>
 <p><img alt="GISInternals首页" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7531?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>要下载 GDAL core 和 bindings 两个安装文件，其中 bindings 需要与自己的 Python 版本匹配，下载完成后先安装 core 再安装 bindings。</p>
 <p><img alt="GISInternals下载文件" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7533?authkey=ALYpzW-ZQ_VBXTU"/></p>
@@ -200,9 +200,9 @@ Package           Version
 ----------------- -------
 GDAL              3.5.1
 </code></pre>
-<p>此时已经在 Python 中安装了 <code>GDAL</code>，但还需要配置环境变量后才能安装 <code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948">这篇文章</a>。</p>
+<p>此时已经在 Python 中安装了 <code>GDAL</code>，但还需要配置环境变量后才能安装 <code>Fiona</code>。详细步骤可以参考<a href="https://zhuanlan.zhihu.com/p/141226948" rel="noopener" target="_blank">这篇文章</a>。</p>
 <h2 id="shi-yong-whl-wen-jian-an-zhuang-tui-jian">使用 .whl 文件安装（推荐）</h2>
-<p><code>GDAL</code> 与 <code>Fiona</code> 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 <code>.whl</code> 安装这两个依赖。UCI 的 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal">Python 拓展包仓库</a>提供了这两个依赖的 <code>.whl</code> 文件。</p>
+<p><code>GDAL</code> 与 <code>Fiona</code> 不能直接通过 pip 安装是因为缺少 GDAL core，在不安装 GDAL core 的情况下，可以使用预编译的 <code>.whl</code> 安装这两个依赖。UCI 的 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal" rel="noopener" target="_blank">Python 拓展包仓库</a>提供了这两个依赖的 <code>.whl</code> 文件。</p>
 <p><img alt="GDAL下载页面" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7530?authkey=ALYpzW-ZQ_VBXTU"/></p>
 <p>要注意文件名中的两个参数，cp 指 Python 版本，win 字段指 CPU 架构，也就是常说的 32 位或 64 位系统。因此我选择的就是 <code>GDAL‑3.4.3‑cp39‑cp39‑win_amd64.whl</code>。</p>
 <p>将下载文件移入 Python 安装目录下的 <code>Scripts</code> 文件夹中，在该文件夹中打开终端，能过以下命令尝试安装：</p>
@@ -217,16 +217,16 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
 <p>Windows 下安装 <code>prettymaps</code> 的错误是 <code>GDAL</code> 与 <code>Fiona</code> 两个依赖未能成功安装造成的，本质原因是 Windows 缺少 GDAL core。</p>
 <p>由于以上原因在 Windows 下未能成功安装 <code>prettymaps</code> 的推荐解决步骤如下：</p>
 <ol>
-<li>安装 <a href="https://www.jianguoyun.com/p/DWCBLasQ2du5CxjCovsEIAA">GDAL-3.3.2-cp39-cp39-win_amd64.whl</a></li>
-<li>安装 <a href="https://www.jianguoyun.com/p/DbxmgnYQ2du5CxjEovsEIAA">Fiona-1.8.20-cp39-cp39-win_amd64.whl</a></li>
+<li>安装 <a href="https://www.jianguoyun.com/p/DWCBLasQ2du5CxjCovsEIAA" rel="noopener" target="_blank">GDAL-3.3.2-cp39-cp39-win_amd64.whl</a></li>
+<li>安装 <a href="https://www.jianguoyun.com/p/DbxmgnYQ2du5CxjEovsEIAA" rel="noopener" target="_blank">Fiona-1.8.20-cp39-cp39-win_amd64.whl</a></li>
 <li><code>pip install prettymaps</code></li>
 </ol>
 <hr/>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/32224877">Python中GDAL的安装 - 知乎</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/141226948">windows10 环境中安装GDAL及其python绑定 - 知乎</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/389235808">window 操作系统安装python的第三方包Fiona报错时解决方法 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32224877" rel="noopener" target="_blank">Python中GDAL的安装 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/141226948" rel="noopener" target="_blank">windows10 环境中安装GDAL及其python绑定 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/389235808" rel="noopener" target="_blank">window 操作系统安装python的第三方包Fiona报错时解决方法 - 知乎</a></li>
 </ul>
             </section>
 
@@ -259,10 +259,10 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -309,10 +309,10 @@ ERROR: Could not install packages due to an OSError: [Errno 22] Invalid argument
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

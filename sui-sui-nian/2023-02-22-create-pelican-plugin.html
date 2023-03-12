@@ -153,11 +153,11 @@
         <div class="inner">
             <section class="post-content">
                 <p>在博客上记录读书笔记是一件寻常事，但是怎么在文章中插入图书信息却是件恼人的事。直接用书名号引出？不不不，这也太不够美观了。参考一下国内图书信息最全面的豆瓣：</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>错不了，就要像这样把图书封面、出版社还有 ISBN 等等全部展示出来，才能让人满意。但是一个个截图也太麻烦了，而且信息没法更新，将这些信息都嵌入在网页中才是最好的实现方式。比较流行的博客框架例如 Hexo 和 WordPress 都有实现类似功能的插件，而我使用的是比较小众的 Pelican，只好自己动手了。</p>
 <h2 id="mu-biao">目标</h2>
 <p>我在博客上写作的流程是 <code>撰写 Markdown</code> ⇨ <code>使用 Pelican 生成 HTML</code>，为了实现在文章中插入豆瓣图书，比较方便的方法是在 Markdown 写作时，在需要插入图书的地方写下 <code>{GET BOOK URL}</code>，其中 <code>BOOK</code> 填写书籍名称，<code>URL</code> 填写书籍链接。当 URL 无效时，保留这条指令，避免遗失原来的信息；当从 URL 成功获取了图书元数据后，就将该条命令转换为 HTML 格式的图书信息，就顺利插入文章中了。</p>
-<p>本文介绍的代码可以在 <a href="https://github.com/Tseing/pelican-bookshelf"><i class="fa fa-github"></i> Tseing/pelican-bookshelf</a>  上找到。</p>
+<p>本文介绍的代码可以在 <a href="https://github.com/Tseing/pelican-bookshelf" rel="noopener" target="_blank"><i class="fa fa-github"></i> Tseing/pelican-bookshelf</a>  上找到。</p>
 <h2 id="pelican-mo-kuai">Pelican 模块</h2>
 <p>先从 Pelican 插件的原理讲起，Pelican 插件使用了信号机制，所谓信号机制就是在工作流程中，完成特定任务后就会给出特定信号，可以使用这种信号触发插件，完成正常工作流程以外额外的工作。那么在正式写插件之前，还需要了解一下 Pelican 的正常工作模块，具体可以分为以下 3 种：</p>
 <ol>
@@ -330,10 +330,10 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -380,10 +380,10 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

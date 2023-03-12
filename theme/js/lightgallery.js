@@ -726,12 +726,13 @@
         }
 
         // Add lg-empty-html class if title doesn't exist
+        // Add lg-empty to ban subHtml
         if (typeof subHtml !== 'undefined' && subHtml !== null) {
-            if (subHtml === '' || subHtml === 'n' || subHtml === 'NoCaption') {
-                _lgUtils2.default.addClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
-            } else {
-                _lgUtils2.default.removeClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
-            }
+            // if (subHtml === '' || subHtml === 'n' || subHtml === 'NoCaption') {
+            _lgUtils2.default.addClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
+            // } else {
+            //     _lgUtils2.default.removeClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
+            // }
         }
 
         _lgUtils2.default.trigger(this.el, 'onAfterAppendSubHtml', {

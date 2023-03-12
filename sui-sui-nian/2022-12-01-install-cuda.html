@@ -152,14 +152,14 @@
 <h2 id="zhun-bei-gong-zuo">准备工作</h2>
 <p>在普遍情况下，设备都安装了相应的显卡驱动，那么使用 <code>nvidia-smi</code> 即可查看驱动信息，确定支持的 CUDA 版本。</p>
 <p>若没有安装驱动，那么需要在终端中输入 <code>lspci | grep -i nvidia</code> 检测设备的 GPU 型号，接着查找适用的 CUDA 版本，在安装 CUDA 时也会自动安装上匹配的驱动。</p>
-<p><a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">CUDA 文档</a>中给出了GPU 驱动与 CUDA 版本的对应关系，一定要选择适配的版本。</p>
+<p><a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html" rel="noopener" target="_blank">CUDA 文档</a>中给出了GPU 驱动与 CUDA 版本的对应关系，一定要选择适配的版本。</p>
 <p>在安装 CUDA 前，还要确保设备安装了 gcc 和 make，如果需要使用 C++ 进行 CUDA 编程，还需要安装 g++。这里我只安装 gcc 和 make：</p>
 <pre><code class="language-sh">sudo apt update             # 更新 apt
 sudo apt install gcc make   # 安装 gcc 和 make
 </code></pre>
 <h2 id="xia-zai-cuda">下载 CUDA</h2>
-<p>确定需要安装的 CUDA 版本后，例如我的设备是 11.4，直接搜索 CUDA 11.4 进入<a href="https://developer.nvidia.com/cuda-11-4-0-download-archive">下载页面</a>。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>确定需要安装的 CUDA 版本后，例如我的设备是 11.4，直接搜索 CUDA 11.4 进入<a href="https://developer.nvidia.com/cuda-11-4-0-download-archive" rel="noopener" target="_blank">下载页面</a>。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在下载页面中需要选择相应的架构和发行版，如果不确定设备架构可以在终端中输入 <code>uname -m</code>，然后根据输出结果选择即可。</p>
 <p>我的设备是 Ubuntu 20.04，选择 Installer Type 为 <code>runfile(local)</code>，网页就给出了下载命令：</p>
 <pre><code class="language-bash"># 下载 CUDA
@@ -238,7 +238,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
 <hr/>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/79059379">Linux 下的 CUDA 安装和使用指南 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/79059379" rel="noopener" target="_blank">Linux 下的 CUDA 安装和使用指南 - 知乎</a></li>
 </ul>
             </section>
 
@@ -271,10 +271,10 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -321,10 +321,10 @@ export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

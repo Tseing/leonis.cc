@@ -150,7 +150,7 @@
             <section class="post-content">
                 <p>Marp 的全称是 Markdown Presentation Ecosystem，专门用于制作各种展示的演示文稿，除 pptx 外，Marp 还可以输出 pdf 和 html 格式，Marp 输出的 html 文件特别有意思，值得一试！但是 html 中的图片依赖于相对路径，真正用于 presentation 还是 pptx 的 slide 更为方便。</p>
 <h2 id="an-zhuang">安装</h2>
-<p><a href="https://marp.app/#get-started">Marp 官网</a>提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。</p>
+<p><a href="https://marp.app/#get-started" rel="noopener" target="_blank">Marp 官网</a>提供了 Marp for VS Code 与 Marp CLI 两个版本，相信会命令行的用户也不用看这篇文章了，所以我选择了 Marp for VS Code。直接在 VS Code 中搜索拓展 Marp for VS Code，下载安装即可。</p>
 <p>安装完成后打开拓展设置，将 <code>Markdown &gt; Marp:Export Type</code> 修改为 <code>pptx</code>，输出文件格式就默认为 pptx（若要调试 CSS 样式，输出 html 更为方便），其余设置按需修改。</p>
 <p>接下来测试一下 Marp 的功能是否正常，新建一个 <code>.md</code> 文件，内容如下：</p>
 <pre><code class="language-markdown">---
@@ -162,10 +162,10 @@ marp: true
 pptx by Marp
 </code></pre>
 <p>接着点击右上角的 <code>打开侧边预览</code> 按钮，或使用快捷键 <code>Ctrl+K V</code> （摁下 Ctrl+K 后再摁 V）打开预览界面。点击右上角 Marp 的图标，选择 <code>Toggle Marp Feature For Current Markdown</code> 后理应出现像下图一样的幻灯片预览。</p>
-<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7652?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>有的朋友会发现仍然是 Markdown 文档的样式，而非幻灯片分页的形式，这可能是因为之前安装了其他的 Markdown 预览插件。最简单的方法就是使用 VS Code 自带的预览工具，以我的 Markdown Preview Enhanced 插件为例，在它的插件设置中找到 <code>Hide Default VSCode Markdown Preview Button</code>，取消取定，重新启动后就会看见右上角有两个预览图标，一个是 VS Code 默认预览，另一个是 Markdown Preview Enhanced 插件，使用默认预览就能正常显示了。</p>
 <h2 id="chuang-zuo-huan-deng-pian">创作幻灯片</h2>
-<p>Marp 中比较特殊的语法可以参考<a href="https://github.com/marp-team/marp-vscode">官方文档</a>与<a href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html">博客 CAI</a>，其他语法与 Markdown 无异。</p>
+<p>Marp 中比较特殊的语法可以参考<a href="https://github.com/marp-team/marp-vscode" rel="noopener" target="_blank">官方文档</a>与<a href="https://caizhiyuan.gitee.io/categories/skills/20200730-marp.html" rel="noopener" target="_blank">博客 CAI</a>，其他语法与 Markdown 无异。</p>
 <p>全局的样式定义在主题 CSS 文件中，有时候需要修改单独页面的主题，Marp 提供了局部样式的方式：</p>
 <pre><code class="language-html">&lt;style scoped&gt;
     &lt;!-- Your style Here.
@@ -193,7 +193,7 @@ pptx by Marp
 </code></pre>
 <p>在撰写文章时，使用 <code>![center](url)</code> 就能使图片居中了。但是因为 <code>display: block</code> 属性，居中的同时就不能左右排列两张图片了，所以欲使两张图片并排共同居中可能还要想点办法<del>（为什么要用 Markdown 做排版软件做的事 ..&bull;&breve;_&breve;&bull;.. ）</del>。</p>
 <h2 id="yi-ge-wo-chuang-jian-de-mo-ban">一个我创建的模版</h2>
-<p>Marp 中的样式是由 CSS 文件定义的，因此只要会使用 CSS，就能创建自己的主题。我制作了一个适用于各种汇报和答辩的 slide 主题，主题项目已经发布到 GitHub 了， <a href="https://github.com/Tseing/Marp-Theme-NKU"><i class="fa fa-github fa-lg"></i> Marp-Theme-NKU</a> 仓库页面有更详细的介绍和安装方法。</p>
+<p>Marp 中的样式是由 CSS 文件定义的，因此只要会使用 CSS，就能创建自己的主题。我制作了一个适用于各种汇报和答辩的 slide 主题，主题项目已经发布到 GitHub 了， <a href="https://github.com/Tseing/Marp-Theme-NKU" rel="noopener" target="_blank"><i class="fa fa-github fa-lg"></i> Marp-Theme-NKU</a> 仓库页面有更详细的介绍和安装方法。</p>
 <p><img alt="page1" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7687?authkey=ALYpzW-ZQ_VBXTU"/>
 <img alt="page2" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7688?authkey=ALYpzW-ZQ_VBXTU"/>
 <img alt="page3" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7689?authkey=ALYpzW-ZQ_VBXTU"/>
@@ -230,10 +230,10 @@ pptx by Marp
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -280,10 +280,10 @@ pptx by Marp
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

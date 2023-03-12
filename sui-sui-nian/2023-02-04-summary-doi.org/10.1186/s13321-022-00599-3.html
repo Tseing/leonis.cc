@@ -150,10 +150,10 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-022-00599-3">doi.org/10.1186/s13321-022-00599-3</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-022-00599-3" rel="noopener" target="_blank">doi.org/10.1186/s13321-022-00599-3</a></p>
 <p>本文介绍于 2022 年发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Transformer‑based molecular optimization beyond matched molecular pairs，目前已经出现许多使用匹配分子对（matched molecular pairs, MMP）的 Transformer 模型，针对这种现状，文章评估了除 MMP 以外其他分子匹配方式对 Transformer 模型表现的影响。</p>
 <p>尽管 MMP 已经广泛应用在多种分子生成模型中，但 MMP 也存在一定的局限性，例如 MMP 在分子单键处匹配的特点决定了每次只能修改分子中单一部分的结构，这与实际中对分子多部分结构进行改造的方法有所差别。除此以外，化学家改造分子的目的是使其满足一定的性质，目前少有研究关注在模型上以此为目标进行直接的分子优化。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8500?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8500?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8500?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8500?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>因此文章从分子的结构与性质两个方面考量模型的表现，如图所示，输入序列由性质约束与分子 SMILES 构成，Transformer 生成优化后的分子，评估生成分子是否满足结构与性质两种约束。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="gou-zao-fen-zi-dui">构造分子对</h3>
@@ -185,9 +185,9 @@
 <li>Random：从测试集中随机选取 10 个具有相同结构约束的分子。</li>
 </ul>
 <h2 id="jie-guo-yu-tao-lun_1">结果与讨论</h2>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8501?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8501?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8501?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8501?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>结果表明，Transformer 具有最好的效果，由于 Transformer-U 没有学习到分子的性质特征，所生成分子中满足性质约束的占比很低。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8502?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8502?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8502?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8502?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>对比不同分子对算法模型生成分子与训练集的分布，可以发现，在使用谷本相似度的三种模型中，尽管生成分子与训练集的分布吻合程度稍低，但模型生成的满足性质约束的分子并未被结构约束限制住（超出红色范围的淡绿色），这说明使用谷本相似度的模型具有一定探索化学空间的能力。</p>
 <p>使用 MMP、分子骨架的模型中，生成分子与训练集的分布十分吻合，模型学习到了数据特征并在结构约束中生成具有目标性质的分子。对比 MMP 与分子骨架的模型，MMP 模型两种分布的吻合程度更高，对分子的结构改变更小，而分子骨架模型偏向于产生谷本相似度更高的分子。</p>
 <p>结合表中的数据，相比于基于谷本相似度的模型，MMP 和分子骨架模型更容易生成满足结构约束的分子，这是因为于谷本相似度训练集中的分子差异较大，这使得 Transformer 更难获取其中的特征。另一方面，由于分子差异较大，模型更倾向于探索化学空间，能够得到了更多满足性质约束的分子（Similarity (&ge;0.7)），但在探索的化学空间太大时，寻找同时满足性质约束与结构约束的分子就会变得困难，因此较恰当的 Similarity (&ge;0.7) 与 MMP 两组模型表现最好。</p>
@@ -198,8 +198,8 @@
 <li>多部分改造且改变骨架：Similarity (&ge;0.5)、Similarity ([0.5,0.7)) 与 Similarity (&ge;0.7)</li>
 </ol>
 <p>从生成分子中也可以看出不同模型的分子改造方式：</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8503?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8503?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8504?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8504?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8503?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8503?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8504?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8504?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun">结论</h2>
 <p>文章评估了包括 MMP 在内的多种分子对匹配方法，虽然 MMP 是目前广泛应用的一种方法，并且在文章的评估中也表现良好，但必须考虑到 MMP 的原理使其对分子做的是单一部分改造，这就会影响分子多样性等指标。在实际应用中，应当根据模型目的考虑多种分子对匹配方法，或者参考该文章的方法评估不同分子对匹配方法对模型表现的影响。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
@@ -216,7 +216,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -295,10 +295,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -345,10 +345,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

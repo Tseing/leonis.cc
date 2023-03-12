@@ -151,8 +151,8 @@
         <div class="inner">
             <section class="post-content">
                 <p>拆解项目代码的时候发现使用到了 <code>onmt</code> 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。</p>
-<p>OpenNMT 官方描述该框架为 an open source neural machine translation system，点进 <a href="https://opennmt.net/">OpenNMT 的官网</a>可以看到更多资料，因此也不需要我多描述。总结一下就是，OpenNMT 是搭建自然语言处理模型的开源框架，其中自然包括常见的 RNN 和 Transformer 等模型。如果在自然语言处理方面有需要，OpenNMT 绝对是一个轻量有效的框架。</p>
-<p>OpenNMT 的中文学习资料较少，于是我只能参考<a href="https://opennmt.net/OpenNMT-py/main.html">官方文档</a>学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。</p>
+<p>OpenNMT 官方描述该框架为 an open source neural machine translation system，点进 <a href="https://opennmt.net/" rel="noopener" target="_blank">OpenNMT 的官网</a>可以看到更多资料，因此也不需要我多描述。总结一下就是，OpenNMT 是搭建自然语言处理模型的开源框架，其中自然包括常见的 RNN 和 Transformer 等模型。如果在自然语言处理方面有需要，OpenNMT 绝对是一个轻量有效的框架。</p>
+<p>OpenNMT 的中文学习资料较少，于是我只能参考<a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank">官方文档</a>学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。</p>
 <h2 id="zhun-bei-gong-zuo">准备工作</h2>
 <p>首先介绍一下我的运行环境，我的设备搭载一块 <code>GTX 1080</code> GPU，系统为 <code>Ubuntu 20.04</code>，需要提前在设备上安装好 CUDA，我使用 Anaconda 配置 Python 环境。</p>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;OpenNMT 不支持过旧的 GPU，之前在 <code>GTX 970</code> 的设备上就无法训练模型，这个问题可能除了换设备无解😭</p></div></p>
@@ -167,7 +167,7 @@ conda activate nlp
 pip install OpenNMT-py==3.0.2
 </code></pre>
 <p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 <code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}</code>，将其中的 <code>{some-package}</code> 替换为需要安装的包名称。</p></div></p>
-<p>直接安装 <code>OpenNMT-py</code> 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 <code>nvcc -V</code> 查询 CUDA 版本，再在 <a href="https://pytorch.org/get-started/previous-versions/">Pytorch 官网</a>找到相应的版本。例如我的 CUDA 版本为 <code>11.4</code>，那么就需要重新安装以下版本的包解决依赖问题：</p>
+<p>直接安装 <code>OpenNMT-py</code> 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 <code>nvcc -V</code> 查询 CUDA 版本，再在 <a href="https://pytorch.org/get-started/previous-versions/" rel="noopener" target="_blank">Pytorch 官网</a>找到相应的版本。例如我的 CUDA 版本为 <code>11.4</code>，那么就需要重新安装以下版本的包解决依赖问题：</p>
 <pre><code class="language-sh">pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
 </code></pre>
 <h3 id="zhun-bei-shu-ju">准备数据</h3>
@@ -183,7 +183,7 @@ pip install OpenNMT-py==3.0.2
 <pre><code class="language-sh">wget https://s3.amazonaws.com/opennmt-trainingdata/toy-ende.tar.gz
 tar xf toy-ende.tar.gz
 </code></pre>
-<p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data"><i class="fa fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
+<p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data" rel="noopener" target="_blank"><i class="fa fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
 <p>接着通过 <code>vim toy_en_de.yaml</code> 在目录下创建 <code>.yaml</code> 配置文件，内容为</p>
 <pre><code class="language-yaml"># toy_en_de.yaml
 
@@ -258,9 +258,9 @@ Die &lt;unk&gt; der &lt;unk&gt; der &lt;unk&gt; , die die &lt;unk&gt; der &lt;un
 </code></pre>
 <p>由于训练时间很短，数据集很小，预测结果不会好，再加上不认识德语，也无法判断结果的优劣，所以接下来尝试在更大的中文语料上进行翻译任务。</p>
 <h2 id="wen-yan-fan-yi_1">文言翻译</h2>
-<p>B 站上有一个展示 OpenNMT 的<a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651">视频</a>，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 <a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb">GitHub</a> 上，可以和本文相互参照，本文中的代码也可以在 <a href="https://github.com/Tseing/OpenNMT-wenyan"><i class="fa fa-github"></i> Tseing/OpenNMT-wenyan </a> 找到。</p>
+<p>B 站上有一个展示 OpenNMT 的<a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651" rel="noopener" target="_blank">视频</a>，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 <a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb" rel="noopener" target="_blank">GitHub</a> 上，可以和本文相互参照，本文中的代码也可以在 <a href="https://github.com/Tseing/OpenNMT-wenyan" rel="noopener" target="_blank"><i class="fa fa-github"></i> Tseing/OpenNMT-wenyan </a> 找到。</p>
 <h3 id="zhun-bei-shu-ju_1">准备数据</h3>
-<p>白话文与文言文的平行语料来自于 <a href="https://github.com/NiuTrans/Classical-Modern"><i class="fa fa-github"></i> NiuTrans/Classical-Modern</a>，包含了大量内容：</p>
+<p>白话文与文言文的平行语料来自于 <a href="https://github.com/NiuTrans/Classical-Modern" rel="noopener" target="_blank"><i class="fa fa-github"></i> NiuTrans/Classical-Modern</a>，包含了大量内容：</p>
 <pre><code class="language-txt"># Classical-Modern/source/
 元史  北齐书  南齐书  后汉书  太平广记  宋史    新五代史  旧五代史  明史  梁书      汉书              辽史  陈书  魏书
 北史  南史    史记    周书    宋书      徐霞客  新唐书    旧唐书    晋书  水经注全  短篇章和资治通鉴  金史  隋书
@@ -318,7 +318,7 @@ for f in os.listdir(source_root):
 派人游说小股义军，被劝说的人都归顺了翟让，翟让开始看重了他，叫他同自己一起讨论重大问题。
 宇文温常对李密说：不杀邴元真，您的祸害就不会排除。
 </code></pre>
-<p>接下来要对文本分词，对于文言文来说，单字词的占比非常高，将每个单字作为一个词就是一种比较方便的分词方法，所以在每个字符后插入空格即可。而白话文中有大量的双字词，甚至三字词、四字词，必须使用专门的分词引擎，这里我使用了 <a href="http://thulac.thunlp.org/">THULAC</a>，直接通过 <code>pip install thualac</code> 就能安装。</p>
+<p>接下来要对文本分词，对于文言文来说，单字词的占比非常高，将每个单字作为一个词就是一种比较方便的分词方法，所以在每个字符后插入空格即可。而白话文中有大量的双字词，甚至三字词、四字词，必须使用专门的分词引擎，这里我使用了 <a href="http://thulac.thunlp.org/" rel="noopener" target="_blank">THULAC</a>，直接通过 <code>pip install thualac</code> 就能安装。</p>
 <pre><code class="language-py">import thulac
 
 # 对文言文本分词
@@ -465,7 +465,7 @@ else:
     os.system('onmt_train -config wenyan.yaml')
 </code></pre>
 <p>在 <code>.yaml</code> 文件中添加 <code>log_file</code> 可以将日志文件保存到相应目录，这里我没有添加，直接用终端中的输出数据分析。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>ACC 和 PPL 是自然语言处理中常用的指标，当然还有更好用的 BELU 等指标。可以看出训练过程收敛得非常快，PPL 迅速下降，ACC 也在第 20 个模型后保持稳定了，检查一下日志文件发现果然在第 23 个模型后学习率变成 0 了。这就说明不需要指定那么多的训练步骤，降低到 300000 可能是比较合适的。</p>
 <h3 id="mo-xing-yu-ce_1">模型预测</h3>
 <p>那么就选最后一个模型作为最终用于预测的模型，将其他模型全部删除。</p>
@@ -499,9 +499,9 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
 <hr/>
 <h2 id="references_1">References</h2>
 <ul>
-<li><a href="https://opennmt.net/OpenNMT-py/main.html">OpenNMT-py Documentation</a></li>
-<li><a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/">OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog</a></li>
-<li><a href="https://www.bilibili.com/video/BV1NL4y1t73c/">开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩</a></li>
+<li><a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank">OpenNMT-py Documentation</a></li>
+<li><a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/" rel="noopener" target="_blank">OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog</a></li>
+<li><a href="https://www.bilibili.com/video/BV1NL4y1t73c/" rel="noopener" target="_blank">开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩</a></li>
 </ul>
             </section>
 
@@ -534,10 +534,10 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -584,10 +584,10 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>

@@ -152,15 +152,15 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jcim.2c00982">doi.org/10.1021/acs.jcim.2c00982</a></p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jcim.2c00982" rel="noopener" target="_blank">doi.org/10.1021/acs.jcim.2c00982</a></p>
 <p>本文介绍于 2022 年发表在 <em>Journal of Chemical Information and Modeling</em> 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="mo-xing">模型</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8280?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章从 SyntaLinker 分子连接模型受到启发，同样使用了强大的 Transformer 模型，但与之不同的是 DRlinker 还引入了强化学习的策略。使用 ChEMBL 数据训练 Transformer，得到先验模型，先验模型能够根据输入的分子片段给出新分子。接着引入基于策略的强化学习，通过打分函数等优化方法训练先验模型，得到代理模型。</p>
 <p>也就是说，代理模型与先验模型具有相同的结构，先验模型首先初始化了代理模型，接着代理模型的强化学习策略使其输出满足打分函数的约束，所以最终的模型可以根据输入的分子片段给出满足指定约束的新分子。</p>
 <h3 id="shu-ju">数据</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8281?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>由于 DRlinker 是对 SyntaLinker 的改进，所使用的数据也与 SyntaLinker 一致，数据都来源于 ChEMBL 数据库，处据处理方法也一致。从 ChEMBL 数据库得到的分子数据首先使用 Lipinski 五规则、假阳性化合物和 SA 分数等标准过滤掉其中不具有类药性的分子，接着使用 MMP 算法将分子切分为片段。</p>
 <p>训练方法也与 SyntaLinker 一致，将切分的分子片段组合为 「片段 1，连接部分，片段 2，分子」的四部分数据，令 Transformer 模型完成将「片段 1，片段 2」转为分「分子」的 seq2seq 任务。</p>
 <h3 id="da-fen-han-shu">打分函数</h3>
@@ -202,13 +202,13 @@
 \end{equation}$$</div>
 <p>多目标约束用于评估模型针对多个目标进行优化时的表现。</p>
 <h2 id="jie-guo_1">结果</h2>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8282?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h4>连接部分长度</h4>
 <p>指定模型生成连接部分长度为 5 和 10 的新分子，结果为 subplot a，可以看出与 SyntaLinker 和 DeLinker 相比，DRLinker 生成的分子分布更加集中在 5 和 10，DRLinker 能够更加准确地生成目标分子。这是由于 SyntaLinker 不具有强化学习策略，是通过在训练数据连接部分长度为 5 的分子中添加例如 <code>L_5</code> 的前缀标记，利用 Transformer 的自注意力机制分配权重，使生成分子连接部分的长度与 <code>L_n</code> 的前缀标记相关。使用这种方法虽然能使分子大致符合目标，但显然是不能使分子准确满足目标。</p>
 <h4>log P</h4>
 <p>指定模型分别生成 <span class="math">\(\log P\)</span> 为 1、2 和 3 的分子，分子分布为 subplot b，可以从先验模型生成分子到代理模型生成分子的分布中看出，经过强化学习，模型生成分子能够满足约束，集中在任务指定的 <span class="math">\(\log P\)</span> 附近。subplot c 列举了模型生成的分子，也可以看出，随着目标 <span class="math">\(\log P\)</span> 增大，生成分子的连接部分具有更多的芳香基团等疏水基团。</p>
 <h4>生物活性与多目标约束</h4>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8284?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>使用活性预测模型的预测活性作为打分函数，可以指定生成活性较高的新分子，使用 RDKit 的评估指标分析生成分子，可以看出在生成的分子在满足合法性、新颖性等要求的同时，相对于 SyntaLinker 活性还有所提升（Impv）。</p>
 <p>此外还可以使用优化 QED 和 SA 两种目标的打分函数，生成分子的 QED 与 SA 都有相应的提高，达到了使生成分子满足多目标约束的目的。</p>
 <p>以上两种应用都不是通过指定要求的目标生成分子，而是指定了优化目标，可以理解为一种优化分子结构的方式，这是 SyntaLinker 所不具有的功能。</p>
@@ -228,7 +228,7 @@
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
 
     var configscript = document.createElement('script');
     configscript.type = 'text/x-mathjax-config';
@@ -307,10 +307,10 @@
                         <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
                             <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
-                            <span class="post-author-website"><a href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
                         <!-- Social linkes in alphabet order. -->
-                            <span class="post-author-github"><a target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
-                            <span class="post-author-email"><a target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
                     </div>
                     <div class="clear"></div>
                 </aside>
@@ -357,10 +357,10 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a href="https://github.com/Tseing/Pelican_blog" rel="nofollow"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml" rel="nofollow"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
                <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
-          <span class="credits-software">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow"><b>Attila</b></a> &bull; Published with <a href="https://github.com/getpelican/pelican" rel="nofollow"><b>Pelican</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
     </footer>
