@@ -75,7 +75,7 @@
           </span>
         </nav>
         <h1 class="post-title"><i class="fa fa-tag"></i> Pelian</h1>
-        <span class="blog-description">2 篇</span>
+        <span class="blog-description">3 篇</span>
           <div class="blog-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content')">
       </div>
     </header>
@@ -94,6 +94,27 @@
 </nav>
     </div>
 
+        <article class="post">
+        <div class="inner">
+            <header class="post-header">
+                <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="bookmark" title="Permalink to 为 Pelican 博客加入搜索功能">为 Pelican 博客加入搜索功能</a>
+                </h2>
+                <span class="post-meta">
+                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                     | <time datetime="2023年 3月14日">2023年 3月14日</time>
+                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                </span>
+                <div class="clear"></div>
+            </header>
+                <section class="post-excerpt">
+                    <p>
+                        博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。
+                    </p>
+                </section>
+                <div class="index-tags">
+<a href="https://leonis.cc/tag/blog.html"># Blog</a><a href="https://leonis.cc/tag/pelian.html"># Pelian</a><a href="https://leonis.cc/tag/rust.html"># Rust</a><a href="https://leonis.cc/tag/windows.html"># Windows</a>                </div>
+            </div>
+        </article>
         <article class="post">
         <div class="inner">
             <header class="post-header">
@@ -148,6 +169,20 @@
       <!-- TODO : Body class -->
     <div id="body-class" style="display: none;" class=""></div>
 
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="sitesearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="sitesearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
     <footer id="footer">
       <div class="inner">
         <section class="credits">
@@ -161,9 +196,13 @@
       </div>
     </footer>
   </section>
-
   <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- pelican search -->
+  <script src="https://files.stork-search.net/releases/v1.5.0/stork.js"></script>
+  <script>
+      stork.register("sitesearch", "https://leonis.cc/search-index.st")
+  </script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>

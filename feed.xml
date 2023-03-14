@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-11T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</title><link href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" rel="alternate"></link><published>2023-03-11T00:00:00+08:00</published><updated>2023-03-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-11:/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html</id><summary type="html">&lt;p&gt;本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2209.06158" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2209.06158&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-14T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客加入搜索功能</title><link href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="alternate"></link><published>2023-03-14T00:00:00+08:00</published><updated>2023-03-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-14:/sui-sui-nian/2023-03-14-deploy-pelican-search.html</id><summary type="html">&lt;p&gt;博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在目前的博客生态圈中，静态博客占了相当大的比例。静态博客因为足够轻量、便于备份和迁移而受到包括我在内的许多用户喜欢，但由于静态博客没有数据库，在组织内容上就不免有所不足，这就涉及到题中所说的搜索功能了。为静态博客部署搜索功能比较麻烦，一个稍简单的方法就是借于「必应」「谷歌」等搜索引擎的 API，用它们来搜索站内的内容，但是这种方法的效果并不好，如果网页还未被收录或是相应头键字在网页中的占比太小，就很难搜索到目标信息。另一种方法就是在站内建立本地的搜索，例如 Hexo 等博客框架都提供了相应的插件，在本地生成搜索匹配所需的文件，将其一并推送至服务器实现全站搜索，这种方法的兼容性、准确性都要更好，也是我选择的方案。&lt;/p&gt;
+&lt;p&gt;Pelican 也有类似的搜索插件 &lt;a href="https://github.com/pelican-plugins/search" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; pelican-plugins/search&lt;/a&gt;，它主要是借助了 &lt;a href="https://stork-search.net/" rel="noopener" target="_blank"&gt;Stork&lt;/a&gt; 来实现搜索功能。Stork 在官方文档中指出，它可以用于为静态站点构建关速美观的搜索接口，所以理应可以用于所有类型的静态博客，我不了解其他博客框架是否使用了这个工具，但不得不提其搜索体验非常不错，十分值得一试。&lt;/p&gt;
+&lt;h2 id="an-zhuang-stork"&gt;安装 Stork&lt;/h2&gt;
+&lt;h3 id="an-zhuang-c-sheng-cheng-gong-ju"&gt;安装 C++ 生成工具&lt;/h3&gt;
+&lt;p&gt;Stork 是基于 Rust 构建的工具，需要使用 Rust 的包管理器 Cargo 安装，若是在 macOS 或 Linux 系统上，直接按照官方文档给出的方法安装即可，而在 Windows 上就会比较麻烦，我在这里介绍一下 Windows 的操作方法。&lt;/p&gt;
+&lt;p&gt;{note begin}后文所涉及的操作系统都是 Windows 10 系统，终端指的是 Windows 终端（Windows Terminal）。{note end}&lt;/p&gt;
+&lt;p&gt;首先，在 Windows 上，Rust 需要某些 C++ 生成工具，可以选择安装 Visual Studio 或仅安装 Microsoft C++ 生成工具。安装 Visual Studio 的方法非常简单（推荐），按下不表，若仅安装 Microsoft C++ 生成工具，可以在终端中输入&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;winget install Microsoft.VisualStudio.2022.BuildTools
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;由于 winget 下载速度感人，实在不推荐这种方法。&lt;/p&gt;
+&lt;p&gt;在安装好 Visual Studio 后，在开始界面搜索并打开 Visual Studio Installer，选择 &lt;code&gt;修改&lt;/code&gt; - &lt;code&gt;使用 C++ 的桌面开发&lt;/code&gt;，等待安装完成。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Visual Studio" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Visual Studio" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="an-zhuang-rust"&gt;安装 Rust&lt;/h3&gt;
+&lt;p&gt;Rust 也可以使用 winget 安装，命令很简单：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;winget install rustup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是不太好用，所以我还是选择到 &lt;a href="https://www.rust-lang.org/zh-CN/tools/install" rel="noopener" target="_blank"&gt;Rust 官网&lt;/a&gt;下载。下载完成后打开安装程序，弹出的是命令行窗口，默认安装在 &lt;code&gt;C:\Users&lt;/code&gt; 路径下的目录中，如果不需要额外的设置，键入 &lt;code&gt;1&lt;/code&gt; 后按回车即可。&lt;/p&gt;
+&lt;p&gt;但由于 C 盘空间不太够了，我需要修改一下安装的路径，在目标路径下创建以下两个文件夹并新建环境变量：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yaml"&gt;CARGO_HOME: E:\RUST\.cargo
+RUSTUP_HOME: E:\RUST\.rustup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 &lt;code&gt;PATH&lt;/code&gt; 中添加变量 &lt;code&gt;%CARGO_HOME%&lt;/code&gt;、&lt;code&gt;%RUSTUP_HOME%&lt;/code&gt; 和 &lt;code&gt;%CARGO_HOME%\bin&lt;/code&gt;，然后再打开安装程序，默认路径就已经改变，键入 &lt;code&gt;1&lt;/code&gt; 按回车安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;Rustup metadata and toolchains will be installed into the Rustup
+home directory, located at:
+
+  E:\RustT\.rustup
+
+This can be modified with the RUSTUP_HOME environment variable.
+
+The Cargo home directory is located at:
+
+  E:\Rust\.cargo
+
+This can be modified with the CARGO_HOME environment variable.
+
+The cargo, rustc, rustup and other commands will be added to
+Cargo's bin directory, located at:
+
+  E:\Rust\.cargo\bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;安装完成后，在终端中输入 &lt;code&gt;cargo --version&lt;/code&gt; 理应输出版本信息。&lt;/p&gt;
+&lt;h3 id="tong-guo-cargo-an-zhuang-stork"&gt;通过 Cargo 安装 Stork&lt;/h3&gt;
+&lt;p&gt;虽然安装好了 Cargo，但不出意外的话，与其他包管理器类似，从官方的源下载内容的速度非常之慢，所以需要修改配置使用镜像源。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;.cargo&lt;/code&gt; 目录下创建文件 &lt;code&gt;config.toml&lt;/code&gt;，写入以下内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-toml"&gt;[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;就使用了科大的镜像源，然后在终端中使用以下命令安装 Stork：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;cargo install stork-search --locked
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后可以使用 &lt;code&gt;stork --version&lt;/code&gt; 验证是否成功安装 Stork。&lt;/p&gt;
+&lt;h2 id="bu-shu-pelican-search_1"&gt;部署 pelican-search&lt;/h2&gt;
+&lt;p&gt;安装好 Stork 后的步骤就很简单了，在 Pelican 的 Python 环境中安装插件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;python -m pip install pelican-search
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后在 Pelican 设置中的 &lt;code&gt;PLUGINS&lt;/code&gt; 引入 &lt;code&gt;search&lt;/code&gt;，在主题的模板文件（一般是 &lt;code&gt;base.html&lt;/code&gt;）中引入 Stork CSS 的 CDN（当然也可以改写后自己部署）：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;link rel="stylesheet" href="https://files.stork-search.net/basic.css" /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以及 JavaScript：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;script src="https://files.stork-search.net/releases/v1.5.0/stork.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;
+    stork.register("sitesearch", "{{ SITEURL }}/search-index.st")
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后就可以在设计的搜索区域通过以下方式调用 Stork 搜索了：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;Search: &amp;lt;input data-stork="sitesearch" /&amp;gt;
+&amp;lt;div data-stork="sitesearch-output"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{warn begin}以上 CSS 应在页面的头部，例如 &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; 中引入，而 JavaScript 则应在 &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; 的尾部引入。这是因为 HTML 文件是自上至下顺序执行的，如果加载 JavaScript 的位置靠前，比如在 &lt;code&gt;&amp;lt;input data-stork="sitesearch" /&amp;gt;&lt;/code&gt; 元素之前引入，在执行时该元素还未生成，就会找不到匹配的搜索框，提示没有 &lt;code&gt;query selector `input[data-stork="sitesearch"]`&lt;/code&gt;，导致 &lt;code&gt;Uncaught StorkError&lt;/code&gt;。{warn end}&lt;/p&gt;
+&lt;h3 id="pelican-search-de-she-zhi-xiang"&gt;pelican-search 的设置项&lt;/h3&gt;
+&lt;p&gt;pelican-search 的设置项只有两项，一项 &lt;code&gt;SEARCH_MODE&lt;/code&gt; 设定从 Markdown 文件建立索引还是从 HTML 建立索引，&lt;code&gt;SEARCH_HTML_SELECTOR&lt;/code&gt; 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。&lt;/p&gt;
+&lt;p&gt;我浏览了一下 &lt;a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank"&gt;Stork 官方文档&lt;/a&gt;中的内容，发现了很多很有意思的东西。例如 &lt;code&gt;minimum_indexed_substring_length&lt;/code&gt; 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 &lt;code&gt;minimum_index_ideographic_substring_length&lt;/code&gt; 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。&lt;/p&gt;
+&lt;p&gt;再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gist.github.com/maphew/95fb9e986edfab887e4ff36547d5da59" rel="noopener" target="_blank"&gt;Install Stork-search on Windows - GitHub Gist&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://learn.microsoft.com/zh-cn/windows/dev-environment/rust/setup" rel="noopener" target="_blank"&gt;在 Windows 上针对 Rust 设置开发环境 - Microsoft Learn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cnblogs.com/skzxc/p/12129353.html" rel="noopener" target="_blank"&gt;Win10 Rust 语言安装与环境变量配置(+VSCode) - 博客园&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://course.rs/first-try/slowly-downloading.html" rel="noopener" target="_blank"&gt;下载依赖太慢了？ - Rust语言圣经(Rust Course)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelian"></category><category term="Rust"></category><category term="Windows"></category></entry><entry><title>文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</title><link href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" rel="alternate"></link><published>2023-03-11T00:00:00+08:00</published><updated>2023-03-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-11:/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html</id><summary type="html">&lt;p&gt;本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2209.06158" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2209.06158&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。&lt;/p&gt;
 &lt;p&gt;随着人工智能技术的发展，深度学习也进入到基于结构的药物设计（Structure Based Drug Design, SBDD）领域。SBDD 基于受体蛋白的结构设计与之适配的分子，是药物化学中的重要方法，而在深度学习辅助下的 SBDD 也将大大提升药物设计的效率，但目前这一方向还存在两个问题：&lt;/p&gt;
 &lt;ol&gt;

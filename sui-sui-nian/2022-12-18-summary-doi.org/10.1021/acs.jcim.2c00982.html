@@ -352,6 +352,20 @@
       <!-- TODO : Body class -->
     <div id="body-class" style="display: none;" class=""></div>
 
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="sitesearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="sitesearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
     <footer id="footer">
       <div class="inner">
         <section class="credits">
@@ -365,9 +379,13 @@
       </div>
     </footer>
   </section>
-
   <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- pelican search -->
+  <script src="https://files.stork-search.net/releases/v1.5.0/stork.js"></script>
+  <script>
+      stork.register("sitesearch", "https://leonis.cc/search-index.st")
+  </script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>

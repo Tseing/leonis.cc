@@ -87,7 +87,7 @@
           <a href="https://leonis.cc/tag/algorithm.html" title="8 article(s) tagged 'Algorithm'">Algorithm (8) </a>
         </div>
         <div class="tag">
-          <a href="https://leonis.cc/tag/blog.html" title="6 article(s) tagged 'Blog'">Blog (6) </a>
+          <a href="https://leonis.cc/tag/blog.html" title="7 article(s) tagged 'Blog'">Blog (7) </a>
         </div>
         <div class="tag">
           <a href="https://leonis.cc/tag/cadd.html" title="21 article(s) tagged 'CADD'">CADD (21) </a>
@@ -150,7 +150,7 @@
           <a href="https://leonis.cc/tag/openstreetmap.html" title="1 article(s) tagged 'OpenStreetMap'">OpenStreetMap (1) </a>
         </div>
         <div class="tag">
-          <a href="https://leonis.cc/tag/pelian.html" title="2 article(s) tagged 'Pelian'">Pelian (2) </a>
+          <a href="https://leonis.cc/tag/pelian.html" title="3 article(s) tagged 'Pelian'">Pelian (3) </a>
         </div>
         <div class="tag">
           <a href="https://leonis.cc/tag/pelican.html" title="2 article(s) tagged 'Pelican'">Pelican (2) </a>
@@ -177,6 +177,9 @@
           <a href="https://leonis.cc/tag/rnn.html" title="6 article(s) tagged 'RNN'">RNN (6) </a>
         </div>
         <div class="tag">
+          <a href="https://leonis.cc/tag/rust.html" title="1 article(s) tagged 'Rust'">Rust (1) </a>
+        </div>
+        <div class="tag">
           <a href="https://leonis.cc/tag/tong-ji-xue-xi-fang-fa.html" title="7 article(s) tagged '统计学习方法'">统计学习方法 (7) </a>
         </div>
         <div class="tag">
@@ -186,7 +189,7 @@
           <a href="https://leonis.cc/tag/vae.html" title="1 article(s) tagged 'VAE'">VAE (1) </a>
         </div>
         <div class="tag">
-          <a href="https://leonis.cc/tag/windows.html" title="1 article(s) tagged 'Windows'">Windows (1) </a>
+          <a href="https://leonis.cc/tag/windows.html" title="2 article(s) tagged 'Windows'">Windows (2) </a>
         </div>
         <div class="tag">
           <a href="https://leonis.cc/tag/xpath.html" title="1 article(s) tagged 'XPath'">XPath (1) </a>
@@ -195,6 +198,20 @@
   </article>
       <!-- TODO : Body class -->
     <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="sitesearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="sitesearch-output"></div>
+        </div>
+      </div>>
+		</div>
 
     <footer id="footer">
       <div class="inner">
@@ -209,9 +226,13 @@
       </div>
     </footer>
   </section>
-
   <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- pelican search -->
+  <script src="https://files.stork-search.net/releases/v1.5.0/stork.js"></script>
+  <script>
+      stork.register("sitesearch", "https://leonis.cc/search-index.st")
+  </script>
   <!-- code highlight -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>

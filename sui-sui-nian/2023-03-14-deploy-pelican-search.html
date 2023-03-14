@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>为 Pelican 博客加入搜索功能</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/fonts.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+
+    <meta name="description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Blog">
+    <meta name="tags" content="Pelian">
+    <meta name="tags" content="Rust">
+    <meta name="tags" content="Windows">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="为 Pelican 博客加入搜索功能"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-03-14 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Pelian"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Rust"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Windows"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "为 Pelican 博客加入搜索功能",
+  "headline": "为 Pelican 博客加入搜索功能",
+  "datePublished": "2023-03-14 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html",
+  "description": "博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。"
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">为 Pelican 博客加入搜索功能</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 3月14日">2023年 3月14日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#an-zhuang-stork" title="安装 Stork">安装 Stork</a><ul><li><a class="toc-href" href="#an-zhuang-c-sheng-cheng-gong-ju" title="安装 C++ 生成工具">安装 C++ 生成工具</a></li><li><a class="toc-href" href="#an-zhuang-rust" title="安装 Rust">安装 Rust</a></li><li><a class="toc-href" href="#tong-guo-cargo-an-zhuang-stork" title="通过 Cargo 安装 Stork">通过 Cargo 安装 Stork</a></li></ul></li><li><a class="toc-href" href="#bu-shu-pelican-search_1" title="部署 pelican-search">部署 pelican-search</a><ul><li><a class="toc-href" href="#pelican-search-de-she-zhi-xiang" title="pelican-search 的设置项">pelican-search 的设置项</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>在目前的博客生态圈中，静态博客占了相当大的比例。静态博客因为足够轻量、便于备份和迁移而受到包括我在内的许多用户喜欢，但由于静态博客没有数据库，在组织内容上就不免有所不足，这就涉及到题中所说的搜索功能了。为静态博客部署搜索功能比较麻烦，一个稍简单的方法就是借于「必应」「谷歌」等搜索引擎的 API，用它们来搜索站内的内容，但是这种方法的效果并不好，如果网页还未被收录或是相应头键字在网页中的占比太小，就很难搜索到目标信息。另一种方法就是在站内建立本地的搜索，例如 Hexo 等博客框架都提供了相应的插件，在本地生成搜索匹配所需的文件，将其一并推送至服务器实现全站搜索，这种方法的兼容性、准确性都要更好，也是我选择的方案。</p>
+<p>Pelican 也有类似的搜索插件 <a href="https://github.com/pelican-plugins/search" rel="noopener" target="_blank"><i class="fa fa-github"></i> pelican-plugins/search</a>，它主要是借助了 <a href="https://stork-search.net/" rel="noopener" target="_blank">Stork</a> 来实现搜索功能。Stork 在官方文档中指出，它可以用于为静态站点构建关速美观的搜索接口，所以理应可以用于所有类型的静态博客，我不了解其他博客框架是否使用了这个工具，但不得不提其搜索体验非常不错，十分值得一试。</p>
+<h2 id="an-zhuang-stork">安装 Stork</h2>
+<h3 id="an-zhuang-c-sheng-cheng-gong-ju">安装 C++ 生成工具</h3>
+<p>Stork 是基于 Rust 构建的工具，需要使用 Rust 的包管理器 Cargo 安装，若是在 macOS 或 Linux 系统上，直接按照官方文档给出的方法安装即可，而在 Windows 上就会比较麻烦，我在这里介绍一下 Windows 的操作方法。</p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;后文所涉及的操作系统都是 Windows 10 系统，终端指的是 Windows 终端（Windows Terminal）。</p></div></p>
+<p>首先，在 Windows 上，Rust 需要某些 C++ 生成工具，可以选择安装 Visual Studio 或仅安装 Microsoft C++ 生成工具。安装 Visual Studio 的方法非常简单（推荐），按下不表，若仅安装 Microsoft C++ 生成工具，可以在终端中输入</p>
+<pre><code class="language-sh">winget install Microsoft.VisualStudio.2022.BuildTools
+</code></pre>
+<p>由于 winget 下载速度感人，实在不推荐这种方法。</p>
+<p>在安装好 Visual Studio 后，在开始界面搜索并打开 Visual Studio Installer，选择 <code>修改</code> - <code>使用 C++ 的桌面开发</code>，等待安装完成。</p>
+<p><div class="lightgallery"><a data-sub-html="Visual Studio" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Visual Studio" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h3 id="an-zhuang-rust">安装 Rust</h3>
+<p>Rust 也可以使用 winget 安装，命令很简单：</p>
+<pre><code class="language-sh">winget install rustup
+</code></pre>
+<p>但是不太好用，所以我还是选择到 <a href="https://www.rust-lang.org/zh-CN/tools/install" rel="noopener" target="_blank">Rust 官网</a>下载。下载完成后打开安装程序，弹出的是命令行窗口，默认安装在 <code>C:\Users</code> 路径下的目录中，如果不需要额外的设置，键入 <code>1</code> 后按回车即可。</p>
+<p>但由于 C 盘空间不太够了，我需要修改一下安装的路径，在目标路径下创建以下两个文件夹并新建环境变量：</p>
+<pre><code class="language-yaml">CARGO_HOME: E:\RUST\.cargo
+RUSTUP_HOME: E:\RUST\.rustup
+</code></pre>
+<p>在 <code>PATH</code> 中添加变量 <code>%CARGO_HOME%</code>、<code>%RUSTUP_HOME%</code> 和 <code>%CARGO_HOME%\bin</code>，然后再打开安装程序，默认路径就已经改变，键入 <code>1</code> 按回车安装。</p>
+<pre><code class="language-txt">Rustup metadata and toolchains will be installed into the Rustup
+home directory, located at:
+
+  E:\RustT\.rustup
+
+This can be modified with the RUSTUP_HOME environment variable.
+
+The Cargo home directory is located at:
+
+  E:\Rust\.cargo
+
+This can be modified with the CARGO_HOME environment variable.
+
+The cargo, rustc, rustup and other commands will be added to
+Cargo's bin directory, located at:
+
+  E:\Rust\.cargo\bin
+</code></pre>
+<p>安装完成后，在终端中输入 <code>cargo --version</code> 理应输出版本信息。</p>
+<h3 id="tong-guo-cargo-an-zhuang-stork">通过 Cargo 安装 Stork</h3>
+<p>虽然安装好了 Cargo，但不出意外的话，与其他包管理器类似，从官方的源下载内容的速度非常之慢，所以需要修改配置使用镜像源。</p>
+<p>在 <code>.cargo</code> 目录下创建文件 <code>config.toml</code>，写入以下内容：</p>
+<pre><code class="language-toml">[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+</code></pre>
+<p>就使用了科大的镜像源，然后在终端中使用以下命令安装 Stork：</p>
+<pre><code class="language-sh">cargo install stork-search --locked
+</code></pre>
+<p>最后可以使用 <code>stork --version</code> 验证是否成功安装 Stork。</p>
+<h2 id="bu-shu-pelican-search_1">部署 pelican-search</h2>
+<p>安装好 Stork 后的步骤就很简单了，在 Pelican 的 Python 环境中安装插件：</p>
+<pre><code class="language-sh">python -m pip install pelican-search
+</code></pre>
+<p>然后在 Pelican 设置中的 <code>PLUGINS</code> 引入 <code>search</code>，在主题的模板文件（一般是 <code>base.html</code>）中引入 Stork CSS 的 CDN（当然也可以改写后自己部署）：</p>
+<pre><code class="language-html">&lt;link rel="stylesheet" href="https://files.stork-search.net/basic.css" /&gt;
+</code></pre>
+<p>以及 JavaScript：</p>
+<pre><code class="language-html">&lt;script src="https://files.stork-search.net/releases/v1.5.0/stork.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    stork.register("sitesearch", "{{ SITEURL }}/search-index.st")
+&lt;/script&gt;
+</code></pre>
+<p>最后就可以在设计的搜索区域通过以下方式调用 Stork 搜索了：</p>
+<pre><code class="language-html">Search: &lt;input data-stork="sitesearch" /&gt;
+&lt;div data-stork="sitesearch-output"&gt;&lt;/div&gt;
+</code></pre>
+<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;以上 CSS 应在页面的头部，例如 <code>&lt;head&gt;</code> 中引入，而 JavaScript 则应在 <code>&lt;body&gt;</code> 的尾部引入。这是因为 HTML 文件是自上至下顺序执行的，如果加载 JavaScript 的位置靠前，比如在 <code>&lt;input data-stork="sitesearch" /&gt;</code> 元素之前引入，在执行时该元素还未生成，就会找不到匹配的搜索框，提示没有 <code>query selector `input[data-stork="sitesearch"]`</code>，导致 <code>Uncaught StorkError</code>。</p></div></p>
+<h3 id="pelican-search-de-she-zhi-xiang">pelican-search 的设置项</h3>
+<p>pelican-search 的设置项只有两项，一项 <code>SEARCH_MODE</code> 设定从 Markdown 文件建立索引还是从 HTML 建立索引，<code>SEARCH_HTML_SELECTOR</code> 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。</p>
+<p>我浏览了一下 <a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank">Stork 官方文档</a>中的内容，发现了很多很有意思的东西。例如 <code>minimum_indexed_substring_length</code> 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 <code>minimum_index_ideographic_substring_length</code> 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。</p>
+<p>再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。</p>
+<hr/>
+<h2 id="references_1">References</h2>
+<ul>
+<li><a href="https://gist.github.com/maphew/95fb9e986edfab887e4ff36547d5da59" rel="noopener" target="_blank">Install Stork-search on Windows - GitHub Gist</a></li>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/dev-environment/rust/setup" rel="noopener" target="_blank">在 Windows 上针对 Rust 设置开发环境 - Microsoft Learn</a></li>
+<li><a href="https://www.cnblogs.com/skzxc/p/12129353.html" rel="noopener" target="_blank">Win10 Rust 语言安装与环境变量配置(+VSCode) - 博客园</a></li>
+<li><a href="https://course.rs/first-try/slowly-downloading.html" rel="noopener" target="_blank">下载依赖太慢了？ - Rust语言圣经(Rust Course)</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=为 Pelican 博客加入搜索功能&amp;url=https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/blog.html">Blog</a><a href="https://leonis.cc/tag/pelian.html">Pelian</a><a href="https://leonis.cc/tag/rust.html">Rust</a><a href="https://leonis.cc/tag/windows.html">Windows</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</h2>
+                            <p class="post-nav-excerpt">本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="sitesearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="sitesearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- pelican search -->
+  <script src="https://files.stork-search.net/releases/v1.5.0/stork.js"></script>
+  <script>
+      stork.register("sitesearch", "https://leonis.cc/search-index.st")
+  </script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
