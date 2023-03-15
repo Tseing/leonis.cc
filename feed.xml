@@ -75,6 +75,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 &lt;p&gt;pelican-search 的设置项只有两项，一项 &lt;code&gt;SEARCH_MODE&lt;/code&gt; 设定从 Markdown 文件建立索引还是从 HTML 建立索引，&lt;code&gt;SEARCH_HTML_SELECTOR&lt;/code&gt; 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。&lt;/p&gt;
 &lt;p&gt;我浏览了一下 &lt;a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank"&gt;Stork 官方文档&lt;/a&gt;中的内容，发现了很多很有意思的东西。例如 &lt;code&gt;minimum_indexed_substring_length&lt;/code&gt; 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 &lt;code&gt;minimum_index_ideographic_substring_length&lt;/code&gt; 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。&lt;/p&gt;
 &lt;p&gt;再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。&lt;/p&gt;
+&lt;p&gt;{note begin}不知是我的原因还是 Stork 的问题，生成的索引文件巨大，足足有 16 MB，完全不能在网页上使用。于是我花了一整天的时间升级 Nginx 并配置上了 Brotli 压缩传输，压缩后只有大约 900 KB 了，加载速度大大提升。{note end}&lt;/p&gt;
 &lt;hr/&gt;
 &lt;h2 id="references_1"&gt;References&lt;/h2&gt;
 &lt;ul&gt;

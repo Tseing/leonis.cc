@@ -83,6 +83,7 @@ dot {
 
 .stork-results .stork-title {
     font-size: 175%;
+    line-height: 1.2em;
     font-weight: 500;
     padding: .5em 0;
 }
