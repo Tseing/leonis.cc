@@ -162,6 +162,8 @@ dot {
 .link .link-content {
     margin: 0 1em;
     line-height: 1em;
+    display: block;
+    width: 100%;
 }
 
 .link .link-content .name {
@@ -169,9 +171,11 @@ dot {
     margin-top: 50px;
     font-size: 1.2em;
     line-height: 1.5em;
+    width: 7em;
     font-family: "Noto Serif KR", "Noto Serif SC";
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .link-content .text {
@@ -225,6 +229,7 @@ dot {
     filter: drop-shadow(1px 5px 5px rgba(0,0,0,.5));
 }
 
+button[title="喜欢"],
 button[title="表情包"] {
     display: none;
 }
