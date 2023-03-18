@@ -231,7 +231,7 @@ dot {
 
 button[title="喜欢"],
 button[title="表情包"] {
-    display: none;
+    display: none!important;
 }
 
 /* location icon */

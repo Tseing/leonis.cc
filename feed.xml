@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-14T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为 Pelican 博客加入搜索功能</title><link href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="alternate"></link><published>2023-03-14T00:00:00+08:00</published><updated>2023-03-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-14:/sui-sui-nian/2023-03-14-deploy-pelican-search.html</id><summary type="html">&lt;p&gt;博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在目前的博客生态圈中，静态博客占了相当大的比例。静态博客因为足够轻量、便于备份和迁移而受到包括我在内的许多用户喜欢，但由于静态博客没有数据库，在组织内容上就不免有所不足，这就涉及到题中所说的搜索功能了。为静态博客部署搜索功能比较麻烦，一个稍简单的方法就是借于「必应」「谷歌」等搜索引擎的 API，用它们来搜索站内的内容，但是这种方法的效果并不好，如果网页还未被收录或是相应头键字在网页中的占比太小，就很难搜索到目标信息。另一种方法就是在站内建立本地的搜索，例如 Hexo 等博客框架都提供了相应的插件，在本地生成搜索匹配所需的文件，将其一并推送至服务器实现全站搜索，这种方法的兼容性、准确性都要更好，也是我选择的方案。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜使用等变扩散模型进行基于结构的药物设计</title><link href="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" rel="alternate"></link><published>2023-03-17T00:00:00+08:00</published><updated>2023-03-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-17:/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html</id><summary type="html">&lt;p&gt;本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2210.13695" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2210.13695&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。&lt;/p&gt;
+&lt;p&gt;近年来，越来越多的深度学习模型被应于用基于结构的药物设计，但这些模型主要采用了序列生成的方式，这些方法所面临的一个重要问题是序列生成忽视了原子的几何顺序，可能并不能反映设计分子的真实原理，最后无法获取到目标分子的化学空间。&lt;/p&gt;
+&lt;p&gt;针对于这个问题，文章考虑了分子中各原子的空间坐标，使用等变扩散模型完成了针对特定靶点的分子生成，称为 DiffSBDD（Equivariant Diffusion Model
+for Structure-Based Drug Design），实验结果表明该模型能够获取指定蛋白活性口袋的信息并生成多样、具有类药性且具有高亲合力的分子。&lt;/p&gt;
+&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
+&lt;h3 id="qu-zao-sheng-kuo-san-gai-lu-mo-xing"&gt;去噪声扩散概率模型&lt;/h3&gt;
+&lt;p&gt;去噪声扩散概率模型（Denoising Diffusion Probabilistic Models, DDPMs）是近年应用于多个领域的一类生成模型，DDPM 通过马尔可夫链逐次向样本数据上添加噪声，然后由神经网络学习该马尔可夫链的逆过程，实现从噪声中重建采样数据。&lt;/p&gt;
+&lt;p&gt;就分子生成任务而言，样本数据是原子点云（简称分子） &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}=[\boldsymbol{x},\boldsymbol{h}]\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\boldsymbol{x}\in\mathbb{R}^{N\times3}\)&lt;/span&gt;，表示原子的空间坐标，&lt;span class="math"&gt;\(\boldsymbol{h}\in\mathbb{R}^{N\times d}\)&lt;/span&gt;，表示原子的特征。那么对原子点由 &lt;span class="math"&gt;\(t=0\)&lt;/span&gt; 至 &lt;span class="math"&gt;\(t=T\)&lt;/span&gt; 逐次加噪声的过程就可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$q(\boldsymbol{z}_t|\boldsymbol{z}_\mathrm{data})=\mathcal{N}(\boldsymbol{z}_t|\alpha_t\boldsymbol{z}_\mathrm{data},\sigma^2_t\boldsymbol{I})$$&lt;/div&gt;
+&lt;p&gt;由 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 至 &lt;span class="math"&gt;\(s&amp;lt;t\)&lt;/span&gt; 的去噪声的过程同是马尔可夫链，记作 &lt;span class="math"&gt;\(q(\boldsymbol{z}_s|\boldsymbol{z}_\mathrm{data},\boldsymbol{z}_t)\)&lt;/span&gt;，可以看出去噪声的过程依赖于样本数据 &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}\)&lt;/span&gt;，即标签数据。&lt;/p&gt;
+&lt;p&gt;但当使用模型进行预测时，由于预测的分子 &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}\)&lt;/span&gt; 是未知的，该模型使用神经网络 &lt;span class="math"&gt;\(\phi_\theta\)&lt;/span&gt; 拟合得到 &lt;span class="math"&gt;\(\hat{\boldsymbol{z}}_\mathrm{data}\)&lt;/span&gt;。具体来说，加噪声后的分子可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$\boldsymbol{z}_t=\alpha_t\boldsymbol{z}_\mathrm{data}+\sigma_t\boldsymbol{\epsilon},\ \epsilon\sim\mathcal{N}(\boldsymbol{0},\boldsymbol{I})$$&lt;/div&gt;
+&lt;p&gt;神经网络就是用于预测噪声 &lt;span class="math"&gt;\(\hat{\boldsymbol{\epsilon}}_\theta=\phi_\theta(\boldsymbol{z}_t,t)\)&lt;/span&gt;，那么显然有&lt;/p&gt;
+&lt;div class="math"&gt;$$\hat{\boldsymbol{z}}_\mathrm{data}=\frac{1}{\alpha_t}\boldsymbol{z}_t-\frac{\sigma_t}{\alpha_t}\hat{\boldsymbol{\epsilon}}_\theta$$&lt;/div&gt;
+&lt;p&gt;所以训练的目标也就是最小化神经网络预测值 &lt;span class="math"&gt;\(\hat{\boldsymbol{\epsilon}}_\theta\)&lt;/span&gt; 与真实值 &lt;span class="math"&gt;\(\boldsymbol{\epsilon}\)&lt;/span&gt; 间的差距，损失函数为&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{L}_\mathrm{train}=\frac{1}{2}||\boldsymbol{\epsilon}-\phi_\theta(\boldsymbol{z}_t,t)||^2$$&lt;/div&gt;
+&lt;h3 id="en-deng-bian-tu-shen-jing-wang-luo"&gt;&lt;em&gt;E(n)&lt;/em&gt; - 等变图神经网络&lt;/h3&gt;
+&lt;p&gt;在使生成的分子与蛋白活性口袋配合的过程中，需要重新打乱原子生成新的结构，所以需要对原子点云做置换、旋转等变换。传统的图神经网络无法很好处理这类具有等变对称性质的特征，因而提出的一类改进后用于处理等变性质的图神经网络就被称为等变图神经网络。&lt;/p&gt;
+&lt;h3 id="diffsbdd"&gt;DiffSBDD&lt;/h3&gt;
+&lt;p&gt;结合以上两种模型，就得到了文章中所设计的 DiffSBDD，DiffSBDD 具有两种分子生成方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;蛋白口袋条件分子生成（Conditional generation）&lt;/li&gt;
+&lt;li&gt;通过联合分布实现分子生成（Inpainting）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h4&gt;Conditional generation&lt;/h4&gt;
+&lt;p&gt;在 conditional generation 模式中，给模型的每个去噪声过程都指定了相同的蛋白口袋，简单来讲，就是在分子生成过程中，原子点云会不断发生置换、旋转等变换，而蛋白口袋不发生变化，使配体分子去「适配」蛋白口袋。&lt;/p&gt;
+&lt;h3 id="inpainting"&gt;Inpainting&lt;/h3&gt;
+&lt;p&gt;而在 inpainting 模式中，需要首先训练一个无指定条件的 DDPM 用于拟合配体分子与蛋白口袋的联合概率分布 &lt;span class="math"&gt;\(p(\boldsymbol{z}^{(L)}_\mathrm{data},\boldsymbol{z}^{(P)}_\mathrm{data})\)&lt;/span&gt;，该概率分布的主要用于从噪声数据中得到配合的配体分子与蛋白口袋对。&lt;/p&gt;
+&lt;p&gt;在预测过程中，首先将加噪声后的样本 &lt;span class="math"&gt;\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P)}_t]\)&lt;/span&gt; 中的蛋白口袋掩盖掉，将得到其中的配体部分与加噪声后的蛋白口袋重新组合为 &lt;span class="math"&gt;\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P')}_t]\)&lt;/span&gt;，最后用已训练得到的联合概率分布 DDPM 为该组合去噪声，即生成目标分子。&lt;/p&gt;
+&lt;h2 id="shu-ju_1"&gt;数据&lt;/h2&gt;
+&lt;p&gt;文章分别使用了 CrossDocked 中 10 万个蛋白-配体对和 Binding MOAD 中 40354 个蛋白-配体对作为模型的数据集。&lt;/p&gt;
+&lt;h2 id="jie-guo-yu-tao-lun"&gt;结果与讨论&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;首先文章对生成分子进行了评估，可以看出不管使用哪一个数据集训练模型、使用哪一个模式生成分子，最终结果中只有很小一部分生成的分子不合法，生成分子中大部分都满足新颖、合法的要求。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;接着文章将分子生成结果与目前在基于结构的药物设计上表现最好的 3D-SBDD 和 Pocaket2Mol 两种模型比较。从表中的数据可以看出，在 Vina Score 上，DiffSBDD 与另外两种模型都比较接近，也就是模型都识别到了配体与蛋白口袋间的相互作用，生成了具有亲合力的分子。DiffSBDD 在 QED、Lipinski 这些分子性质上并没有实现优化，而是与测试集保持相似。其中，DiffSBDD 在 SA 上显著低于其他两种模型，文章认为 SA 在一定程度上并不能反映分子真实的合成难度，低 SA 反而说明 DiffSBDD 能够探索更大的化学空间，因此具有最高的 Diversity。最后，DiffSBDD 所需的计算时间远远少于另外两种模型，相比之下更加高效。&lt;/p&gt;
+&lt;p&gt;文章展示了针对靶点 2jjg 和 3kc1 生成的分子，其中为 3kc1 生成的第二个分子具有三环结构，该分子也曾在传统的基于结构的药物设计中被设计出来，说明 DiffSBDD 具有应用潜力。在生成的许多分子，还可以找到大环、三元环化合物，这些分子很难合成，所以 DiffSBDD 可能还需要考虑分子的可合成性。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章中所提出的 DiffSBDD 首次将等变扩散模型应用于基于结构的药物设计领域，实验证明了 DiffSBDD 在完成分子生成任务上不仅高效而且有效，能够针对给定的靶点生成多样且具有高亲合力的配体分子，该模型不需要再训练就可以直接应用于先导化合物优化等药物设计实践。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>为 Pelican 博客加入搜索功能</title><link href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="alternate"></link><published>2023-03-14T00:00:00+08:00</published><updated>2023-03-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-14:/sui-sui-nian/2023-03-14-deploy-pelican-search.html</id><summary type="html">&lt;p&gt;博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在目前的博客生态圈中，静态博客占了相当大的比例。静态博客因为足够轻量、便于备份和迁移而受到包括我在内的许多用户喜欢，但由于静态博客没有数据库，在组织内容上就不免有所不足，这就涉及到题中所说的搜索功能了。为静态博客部署搜索功能比较麻烦，一个稍简单的方法就是借于「必应」「谷歌」等搜索引擎的 API，用它们来搜索站内的内容，但是这种方法的效果并不好，如果网页还未被收录或是相应头键字在网页中的占比太小，就很难搜索到目标信息。另一种方法就是在站内建立本地的搜索，例如 Hexo 等博客框架都提供了相应的插件，在本地生成搜索匹配所需的文件，将其一并推送至服务器实现全站搜索，这种方法的兼容性、准确性都要更好，也是我选择的方案。&lt;/p&gt;
 &lt;p&gt;Pelican 也有类似的搜索插件 &lt;a href="https://github.com/pelican-plugins/search" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; pelican-plugins/search&lt;/a&gt;，它主要是借助了 &lt;a href="https://stork-search.net/" rel="noopener" target="_blank"&gt;Stork&lt;/a&gt; 来实现搜索功能。Stork 在官方文档中指出，它可以用于为静态站点构建关速美观的搜索接口，所以理应可以用于所有类型的静态博客，我不了解其他博客框架是否使用了这个工具，但不得不提其搜索体验非常不错，十分值得一试。&lt;/p&gt;
 &lt;h2 id="an-zhuang-stork"&gt;安装 Stork&lt;/h2&gt;
 &lt;h3 id="an-zhuang-c-sheng-cheng-gong-ju"&gt;安装 C++ 生成工具&lt;/h3&gt;
@@ -53,7 +156,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 &lt;pre&gt;&lt;code class="language-sh"&gt;cargo install stork-search --locked
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;最后可以使用 &lt;code&gt;stork --version&lt;/code&gt; 验证是否成功安装 Stork。&lt;/p&gt;
-&lt;h2 id="bu-shu-pelican-search_1"&gt;部署 pelican-search&lt;/h2&gt;
+&lt;h2 id="bu-shu-pelican-search_1"&gt;部署 Pelican Search&lt;/h2&gt;
 &lt;p&gt;安装好 Stork 后的步骤就很简单了，在 Pelican 的 Python 环境中安装插件：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-sh"&gt;python -m pip install pelican-search
 &lt;/code&gt;&lt;/pre&gt;
@@ -71,7 +174,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 &amp;lt;div data-stork="sitesearch-output"&amp;gt;&amp;lt;/div&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;{warn begin}以上 CSS 应在页面的头部，例如 &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; 中引入，而 JavaScript 则应在 &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; 的尾部引入。这是因为 HTML 文件是自上至下顺序执行的，如果加载 JavaScript 的位置靠前，比如在 &lt;code&gt;&amp;lt;input data-stork="sitesearch" /&amp;gt;&lt;/code&gt; 元素之前引入，在执行时该元素还未生成，就会找不到匹配的搜索框，提示没有 &lt;code&gt;query selector `input[data-stork="sitesearch"]`&lt;/code&gt;，导致 &lt;code&gt;Uncaught StorkError&lt;/code&gt;。{warn end}&lt;/p&gt;
-&lt;h3 id="pelican-search-de-she-zhi-xiang"&gt;pelican-search 的设置项&lt;/h3&gt;
+&lt;h3 id="pelican-search-de-she-zhi-xiang"&gt;Pelican Search 的设置项&lt;/h3&gt;
 &lt;p&gt;pelican-search 的设置项只有两项，一项 &lt;code&gt;SEARCH_MODE&lt;/code&gt; 设定从 Markdown 文件建立索引还是从 HTML 建立索引，&lt;code&gt;SEARCH_HTML_SELECTOR&lt;/code&gt; 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。&lt;/p&gt;
 &lt;p&gt;我浏览了一下 &lt;a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank"&gt;Stork 官方文档&lt;/a&gt;中的内容，发现了很多很有意思的东西。例如 &lt;code&gt;minimum_indexed_substring_length&lt;/code&gt; 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 &lt;code&gt;minimum_index_ideographic_substring_length&lt;/code&gt; 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。&lt;/p&gt;
 &lt;p&gt;再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。&lt;/p&gt;
@@ -3295,95 +3398,4 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="CRNN"></category></entry><entry><title>为深度学习环境配置 CUDA</title><link href="https://leonis.cc/sui-sui-nian/2022-12-01-install-cuda.html" rel="alternate"></link><published>2022-12-01T00:00:00+08:00</published><updated>2022-12-01T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2022-12-01:/sui-sui-nian/2022-12-01-install-cuda.html</id><summary type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。&lt;/p&gt;
-&lt;h2 id="zhun-bei-gong-zuo"&gt;准备工作&lt;/h2&gt;
-&lt;p&gt;在普遍情况下，设备都安装了相应的显卡驱动，那么使用 &lt;code&gt;nvidia-smi&lt;/code&gt; 即可查看驱动信息，确定支持的 CUDA 版本。&lt;/p&gt;
-&lt;p&gt;若没有安装驱动，那么需要在终端中输入 &lt;code&gt;lspci | grep -i nvidia&lt;/code&gt; 检测设备的 GPU 型号，接着查找适用的 CUDA 版本，在安装 CUDA 时也会自动安装上匹配的驱动。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html" rel="noopener" target="_blank"&gt;CUDA 文档&lt;/a&gt;中给出了GPU 驱动与 CUDA 版本的对应关系，一定要选择适配的版本。&lt;/p&gt;
-&lt;p&gt;在安装 CUDA 前，还要确保设备安装了 gcc 和 make，如果需要使用 C++ 进行 CUDA 编程，还需要安装 g++。这里我只安装 gcc 和 make：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;sudo apt update             # 更新 apt
-sudo apt install gcc make   # 安装 gcc 和 make
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="xia-zai-cuda"&gt;下载 CUDA&lt;/h2&gt;
-&lt;p&gt;确定需要安装的 CUDA 版本后，例如我的设备是 11.4，直接搜索 CUDA 11.4 进入&lt;a href="https://developer.nvidia.com/cuda-11-4-0-download-archive" rel="noopener" target="_blank"&gt;下载页面&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8128?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;在下载页面中需要选择相应的架构和发行版，如果不确定设备架构可以在终端中输入 &lt;code&gt;uname -m&lt;/code&gt;，然后根据输出结果选择即可。&lt;/p&gt;
-&lt;p&gt;我的设备是 Ubuntu 20.04，选择 Installer Type 为 &lt;code&gt;runfile(local)&lt;/code&gt;，网页就给出了下载命令：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-bash"&gt;# 下载 CUDA
-wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda_11.4.0_470.42.01_linux.run
-# 安装 CUDA
-sudo sh&amp;nbsp;cuda_11.4.0_470.42.01_linux.run
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="an-zhuang-cuda"&gt;安装 CUDA&lt;/h2&gt;
-&lt;p&gt;下载需要较长时间，待下载完成后执行文件开始安装。若已经安装 GPU 驱动，会有以下提示，选择 &lt;code&gt;Continue&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
-&amp;boxv; Existing package manager installation of the driver found. It is strongly    &amp;boxv;
-&amp;boxv; recommended that you remove this before continuing.                          &amp;boxv;
-&amp;boxv; Abort                                                                        &amp;boxv;
-&amp;boxv; Continue                                                                     &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv; Up/Down: Move | 'Enter': Select                                              &amp;boxv;
-&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;接下来输入 &lt;code&gt;accept&lt;/code&gt; 接受用户条款。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
-&amp;boxv;  End User License Agreement                                                  &amp;boxv;
-&amp;boxv;  --------------------------                                                  &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;  NVIDIA Software License Agreement and CUDA Supplement to                    &amp;boxv;
-&amp;boxv;  Software License Agreement. Last updated: October 8, 2021                   &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;  The CUDA Toolkit End User License Agreement applies to the                  &amp;boxv;
-&amp;boxv;  NVIDIA CUDA Toolkit, the NVIDIA CUDA Samples, the NVIDIA                    &amp;boxv;
-&amp;boxv;  Display Driver, NVIDIA Nsight tools (Visual Studio Edition),                &amp;boxv;
-&amp;boxv;  and the associated documentation on CUDA APIs, programming                  &amp;boxv;
-&amp;boxv;  model and development tools. If you do not agree with the                   &amp;boxv;
-&amp;boxv;  terms and conditions of the license agreement, then do not                  &amp;boxv;
-&amp;boxv;  download or use the software.                                               &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;  Last updated: October 8, 2021.                                              &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;  Preface                                                                     &amp;boxv;
-&amp;boxv;  -------                                                                     &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxv;
-&amp;boxv; Do you accept the above EULA? (accept/decline/quit):                         &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后出现下方的界面，需要选择安装的内容。若设备已经安装驱动，在这里需要&lt;strong&gt;取消&lt;/strong&gt; &lt;code&gt;Driver&lt;/code&gt; 的选择，否则会出现安装错误。在这个步骤中，我只选择了 &lt;code&gt;CUDA Toolkit 11.4&lt;/code&gt; 与 &lt;code&gt;CUDA Documentation 11.4&lt;/code&gt;，选择 &lt;code&gt;Intsall&lt;/code&gt; 开始安装。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;&amp;boxdr;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxdl;
-&amp;boxv; CUDA Installer                                                               &amp;boxv;
-&amp;boxv; - [X] Driver                                                                 &amp;boxv;
-&amp;boxv;      [X] 470.42.01                                                           &amp;boxv;
-&amp;boxv; + [X] CUDA Toolkit 11.4                                                      &amp;boxv;
-&amp;boxv;   [X] CUDA Samples 11.4                                                      &amp;boxv;
-&amp;boxv;   [X] CUDA Demo Suite 11.4                                                   &amp;boxv;
-&amp;boxv;   [X] CUDA Documentation 11.4                                                &amp;boxv;
-&amp;boxv;   Options                                                                    &amp;boxv;
-&amp;boxv;   Install                                                                    &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv;                                                                              &amp;boxv;
-&amp;boxv; Up/Down: Move | Left/Right: Expand | 'Enter': Select | 'A': Advanced options &amp;boxv;
-&amp;boxur;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxh;&amp;boxul;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note begin}安装过程中出现的 &lt;code&gt;boost::filesystem::copy_file: No such file or directory&lt;/code&gt; 错误是由于存储空间不足导致的。{note end}&lt;/p&gt;
-&lt;h2 id="huan-jing-bian-liang"&gt;环境变量&lt;/h2&gt;
-&lt;p&gt;当输出 &lt;code&gt;Summary&lt;/code&gt; 信息后即表示安装完成，在输出信息中还会提示修改环境变量:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Please make sure that
- -   PATH includes /usr/local/cuda-11.4/
- -   LD_LIBRARY_PATH includes /usr/local/cuda-11.4/lib64, or, add /usr/local/cuda-11.4/lib64 to /etc/ld.so.conf and run ldconfig as root
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;使用 &lt;code&gt;vim ~/.bashrc&lt;/code&gt;，在文件末添加以下内容并保存：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;# CUDA
-export PATH="/usr/local/cuda-11.4/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64:$ LD_LIBRARY_PATH"
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;最后使用 &lt;code&gt;source ~/.bashrc&lt;/code&gt; 更新修改内容，在终端中输入 &lt;code&gt;nvcc -V&lt;/code&gt;，输出 nvcc 的版本信息就说明安装完成。&lt;/p&gt;
-&lt;hr/&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/79059379" rel="noopener" target="_blank"&gt;Linux 下的 CUDA 安装和使用指南 - 知乎&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="CUDA"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="CRNN"></category></entry></feed>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜使用等变扩散模型进行基于结构的药物设计</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/fonts.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+
+    <meta name="description" content="本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="GNN">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜使用等变扩散模型进行基于结构的药物设计"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-03-17 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜使用等变扩散模型进行基于结构的药物设计",
+  "headline": "文献总结｜使用等变扩散模型进行基于结构的药物设计",
+  "datePublished": "2023-03-17 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html",
+  "description": "本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion..."
+}
+</script>  <!-- waline comment -->
+  <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜使用等变扩散模型进行基于结构的药物设计</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 3月17日">2023年 3月17日</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a><ul><li><a class="toc-href" href="#qu-zao-sheng-kuo-san-gai-lu-mo-xing" title="去噪声扩散概率模型">去噪声扩散概率模型</a></li><li><a class="toc-href" href="#en-deng-bian-tu-shen-jing-wang-luo" title="E(n) - 等变图神经网络">E(n) - 等变图神经网络</a></li><li><a class="toc-href" href="#diffsbdd" title="DiffSBDD">DiffSBDD</a></li><li><a class="toc-href" href="#inpainting" title="Inpainting">Inpainting</a></li></ul></li><li><a class="toc-href" href="#shu-ju_1" title="数据">数据</a></li><li><a class="toc-href" href="#jie-guo-yu-tao-lun" title="结果与讨论">结果与讨论</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.48550/arXiv.2210.13695" rel="noopener" target="_blank">doi.org/10.48550/arXiv.2210.13695</a></p>
+<p>本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。</p>
+<p>近年来，越来越多的深度学习模型被应于用基于结构的药物设计，但这些模型主要采用了序列生成的方式，这些方法所面临的一个重要问题是序列生成忽视了原子的几何顺序，可能并不能反映设计分子的真实原理，最后无法获取到目标分子的化学空间。</p>
+<p>针对于这个问题，文章考虑了分子中各原子的空间坐标，使用等变扩散模型完成了针对特定靶点的分子生成，称为 DiffSBDD（Equivariant Diffusion Model
+for Structure-Based Drug Design），实验结果表明该模型能够获取指定蛋白活性口袋的信息并生成多样、具有类药性且具有高亲合力的分子。</p>
+<h2 id="mo-xing">模型</h2>
+<h3 id="qu-zao-sheng-kuo-san-gai-lu-mo-xing">去噪声扩散概率模型</h3>
+<p>去噪声扩散概率模型（Denoising Diffusion Probabilistic Models, DDPMs）是近年应用于多个领域的一类生成模型，DDPM 通过马尔可夫链逐次向样本数据上添加噪声，然后由神经网络学习该马尔可夫链的逆过程，实现从噪声中重建采样数据。</p>
+<p>就分子生成任务而言，样本数据是原子点云（简称分子） <span class="math">\(\boldsymbol{z}_\mathrm{data}=[\boldsymbol{x},\boldsymbol{h}]\)</span>，其中 <span class="math">\(\boldsymbol{x}\in\mathbb{R}^{N\times3}\)</span>，表示原子的空间坐标，<span class="math">\(\boldsymbol{h}\in\mathbb{R}^{N\times d}\)</span>，表示原子的特征。那么对原子点由 <span class="math">\(t=0\)</span> 至 <span class="math">\(t=T\)</span> 逐次加噪声的过程就可以表示为</p>
+<div class="math">$$q(\boldsymbol{z}_t|\boldsymbol{z}_\mathrm{data})=\mathcal{N}(\boldsymbol{z}_t|\alpha_t\boldsymbol{z}_\mathrm{data},\sigma^2_t\boldsymbol{I})$$</div>
+<p>由 <span class="math">\(t\)</span> 至 <span class="math">\(s&lt;t\)</span> 的去噪声的过程同是马尔可夫链，记作 <span class="math">\(q(\boldsymbol{z}_s|\boldsymbol{z}_\mathrm{data},\boldsymbol{z}_t)\)</span>，可以看出去噪声的过程依赖于样本数据 <span class="math">\(\boldsymbol{z}_\mathrm{data}\)</span>，即标签数据。</p>
+<p>但当使用模型进行预测时，由于预测的分子 <span class="math">\(\boldsymbol{z}_\mathrm{data}\)</span> 是未知的，该模型使用神经网络 <span class="math">\(\phi_\theta\)</span> 拟合得到 <span class="math">\(\hat{\boldsymbol{z}}_\mathrm{data}\)</span>。具体来说，加噪声后的分子可以表示为</p>
+<div class="math">$$\boldsymbol{z}_t=\alpha_t\boldsymbol{z}_\mathrm{data}+\sigma_t\boldsymbol{\epsilon},\ \epsilon\sim\mathcal{N}(\boldsymbol{0},\boldsymbol{I})$$</div>
+<p>神经网络就是用于预测噪声 <span class="math">\(\hat{\boldsymbol{\epsilon}}_\theta=\phi_\theta(\boldsymbol{z}_t,t)\)</span>，那么显然有</p>
+<div class="math">$$\hat{\boldsymbol{z}}_\mathrm{data}=\frac{1}{\alpha_t}\boldsymbol{z}_t-\frac{\sigma_t}{\alpha_t}\hat{\boldsymbol{\epsilon}}_\theta$$</div>
+<p>所以训练的目标也就是最小化神经网络预测值 <span class="math">\(\hat{\boldsymbol{\epsilon}}_\theta\)</span> 与真实值 <span class="math">\(\boldsymbol{\epsilon}\)</span> 间的差距，损失函数为</p>
+<div class="math">$$\mathcal{L}_\mathrm{train}=\frac{1}{2}||\boldsymbol{\epsilon}-\phi_\theta(\boldsymbol{z}_t,t)||^2$$</div>
+<h3 id="en-deng-bian-tu-shen-jing-wang-luo"><em>E(n)</em> - 等变图神经网络</h3>
+<p>在使生成的分子与蛋白活性口袋配合的过程中，需要重新打乱原子生成新的结构，所以需要对原子点云做置换、旋转等变换。传统的图神经网络无法很好处理这类具有等变对称性质的特征，因而提出的一类改进后用于处理等变性质的图神经网络就被称为等变图神经网络。</p>
+<h3 id="diffsbdd">DiffSBDD</h3>
+<p>结合以上两种模型，就得到了文章中所设计的 DiffSBDD，DiffSBDD 具有两种分子生成方式：</p>
+<ol>
+<li>蛋白口袋条件分子生成（Conditional generation）</li>
+<li>通过联合分布实现分子生成（Inpainting）</li>
+</ol>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h4>Conditional generation</h4>
+<p>在 conditional generation 模式中，给模型的每个去噪声过程都指定了相同的蛋白口袋，简单来讲，就是在分子生成过程中，原子点云会不断发生置换、旋转等变换，而蛋白口袋不发生变化，使配体分子去「适配」蛋白口袋。</p>
+<h3 id="inpainting">Inpainting</h3>
+<p>而在 inpainting 模式中，需要首先训练一个无指定条件的 DDPM 用于拟合配体分子与蛋白口袋的联合概率分布 <span class="math">\(p(\boldsymbol{z}^{(L)}_\mathrm{data},\boldsymbol{z}^{(P)}_\mathrm{data})\)</span>，该概率分布的主要用于从噪声数据中得到配合的配体分子与蛋白口袋对。</p>
+<p>在预测过程中，首先将加噪声后的样本 <span class="math">\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P)}_t]\)</span> 中的蛋白口袋掩盖掉，将得到其中的配体部分与加噪声后的蛋白口袋重新组合为 <span class="math">\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P')}_t]\)</span>，最后用已训练得到的联合概率分布 DDPM 为该组合去噪声，即生成目标分子。</p>
+<h2 id="shu-ju_1">数据</h2>
+<p>文章分别使用了 CrossDocked 中 10 万个蛋白-配体对和 Binding MOAD 中 40354 个蛋白-配体对作为模型的数据集。</p>
+<h2 id="jie-guo-yu-tao-lun">结果与讨论</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>首先文章对生成分子进行了评估，可以看出不管使用哪一个数据集训练模型、使用哪一个模式生成分子，最终结果中只有很小一部分生成的分子不合法，生成分子中大部分都满足新颖、合法的要求。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>接着文章将分子生成结果与目前在基于结构的药物设计上表现最好的 3D-SBDD 和 Pocaket2Mol 两种模型比较。从表中的数据可以看出，在 Vina Score 上，DiffSBDD 与另外两种模型都比较接近，也就是模型都识别到了配体与蛋白口袋间的相互作用，生成了具有亲合力的分子。DiffSBDD 在 QED、Lipinski 这些分子性质上并没有实现优化，而是与测试集保持相似。其中，DiffSBDD 在 SA 上显著低于其他两种模型，文章认为 SA 在一定程度上并不能反映分子真实的合成难度，低 SA 反而说明 DiffSBDD 能够探索更大的化学空间，因此具有最高的 Diversity。最后，DiffSBDD 所需的计算时间远远少于另外两种模型，相比之下更加高效。</p>
+<p>文章展示了针对靶点 2jjg 和 3kc1 生成的分子，其中为 3kc1 生成的第二个分子具有三环结构，该分子也曾在传统的基于结构的药物设计中被设计出来，说明 DiffSBDD 具有应用潜力。在生成的许多分子，还可以找到大环、三元环化合物，这些分子很难合成，所以 DiffSBDD 可能还需要考虑分子的可合成性。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h2 id="jie-lun">结论</h2>
+<p>文章中所提出的 DiffSBDD 首次将等变扩散模型应用于基于结构的药物设计领域，实验证明了 DiffSBDD 在完成分子生成任务上不仅高效而且有效，能够针对给定的靶点生成多样且具有高亲合力的配体分子，该模型不需要再训练就可以直接应用于先导化合物优化等药物设计实践。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=文献总结｜使用等变扩散模型进行基于结构的药物设计&amp;url=https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/gnn.html">GNN</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="fa fa-envelope fa-fw"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">为 Pelican 博客加入搜索功能</h2>
+                            <p class="post-nav-excerpt">博客上的文章越来越多了，靠文章 tag...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://j5b7t4.deta.dev/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="sitesearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="sitesearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- pelican search -->
+  <script src="https://files.stork-search.net/releases/v1.5.0/stork.js"></script>
+  <script>
+      stork.register("sitesearch", "https://leonis.cc/search-index.st")
+  </script>
+  <!-- code highlight -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

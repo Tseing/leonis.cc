@@ -42,7 +42,7 @@
 
 
 
-    <meta name="description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。">
+    <meta name="description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。">
 
     <meta name="author" content="Leo">
 
@@ -57,7 +57,7 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="为 Pelican 博客加入搜索功能"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -88,7 +88,7 @@
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "url": "https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html",
-  "description": "博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点相关信息，希望这篇文章能帮到后来人。"
+  "description": "博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。"
 }
 </script>  <!-- waline comment -->
   <link href="https://unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet" />
@@ -148,7 +148,7 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#an-zhuang-stork" title="安装 Stork">安装 Stork</a><ul><li><a class="toc-href" href="#an-zhuang-c-sheng-cheng-gong-ju" title="安装 C++ 生成工具">安装 C++ 生成工具</a></li><li><a class="toc-href" href="#an-zhuang-rust" title="安装 Rust">安装 Rust</a></li><li><a class="toc-href" href="#tong-guo-cargo-an-zhuang-stork" title="通过 Cargo 安装 Stork">通过 Cargo 安装 Stork</a></li></ul></li><li><a class="toc-href" href="#bu-shu-pelican-search_1" title="部署 pelican-search">部署 pelican-search</a><ul><li><a class="toc-href" href="#pelican-search-de-she-zhi-xiang" title="pelican-search 的设置项">pelican-search 的设置项</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#an-zhuang-stork" title="安装 Stork">安装 Stork</a><ul><li><a class="toc-href" href="#an-zhuang-c-sheng-cheng-gong-ju" title="安装 C++ 生成工具">安装 C++ 生成工具</a></li><li><a class="toc-href" href="#an-zhuang-rust" title="安装 Rust">安装 Rust</a></li><li><a class="toc-href" href="#tong-guo-cargo-an-zhuang-stork" title="通过 Cargo 安装 Stork">通过 Cargo 安装 Stork</a></li></ul></li><li><a class="toc-href" href="#bu-shu-pelican-search_1" title="部署 Pelican Search">部署 Pelican Search</a><ul><li><a class="toc-href" href="#pelican-search-de-she-zhi-xiang" title="Pelican Search 的设置项">Pelican Search 的设置项</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
@@ -206,7 +206,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 <pre><code class="language-sh">cargo install stork-search --locked
 </code></pre>
 <p>最后可以使用 <code>stork --version</code> 验证是否成功安装 Stork。</p>
-<h2 id="bu-shu-pelican-search_1">部署 pelican-search</h2>
+<h2 id="bu-shu-pelican-search_1">部署 Pelican Search</h2>
 <p>安装好 Stork 后的步骤就很简单了，在 Pelican 的 Python 环境中安装插件：</p>
 <pre><code class="language-sh">python -m pip install pelican-search
 </code></pre>
@@ -224,7 +224,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 &lt;div data-stork="sitesearch-output"&gt;&lt;/div&gt;
 </code></pre>
 <p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;以上 CSS 应在页面的头部，例如 <code>&lt;head&gt;</code> 中引入，而 JavaScript 则应在 <code>&lt;body&gt;</code> 的尾部引入。这是因为 HTML 文件是自上至下顺序执行的，如果加载 JavaScript 的位置靠前，比如在 <code>&lt;input data-stork="sitesearch" /&gt;</code> 元素之前引入，在执行时该元素还未生成，就会找不到匹配的搜索框，提示没有 <code>query selector `input[data-stork="sitesearch"]`</code>，导致 <code>Uncaught StorkError</code>。</p></div></p>
-<h3 id="pelican-search-de-she-zhi-xiang">pelican-search 的设置项</h3>
+<h3 id="pelican-search-de-she-zhi-xiang">Pelican Search 的设置项</h3>
 <p>pelican-search 的设置项只有两项，一项 <code>SEARCH_MODE</code> 设定从 Markdown 文件建立索引还是从 HTML 建立索引，<code>SEARCH_HTML_SELECTOR</code> 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。</p>
 <p>我浏览了一下 <a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank">Stork 官方文档</a>中的内容，发现了很多很有意思的东西。例如 <code>minimum_indexed_substring_length</code> 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 <code>minimum_index_ideographic_substring_length</code> 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。</p>
 <p>再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。</p>
@@ -280,6 +280,13 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 
 
                 <aside class="post-nav">
+                    <a class="post-nav-next" href="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">文献总结｜使用等变扩散模型进行基于结构的药物设计</h2>
+                            <p class="post-nav-excerpt">本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv...</p>
+                        </section>
+                    </a>
                     <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
