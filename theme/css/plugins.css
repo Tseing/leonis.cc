@@ -154,7 +154,7 @@ dot {
 
 .link img {
     margin: 10px;
-    filter: none;
+    box-shadow: none;
     height: 6em;
     width: 6em;
 }
@@ -226,7 +226,7 @@ dot {
 .wl-user > img,
 .wl-avatar img {
     margin: 0;
-    filter: drop-shadow(1px 5px 5px rgba(0,0,0,.5));
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 button[title="喜欢"],
@@ -320,7 +320,7 @@ i.fa.fa-map-marker.fa-stack-1x {
 .output_png img,
 .output_svg svg {
     width: unset;
-    filter: none;
+    box-shadow: none;
     border: 2px solid #eee;
 }
 
