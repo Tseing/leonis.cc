@@ -1,5 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-24T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>春日漫步小记</title><link href="https://leonis.cc/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html" rel="alternate"></link><published>2023-03-24T00:00:00+08:00</published><updated>2023-03-24T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-24:/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html</id><summary type="html">&lt;p&gt;五六天前刚起了几阵沙尘暴，入眼的一切都是黄蒙蒙的。黄沙中的行人都拉紧着衣服、戴着口罩，可能是为了防沙，也可能是 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;五六天前刚起了几阵沙尘暴，入眼的一切都是黄蒙蒙的。黄沙中的行人都拉紧着衣服、戴着口罩，可能是为了防沙，也可能是为了防病毒。唯一不避风沙的只有两旁的行道树，经冬之后满是枯枝，更添了几分萧索。就是在这样一片了无生气之中，竟在几天之中气温陡升，绽开了桃花，催绿了柳梢，赶在春分前酝酿好了春天的氛围。我想，也只有中原与华北的气候能如此依时令而行，不误物候，也只有在这时，看着次第开放的春花，才深感只有北方的花如此重诺而能被称为「花信」。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-25T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜通过连接感知模版挖掘实现从头生成分子</title><link href="https://leonis.cc/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html" rel="alternate"></link><published>2023-03-25T00:00:00+08:00</published><updated>2023-03-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-25:/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html</id><summary type="html">&lt;p&gt;本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2302.01129" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2302.01129&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型 MiCaM（Mined Connection-aware Motifs）。&lt;/p&gt;
+&lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
+&lt;p&gt;文章中提出的连接感知模版挖掘能够从数据集中构建模版词汇，用于后续的分子生成，该算法包括两个主要步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;合并操作（Merging-operation Learning Phase）&lt;/li&gt;
+&lt;li&gt;构建模版词汇（Motif-vocabulary Construction Phase）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="算法" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8702?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="算法" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8702?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="he-bing-cao-zuo"&gt;合并操作&lt;/h3&gt;
+&lt;p&gt;数据集 &lt;span class="math"&gt;\(\mathcal{D}\)&lt;/span&gt; 中的每个分子都可以表示为图 &lt;span class="math"&gt;\(\mathcal{G(V,E)}\)&lt;/span&gt;，结点 &lt;span class="math"&gt;\(\mathcal{V}\)&lt;/span&gt; 表示原子，边 &lt;span class="math"&gt;\(\mathcal{E}\)&lt;/span&gt; 表示化学键。接着定义与之类似的 &lt;span class="math"&gt;\(\mathcal{G}^{(k)}_M(\mathcal{V}^{(k)}_M,\mathcal{E}^{(k)}_M)\)&lt;/span&gt; 表示第 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 次合并后的分子，其中 &lt;span class="math"&gt;\(\mathcal{F}\in\mathcal{V}_M\)&lt;/span&gt; 表示分子的子结构，可以由一个原子构成，也可以由多个原子构成，那么边 &lt;span class="math"&gt;\(\mathcal{E}_M\)&lt;/span&gt; 相应就表示子结构之间的连接方式。显然 &lt;span class="math"&gt;\(\mathcal{G}^{(k)}_M\)&lt;/span&gt; 由 &lt;span class="math"&gt;\(\mathcal{G}\)&lt;/span&gt; 初始化得到，也就是 &lt;span class="math"&gt;\(\mathcal{G}^{(0)}_M(\mathcal{V}^{(0)}_M,\mathcal{E}^{(0)}_M=\mathcal{G(V,E)}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;接下来介绍由 &lt;span class="math"&gt;\(\mathcal{G}^{(0)}_M\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\(\mathcal{G}^{(k)}_M\)&lt;/span&gt; 的合并操作，文章将操作「&lt;span class="math"&gt;\(\oplus\)&lt;/span&gt;」定义将子结构合并为新的子结构，即 &lt;span class="math"&gt;\(\mathcal{F}_{ij}=\mathcal{F}_i\oplus\mathcal{F}_j\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\mathcal{F}_{ij}\)&lt;/span&gt; 就包含了 &lt;span class="math"&gt;\(\mathcal{F}_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\mathcal{F}_j\)&lt;/span&gt; 中所有的结点与边。&lt;span class="math"&gt;\(\mathcal{G}^{(0)}_M\)&lt;/span&gt; 包含了边 &lt;span class="math"&gt;\(\mathcal{E}^{(0)}_M\)&lt;/span&gt;，边又连接了相应的子结构，所以对于通过边连接的子结构 &lt;span class="math"&gt;\((\mathcal{F}^{(0)}_i,\mathcal{F}^{(0)}_j)\in\mathcal{E}^{(0)}_M\)&lt;/span&gt; 计算 &lt;span class="math"&gt;\(\mathcal{F}^{(0)}_{ij}=\mathcal{F}^{(0)}_i\oplus\mathcal{F}^{(0)}_j\)&lt;/span&gt;，其中出现频率最高的 &lt;span class="math"&gt;\(\mathcal{F}^{(0)}_{ij}\)&lt;/span&gt; 就记作 &lt;span class="math"&gt;\(\mathcal{M}^{(0)}\)&lt;/span&gt;。再次遍历子结构 &lt;span class="math"&gt;\((\mathcal{F}^{(0)}_i,\mathcal{F}^{(0)}_j)\in\mathcal{E}^{(0)}_M\)&lt;/span&gt;，只要 &lt;span class="math"&gt;\(\mathcal{F}^{(0)}_i\oplus\mathcal{F}^{(0)}_j==\mathcal{M}^{(0)}\)&lt;/span&gt;，就将这两个子结构合并，完成后得到的所有新子结构就是 &lt;span class="math"&gt;\(\mathcal{V}^{(1)}_M\)&lt;/span&gt;，相应的新连接边就是 &lt;span class="math"&gt;\(\mathcal{E}^{(1)}_M\)&lt;/span&gt;，二者构成了经过 1 次合并的分子 &lt;span class="math"&gt;\(\mathcal{G}^{(1)}_M\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;以上合并操作可以推广，在第 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 次合并中，可以从分子 &lt;span class="math"&gt;\(\mathcal{G}^{(k)}_M(\mathcal{V}^{(k)}_M,\mathcal{E}^{(k)}_M)\)&lt;/span&gt; 得到分子 &lt;span class="math"&gt;\(\mathcal{G}^{(k+1)}_M(\mathcal{V}^{(k+1)}_M,\mathcal{E}^{(k+1)}_M)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id="gou-jian-mo-ban-ci-hui"&gt;构建模版词汇&lt;/h3&gt;
+&lt;p&gt;数据集中的所有分子在合并操作后都变为 &lt;span class="math"&gt;\(\mathcal{G}^{(K)}_M(\mathcal{V}^{(K)}_M,\mathcal{E}^{(K)}_M)\)&lt;/span&gt;，此时分子的已经大大简化，将分子中的结点分割开来，并添加上连接位置的标记 &lt;code&gt;*&lt;/code&gt;，就得到了分子结构模版。&lt;/p&gt;
+&lt;h2 id="mo-xing_1"&gt;模型&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="模型" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8703?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="模型" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8703?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;MiCaM 通过多个逐渐组合模版结构的步骤生成分子，这样的组成有两种方式，一种是直接在连接位置上连上另一个模版结构，另一种是分子中的两个连接位置相连（成环）。&lt;/p&gt;
+&lt;p&gt;将第 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 步得到的分子记作 &lt;span class="math"&gt;\(\mathcal{G}_t\)&lt;/span&gt;，用 &lt;span class="math"&gt;\(\mathcal{C}_{\mathcal{G}_t}\)&lt;/span&gt; 表示该分子的所有连接位置，使用序列 &lt;span class="math"&gt;\(\mathcal{Q}\)&lt;/span&gt; 记录 &lt;span class="math"&gt;\(\mathcal{C}_{\mathcal{G}_t}\)&lt;/span&gt; 中所有连接位置的顺序。在第 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 步取出 &lt;span class="math"&gt;\(\mathcal{Q}\)&lt;/span&gt; 的首个元素 &lt;span class="math"&gt;\(v_t\)&lt;/span&gt;，也就是当前操作的连接位置，在该处连接或者成环后，就得到了新分子。新分子中可能具有新的连接位置，所以还使用 RDKit 更新序列 &lt;span class="math"&gt;\(\mathcal{Q}\)&lt;/span&gt;。分子生成步骤就是不断重复以上过程，直至 &lt;span class="math"&gt;\(\mathcal{Q}\)&lt;/span&gt; 为空，此时分子中的所有连接位置都被填满，就得到了输出分子。&lt;/p&gt;
+&lt;p&gt;因为具有连接和成环两种组合方式，所以在每个生成步骤中还需要确定与当前操作的连接位置 &lt;span class="math"&gt;\(v_t\)&lt;/span&gt; 相连的位置与子结构。&lt;/p&gt;
+&lt;p&gt;文章为此设计了以下步骤，首先使用 GNN&lt;sub&gt;pmol&lt;/sub&gt; 编码当前步骤得到的分子 &lt;span class="math"&gt;\(\mathcal{G}_t\)&lt;/span&gt; 和当前操作的连接位置 &lt;span class="math"&gt;\(v_t\)&lt;/span&gt;，分别得到相应的表示 &lt;span class="math"&gt;\(\boldsymbol{h}_{v_t}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{h}_{\mathcal{G}_t}\)&lt;/span&gt;，使用 GNN&lt;sub&gt;motif&lt;/sub&gt; 编码模版库中的所有结构模版，得到所有连接位置 &lt;span class="math"&gt;\(v\in\mathcal{C}_\mathrm{Vocab}\)&lt;/span&gt; 的表示 &lt;span class="math"&gt;\(\boldsymbol{h}_{v}\)&lt;/span&gt;。使用神经网络将相应的表示转换为向量，寻找与 query 向量最相似的 key 向量，也就是根据以下概率选择与当前操作的连接位置 &lt;span class="math"&gt;\(v_t\)&lt;/span&gt; 相连的位置：&lt;/p&gt;
+&lt;div class="math"&gt;$$P_v=\mathop{\mathrm{softmax}}_{v\in\mathcal{C}_\mathrm{Vocab}\cup\mathcal{C}_{\mathcal{G}_t}\backslash\{v_t\}}(\mathrm{NN_{query}}([\boldsymbol{z},\boldsymbol{h}_{\mathcal{G}_t},\boldsymbol{h}_{v_t}])\cdot\mathrm{NN_{key}}(\boldsymbol{h}_v))$$&lt;/div&gt;
+&lt;p&gt;若候选的连接位置 &lt;span class="math"&gt;\(v\in\mathcal{C}_\mathrm{Vocab}\)&lt;/span&gt;，则在模版库中取得相应的 &lt;span class="math"&gt;\(\mathcal{F}^*\)&lt;/span&gt;，并将其接入分子 &lt;span class="math"&gt;\(\mathcal{G}_t\)&lt;/span&gt;，完成连接；若 &lt;span class="math"&gt;\(v\in\mathcal{C}_{\mathcal{G}_t}\)&lt;/span&gt;，那么就合并 &lt;span class="math"&gt;\(v_t\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(v\)&lt;/span&gt;，完成成环。&lt;/p&gt;
+&lt;h2 id="jie-guo-yu-tao-lun"&gt;结果与讨论&lt;/h2&gt;
+&lt;h3 id="fen-bu-xue-xi"&gt;分布学习&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8704?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8704?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章在 QM9、ZINC 和 GuacaMol 三个数据集上分别训练了 MiCaM，并使用 MiCaM 生成分子，检查生成的分子集是否接近训练集的分布。实验结果如上表所示，在 QM9 和 GuacaMol 数据集上，MiCaM 生成分子的 Uniqueness 和 Novelty 低于 MoLeR 和 GP-VAE 等模型，但在 KL Div 和 FCD score 上，MiCaM 完全优于其他模型。KL Div 与 FCD score 都衡量了生成分子集与训练集分布的相似程度，也就是说，MiCaM 生成的分子最接近训练集的分布。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8705?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8705?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在算法一节提到的参数 &lt;span class="math"&gt;\(K\)&lt;/span&gt; 决定了合并次数，文章在 QM9 数据集上测试了该参数对生成分子的影响。随着合并次数增加，KL Div 与 FCD score 都随之增加，而生成分子的 Novelty 却在下降。这是因为合并次数越多，分子简化程度越大，最后进入模版库中的模版结构也会更加复杂、更加接近训练集中的分子，最后使用这些模版结构构造的分子就会趋于与训练集分子「雷同」，这也一点程度解释了为什么 MiCaM 生成分子的 Uniqueness 和 Novelty 低于部分模型。&lt;/p&gt;
+&lt;h3 id="die-dai-you-hua"&gt;迭代优化&lt;/h3&gt;
+&lt;p&gt;文章还使用 MiCaM 进行了迭代目标增强（Iterative Target Augmentation, ITA）的分子生成。首先选出数据集中针对目标要求打分最高的 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 个分子，接着使用模型在该训练集上微调并产生新分子，每次迭代过程中，在新分子与训练集中再选出打分最高的 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 个分子，用作为下一次迭代的训练集。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8706?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8706?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在文章设计的 5 种任务中，MiCaM 优于其他所有模型。&lt;/p&gt;
+&lt;p&gt;最后文章展示了 MiCaM 生成分子的过程，经过 5 个步骤，MiCaM 就能生成相当复杂的分子，同时分子的各性质分数也相应提高。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8707?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8707?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章提出了一种从分子数据中挖掘模版结构的算法，能够用于提取分子数据集中频繁出现的子结构并构建模版结构库，同时文章设计了基于该模版结构库的分子生成模型 MiCaM。MiCaM 通过逐步组合模版结构实现分子生成，很大程度解决了以往启发式分子生成随机性大、难以生成复杂结构的问题，使用模版结构组合生成的分子也更接近于现实中化学家对化合物改造的策略。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category><category term="VAE"></category></entry><entry><title>春日漫步小记</title><link href="https://leonis.cc/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html" rel="alternate"></link><published>2023-03-24T00:00:00+08:00</published><updated>2023-03-24T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-24:/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html</id><summary type="html">&lt;p&gt;五六天前刚起了几阵沙尘暴，入眼的一切都是黄蒙蒙的。黄沙中的行人都拉紧着衣服、戴着口罩，可能是为了防沙，也可能是为了防病毒。唯一不避风沙的只有两旁的行道树，经冬之后满是枯枝，更添了几分萧索。就是在这样一片了无生气之中，竟在 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;五六天前刚起了几阵沙尘暴，入眼的一切都是黄蒙蒙的。黄沙中的行人都拉紧着衣服、戴着口罩，可能是为了防沙，也可能是为了防病毒。唯一不避风沙的只有两旁的行道树，经冬之后满是枯枝，更添了几分萧索。就是在这样一片了无生气之中，竟在几天之中气温陡升，绽开了桃花，催绿了柳梢，赶在春分前酝酿好了春天的氛围。我想，也只有中原与华北的气候能如此依时令而行，不误物候，也只有在这时，看着次第开放的春花，才深感只有北方的花如此重诺而能被称为「花信」。&lt;/p&gt;
 &lt;p&gt;虽是在尘埃满扑之中，但桃红柳绿的色彩也使春光亮丽了起来，现出了新鲜的气象。自新冠管控放松之后，趁着东风，京津间的通勤也恢复如常了，于是与北京的好友几人约在周末沿海河散散步。&lt;/p&gt;
 &lt;p&gt;海河是天津最有风采的景致，虽说不如长江黄河之于中国，但若是失了海河，天津的趣味就要大打折扣。此行的起点就在三岔河口前的丁字沽，北运河、子牙河与海河在此交汇，形成「丁」形，因而得名「丁字沽」。朋友看着路边介绍京杭大运河的牌子打趣这里该算天津的陆家嘴，运河虽是依旧却再难见到繁忙来往的船舶。&lt;/p&gt;
 &lt;p&gt;丁字沽一带的桃花园与西沽公园是赏春的好去处，不用多言，其中最负盛名的自然是桃花。节临三月，占得春花头筹的就是桃花，连通往景点的路上也游人如织，非摩肩接朣不得过，也许是为了不打消游人赏花的兴致，原先告示的「预约入园」也成了君子协定，凡是到场即可入内，园中的人流便可以推测了。桃花园是北运河边的一条长堤，沿堤遍植桃树，因此没有「园」之实，称为桃花堤更为贴切。长堤上人头攒头，头顶上两边的桃树相互环合，拱成了一条花廊，游人在花廊下行走，而时不时几阵薰风吹过，就有几枚桃花脱了梢头，落入人流之中。人在花群中，花亦在人群中。&lt;/p&gt;
@@ -3285,39 +3383,4 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
 &lt;li&gt;&lt;a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank"&gt;OpenNMT-py Documentation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/" rel="noopener" target="_blank"&gt;OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.bilibili.com/video/BV1NL4y1t73c/" rel="noopener" target="_blank"&gt;开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry><entry><title>文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型</title><link href="https://leonis.cc/sui-sui-nian/2022-12-11-summary-doi.org/10.1186/s13321-020-00441-8.html" rel="alternate"></link><published>2022-12-11T00:00:00+08:00</published><updated>2022-12-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2022-12-11:/sui-sui-nian/2022-12-11-summary-doi.org/10.1186/s13321-020-00441-8.html</id><summary type="html">&lt;p&gt;本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-020-00441-8" rel="noopener" target="_blank"&gt;doi.org/10.1186/s13321-020-00441-8&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍于 2020 年发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。&lt;/p&gt;
-&lt;h2 id="yin-yan"&gt;引言&lt;/h2&gt;
-&lt;p&gt;对先导化合物进行结构优化是药物设计中的重要步骤，利用深度学习手段对分子结构进行改造能够大大提升药物设计的效率。以往提出的结构改造模型有基于 SMILES 的双向 RNN 模型，其问题在于只能连接分子中的两个指定位点，也有基于图的深度模型，但需要消耗大量的计算资源和训练时间。&lt;/p&gt;
-&lt;p&gt;文章提出了一种用于分子结构改造的深度生成模型，首先由 RNN 模型生成分子骨架，再由改造模型在分子骨架中的改造位点上进行合适的改造，生成新的分子。&lt;/p&gt;
-&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8212?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8212?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章提出的模型主要由分子骨架生成模型与分子骨架改造模型两部分构成。分子骨架生成模型是基于 RNN 的模型，使用 MMP 算法将分子的 SMILES 分割为分子片段并将其作为训练数据，分子骨架生成模型就能够生成具有结构改造位点标记 &lt;code&gt;[*]&lt;/code&gt; 的分子骨架。&lt;/p&gt;
-&lt;p&gt;分子改造模型也是 RNN 模型，但具有注意力机制的编码器-解码器架构，编码器-解码器架构主要用于处理 seq2seq 任务，在这里，编码器-解码器将具有结构改造位点标记的分子骨架转化为用于结构改造的取代基。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8213?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8213?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;使用该模型对分子进行结构改造的主要流程如上图所示，首先手动输入或由模型生成带有改造位点的分子骨架，接着再由改造模型进行改造。改造模型具有两种模式，一种是一步模式，另一种是多步模式。在多步模式中，通过多步骤完成分子的改造，先将分子结构转化为改造基团，再将改造基团连入分子结构，然后再次将分子结构送入改造模型，直至所有改造位点完成改造。单步模式中，模型将分子结构转化为多个改造基团，以分隔符 &lt;code&gt;|&lt;/code&gt; 区分，将多个改造基团全部连入分子，一次性完成改造。&lt;/p&gt;
-&lt;p&gt;文章设定了两个实验用于测试模型的表现：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;实验 1&lt;/strong&gt;：使用 DRD2 受体调节剂数据训练结构改造模型，用活性预测模型确定模型输出活性分子的数量；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;实验 2&lt;/strong&gt;：使用类药分子作为训练数据，测试模型表现。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="shu-ju-yu-chu-li"&gt;数据预处理&lt;/h3&gt;
-&lt;p&gt;实验 1 所使用的数据是 DRD2 受体调节剂数据，来自于 ExCAPE-DB，使用 MMP 算法将分子分割为分子骨架与改造基团。&lt;/p&gt;
-&lt;p&gt;实验 2 使用的数据是 ChEMBL 中的类药分子，同样使用 MMP 算法，但在分割的同时增加了 RECAP 规则的约束，RECAP 规则能让分子骨架与改造基团的分割更符合化学合成的规则。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8214?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8214?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8215?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8215?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;在训练集中随机选择了 5 个分子骨架（1-5），并将其从训练集中去除，将这 5 个分子骨架相关的分子片段数据作为验证集。&lt;/p&gt;
-&lt;p&gt;在骨架生成模型生成的数据中选择 5 个未出现在数据集中的不同分子骨架（6-10）作为改造模型的输入。&lt;/p&gt;
-&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
-&lt;h3 id="shi-yan-1"&gt;实验 1&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8216?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8216?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;使用 1-10 分子骨架作为输入的生成分子结果如上图所示。从 subplot a 可以看出，分子骨架不同，所产生的结构改造数量也不同，这种不同不是由结构改造位点数量导致的，而且在单步模式下具有更多的结构改造。在 subplot c 和 d 中可以看出，在不同结构上生成结构改造的新颖性不同，这主要是由于模型对每个结构改造位点上所具有知识的不同，此外在生成新颖性的结构中，也有相当一部分分子具有预测活性，表明模型在进行结构改造的同时依然具有 DRD2 的知识，模型能够基于 SMILES 语境做出结构改造。&lt;/p&gt;
-&lt;p&gt;尽管单步模式能够针对分子骨架产生更多的结构改造，但多步模型产生的所有分子中的活性分子占比更高，因此多模型在对分子进行结构改造上具有更好的表现。可以认为这是因为多步改造能够更好地利用训练数据中的知识，例如单步模式下，模型只会运用到对多个改造位点进行改造的知识，而在多模式下，模型会逐次运用到对三个、两个、一点改造位点改造的数据，使得生成的分子更能满足 DRD2 受体的活性要求。&lt;/p&gt;
-&lt;h3 id="shi-yan-2"&gt;实验 2&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8217?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8217?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8218?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8218?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;实验 2 生成新分子的结果如图所示，其中上图为多步模式，下图为单步模式，non-dataset scaff. 表示分子具有未出现在数据集中的新骨架（6-10），val. set scaff. 表示分子具有训练集中的骨架（1-5）。&lt;/p&gt;
-&lt;p&gt;可以看出，在多步模式下，尽管输入了不同的分子骨架，结构改造后新分子的性质仍然能和训练集保持一致，表现了模式良好的泛化能力，能够用于生成类药分子。而在单步模式下，模型利用的知识受限，生成新分子的性质偏离了训练数据。&lt;/p&gt;
-&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
-&lt;p&gt;文章基于 RNN 构建了一种新的分子改造模型，没有使用额外的深度学习方法，仅由 RNN 的分子骨架生成模型与 RNN 编码器-解码器的分子改造模型构成。通过 MMP 算法处理分子的 SMILES 数据后，即可用于该模型的训练，该模型能够基于 SMILES 语境进行合适的分子改造。该模型的结构较为简单，还有进一步改进的空间。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="RNN"></category></entry></feed>
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry></feed>
