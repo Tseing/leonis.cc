@@ -171,21 +171,46 @@ jQuery(function($) {
 	   ========================================================================== */
 
 	// function codestyling() {
-	// 	$('pre code').each(function(i, e) {
+	// 	var mdSelector=".highlight pre code"
+	// 	var rstSelector=".highlight pre"
+	// 	var selector=rstSelector
+	// 	var showLines=false
+
+	// 	if($(mdSelector).length) {
+	// 		selector = mdSelector
+	// 		showLines = true
+	// 	}
+
+	// 	$(selector).each(function(i, e) {
+	// 		// Code highlight
 	// 		hljs.highlightBlock(e);
 
-	// 		if(!$(this).hasClass('language-text')) {
+	// 		// No lines for plain text blocks and nolines
+	// 		if(!($(this).hasClass('language-text') && $(this).hasClass('nolines')) && showLines) {
 	// 			var code = $(this);
-	// 			var lines = code.html().split(/\n/).length;
+	// 			// Calculate amount of lines
+	// 			var lines = code.html().split(/\n(?!$)/g).length;
 	// 			var numbers = [];
+	// 			if (lines > 1) {
+	// 				lines++;
+	// 			}
 	// 			for (i = 1; i < lines; i++) {
-	// 				numbers += '<span class="line">' + i + '</span>';
+	// 				numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
 	// 			}
 	// 			code.parent().append('<div class="lines">' + numbers + '</div>');
 	// 		}
 	// 	});
 	// }
-	// codestyling();
+
+	// Format code blocks only
+	// function codestylingWithoutLineNumbers() {
+	// 	$(".highlight pre").each(function(i, e) {
+	// 		// Code highlight
+	// 		hljs.highlightBlock(e);
+	// 	});
+	// }
+
+	// codestylingWithoutLineNumbers();
 
 	/* ==========================================================================
 	   Initialize and load Disqus
@@ -216,8 +241,11 @@ jQuery(function($) {
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
       </svg>
   	</div>`;
-	$("#map").prepend(loader);
-	document.getElementById("map-html").onload = function() {
-		$(".loader").remove();
-	};
+
+	if ($("#map").length){
+		$("#map").prepend(loader);
+		document.getElementById("map-html").onload = function() {
+			$(".loader").remove();
+		};
+	}
 });
