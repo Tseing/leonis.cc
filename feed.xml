@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-25T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜通过连接感知模版挖掘实现从头生成分子</title><link href="https://leonis.cc/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html" rel="alternate"></link><published>2023-03-25T00:00:00+08:00</published><updated>2023-03-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-25:/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html</id><summary type="html">&lt;p&gt;本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2302.01129" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2302.01129&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-03-30T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>在明清小说中索隐——读《中国叙事学》</title><link href="https://leonis.cc/gu-zhi-dui/2023-03-30-book-chinese-narratology.html" rel="alternate"></link><published>2023-03-30T00:00:00+08:00</published><updated>2023-03-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-30:/gu-zhi-dui/2023-03-30-book-chinese-narratology.html</id><summary type="html">&lt;p&gt;浦安迪的《中国叙事学》是一本讨论中国叙事传统和明清小说的小书，页数并不多，不消四五天即可翻完，虽然这是一本学术著作，但语言流畅、分析丝丝入扣，读起来时并不觉筛枯燥乏味，反而觉得酣畅淋漓。书题虽为《中国叙事学》，但全书中专门论述 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;浦安迪的《中国叙事学》是一本讨论中国叙事传统和明清小说的小书，页数并不多，不消四五天即可翻完，虽然这是一本学术著作，但语言流畅、分析丝丝入扣，读起来时并不觉筛枯燥乏味，反而觉得酣畅淋漓。书题虽为《中国叙事学》，但全书中专门论述中国叙事的篇目并不多，只是在全书的前面部分章节立起「中国叙事」的概念与分析方法，在后文中则全是基于这些概念与方法来分析中国的奇书文体，也就是范围更窄的明清小说，我在后文中即以「明清小说」这一更为通俗的文学类别指代书中所说的「奇书文体」。所以前一部分中才真正讨论了「中国叙事学」，而这一部分中不乏许多精要切当的论述，让人觉得豁然开朗；作者将其作为分析方法，一以贯之用于剖析明清小说，又深让人惊异于明清小说原来还能这么读，读完这本书后再去重读明清小说，相信又会有另一番收获。基于以上的原因，本文另起了一个标题「在明清小说中索隐」，我认为能够更准确地概括全书的主题。&lt;/p&gt;
+&lt;div class="bookshelf"&gt;
+&lt;div class="book"&gt;
+&lt;img referrerpolicy="no-referrer" src="https://img2.doubanio.com/view/subject/s/public/s33747413.jpg"/&gt;
+&lt;div class="infos"&gt;
+&lt;a class="title" href="https://book.douban.com/subject/30244064/"&gt;中国叙事学&lt;/a&gt;
+&lt;div class="作者"&gt;作者：[美] 浦安迪 (Andrew H. Plaks)&lt;/div&gt;
+&lt;div class="出版社"&gt;出版社：北京大学出版社&lt;/div&gt;
+&lt;div class="出版年"&gt;出版年：2018-8&lt;/div&gt;
+&lt;div class="页数"&gt;页数：292&lt;/div&gt;
+&lt;div class="定价"&gt;定价：45.00元&lt;/div&gt;
+&lt;div class="ISBN"&gt;ISBN：9787301295960&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id="he-wei-xu-shi"&gt;何为叙事&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;p class="cite"&gt;任何时代，任何地方，任何社会，都少不了叙述。它从远古时代就开始存在，古往今来，哪里有人，哪里就有叙述。&lt;/p&gt;
+&amp;mdash;&amp;mdash;法国当代文论家 罗兰・巴特&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;书中认为文学作品是在传递某种人生本质，那么文学中的三大体式就也可以按传递人生本质的方式区别，即&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;抒情诗：直接描绘绘静态的人生本质，有叙述人但没有故事&lt;/li&gt;
+&lt;li&gt;戏剧：关注人生矛盾，通过舞台传达人生本质，有场面、故事但没有叙述人&lt;/li&gt;
+&lt;li&gt;叙事文：不直接描绘人生本质，而以传事为主要目标，从而展示延绵不断的经验流中的人生本质&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们不妨回忆我们曾经接触过的文学作品，一定是可以大体的内容归置到上述的 3 个类别中去的。之所以说「大体的内容」，就是因为三种体式间不是完全孤立的，实际上三者相互交融渗透，叙事中同样存在着抒情。但是这种机械的分类有助于我们厘清全书讨论的对象，那也就是叙事文，相信我们对「何为叙事」已经有了朦胧的答案。&lt;/p&gt;
+&lt;h2 id="xu-shi-wen-xue-de-yuan-liu"&gt;叙事文学的源流&lt;/h2&gt;
+&lt;p&gt;西方叙事文学的历史可以概括为「&lt;dot&gt;史诗（epic）&amp;rarr; 罗曼史（romance）&amp;rarr; 小说（novel）&lt;/dot&gt;」。&lt;/p&gt;
+&lt;p&gt;而中国的古代传统文学则是一条「三百篇 - 骚 - 赋 - 乐府 - 律诗 - 词曲 - 小说」的一条发展脉络，也就是中国传统文学的重心是抒情。&lt;/p&gt;
+&lt;p&gt;中国的叙事文学源头应当是《尚书》以及《左传》，书中认为二者深刻地影响了后世的叙事文学，并画下了一定的定式。但二者都是史文，后世的虚构文学则是从六朝志怪发源，分化为「文言小说」和「白话小说」两大类别。&lt;/p&gt;
+&lt;p&gt;作者强调，文言小说和白话小说泾渭分明，「杂录」「志怪」等文言小说又被称为「史余」，与史文的关系更为密切，书中提到纪昀将《山海经》等书从史部抽出，纳入小说，可为一证。而白话小说则可能是由民间说书的「通俗文学」发展而来（鲁迅待持此说），也可能是由当时文人所创作的「才子书」（作者持此说）。&lt;/p&gt;
+&lt;p&gt;书中将中国的叙事文学历史总结为「&lt;dot&gt;神话 &amp;rarr; 史文 &amp;rarr; 明清奇书&lt;/dot&gt;」，正如在对 novel 的批评不得不在 epic 的传统中一样，在批评中国的明清奇书时也脱不开神话与史文对其的影响。&lt;/p&gt;
+&lt;h2 id="shi-wen-de-ying-xiang"&gt;史文的影响&lt;/h2&gt;
+&lt;p&gt;在介绍书中分析史文与神话的内容之前，我想先引用顾颉刚先生的观点奠定一个基调，那就是应当审慎地对待传世文献，未经检验的文献是不可信的。经常有人被民族主义裹挟，把「疑古」简单地想象为「否认一切历史」并言之凿凿地抨击顾颉刚先生，我只能对此深表遗憾。在面对浩如烟海的史料时，「疑古」才是去伪存真、还原历史的科学方法。&lt;/p&gt;
+&lt;p&gt;书中的想法与顾颉刚先生的观点不谋而合，我不了解作者是否参考了顾颉刚先生的著作，如若不然，就是顾颉刚先生从历史研究的经验中总结出了「疑古」的观点，而作者从文学分析的角度告诉读者对史文的应当审慎，可以称得上合作。原书中的文字足够精彩，无需我的赘言，兹引录原文如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;p class="cite"&gt;中国的史书虽然力图给我们造成一种客观记载的感觉，但实际上不外乎一种美学上的幻觉，是用各种人为的方法和手段造成的「拟客观」效果。&lt;/p&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;p class="cite"&gt;由于中国历代长期形成的对史近乎宗教的狂热崇拜，也由于在清亡以前史料永远只对史官开放的历史事实，中国正史叙述者总是摆出一副「全知全能者」的姿态；然而，这种全知全能却只是局限在冠冕堂皇的庙堂里。它的触角甚至伸不进皇家的后院，当然更难看见「处江湖之远」的草民百姓的众生相。一种纯客观的叙事幻觉由此产生，并且成为一种经久不坏的模式，从史官实录到虚构文本，横贯中国叙事的各种文体。&lt;/p&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;p class="cite"&gt;西方的史诗原则上是虚构的艺术，只与历史传说有些微弱的关联；而中国的史文对于「虚构」和「实事」却从来就没有严格的分界线。西方文学理论家一般认为，历史讲实事，小说讲虚构。中国古代批评家则强调，「历史中有小说，小说中有历史」。&lt;/p&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;p class="cite"&gt;西人重「模仿」，等于假定所讲述的一切都是出于虚构，中国人尚「传述」，等于宣称所述的一切都出于实事。&lt;/p&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="shen-hua-de-ying-xiang"&gt;神话的影响&lt;/h2&gt;
+&lt;p&gt;由史文上溯至远古神话，可以发现中国神话具有「人本位」倾向，也就是通常借神话来表人事，因而常常把历史与神话混作一团，譬如说我们都知道宙斯是虚构的，而禹究竟是神是人仍无定论，再例如我们都知道十个太阳是断无可能的，但后羿是远古的君主还是人格化的神呢？或许我们习于这些神话，在面对这样的疑难时会将其推作中国的神话过于琐碎繁杂而不成体系，但希腊神话何尝不零碎，却没有这种明显的「人本位」特征。&lt;/p&gt;
+&lt;p&gt;再来考查中神话的叙事，在中国古代典籍中，对神话的具体情节都是话焉不详的，这可以说是&lt;dot&gt;在中国的美学原动力中缺乏一种要求「头身尾」连贯的结构原型&lt;/dot&gt;，这种「非叙述性」美学原型导致了中西叙事传统的分流。这两种不同的叙事传统在神话中表现为希腊神话以时间为轴心，故重过程而善于讲述故事；中国神话以空间为宗旨，故重本体而善于画图案。&lt;/p&gt;
+&lt;p&gt;这里要注意，神话是诞生于远古时代的故事，但其叙述未并产生于远古时代，例如《淮南子》《庄子》中的神话显然不能用于作神话叙述的分析，所以作者更花精力着眼于例如《尚书》中的神话。&lt;/p&gt;
+&lt;h2 id="zhong-guo-de-xu-shi"&gt;中国的叙事&lt;/h2&gt;
+&lt;p&gt;在神话与史文的孳乳中，中国的叙事形成了不同于西方的叙事传统，这种叙事传统的影响绵延至明清小说乃至其后。中国的叙事传统中，普遍将重点放在「事隙」上，与西方恰恰相反，也就是真正的具有动作的「事」，都被诸如宴会等「无事之事」包围。&lt;/p&gt;
+&lt;p&gt;至于为什么中国的叙事传统如此，没有形成或是拋弃了「叙述性」，甚至在远古神话中已经接受了了这一范式，作者认为这可能是因为中国人重礼的传统，因而中国人把诸如阴阳交替、四时更换等仪礼形式作为了一种基本原则，从而将其「空间化」，抹杀了其中的「时间性」。&lt;/p&gt;
+&lt;h2 id="ming-qing-xiao-shuo-zhong-de-xu-shi"&gt;明清小说中的叙事&lt;/h2&gt;
+&lt;p&gt;今人在读明清小说时，相当大部分人会因为叙事中的时间性或因果性不强感觉琐碎或是乏味，想必很多人在中学时代读四大名著时，除了《西游记》与《三国演义》以外都觉得昏昏欲睡，这很大程度上就是因为《西游记》具有「取经」这条真正的具有动作的「事」贯穿始终，《三国演义》的时间性则明显更强，就算书中没有明显地以时间为线索，但汉末三分天下终而三家归晋的历史在开卷之前已经为读者熟知。&lt;/p&gt;
+&lt;p&gt;西人在读明清小说时亦有这种感受，他们用「缀段性」批评明清小说的叙事方法。缀段性来源于西方对诗歌的文学批评，亚里士多德曾说「缀段性的情节是所有情节中最坏的一种。我所谓的缀段性情节，是指前后毫无因果关系而串接成的情节。」&lt;/p&gt;
+&lt;p&gt;但是我们要注意，这是批评西方诗歌的方法，将这一术语用于评价明清小说时已经陷入了西方视角。西方之所以贬斥缀段性，是因为西方文学中有重视「头身尾」结构完整性的传统，这种叙述完整性的要求下，缀段性显然是一种低格。但这种结构完整性的要求并不是金科玉律，我们将眼光放回到「叙事」这一行为上，就会发现叙事天然就带有一定缀段性的特征，因为叙事就是在处理人类经验的一个个片段单元，例如中国的史文，就是由史官将一长段的时间线的人类经验分割为一个个事件片段而创作出的巨制。&lt;/p&gt;
+&lt;p&gt;明清小说在结构上的一个明显特征就是「百回」，古人刻意将一部小说分为百回或是百廿回本身就反映了一种中式的美感，一种中国人追求平衡的美学倾向。再者，明清小说的百回完帙在出版时又惯被分作十卷，这是今人难以注意到的细节，同时这也不是出于偶然。作者发现，每十回就能组成一个小故事，百回中的十个小故事又现出一种特殊的韵律感。&lt;/p&gt;
+&lt;p&gt;若以《水浒传》为为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;武（松）十回&lt;/li&gt;
+&lt;li&gt;林（冲）十回&lt;/li&gt;
+&lt;li&gt;宋（江）十回&lt;/li&gt;
+&lt;li&gt;第七十二至八十二回：受招安&lt;/li&gt;
+&lt;li&gt;第八十三至九十回：平辽&lt;/li&gt;
+&lt;li&gt;第九十一至一百回：平田虎&lt;/li&gt;
+&lt;li&gt;第一百一至一百十回：平王庆&lt;/li&gt;
+&lt;li&gt;第一百十一至一百二十回：平方腊&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;若以《三国演义》为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一至九回：董卓传，至董卓身死&lt;/li&gt;
+&lt;li&gt;第十至十九回：吕布传，至吕布战死白门楼&lt;/li&gt;
+&lt;li&gt;第二十至三十一回：曹操传，至大破袁绍&lt;/li&gt;
+&lt;li&gt;第三十二至三十八回：刘备传，至隆中对&lt;/li&gt;
+&lt;li&gt;第三十九至五十回：诸葛亮传，至华容道&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这些十回的小故事中，又有相应的重心，这个重心大约是在三四回左右，在全书之中丝毫不乱，作者也基于这些结构上的巧妙安排而认定明清小说属于独运匠心的「才子书」，绝不可能脱胎于民间说书人口中。&lt;/p&gt;
+&lt;p&gt;再将全书的十回目故事缀合起来，对于全书而言还有一个结构上的经典范式，那就是「二十-六十-二十」叙述程式。《金瓶梅》就是具有这种对称美的典型，在前二十回与后二十回中，书中都是在描写西门庆院墙外的故事，在中间六十回转入展开这间深宅大院中离合，同时前二十回叙述家中新添金、瓶、梅三小妾，奠定全书格局，后二十回则是西门庆死去，树倒猢孙散，这种对称的安排不能说不是作者的心思。&lt;/p&gt;
+&lt;p&gt;作者还发现，明清小说中的另一个叙事特点就是情节的高潮在终点前就已经发生了，大约在全书四分之三位置处，同时全书又可以分成上下两截相互照应。以《三国演义》为例子最为简单，第五十回赤壁之战确定了天下三分的格局，在此全书分为两截，而在第七十八回曹操死去，全书自此高潮突然收束，一路走向下坡。《金瓶梅》要更为规整，以第四十九回为上下截的分水岭，上截描述西门庆升官发财、步步高升的经历，下截则是其春风得意而加速自毁的过程，同样在第七十九回死去，达到故事的最高潮。&lt;/p&gt;
+&lt;p&gt;作者认为这种绵延不绝的故事布局是中国叙事独特的「转轮式」布局，故事的发展正像一个不断旋转的法轮，暗给人天道循环的感受。正如《三国演义》所要强调的「合久并分，分久并合」，故事从东汉分开始，于晋归于一统结束，故事从刘、关、张等主人公手中交递给他们的后辈，正像长江后浪推前浪，呈现出一种无了局的形式，作者想表达的思想也暗含其中了。&lt;/p&gt;
+&lt;p&gt;作者在书的最后部分上述方法分析了四大奇书中的中心思想，对于只接触教科书式解读的我，其分析方法与结果都可谓是别开生面，例如《西游记》不能简单理解为明末政治的黑暗，在一定程度上它还与明末的思想主流「心学」有关，书中「心猿」等等用语肯定另有所指，作者将其解读为告诫人们「诚意正心」。但部分观点有些冒进而难免令人觉得有些穿凿，但我认为作者只是提出了他的观点，真正怎样理解和解读明清小说还是依赖于读者。我相信在看过作者的一系列剖析后，再去重新读一读四大奇书，一定会有新的理解，这些新收获才是作者浦安迪撰写此书想要给予我们的东西。&lt;/p&gt;</content><category term="故纸堆"></category><category term="阅读"></category><category term="文学"></category></entry><entry><title>文献总结｜通过连接感知模版挖掘实现从头生成分子</title><link href="https://leonis.cc/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html" rel="alternate"></link><published>2023-03-25T00:00:00+08:00</published><updated>2023-03-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-25:/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html</id><summary type="html">&lt;p&gt;本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2302.01129" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2302.01129&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型 MiCaM（Mined Connection-aware Motifs）。&lt;/p&gt;
 &lt;h2 id="suan-fa"&gt;算法&lt;/h2&gt;
 &lt;p&gt;文章中提出的连接感知模版挖掘能够从数据集中构建模版词汇，用于后续的分子生成，该算法包括两个主要步骤：&lt;/p&gt;
@@ -3031,356 +3117,4 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RL"></category></entry><entry><title>机器翻译框架 OpenNMT 入门：快速上手</title><link href="https://leonis.cc/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" rel="alternate"></link><published>2022-12-16T00:00:00+08:00</published><updated>2022-12-16T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2022-12-16:/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html</id><summary type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;</summary><content type="html">&lt;p&gt;拆解项目代码的时候发现使用到了 &lt;code&gt;onmt&lt;/code&gt; 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。&lt;/p&gt;
-&lt;p&gt;OpenNMT 官方描述该框架为 an open source neural machine translation system，点进 &lt;a href="https://opennmt.net/" rel="noopener" target="_blank"&gt;OpenNMT 的官网&lt;/a&gt;可以看到更多资料，因此也不需要我多描述。总结一下就是，OpenNMT 是搭建自然语言处理模型的开源框架，其中自然包括常见的 RNN 和 Transformer 等模型。如果在自然语言处理方面有需要，OpenNMT 绝对是一个轻量有效的框架。&lt;/p&gt;
-&lt;p&gt;OpenNMT 的中文学习资料较少，于是我只能参考&lt;a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank"&gt;官方文档&lt;/a&gt;学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。&lt;/p&gt;
-&lt;h2 id="zhun-bei-gong-zuo"&gt;准备工作&lt;/h2&gt;
-&lt;p&gt;首先介绍一下我的运行环境，我的设备搭载一块 &lt;code&gt;GTX 1080&lt;/code&gt; GPU，系统为 &lt;code&gt;Ubuntu 20.04&lt;/code&gt;，需要提前在设备上安装好 CUDA，我使用 Anaconda 配置 Python 环境。&lt;/p&gt;
-&lt;p&gt;{note begin}OpenNMT 不支持过旧的 GPU，之前在 &lt;code&gt;GTX 970&lt;/code&gt; 的设备上就无法训练模型，这个问题可能除了换设备无解😭{note end}&lt;/p&gt;
-&lt;h2 id="kuai-su-shang-shou"&gt;快速上手&lt;/h2&gt;
-&lt;h3 id="an-zhuang-opennmt"&gt;安装 OpenNMT&lt;/h3&gt;
-&lt;p&gt;OpenNMT 有 PyTorch 与 TensorFlow 两个版本，PyTorch 在环境搭建上方便很多，所以我选择 PyTorch 版本。先创建虚拟环境，再直接通过 &lt;code&gt;pip&lt;/code&gt; 安装 OpenNMT-py，Python 版本为 &lt;code&gt;3.9&lt;/code&gt;，OpenNMT-py 为 &lt;code&gt;3.0.2&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;# 创建虚拟环境
-conda create -n nlp python==3.9
-# 激活虚拟环境
-conda activate nlp
-# 安装 OpenNMT
-pip install OpenNMT-py==3.0.2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note begin}国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 &lt;code&gt;pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}&lt;/code&gt;，将其中的 &lt;code&gt;{some-package}&lt;/code&gt; 替换为需要安装的包名称。{note end}&lt;/p&gt;
-&lt;p&gt;直接安装 &lt;code&gt;OpenNMT-py&lt;/code&gt; 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 &lt;code&gt;nvcc -V&lt;/code&gt; 查询 CUDA 版本，再在 &lt;a href="https://pytorch.org/get-started/previous-versions/" rel="noopener" target="_blank"&gt;Pytorch 官网&lt;/a&gt;找到相应的版本。例如我的 CUDA 版本为 &lt;code&gt;11.4&lt;/code&gt;，那么就需要重新安装以下版本的包解决依赖问题：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="zhun-bei-shu-ju"&gt;准备数据&lt;/h3&gt;
-&lt;p&gt;快速上手一节搭建的是一个简单的双语翻译模型，因此需要准备两种语言的数据，分别为源语言&lt;code&gt;src&lt;/code&gt; 和目标语言 &lt;code&gt;tgt&lt;/code&gt;，数据文件中每行包含一句话，以空格分隔不同的词。再考虑到训练集和验证集，那么一共需要 4 种数据文件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;src-train.txt&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tgt-train.txt&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;src-val.txt&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tgt-val.txt&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;{note begin}可以想象到，如果处理的是英语、法语等以空格分隔单词的语言，只需要将文本数据处理为每行一句话的格式即可。但对于汉语、日语等不以特殊标记分隔词语的语言，数据需要经过额外的分词步骤后才可以使用。{note end}&lt;/p&gt;
-&lt;p&gt;官方提供了英语-德语的数据文件，可以直接下载：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;wget https://s3.amazonaws.com/opennmt-trainingdata/toy-ende.tar.gz
-tar xf toy-ende.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;也可以到 &lt;a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; OpenNMT-py/data/&lt;/a&gt; 在线查看数据长什么样子。&lt;/p&gt;
-&lt;p&gt;接着通过 &lt;code&gt;vim toy_en_de.yaml&lt;/code&gt; 在目录下创建 &lt;code&gt;.yaml&lt;/code&gt; 配置文件，内容为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml"&gt;# toy_en_de.yaml
-
-## Where the samples will be written
-save_data: toy-ende/run/example
-## Where the vocab(s) will be written
-src_vocab: toy-ende/run/example.vocab.src
-tgt_vocab: toy-ende/run/example.vocab.tgt
-# Prevent overwriting existing files in the folder
-overwrite: False
-
-# Corpus opts:
-data:
-    corpus_1:
-        path_src: toy-ende/src-train.txt
-        path_tgt: toy-ende/tgt-train.txt
-    valid:
-        path_src: toy-ende/src-val.txt
-        path_tgt: toy-ende/tgt-val.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;创建文件后的文件结构为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;.
-&amp;boxvr;&amp;boxh;&amp;boxh; toy-ende
-&amp;boxv;   &amp;boxvr;&amp;boxh;&amp;boxh; src-test.txt
-&amp;boxv;   &amp;boxvr;&amp;boxh;&amp;boxh; src-train.txt
-&amp;boxv;   &amp;boxvr;&amp;boxh;&amp;boxh; src-val.txt
-&amp;boxv;   &amp;boxvr;&amp;boxh;&amp;boxh; tgt-test.txt
-&amp;boxv;   &amp;boxvr;&amp;boxh;&amp;boxh; tgt-train.txt
-&amp;boxv;   &amp;boxur;&amp;boxh;&amp;boxh; tgt-val.txt
-&amp;boxur;&amp;boxh;&amp;boxh; toy_en_de.yaml
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;设置完成后，运行以下命令开始构建词库：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;onmt_build_vocab -config toy_en_de.yaml -n_sample 10000
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;其中 &lt;code&gt;n_sample&lt;/code&gt; 设定了从语料中获取多少行的数据用于构建词库。&lt;/p&gt;
-&lt;p&gt;{note begin}若使用虚拟环境，需要进入虚拟环境后才能运行上述命令，若使用 Anaconda，也需要先激活环境。Pytorch 与 CUDA 版本不匹配会导致 &lt;code&gt;undefined symbol: cublasLtGetStatusString, version libcublasLt.so&lt;/code&gt; 错误。{note end}&lt;/p&gt;
-&lt;h3 id="xun-lian-mo-xing"&gt;训练模型&lt;/h3&gt;
-&lt;p&gt;训练模型也十分简单，在 &lt;code&gt;.yaml&lt;/code&gt; 文件中追加以下内容：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml"&gt;# Vocabulary files that were just created
-src_vocab: toy-ende/run/example.vocab.src
-tgt_vocab: toy-ende/run/example.vocab.tgt
-
-# Train on a single GPU
-world_size: 1
-gpu_ranks: [0]
-
-# Where to save the checkpoints
-save_model: toy-ende/run/model
-save_checkpoint_steps: 500
-train_steps: 1000
-valid_steps: 500
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;使用 &lt;code&gt;onmt_train -config toy_en_de.yaml&lt;/code&gt; 开始训练，该配置会生成默认的 2 层具有 500 个隐藏单元的 LSTM 模型。&lt;/p&gt;
-&lt;h3 id="mo-xing-yu-ce"&gt;模型预测&lt;/h3&gt;
-&lt;p&gt;使用类似的命令进行模型预测，模型预测能够将文本文件中的内容翻译并保存到输出文件中：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;onmt_translate -model toy-ende/run/model_step_1000.pt -src toy-ende/src-test.txt -output toy-ende/pred_1000.txt -gpu 0 -verbose
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;上面的命令使用了训练得到的模型 &lt;code&gt;toy-ende/run/model_step_1000.pt&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;预测 &lt;code&gt;toy-ende/src-test.txt&lt;/code&gt; 测试集数据&lt;/li&gt;
-&lt;li&gt;将结果输出到 &lt;code&gt;toy-ende/pred_1000.txt&lt;/code&gt;，&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-gpu&lt;/code&gt; 指定了使用的 GPU&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-verbose&lt;/code&gt; 指定在终端中输出每个步骤的详细结果&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;使用 &lt;code&gt;head -n 2 toy-ende/src-test.txt&lt;/code&gt; 和 &lt;code&gt;head -n 2 toy-ende/pred_1000.txt&lt;/code&gt; 查看一下预测结果：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;# test
-Orlando Bloom and Miranda Kerr still love each other
-Actors Orlando Bloom and Model Miranda Kerr want to go their separate ways .
-
-# pred
-Die &amp;lt;unk&amp;gt; der &amp;lt;unk&amp;gt; der &amp;lt;unk&amp;gt; , die die &amp;lt;unk&amp;gt; der &amp;lt;unk&amp;gt; &amp;hellip;&amp;hellip;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;由于训练时间很短，数据集很小，预测结果不会好，再加上不认识德语，也无法判断结果的优劣，所以接下来尝试在更大的中文语料上进行翻译任务。&lt;/p&gt;
-&lt;h2 id="wen-yan-fan-yi_1"&gt;文言翻译&lt;/h2&gt;
-&lt;p&gt;B 站上有一个展示 OpenNMT 的&lt;a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651" rel="noopener" target="_blank"&gt;视频&lt;/a&gt;，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 &lt;a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb" rel="noopener" target="_blank"&gt;GitHub&lt;/a&gt; 上，可以和本文相互参照，本文中的代码也可以在 &lt;a href="https://github.com/Tseing/OpenNMT-wenyan" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; Tseing/OpenNMT-wenyan &lt;/a&gt; 找到。&lt;/p&gt;
-&lt;h3 id="zhun-bei-shu-ju_1"&gt;准备数据&lt;/h3&gt;
-&lt;p&gt;白话文与文言文的平行语料来自于 &lt;a href="https://github.com/NiuTrans/Classical-Modern" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; NiuTrans/Classical-Modern&lt;/a&gt;，包含了大量内容：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;# Classical-Modern/source/
-元史  北齐书  南齐书  后汉书  太平广记  宋史    新五代史  旧五代史  明史  梁书      汉书              辽史  陈书  魏书
-北史  南史    史记    周书    宋书      徐霞客  新唐书    旧唐书    晋书  水经注全  短篇章和资治通鉴  金史  隋书
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;下载数据后可以先用 &lt;code&gt;head Classical-Modern/source/史记&lt;/code&gt; 与 &lt;code&gt;head Classical-Modern/target/史记翻译&lt;/code&gt; 查看一下语料：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;# 史记
-後为太常，坐法当死，赎免为庶人。
-上曰：剑，人之所施易，独至今乎？
-然终不自明也。
-然亦无所毁。
-
-# 史记翻译
-因为触犯法律判处死刑，纳米粟入官赎罪后成了平民。
-景帝说：剑是人们所喜爱之物，往往用来送人或交换他物，难道你能保存到现在吗？
-说过后他终究不再做其他辩解。
-然后也没有讲别人的什么坏话。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;原始语料是将文言翻译为白话，因此 &lt;code&gt;source&lt;/code&gt; 中存储了原文，&lt;code&gt;target&lt;/code&gt; 中存储了翻译，每行一句话，两个文件一一对应。我们需要预处理数据，将所有文本都作为数据集。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;import os
-
-source_root = 'Classical-Modern/source'
-target_root = 'Classical-Modern/target'
-
-for f in os.listdir(source_root):
-    print("processing " + f)
-    source_file = os.path.join(source_root, f)
-    target_file = os.path.join(target_root, f + '翻译')
-
-    # 统计各文本中行数
-    with open(source_file, "r", encoding="utf-8") as source_f:
-        source_len = sum(1 for _ in source_f)
-    with open(target_file, "r", encoding="utf-8") as target_f:
-        target_len = sum(1 for _ in target_f)
-
-    # 对比平行语料行数，确保一致
-    assert source_len == target_len
-    try:
-        with open('dataset/source_raw.txt', "a+", encoding="utf-8") as source_f:
-            source_f.write(open(source_file, "r", encoding="utf-8").read())
-        with open('dataset/target_raw.txt', "a+", encoding="utf-8") as target_f:
-            target_f.write(open(target_file, "r", encoding="utf-8").read())
-    except FileNotFoundError:
-        os.mkdir('dataset')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;检查一下处理的结果：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;# dataset/source_raw.txt
-密计不行。
-使者利金，遂相许。
-遣说诸小贼，所至辄降，让始敬焉，召与计事。
-宇文温每谓密曰：不杀元真，公难未已。
-
-# dataset/target_raw.txt
-李密的意见没有被采纳。
-押送的人贪图金钱，便满口答应。
-派人游说小股义军，被劝说的人都归顺了翟让，翟让开始看重了他，叫他同自己一起讨论重大问题。
-宇文温常对李密说：不杀邴元真，您的祸害就不会排除。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;接下来要对文本分词，对于文言文来说，单字词的占比非常高，将每个单字作为一个词就是一种比较方便的分词方法，所以在每个字符后插入空格即可。而白话文中有大量的双字词，甚至三字词、四字词，必须使用专门的分词引擎，这里我使用了 &lt;a href="http://thulac.thunlp.org/" rel="noopener" target="_blank"&gt;THULAC&lt;/a&gt;，直接通过 &lt;code&gt;pip install thualac&lt;/code&gt; 就能安装。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;import thulac
-
-# 对文言文本分词
-with open('dataset/source_raw.txt', 'r', encoding='utf-8') as f:
-    # 目标是 白话-&amp;gt;文言，因此将文言作为目标 target.txt
-    with open('dataset/target.txt', 'w+', encoding='utf-8') as s:
-        print("separating wenyan text...")
-        while True:
-            line = f.readline()
-            if line:
-                line_seq = " ".join([char for char in line])
-                s.write(line_seq)
-            else:
-                break
-
-# 对白话文本分词，将白话作为源语言 source.txt
-print("separating modern text...")
-sep_model = thulac.thulac(seg_only=True)
-sep_model.cut_f('dataset/target_raw.txt', 'dataset/source.txt')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 &lt;code&gt;thulac&lt;/code&gt; 首先要加载分词模型，&lt;code&gt;seg_only&lt;/code&gt; 指定只分词，不输出词性&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cut_f(input, output)&lt;/code&gt; 用于对文件 &lt;code&gt;input&lt;/code&gt; 分词，并将结果保存到 &lt;code&gt;output&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;{note begin}使用 thulac 处理文件时一般会输出 &lt;code&gt;UnicodeDecodeError&lt;/code&gt; 错误，主要是读取文件时的编码错误，是 thulac 本身的一个 bug，请看下文的解决方法&lt;del&gt;（也可能官方修好了）&lt;/del&gt;。&lt;/p&gt;
-&lt;p&gt;找到错误信息中的 &lt;code&gt;site-packages\thulac\__init__.py&lt;/code&gt; 文件，第 187 行与第 188 行的代码为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;input_f = open(input_file, 'r')
-output_f = open(output_file, 'w')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;将其修改为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;input_f = open(input_file, 'r', encoding='utf-8')
-output_f = open(output_file, 'w', encoding='utf-8')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note end}&lt;/p&gt;
-&lt;p&gt;同样再检查一下处理的结果：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;# dataset/source.txt
-李密 的 意见 没有 被 采纳 。
-押送 的 人 贪图 金钱 ， 便 满口答应 。
-派 人 游说 小 股义军 ， 被 劝说 的 人 都 归顺 了 翟让 ， 翟让 开始 看重 了 他 ， 叫 他 同 自己 一起 讨论 重大 问题 。
-宇文 温常 对 李密 说 ： 不 杀 邴元真 ， 您 的 祸害 就 不 会 排除 。
-
-# dataset/target.txt
-密 计 不 行 。
-使 者 利 金 ， 遂 相 许 。
-遣 说 诸 小 贼 ， 所 至 辄 降 ， 让 始 敬 焉 ， 召 与 计 事 。
-宇 文 温 每 谓 密 曰 ： 不 杀 元 真 ， 公 难 未 已 。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;分词结果虽然有错误，但总体效果还可以，最后将全部文本划分为训练集与验证集。由于文本数据非常大，不适合读取后转换为列表进行操作，我写了一个划分 &lt;code&gt;.txt&lt;/code&gt; 文本的脚本，可以在 GitHub 上找到，代码不复杂，就不展开介绍了。划分数据集后的文件结构与 OpenNMT 要求的数据一致，就可以直接使用了。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;dataset
-&amp;boxvr;&amp;boxh;&amp;boxh; src-train.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; src-val.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; source.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; source_raw.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; target.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; target_raw.txt
-&amp;boxvr;&amp;boxh;&amp;boxh; tgt-train.txt
-&amp;boxur;&amp;boxh;&amp;boxh; tgt-val.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="gou-jian-ci-ku"&gt;构建词库&lt;/h3&gt;
-&lt;p&gt;同样创建 &lt;code&gt;.yaml&lt;/code&gt; 配置文件，内容为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml"&gt;# wenyan.yaml
-
-## Where the samples will be written
-save_data: run/wenyan
-## Where the vocab(s) will be written
-src_vocab: run/wenyan.vocab.src
-tgt_vocab: run/wenyan.vocab.tgt
-src_vocab_size: 200000
-tgt_vocab_size: 200000
-overwrite: True
-
-# Corpus opts:
-data:
-    corpus_1:
-        path_src: dataset/src-train.txt
-        path_tgt: dataset/tgt-train.txt
-    valid:
-        path_src: dataset/src-val.txt
-        path_tgt: dataset/tgt-val.txt
-
-# Train on a single GPU
-world_size: 1
-gpu_ranks: [0]
-queue_size: 100
-bucket_size: 2048
-
-# Train batch
-batch_size: 32
-# Validation batch
-valid_batch_size: 16
-
-# Where to save the checkpoints
-save_model: run/model
-save_checkpoint_steps: 10000
-train_steps: 1000000
-valid_steps: 10000
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;queue_size&lt;/code&gt; 为读取数据的消息队列大小&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;bucket_size&lt;/code&gt; 为读取数据的缓冲区大小，用于避免无法实时读取数据&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;batch_size&lt;/code&gt; 为训练过程中处理的批大小&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;valid_batch_size&lt;/code&gt; 为验证过程中处理的批大小&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;onmt_build_vocab -config wenyan.yaml -n_sample -1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;同样使用该命令开始构建词库，将 &lt;code&gt;-n_sample&lt;/code&gt; 指定为 &lt;code&gt;-1&lt;/code&gt; 能让模型使用整个数据集的数据构建词库。可以使用 &lt;code&gt;head run/wenyan.vocab.src&lt;/code&gt; 查看一下构建的词库：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;，      2041007
-。      920182
-的      700401
-不      279935
-、      224914
-了      195770
-是      176242
-他      175822
-在      156216
-说      143227
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="xun-lian-mo-xing_1"&gt;训练模型&lt;/h3&gt;
-&lt;p&gt;使用 &lt;code&gt;onmt_train -config wenyan.yaml&lt;/code&gt; 开始训练模型。&lt;/p&gt;
-&lt;p&gt;由于数据集很大，训练模型需要非常长的时间，中途可能训练中断或卡死。由于在训练过程中保存了 &lt;code&gt;checkpoints&lt;/code&gt;，也不需要重头训练，可以从保存的断点继续训练。可以使用以下的自动化脚本，将其保存为 &lt;code&gt;train.py&lt;/code&gt;，就可以通过 &lt;code&gt;python train.py&lt;/code&gt; 自动继续训练。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;import os
-
-model_root = 'run/wenyan'
-try:
-    checkpoints = [x for x in os.listdir(model_root) if x.endswith('.pt')]
-except FileNotFoundError:
-    os.mkdir(model_root)
-    checkpoints = [x for x in os.listdir(model_root) if x.endswith('.pt')]
-
-last_checkpoint = None
-if len(checkpoints) &amp;gt; 0:
-    checkpoints = sorted(checkpoints, key=lambda x: int(x[:-3].split('_')[-1]))
-    last_checkpoint = checkpoints[-1]
-    last_checkpoint = os.path.join(model_root, last_checkpoint)
-
-if last_checkpoint is not None:
-    print('last_checkpoint', last_checkpoint, os.path.exists(last_checkpoint))
-    if isinstance(last_checkpoint, str) and os.path.exists(last_checkpoint):
-        # 中断后继续训练使用
-        os.system('onmt_train -config wenyan.yaml --train_from="%s"' % last_checkpoint)
-    else:
-        os.system('onmt_train -config wenyan.yaml')
-else:
-    os.system('onmt_train -config wenyan.yaml')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在 &lt;code&gt;.yaml&lt;/code&gt; 文件中添加 &lt;code&gt;log_file&lt;/code&gt; 可以将日志文件保存到相应目录，这里我没有添加，直接用终端中的输出数据分析。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8277?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;ACC 和 PPL 是自然语言处理中常用的指标，当然还有更好用的 BELU 等指标。可以看出训练过程收敛得非常快，PPL 迅速下降，ACC 也在第 20 个模型后保持稳定了，检查一下日志文件发现果然在第 23 个模型后学习率变成 0 了。这就说明不需要指定那么多的训练步骤，降低到 300000 可能是比较合适的。&lt;/p&gt;
-&lt;h3 id="mo-xing-yu-ce_1"&gt;模型预测&lt;/h3&gt;
-&lt;p&gt;那么就选最后一个模型作为最终用于预测的模型，将其他模型全部删除。&lt;/p&gt;
-&lt;p&gt;{note begin}可以在 &lt;code&gt;.yaml&lt;/code&gt; 文件中通过参数 &lt;code&gt;keep_checkpoint&lt;/code&gt; 指定需要保存的模型数量，在训练过程中会自动删去多余的模型，节省存储空间。{note end}&lt;/p&gt;
-&lt;p&gt;在目录中新建一个文本 &lt;code&gt;input.txt&lt;/code&gt;，写入需要翻译的语句，每行一句话：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;这样的事情是很难令人相信的。
-传说西北方有一座海岛，居住着神仙，留下这部书。
-可惜这本书的字已经看不清了。
-后来皇帝下旨找遍了天下具有智识的儒生。
-命令大臣在几十年里翻遍了所有的藏书。
-最后确定封面上写着《算法：C语言实现》。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{warn begin}每句话以换行（&lt;code&gt;\n&lt;/code&gt;）分隔，注意最后一行不能有空行，否则会报错。{warn end}&lt;/p&gt;
-&lt;p&gt;接着需要对输入文本分词，同样使用 &lt;code&gt;thulac&lt;/code&gt;，新建一个 &lt;code&gt;input_sep.py&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;import thulac
-
-sep_model = thulac.thulac(seg_only=True)
-sep_model.cut_f('input.txt', 'input_sep.txt')
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;运行 &lt;code&gt;python input_sep.py&lt;/code&gt; 完成分词后，使用以下命令开始翻译：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;onmt_translate --model 'run/model_final.pt' --src input_sep.txt --output output.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;使用 &lt;code&gt;cat output.txt&lt;/code&gt; 就可以看到输出了，结果非常生草🤣&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;如 此 者 ， 难 信 也 。
-传 西 北 有 一 海 岛 ， 居 神 仙 ， 留 此 书 。
-惜 此 书 已 不 明 矣 。
-后 诏 遍 遍 天 下 有 知 儒 生 。
-命 大 臣 数 十 年 ， 尽 有 书 藏 。
-最 后 定 上 书 《 法 术 法 》 。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr/&gt;
-&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank"&gt;OpenNMT-py Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://arabelatso.github.io/2021/01/03/OpenNMT-Doc/" rel="noopener" target="_blank"&gt;OpenNMT 2.0.0rc1 使用手册 - Arabela's Blog&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.bilibili.com/video/BV1NL4y1t73c/" rel="noopener" target="_blank"&gt;开源神经机器翻译-OpenNMT使用介绍 - 哔哩哔哩&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="OpenNMT"></category><category term="NLP"></category><category term="Python"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RL"></category></entry></feed>
