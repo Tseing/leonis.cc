@@ -13,6 +13,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "\u5c71\u5899\u8fb9"
 
 [[input.files]]
+path = "sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html"
+url = "/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html"
+title = "\u6587\u732e\u603b\u7ed3\uff5c\u7528\u4e8e\u4ece\u86cb\u767d\u5e8f\u5217\u8fdb\u884c\u836f\u7269\u8bbe\u8ba1\u7684\u6df1\u5ea6\u751f\u6210\u6a21\u578b"
+
+[[input.files]]
 path = "gu-zhi-dui/2023-03-30-book-chinese-narratology.html"
 url = "/gu-zhi-dui/2023-03-30-book-chinese-narratology.html"
 title = "\u5728\u660e\u6e05\u5c0f\u8bf4\u4e2d\u7d22\u9690\u2014\u2014\u8bfb\u300a\u4e2d\u56fd\u53d9\u4e8b\u5b66\u300b"

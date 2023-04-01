@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜用于从蛋白序列进行药物设计的深度生成模型</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="GAN">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜用于从蛋白序列进行药物设计的深度生成模型"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-04-01 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GAN"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜用于从蛋白序列进行药物设计的深度生成模型",
+  "headline": "文献总结｜用于从蛋白序列进行药物设计的深度生成模型",
+  "datePublished": "2023-04-01 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html",
+  "description": "本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN..."
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜用于从蛋白序列进行药物设计的深度生成模型</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 4月01日">2023年 4月01日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li></ul></li><li><a class="toc-href" href="#jie-guo-yu-tao-lun_1" title="结果与讨论">结果与讨论</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-023-00702-2" rel="noopener" target="_blank">doi.org/10.1186/s13321-023-00702-2</a></p>
+<p>本文介绍 2023 年发布在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN 的蛋白配体分子生成模型，该模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体。</p>
+<p>目前的分子生成方法可以分为两类，其中一种是基于配体的分子生成（ligand-based molecule generation, LBMG），另一种是基于口袋的分子生成（pocketbased
+molecule generation, PBMG）。LBMG 方法难以跳出目前的化空间，因而难以生成具有新颖结构的分子；PBMG 方法需要获取更多蛋白口袋的信息，但计算蛋白 3D 构象通常开销巨大。</p>
+<p>文章提出了一种输入蛋白序列即可获得配体的分子生成模型，称为 DeepTarget。DeepTarget 既不需要考虑蛋白口袋的构象信息，也不需要在特定的分子库上微调，有效避免了上述两种方法的局限。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="shu-ju">数据</h3>
+<p>文章使用了来自于 ChEMBL 的分子-蛋白对数据，经数据清洗后，共得到 551223 个分子-蛋白对，涉及 1970 种蛋白质与 333399 种分子的 SMILES 序列。</p>
+<h3 id="mo-xing">模型</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8733?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>DeepTarget 由 3 个部分构成，分别是氨基酸序列嵌入（Amino Acid Sequence Embedding, AASE）、结构特征推理（Structural Feature Inference, SFI）和分子生成（Molecule Generation, MG）。</p>
+<ol>
+<li>氨基酸序列嵌入：AASE 是模型的嵌入层，使用了 Transformer 的架构，主要用于将序列数据转化为模型计算并处理的特征向量。</li>
+<li>结构特征推理：SFI 部分采用了 GAN 的结构，其主要任务是在 AASE 中得到蛋白特征表示上加上一定的噪声，再通过多层感知机得到潜变量 <span class="math">\(\boldsymbol{z}\)</span>。</li>
+<li>分子生成：MG 部分使用了 LSTM 结构，是一个预训练的解码器，它将潜变量 <span class="math">\(\boldsymbol{z}\)</span> 解码为目标分子。该解码器是一个在 ChEMBL 大数据集上训练好的模型，能将分子的潜变量转换为相似的分子。</li>
+</ol>
+<p>SFI 中的 GAN 模型是 DeepTarget 生成蛋白配体的关键，GAN 由生成器与分别器两个模块构成，生成器从潜变量 <span class="math">\(\boldsymbol{z}\)</span> 生成分子，而分别器则识别生成分子与该蛋白口袋之间的关系，训练 GAN 就是让生成器不断生成分子，直至生成的分子可以「欺骗」分别器，也就是此时生成的分子满足该蛋白口袋的配体分布特征。在推理阶段，则将此生成分子的表示送入 MG 中得到分子的 SMILES 编码。</p>
+<p>传统的生成模型关注于生成器与生成结果之间的关系，而在文章所设计的任务中，不同的蛋白口袋与配体分子在化学空间中有着不同的分布，这也是影响分子生成的因素。因此文章引入了对比学习（Contrastive Learning, CL）的手段，将不同的蛋白作为标签而使分子分簇，在相应的化学空间中生成分子。</p>
+<h2 id="jie-guo-yu-tao-lun_1">结果与讨论</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8734?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章首先针对 DRD2 和 PARP1 两个蛋白的活性口袋生成分子。图 a 展示了对应的真实配体分子与生成分子的对接打分，生成分子相对于真实分子向打分更低方向偏移，说明具有更高的亲合力。</p>
+<p>图 b 挑出了生成分子中的代表分子，与训练集分子计算相似性，两个分子与训练集的相似性都在 0.2-0.6 左右，说明这两个分子与训练集分子存在一定差异，DeepTarget 能生成新颖的分子。</p>
+<p>图 c 展示了是否在模型中引入对比学习的了生成结果，使用对比学习策略模型生成的分子明显向打分更低处偏移，具有更好的效果。</p>
+<p>图 d 测试了模型的泛化能力，先在训练集中删去 DRD2 和 PARP1 两个蛋白的数据，将生成分子与先前生成的分子对比，从测试结果中可以看出，删除相应训练数据后，生成分子的对接打分上升，但还是生成了相当数量打分低于 -6 的分子，作者认为这可以说明 DeepTarget 能针对训练集中不存在的活性口袋生成配体分子。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8735?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8735?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章对 DeepTarget 生成的分子与其他模型针对这两个口袋生成的分子做了评估，结果如上表所示，DeepTarget 生成分子的 Valid 高于两个 GAN 模型，其他指标与其他模型相当。</p>
+<p>作者认为这些指标只能做为模型的参考，因为模型并没有针对生成分子的 Valid 和 Unique 等指标进行优化，DeepTarget 的目标更着重于生成与指定口袋真正具有相互作用的配体分子。</p>
+<h2 id="jie-lun">结论</h2>
+<p>文章设计了一种基于 GAN 的蛋白配体分子生成模型，模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体，文章验证了生成分子具有较好的对接打分，并且模型表现出了一定的泛化能力，可用于针对训练集以外的蛋白生成配体。但文章中设计的模型评估实验有限，只针对两个靶点生成了分子，从文章中的数据来看，与其他模型相比该模型没有特别明显的优势。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜用于从蛋白序列进行药物设计的深度生成模型&amp;url=https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html&amp;title=文献总结｜用于从蛋白序列进行药物设计的深度生成模型" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜用于从蛋白序列进行药物设计的深度生成模型&amp;body=https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/gan.html">GAN</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜通过连接感知模版挖掘实现从头生成分子</h2>
+                            <p class="post-nav-excerpt">本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
