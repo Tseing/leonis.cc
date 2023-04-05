@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="Transformer">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-04-06 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Transformer"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计",
+  "headline": "文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计",
+  "datePublished": "2023-04-06 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html",
+  "description": "本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design"
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 4月06日">2023年 4月06日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#ping-gu-zhi-biao" title="评估指标">评估指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo-yu-tao-lun_1" title="结果与讨论">结果与讨论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>with graph transformer‑based reinforcement learning，文章介绍了使用包括 Transformer 和 LSTM 模型实现以分子骨架为约束的药物设计的方法并对比了使用 SMILES 与图两种方式的分子表示在分子生成中的区别。</p>
+<p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-023-00694-z" rel="noopener" target="_blank">doi.org/10.1186/s13321-023-00694-z</a></p>
+<p>本文介绍 2023 年发布在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design
+with graph transformer‑based reinforcement learning，文章介绍了使用包括 Transformer 和 LSTM 模型实现以分子骨架为约束的药物设计的方法，并且对比了使用 SMILES 与图两种分子表示方式在分子生成中的区别。</p>
+<p>在先前的工作中，作者设计了名为 DrugEx 的 RNN 模型，它能够通过基于分布的方式探索化学空间并通过强化学习的策略实现基于目标的分子生成，但它无法接受用户的输入，无法基于先验知识给出结果，只能在已有的化学空间中给出结果，当任务改变后又需要重新训练模型，这些方面的问题使其在具体应用上具有很大的局限性。</p>
+<p>因此这篇文章使用多种深度学习模型重构了 DrugEx，DrugEx 可以接受用户指定的分子骨架生成具有目标结构的分子，并且在模型中引入强化学习策略，更加有效地控制生成分子的目标性质，此外文章对比了不同深度学习模型和以 SMILES 或图两种不同编码方式实现以分子骨架为约束的药物设计的效果。</p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="shu-ju">数据</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8738?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>使用来源于 ChEMBL 的约 170 万条分子数据预训练模型，使用对人腺苷受体具有活性的 10828 条分子数据微调生成模型。</p>
+<p>所有数据都构建为「输入- 输出」对的形式，使用 BRICS 规则将每个分子分割为最多 4 个的一系列片段，片段的排列组合就作为输入部分，被分割的分子就作为输出部分。分割完成后，用于预训练生成模型的分子对数据有 9335410 万条。</p>
+<p>若以 SMILES 作为分子表示，则是使用词表将每条 SMILES 序列分为若干 token，就可以将 SMILES 表示为 token 的索引序列，用于模型计算。</p>
+<p>若以图作为分子表示，首先需要计算分子的临接矩阵，接着每个分子都会被表示为具有 5 行的矩阵，前两行分别代表原子类型和化学键类型，第三行表示连接原子的索引，第四行表示目前原子的索引，第五行表示片段索引。按列连接 start、fragment、growing、end 和 linking 五个部分的上述五种信息，start 与 end 两部分分别具有一列，只有标记分隔的作用，fragment 部分中组织了各分子骨架中的原子信息，growing 部分组织了分子中去除分子骨架后剩余原子的信息，linking 部分组织了 fragment 与 growing 部分间相互连接的化学键信息。</p>
+<h3 id="mo-xing">模型</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8739?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>文章中设计了 4 种模型用于完成分子生成成任务：</p>
+<ol>
+<li>图 Transformer</li>
+<li>LSTM</li>
+<li>LSTM + 注意力机制</li>
+<li>序列 Transformer</li>
+</ol>
+<p>其中分子的图表示只用于图 Transformer 模型中，其他三种模型都使用 SMILES 表示分子。</p>
+<p>由于图 Transformer 无法同时处理原子与化学键的信息，因此按下式组合原子和化学键索引：</p>
+<div class="math">$$W=T_\mathrm{atom}\times 4+T_\mathrm{bond}$$</div>
+<p>通过将原子类型与化学键类型的总数相乘再加上化学键类型得到结果 <span class="math">\(W\)</span>，用于计算词向量。</p>
+<p>由于图 Transformer 处理的不是序列信息，原有的位置编码计算方式同样无法使用，文章设计了以下位置编码：</p>
+<div class="math">$$P=I_\mathrm{atom}\times L_\mathrm{max}+I_\mathrm{connected}$$</div>
+<p>式中将当前原子索引 <span class="math">\(I_\mathrm{atom}\)</span> 与最大长度 <span class="math">\(L_\mathrm{max}\)</span> 相乘，然后再加上连接原子的索引 <span class="math">\(I_\mathrm{connected}\)</span> 得到位置编码。</p>
+<h3 id="ping-gu-zhi-biao">评估指标</h3>
+<h2 id="jie-guo-yu-tao-lun_1">结果与讨论</h2>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计&amp;url=https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html&amp;title=文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计&amp;body=https://leonis.cc/drafts/summary-doi.org/10.1186/s13321-023-00694-z.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/transformer.html">Transformer</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
