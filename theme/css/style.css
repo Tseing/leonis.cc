@@ -810,9 +810,9 @@ table td {
 }
 
 table th {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', "Noto Sans KR", "Noto Sans SC", sans-serif;
     font-weight: 500;
-    font-size: 0.75em;
+    font-size: 0.85em;
     line-height: 1.25em;
     padding: 0.666em;
     color: #000

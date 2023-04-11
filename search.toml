@@ -13,6 +13,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "\u5c71\u5899\u8fb9"
 
 [[input.files]]
+path = "zai-lu-shang/2023-04-11-my-gardening-plan.html"
+url = "/zai-lu-shang/2023-04-11-my-gardening-plan.html"
+title = "\u6211\u7684 2023 \u5e74\u6625\u64ad\u8ba1\u5212"
+
+[[input.files]]
 path = "sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html"
 url = "/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html"
 title = "\u6587\u732e\u603b\u7ed3\uff5cDrugEx v3\uff1a\u4f7f\u7528\u57fa\u4e8e\u56fe Transformer \u7684\u5f3a\u5316\u5b66\u4e60\u8fdb\u884c\u4ee5\u5206\u5b50\u9aa8\u67b6\u4e3a\u7ea6\u675f\u7684\u836f\u7269\u8bbe\u8ba1"

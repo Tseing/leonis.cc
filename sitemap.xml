@@ -5,22 +5,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://leonis.cc/</loc>
-<lastmod>2023-04-07T19:02:41-00:00</lastmod>
+<lastmod>2023-04-11T10:11:11-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.8</priority>
 </url>
 
 <url>
 <loc>https://leonis.cc/pages/about.html</loc>
-<lastmod>2023-04-07T19:02:41-00:00</lastmod>
+<lastmod>2023-04-11T10:11:11-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://leonis.cc/pages/shan-qiang-bian.html</loc>
-<lastmod>2023-04-07T19:02:41-00:00</lastmod>
+<lastmod>2023-04-11T10:11:11-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://leonis.cc/zai-lu-shang/2023-04-11-my-gardening-plan.html</loc>
+<lastmod>2023-04-11T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -404,7 +411,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://leonis.cc/author/leo.html</loc>
-<lastmod>2023-04-06T00:00:00+08:06</lastmod>
+<lastmod>2023-04-11T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.8</priority>
 </url>
