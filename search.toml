@@ -1,6 +1,7 @@
 [input]
-base_directory = "output"
 html_selector = ".post-content"
+exclude_html_selector = "script, .toc-nav, .math"
+base_directory = "output"
 
 [[input.files]]
 path = "pages/about.html"
@@ -10,279 +11,282 @@ title = "About"
 [[input.files]]
 path = "pages/shan-qiang-bian.html"
 url = "/pages/shan-qiang-bian.html"
-title = "\u5c71\u5899\u8fb9"
+title = "山墙边"
 
 [[input.files]]
 path = "zai-lu-shang/2023-04-11-my-gardening-plan.html"
 url = "/zai-lu-shang/2023-04-11-my-gardening-plan.html"
-title = "\u6211\u7684 2023 \u5e74\u6625\u64ad\u8ba1\u5212"
+title = "我的 2023 年春播计划"
 
 [[input.files]]
 path = "sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html"
 url = "/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cDrugEx v3\uff1a\u4f7f\u7528\u57fa\u4e8e\u56fe Transformer \u7684\u5f3a\u5316\u5b66\u4e60\u8fdb\u884c\u4ee5\u5206\u5b50\u9aa8\u67b6\u4e3a\u7ea6\u675f\u7684\u836f\u7269\u8bbe\u8ba1"
+title = "文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计"
 
 [[input.files]]
 path = "sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html"
 url = "/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u7528\u4e8e\u4ece\u86cb\u767d\u5e8f\u5217\u8fdb\u884c\u836f\u7269\u8bbe\u8ba1\u7684\u6df1\u5ea6\u751f\u6210\u6a21\u578b"
+title = "文献总结｜用于从蛋白序列进行药物设计的深度生成模型"
 
 [[input.files]]
 path = "gu-zhi-dui/2023-03-30-book-chinese-narratology.html"
 url = "/gu-zhi-dui/2023-03-30-book-chinese-narratology.html"
-title = "\u5728\u660e\u6e05\u5c0f\u8bf4\u4e2d\u7d22\u9690\uff1a\u8bfb\u300a\u4e2d\u56fd\u53d9\u4e8b\u5b66\u300b"
+title = "在明清小说中索隐：读《中国叙事学》"
 
 [[input.files]]
 path = "sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html"
 url = "/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u901a\u8fc7\u8fde\u63a5\u611f\u77e5\u6a21\u7248\u6316\u6398\u5b9e\u73b0\u4ece\u5934\u751f\u6210\u5206\u5b50"
+title = "文献总结｜通过连接感知模版挖掘实现从头生成分子"
 
 [[input.files]]
 path = "zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html"
 url = "/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html"
-title = "\u6625\u65e5\u6f2b\u6b65\u5c0f\u8bb0"
+title = "春日漫步小记"
 
 [[input.files]]
 path = "sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html"
 url = "/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4f7f\u7528\u7b49\u53d8\u6269\u6563\u6a21\u578b\u8fdb\u884c\u57fa\u4e8e\u7ed3\u6784\u7684\u836f\u7269\u8bbe\u8ba1"
+title = "文献总结｜使用等变扩散模型进行基于结构的药物设计"
 
 [[input.files]]
 path = "sui-sui-nian/2023-03-14-deploy-pelican-search.html"
 url = "/sui-sui-nian/2023-03-14-deploy-pelican-search.html"
-title = "\u4e3a Pelican \u535a\u5ba2\u52a0\u5165\u641c\u7d22\u529f\u80fd"
+title = "为 Pelican 博客加入搜索功能"
 
 [[input.files]]
 path = "sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html"
 url = "/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4e3a\u86cb\u767d\u8d28\u53e3\u888b\u5b9a\u5236\u5206\u5b50\uff1a\u7528\u4e8e\u57fa\u4e8e\u7ed3\u6784\u836f\u7269\u8bbe\u8ba1\u7684 Transformer \u5206\u5b50\u751f\u6210\u65b9\u6cd5"
+title = "文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法"
 
 [[input.files]]
 path = "sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html"
 url = "/sui-sui-nian/2023-03-03-summary-doi.org/10.1021/acs.jcim.1c00600.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cMolGPT\uff1a\u4f7f\u7528 Transformer \u89e3\u7801\u5668\u6a21\u578b\u5b9e\u73b0\u5206\u5b50\u751f\u6210"
+title = "文献总结｜MolGPT：使用 Transformer 解码器模型实现分子生成"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html"
 url = "/sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u5728\u5927\u6570\u636e\u96c6\u4e2d\u6709\u6548\u8bc6\u522b\u5339\u914d\u5206\u5b50\u5bf9\uff08MMPs\uff09\u7684\u7b97\u6cd5"
+title = "文献总结｜在大数据集中有效识别匹配分子对（MMPs）的算法"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-22-create-pelican-plugin.html"
 url = "/sui-sui-nian/2023-02-22-create-pelican-plugin.html"
-title = "\u4e3a Pelican \u535a\u5ba2\u5199\u63d2\u4ef6\u2014\u2014\u5728\u6587\u7ae0\u4e2d\u63d2\u5165\u8c46\u74e3\u56fe\u4e66"
+title = "为 Pelican 博客写插件——在文章中插入豆瓣图书"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html"
 url = "/sui-sui-nian/2023-02-17-summary-doi.org/10.1038/s42256-022-00580-7.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u901a\u8fc7\u5927\u89c4\u6a21\u5316\u5b66\u8bed\u8a00\u8868\u793a\u6355\u83b7\u5206\u5b50\u7ed3\u6784\u548c\u6027\u8d28"
+title = "文献总结｜通过大规模化学语言表示捕获分子结构和性质"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-13-deploy-pelican-by-nginx.html"
 url = "/sui-sui-nian/2023-02-13-deploy-pelican-by-nginx.html"
-title = "Pelican + Nginx \u5728\u670d\u52a1\u5668\u4e0a\u642d\u8f7d\u9759\u6001\u535a\u5ba2"
+title = "Pelican + Nginx 在服务器上搭载静态博客"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-11-summary-doi.org/10.1186/s13321-021-00497-0.html"
 url = "/sui-sui-nian/2023-02-11-summary-doi.org/10.1186/s13321-021-00497-0.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u901a\u8fc7\u6df1\u5ea6\u795e\u7ecf\u7f51\u7edc\u6355\u83b7\u5316\u5b66\u5bb6\u7684\u76f4\u89c9\u5b9e\u73b0\u5206\u5b50\u4f18\u5316"
+title = "文献总结｜通过深度神经网络捕获化学家的直觉实现分子优化"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-08-cs224n-lecture2.html"
 url = "/sui-sui-nian/2023-02-08-cs224n-lecture2.html"
-title = "CS224n \u81ea\u7136\u8bed\u8a00\u5904\u7406\u7b2c\u4e8c\u8282: \u8bcd\u5411\u91cf\u4e0e\u8bcd\u4e49\u611f\u77e5"
+title = "CS224n 自然语言处理第二节: 词向量与词义感知"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-06-rdkit-modify-substructure.html"
 url = "/sui-sui-nian/2023-02-06-rdkit-modify-substructure.html"
-title = "RDKit \u5165\u95e8\uff1a\u57fa\u4e8e\u5b50\u7ed3\u6784\u4fee\u6539\u5206\u5b50"
+title = "RDKit 入门：基于子结构修改分子"
 
 [[input.files]]
 path = "sui-sui-nian/2023-02-04-summary-doi.org/10.1186/s13321-022-00599-3.html"
 url = "/sui-sui-nian/2023-02-04-summary-doi.org/10.1186/s13321-022-00599-3.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u5339\u914d\u5206\u5b50\u5bf9\u4ee5\u5916\u57fa\u4e8e Transformer \u7684\u5206\u5b50\u4f18\u5316"
+title = "文献总结｜匹配分子对以外基于 Transformer 的分子优化"
 
 [[input.files]]
 path = "sui-sui-nian/2023-01-08-summary-doi.org/10.48550/arXiv.1811.12823.html"
 url = "/sui-sui-nian/2023-01-08-summary-doi.org/10.48550/arXiv.1811.12823.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cMolecular Sets (MOSES)\uff1a\u5206\u5b50\u751f\u6210\u6a21\u578b\u7684\u8bc4\u4f30\u5e73\u53f0"
+title = "文献总结｜Molecular Sets (MOSES)：分子生成模型的评估平台"
 
 [[input.files]]
 path = "sui-sui-nian/2023-01-03-rdkit-modify-search-molecule.html"
 url = "/sui-sui-nian/2023-01-03-rdkit-modify-search-molecule.html"
-title = "RDKit \u5165\u95e8\uff1a\u4fee\u6539\u5206\u5b50\u4e0e\u641c\u7d22\u5b50\u7ed3\u6784"
+title = "RDKit 入门：修改分子与搜索子结构"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html"
 url = "/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4ece\u5934\u836f\u7269\u8bbe\u8ba1\u548c\u751f\u6210\u6a21\u578b"
+title = "文献总结｜从头药物设计和生成模型"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-21-cs224n-lecture1.html"
 url = "/sui-sui-nian/2022-12-21-cs224n-lecture1.html"
-title = "CS224n \u81ea\u7136\u8bed\u8a00\u5904\u7406\u7b2c\u4e00\u8282\uff1a\u7b80\u4ecb\u4e0e\u8bcd\u5411\u91cf"
+title = "CS224n 自然语言处理第一节：简介与词向量"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-18-summary-doi.org/10.1021/acs.jcim.2c00982.html"
 url = "/sui-sui-nian/2022-12-18-summary-doi.org/10.1021/acs.jcim.2c00982.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cDRlinker\uff1a\u4f7f\u7528\u6df1\u5ea6\u5f3a\u5316\u5b66\u4e60\u4f18\u5316\u8fde\u63a5\u7247\u6bb5\u8bbe\u8ba1"
+title = "文献总结｜DRlinker：使用深度强化学习优化连接片段设计"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html"
 url = "/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html"
-title = "\u673a\u5668\u7ffb\u8bd1\u6846\u67b6 OpenNMT \u5165\u95e8\uff1a\u5feb\u901f\u4e0a\u624b"
+title = "机器翻译框架 OpenNMT 入门：快速上手"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-11-summary-doi.org/10.1186/s13321-020-00441-8.html"
 url = "/sui-sui-nian/2022-12-11-summary-doi.org/10.1186/s13321-020-00441-8.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u57fa\u4e8eSMILES\u7528\u4e8e\u4ece\u5934\u836f\u7269\u8bbe\u8ba1\u7684\u6df1\u5ea6\u5206\u5b50\u9aa8\u67b6\u6539\u9020\u6a21\u578b"
+title = "文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html"
 url = "/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u901a\u8fc7\u751f\u6210\u6df1\u5ea6\u5b66\u4e60\u53d1\u73b0 RIPK1 \u6291\u5236\u5242"
+title = "文献总结｜通过生成深度学习发现 RIPK1 抑制剂"
 
 [[input.files]]
 path = "sui-sui-nian/2022-12-01-install-cuda.html"
 url = "/sui-sui-nian/2022-12-01-install-cuda.html"
-title = "\u4e3a\u6df1\u5ea6\u5b66\u4e60\u73af\u5883\u914d\u7f6e CUDA"
+title = "为深度学习环境配置 CUDA"
 
 [[input.files]]
 path = "sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html"
 url = "/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4f7f\u7528\u8bfe\u7a0b\u5b66\u4e60\u6539\u8fdb\u4ece\u5934\u836f\u7269\u8bbe\u8ba1"
+title = "文献总结｜使用课程学习改进从头药物设计"
 
 [[input.files]]
 path = "sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html"
 url = "/sui-sui-nian/2022-11-20-summary-doi.org/10.1021/acs.jcim.1c00469.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cLibINVENT\uff1a\u53ef\u7528\u4e8e\u865a\u62df\u5316\u5408\u7269\u5e93\u6784\u5efa\u7684\u57fa\u4e8e\u53cd\u5e94\u7684\u5206\u5b50\u9aa8\u67b6\u6539\u9020\u6a21\u578b"
+title = "文献总结｜LibINVENT：可用于虚拟化合物库构建的基于反应的分子骨架改造模型"
 
 [[input.files]]
 path = "sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html"
 url = "/sui-sui-nian/2022-11-14-summary-doi.org/10.1039/d0sc03126g.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cSyntaLinker\uff1a\u4f7f\u7528 Conditional Transformer \u795e\u7ecf\u7f51\u7edc\u81ea\u52a8\u8fde\u63a5\u5206\u5b50\u7247\u6bb5"
+title = "文献总结｜SyntaLinker：使用 Conditional Transformer 神经网络自动连接分子片段"
 
 [[input.files]]
 path = "sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html"
 url = "/sui-sui-nian/2022-11-05-summary-doi.org/10.1021/acs.jcim.2c00838.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4f7f\u7528\u5f3a\u5316\u5b66\u4e60\u548c\u57fa\u4e8e\u56fe\u7684\u6df1\u5ea6\u751f\u6210\u6a21\u578b\u8fdb\u884c\u4ece\u5934\u836f\u7269\u8bbe\u8ba1"
+title = "文献总结｜使用强化学习和基于图的深度生成模型进行从头药物设计"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html"
 url = "/sui-sui-nian/2022-10-29-summary-doi.org/10.1021/acs.jmedchem.2c01179.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cChemistGA\uff1a\u7528\u4e8e\u5b9e\u9645\u836f\u7269\u53d1\u73b0\u7684\u53ef\u5408\u6210\u5206\u5b50\u751f\u6210\u7b97\u6cd5"
+title = "文献总结｜ChemistGA：用于实际药物发现的可合成分子生成算法"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html"
 url = "/sui-sui-nian/2022-10-21-summary-doi.org/10.1186/s13321-019-0393-0.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u901a\u8fc7\u968f\u673a\u5316 SMILES \u5e8f\u5217\u63d0\u5347\u5206\u5b50\u751f\u6210\u6a21\u578b\u8d28\u91cf"
+title = "文献总结｜通过随机化 SMILES 序列提升分子生成模型质量"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-20-rdkit-draw-molecule.html"
 url = "/sui-sui-nian/2022-10-20-rdkit-draw-molecule.html"
-title = "RDKit \u5165\u95e8\uff1a\u7ed8\u5236\u5206\u5b50\u56fe\u50cf"
+title = "RDKit 入门：绘制分子图像"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-18-rdkit-import-export-file.html"
 url = "/sui-sui-nian/2022-10-18-rdkit-import-export-file.html"
-title = "RDKit \u5165\u95e8\uff1a\u6587\u4ef6\u7684\u5bfc\u5165\u4e0e\u5bfc\u51fa"
+title = "RDKit 入门：文件的导入与导出"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html"
 url = "/sui-sui-nian/2022-10-15-summary-doi.org/10.1021/acs.jcim.0c00915.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5cREINVENT 2.0\uff1a\u7528\u4e8e\u4ece\u5934\u836f\u7269\u8bbe\u8ba1\u7684 AI \u5de5\u5177"
+title = "文献总结｜REINVENT 2.0：用于从头药物设计的 AI 工具"
 
 [[input.files]]
 path = "sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html"
 url = "/sui-sui-nian/2022-10-08-summary-doi.org/10.1038/s42256-021-00403-1.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u57fa\u4e8e Conditional Transformer\u3001\u77e5\u8bc6\u84b8\u998f\u4e0e\u5f3a\u5316\u5b66\u4e60\u7684\u591a\u7ea6\u675f\u5206\u5b50\u751f\u6210"
+title = "文献总结｜基于 Conditional Transformer、知识蒸馏与强化学习的多约束分子生成"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html"
 url = "/sui-sui-nian/2022-09-30-summary-doi.org/10.1021/acscentsci.7b00512.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4f7f\u7528\u5faa\u73af\u795e\u7ecf\u7f51\u7edc\u4e3a\u836f\u7269\u53d1\u73b0\u751f\u6210\u6307\u5b9a\u7684\u5206\u5b50\u5e93"
+title = "文献总结｜使用循环神经网络为药物发现生成指定的分子库"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-27-generate-ppt-by-marp.html"
 url = "/sui-sui-nian/2022-09-27-generate-ppt-by-marp.html"
-title = "\u7528 Markdown \u521b\u4f5c pptx \u7684\u5c1d\u8bd5"
+title = "用 Markdown 创作 pptx 的尝试"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html"
 url = "/sui-sui-nian/2022-09-21-summary-doi.org/10.1016/j.sbi.2021.10.001.html"
-title = "\u6587\u732e\u603b\u7ed3\uff5c\u4ece\u5934\u836f\u7269\u8bbe\u8ba1\u4e2d\u7684\u6df1\u5ea6\u5b66\u4e60\u65b9\u6cd5"
+title = "文献总结｜从头药物设计中的深度学习方法"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-16-statistical-learning-chapter7.html"
 url = "/sui-sui-nian/2022-09-16-statistical-learning-chapter7.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u4e03\u7ae0\uff1a\u652f\u6301\u5411\u91cf\u673a"
+title = "《统计学习方法》第七章：支持向量机"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-09-statistical-learning-chapter6.html"
 url = "/sui-sui-nian/2022-09-09-statistical-learning-chapter6.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u516d\u7ae0\uff1a\u903b\u8f91\u65af\u8c1b\u56de\u5f52\u4e0e\u6700\u5927\u71b5\u6a21\u578b"
+title = "《统计学习方法》第六章：逻辑斯谛回归与最大熵模型"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html"
 url = "/sui-sui-nian/2022-09-06-dns-forbidden-of-github-pages.html"
-title = "\u56fd\u5185\u90e8\u5206\u7f51\u7edc\u65e0\u6cd5\u8bbf\u95ee githui.io \u7684\u89e3\u51b3\u65b9\u6848"
+title = "国内部分网络无法访问 githui.io 的解决方案"
 
 [[input.files]]
 path = "sui-sui-nian/2022-09-05-function-drawer.html"
 url = "/sui-sui-nian/2022-09-05-function-drawer.html"
-title = "\u51fd\u6570\u7ed8\u56fe\u5de5\u5177\u7684\u9009\u62e9"
+title = "函数绘图工具的选择"
 
 [[input.files]]
 path = "gu-zhi-dui/2022-08-31-hokciu-word-collect.html"
 url = "/gu-zhi-dui/2022-08-31-hokciu-word-collect.html"
-title = "\u8a5e\u85ea"
+title = "詞藪"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-23-statistical-learning-chapter5.html"
 url = "/sui-sui-nian/2022-08-23-statistical-learning-chapter5.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u4e94\u7ae0\uff1a\u51b3\u7b56\u6811"
+title = "《统计学习方法》第五章：决策树"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-17-pelican-lightbox.html"
 url = "/sui-sui-nian/2022-08-17-pelican-lightbox.html"
-title = "\u4e3a Pelican \u535a\u5ba2\u8bbe\u7f6e Lightbox \u6548\u679c"
+title = "为 Pelican 博客设置 Lightbox 效果"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-14-prettymaps-generate-maps.html"
 url = "/sui-sui-nian/2022-08-14-prettymaps-generate-maps.html"
-title = "\u4f7f\u7528 prettymaps \u751f\u6210\u7cbe\u7f8e\u5730\u56fe"
+title = "使用 prettymaps 生成精美地图"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-11-prettymaps-install.html"
 url = "/sui-sui-nian/2022-08-11-prettymaps-install.html"
-title = "\u5728 Windows \u5b89\u88c5 prettymaps \u7684\u8e29\u5751\u5b9e\u5f55"
+title = "在 Windows 安装 prettymaps 的踩坑实录"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-05-statistical-learning-chapter4.html"
 url = "/sui-sui-nian/2022-08-05-statistical-learning-chapter4.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u56db\u7ae0\uff1a\u6734\u7d20\u8d1d\u53f6\u65af\u6cd5"
+title = "《统计学习方法》第四章：朴素贝叶斯法"
 
 [[input.files]]
 path = "sui-sui-nian/2022-08-02-statistical-learning-chapter3.html"
 url = "/sui-sui-nian/2022-08-02-statistical-learning-chapter3.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u4e09\u7ae0\uff1ak \u8fd1\u90bb\u6cd5"
+title = "《统计学习方法》第三章：k 近邻法"
 
 [[input.files]]
 path = "sui-sui-nian/2022-07-27-statistical-learning-chapter2.html"
 url = "/sui-sui-nian/2022-07-27-statistical-learning-chapter2.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u4e8c\u7ae0\uff1a\u611f\u77e5\u673a"
+title = "《统计学习方法》第二章：感知机"
 
 [[input.files]]
 path = "sui-sui-nian/2022-07-21-statistical-learning-chapter1.html"
 url = "/sui-sui-nian/2022-07-21-statistical-learning-chapter1.html"
-title = "\u300a\u7edf\u8ba1\u5b66\u4e60\u65b9\u6cd5\u300b\u7b2c\u4e00\u7ae0\uff1a\u6982\u8bba"
+title = "《统计学习方法》第一章：概论"
 
 [[input.files]]
 path = "sui-sui-nian/2022-07-14-onedrive-as-image-host.html"
 url = "/sui-sui-nian/2022-07-14-onedrive-as-image-host.html"
-title = "\u5728 Linux \u4e0a\u4f7f\u7528 OneDrive \u4f5c\u4e3a\u535a\u5ba2\u56fe\u5e8a"
+title = "在 Linux 上使用 OneDrive 作为博客图床"
 
 [[input.files]]
 path = "sui-sui-nian/2022-07-12-pelican-to-publish.html"
 url = "/sui-sui-nian/2022-07-12-pelican-to-publish.html"
-title = "\u4f7f\u7528 Pelican \u53d1\u5e03\u6587\u7ae0\u7684\u6d41\u7a0b"
+title = "使用 Pelican 发布文章的流程"
+
+[output]
+excerpts_per_result = 1
