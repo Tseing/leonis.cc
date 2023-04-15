@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜药物发现中的匹配分子对分析：方法与当前应用</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍 2023 年由曹东升与侯廷军研究团队发表在 Journal of Medicinal Chemistry 上的一篇展望，文章原标题为 Matched Molecular Pair Analysis in Drug Discovery: Methods and...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="Review">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜药物发现中的匹配分子对分析：方法与当前应用"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍 2023 年由曹东升与侯廷军研究团队发表在 Journal of Medicinal Chemistry 上的一篇展望，文章原标题为 Matched Molecular Pair Analysis in Drug Discovery: Methods and..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-04-15 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Review"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜药物发现中的匹配分子对分析：方法与当前应用",
+  "headline": "文献总结｜药物发现中的匹配分子对分析：方法与当前应用",
+  "datePublished": "2023-04-15 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html",
+  "description": "本文介绍 2023 年由曹东升与侯廷军研究团队发表在 Journal of Medicinal Chemistry 上的一篇展望，文章原标题为 Matched Molecular Pair Analysis in Drug Discovery: Methods and..."
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜药物发现中的匹配分子对分析：方法与当前应用</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 4月15日">2023年 4月15日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#mmpa-li-lun" title="MMPA 理论">MMPA 理论</a><ul><li><a class="toc-href" href="#mmp-sou-suo-suan-fa" title="MMP 搜索算法">MMP 搜索算法</a></li><li><a class="toc-href" href="#ying-xiang-mmpa-de-guan-jian-yin-su" title="影响 MMPA 的关键因素">影响 MMPA 的关键因素</a></li></ul></li><li><a class="toc-href" href="#mmpa-shi-ji-ying-yong_1" title="MMPA 实际应用">MMPA 实际应用</a><ul><li><a class="toc-href" href="#pi-pei-fen-zi-xu-lie" title="匹配分子序列">匹配分子序列</a></li><li><a class="toc-href" href="#ji-yu-mmpa-de-quan-xin-yao-wu-she-ji" title="基于 MMPA 的全新药物设计">基于 MMPA 的全新药物设计</a></li></ul></li><li><a class="toc-href" href="#zhan-wang_1" title="展望">展望</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1021/acs.jmedchem.2c01787" rel="noopener" target="_blank">doi.org/10.1021/acs.jmedchem.2c01787</a></p>
+<p>本文介绍 2023 年由曹东升与侯廷军研究团队发表在 <em>Journal of Medicinal Chemistry</em> 上的一篇展望，文章原标题为 Matched Molecular Pair Analysis in Drug Discovery: Methods and Recent Applications，文章介绍了主要介绍了匹配分子对分析的理论与目前基于匹配分子对分析的实际应用。</p>
+<p>匹配分子对（matched molecular pair, MMP）的概念自提出以来，已成为了从化合物中提取药物化学知识并用于指导先导化合物优化的标准方法，MMP 的定义是只在局部具有较小的结构差异的一对化合物。合成化学家、药物化学家借助匹配分子对分析（molecular matched pair analysis, MMPA）的手段，可以从人类研究过的海量化合物中总结出化学改造的方法、化学改造对于化合物性质的影响等重要经验知识。</p>
+<h2 id="mmpa-li-lun">MMPA 理论</h2>
+<h3 id="mmp-sou-suo-suan-fa">MMP 搜索算法</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8784?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8784?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在需要对大量分子数据做 MMPA 时，首要任务就是提取出其中的 MMP，MMP 搜索算法可以分为 3 类：</p>
+<ol>
+<li>预设的变换规则：使用人为设计的切分规则分割分子，寻找分子数据中的 MMP，常用规则如 retrosynthetic combinatorial analysis procedure（RECAP）和 breaking of retrosynthetically interesting chemical substructures（BRICS）。这种方法的局限性也很明显，例如忽略了预设规则以外的 MMP 并且只能处理单点的化学结构变换。</li>
+<li>基于最大公共子结构（maximum common substructure, MCS）的方法：先寻找指定分子的的公共结构，将其设定为固定部分，只有具有公共结构的分子才能构成 MMP，分子中除去公共结构所剩余的结构就是改变部分，所以该方法通常用用于表示化学变换的 SMIRKS 存储 MMP。这种方法的问题在于计算 MCS 的计算开销很大。</li>
+<li>片段与索引（fragmentation and indexing, F+I）方法：该方法是目前寻找 MMP 最通用的方法，主要方法是在两非氢原子间的非环单键处切断，构建 key 与 value 片段的对应索引，通过键值对间的匹配寻找 MMP，具体方法可以<a href="https://leonis.cc/sui-sui-nian/2023-02-25-summary-doi.org/10.1021/ci900450m.html" rel="noopener" target="_blank">参看前文</a>。</li>
+</ol>
+<h3 id="ying-xiang-mmpa-de-guan-jian-yin-su">影响 MMPA 的关键因素</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8785?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8785?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>MMPA 的基本假设是，分子结构中一些小的结构改变将引起特定物理性质或是生物活性的改变。然而现实中化合物性质改变的原因更为复杂，表现出更为偶然的现象，例如分子改造中的活性悬崖（对分子仅做微小的改造而生物活性变化巨大）等，所以在 MMPA 中也要考虑到许多因素的影响。</p>
+<ul>
+<li>分子表示：2D 与 3D 分子结构都被用于 MMPA 研究中，2D 分子描述的主要优点是处理简单，但许多实践表明 3D 分子表示方法表示了分子的空间信息，使其对于微小的结构差异更为敏感，这对 MMPA 十分重要。</li>
+<li>环境特征：在早期的研究中，人们认为只有 MMP 中的化学转换改变了分子的性质，因此只针对化学转换进行研究，而没有考虑具体分子。如今人们已经意识到，在 MMPA 还需要考虑具体分子的结构以及改造位点等环境特征，不能只研究 MMP 中的化学转化规则。目前，大部分研究使用分子图或 SMILES 来表示 MMP 中的完整分子，用于 MMPA 研究。除了分子信息以外，也有研究将蛋白口袋的信息也融入 MMPA，这有助于更深入研究 MMP 转化对受体与配体间结合作用影响。</li>
+<li>统计显著性：MMPA 的统计分析对于研究 MMP 间性质的变化十分重要，因为一种化学转换可以引起多种性质的改变，多种化学转换也可能使分子的某些性质不发生改变。MMPA 的统计学研究发现，在同一化合物上所做的两个结构改造所产生的影响远不同于单一结构改造影响的加和，这也称为「不可加和性」效应，这意味着简单的单一结构改造间存在着相互作用。不可加和性同样影响了分子的溶解度等性质，在 MMPA 中对可加和性进行统计分析，可以更好地识别药物分子的构效关系与分子中潜在的相互作用。</li>
+</ul>
+<h2 id="mmpa-shi-ji-ying-yong_1">MMPA 实际应用</h2>
+<p>MMPA 已经广泛应用在寻找得到目标性质分子所需的化学改造中（ADMET 优化），除了应用在先导化合物优化，MMPA 也用于靶点预测、生物电子等排体替换、构效关系确定、全新药物设计等任务中，这里主要介绍 MMPA 在分子结构改造和全新药物设计中的应用。</p>
+<h3 id="pi-pei-fen-zi-xu-lie">匹配分子序列</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8786?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8786?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>将多个仅具有一个子结构区别的分子组织起来，就得到了匹配分子序列（matching molecular series, MMS），该方法最早被用于药物分子构效关系的分析，将不同 MMS 组织起来还得到形成匹配分子序列图，用于决策分子改造的路线。称为 SAR 转移的方法通过对比两个 MMS 间化合物性质的变化，可以判断替换结构的效果与。</p>
+<h3 id="ji-yu-mmpa-de-quan-xin-yao-wu-she-ji">基于 MMPA 的全新药物设计</h3>
+<p>将 MMP 化学变换规则用于分子生成是全新药物设计中的重要步骤，输入的分子首先被分割为片段，然后通过 MMP 数据库搜索找到相应的化学转换，将这些化学转换用于输入分子就得到了新分子。也有研究提出了基于片段的 MMP 分子生成方法，主要步骤是收集 MMP 片段信息，通过遗传算法等方法合理地相互组合 MMP 片段，得到新分子。</p>
+<p>也有研究使用分子骨架和分子骨架以外的子结构来构建分子生成模型，模型是使用 SMILES 的 RNN 模型，第一步是生成正确的分子骨架，第二步在分子骨架上添加结构改造得到正确的分子。此外，MMS 方法可以很容易地将分子分为若干类的类似物，也可以很方便地用于全新药物设计。DeepSARM 模型的目标是寻找生物作用类似而化学结构新颖的类似物，就使用了 MMS 方法，模型同时还考虑了靶点信息，扩大的 MMS 方法的应用范围。</p>
+<h2 id="zhan-wang_1">展望</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8787?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8787?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>分子设计所面临的一个重要难题是如何基于有限的实验数据决定下一步的分子改造，MMPA 有助于人们从已有的分子改造数据中得到化学转换的信息。为了能更好地利用 MMPA，文章提出了以下几点展望：</p>
+<ol>
+<li>将 QSAR 与 MMPA 相结合。QSAR 模型着重于整体的结构特征，MMPA 主要用于确定局部子结构的改变，在一定程度上二者是互补的，在未来 MMPA 也可能对 QSAR 模型的预测有帮助。</li>
+<li>将 MMPA 的概念用于蛋白质等大分子。</li>
+<li>融合 MMPA 相关的分子优化方法，构建自动化的分子优化流程。尽管目前 MMP 已经应用于分子生成，但 MMP 数据的提取等步骤还需要人工处理。文章提出了上图所示的预期 MMPA 工作流程，希望能够实现 MMP 的自动提取、组织、应用和评估。</li>
+</ol>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜药物发现中的匹配分子对分析：方法与当前应用&amp;url=https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html&amp;title=文献总结｜药物发现中的匹配分子对分析：方法与当前应用" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜药物发现中的匹配分子对分析：方法与当前应用&amp;body=https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/review.html">Review</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计</h2>
+                            <p class="post-nav-excerpt">本文介绍 2023 年发布在 Journal of Cheminformatics...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
