@@ -772,7 +772,7 @@ copy_test(model, max_len)
 </code></pre>
 <p>PyTorch 使用 <code>torch.optim</code> 定义模型的训练过程，其中可以选择非常多种的优化过程，这里选择了 <code>Adam()</code>，<code>lr=3e-4</code> 指定了训练步骤的学习率。<code>nn.CrossEntropyLoss()</code> 用于计算两个向量的交叉熵损失，作为训练过程的损失函数。</p>
 <p>在训练循环中，每一个循环处理 1 个 batch 的数据，在同一个 batch 中 PyTorch 自动计算梯度的反向传播并更新参数。但在新的 batch 中，因为已经更新到参数中了，我们不希望保留上一个 batch 的梯度，所以用 <code>optimizer.zero_grad()</code> 将梯度清空。</p>
-<p>将 <code>src</code> 与 <code>tgt</code> 传入模型，<code>out</code> 就是 Transformer 的计算结果，。<code>loss.backward()</code> 与 <code>optimizer.step()</code> 两行代码就是前面所说的让 PyTorch 自动计算梯度的反向传播并更新参数。</p>
+<p>将 <code>src</code> 与 <code>tgt</code> 传入模型，<code>out</code> 就是 Transformer 的计算结果。<code>loss.backward()</code> 与 <code>optimizer.step()</code> 两行代码就是前面所说的让 PyTorch 自动计算梯度的反向传播并更新参数。</p>
 <h3 id="predict">Predict</h3>
 <p>训练结束后，我用 <code>copy_test()</code> 函数测试模型的效果，这个测试函数定义为</p>
 <pre><code class="language-py">def copy_test(model, max_len):
@@ -940,6 +940,13 @@ tensor([[0, 6, 3, 4, 5, 7, 6, 4, 3, 1]])
 
 
                 <aside class="post-nav">
+                    <a class="post-nav-next" href="https://leonis.cc/sui-sui-nian/2023-04-22-summary-openreview.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">文献总结｜使用上下文增强的分子表示提升少样本药物发现的效果</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2023 年发表在 ICLR 2023 上的一篇文章，文章原标题为...</p>
+                        </section>
+                    </a>
                     <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
