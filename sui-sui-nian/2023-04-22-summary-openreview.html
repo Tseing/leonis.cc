@@ -182,7 +182,7 @@
 <h2 id="fang-fa">方法</h2>
 <h3 id="yuan-li">原理</h3>
 <p>药物发现中所使用的模型 <span class="math">\(g(\boldsymbol{m})\)</span> 用于在给定分子表示 <span class="math">\(\boldsymbol{m}\in\mathcal{M}\)</span> 的情况下预测分子性质或活性 <span class="math">\(\hat{y}\)</span>。深度学习模型中的分子编码器将分子的一些低级表示（如 SMILES、分子图等）映射为模型空间的表示 <span class="math">\(f^\mathrm{ME}:\mathcal{M}\rightarrow\mathbb{R}^d\)</span>，再通过后续计算给出分子性质。</p>
-<p>在少样本的情况下，只有分子的小数据集 <span class="math">\(\{\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\}\)</span> 与对应分子是否具有活性的数据 <span class="math">\(\boldsymbol{y}=\{y_1,\cdots,y_N\}\)</span>。这里将数据集 <span class="math">\(\{(\boldsymbol{x}_n,y_n)\}_{n=1}^N\)</span> 称为 support set，少样本学习就是要正确预测不在 support set 中 <span class="math">\(\boldsymbol{x}\)</span> 对应的 <span class="math">\(y\)</span>。</p>
+<p>在少样本的情况下，只有分子的小数据集 <span class="math">\(\{\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N\}\)</span> 与对应分子是否具有活性的数据 <span class="math">\(\boldsymbol{y}=\{y_1,\cdots,y_N\}\)</span>。这里将数据集 <span class="math">\(\{(\boldsymbol{x}_n,y_n)\}_{n=1}^N\)</span> 称为 support set，少样本学习就是要正确预测不在 support set 中 <span class="math">\(\boldsymbol{x}\)</span> 所对应的 <span class="math">\(y\)</span>。</p>
 <p>文章中的模型分为 3 个模块：</p>
 <div class="math">$$
 \begin{align}
@@ -210,7 +210,7 @@ $$</div>
 <div class="math">$$
 \boldsymbol{m}'=\mathrm{Hopfield(\boldsymbol{m},\boldsymbol{C})},\quad\boldsymbol{X}'=\mathrm{Hopfield}(\boldsymbol{X},\boldsymbol{C})
 $$</div>
-<p>MHN 计算能够计算两个输入间的注意力，最后更新得到的分子表示就具有参考分子集 <span class="math">\(\boldsymbol{C}\)</span> 中的联想记忆。</p>
+<p>MHN 能够计算两个输入间的注意力，最后更新得到的分子表示就具有参考分子集 <span class="math">\(\boldsymbol{C}\)</span> 中的联想记忆。</p>
 <p>交叉注意力模块替换了原来 Transformer 中的多头注意力机制，但功能仍然类似，用于记算输入分子 <span class="math">\(\boldsymbol{m}'\)</span> 与 support set <span class="math">\(\boldsymbol{X}'\)</span> 之间的注意力，再次更新分子表示：</p>
 <div class="math">$$[\boldsymbol{m}'',\boldsymbol{X}'']=\mathrm{Hopfield}([\boldsymbol{m}',\boldsymbol{X}'],[\boldsymbol{m}',\boldsymbol{X}'])$$</div>
 <p>在最后的相似性模块中，模型计算输入分子 <span class="math">\(\boldsymbol{m}''\)</span> 与 support set <span class="math">\(\boldsymbol{X}''\)</span> 中每个分子 <span class="math">\(\boldsymbol{x}_n''\)</span> 之间的相似性 <span class="math">\(k(\boldsymbol{m}'',\boldsymbol{x}_n'')\)</span>，并使用所有相似性的加权平均表示输入分子，用该表示计算输入分子的性质：</p>

@@ -14,6 +14,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "zai-lu-shang/2023-04-27-crabapple-of-tianjin.html"
+url = "/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html"
+title = "津城海棠"
+
+[[input.files]]
 path = "sui-sui-nian/2023-04-22-summary-openreview.html"
 url = "/sui-sui-nian/2023-04-22-summary-openreview.html"
 title = "文献总结｜使用上下文增强的分子表示提升少样本药物发现的效果"
