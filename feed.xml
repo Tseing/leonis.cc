@@ -1,5 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-04-27T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>津城海棠</title><link href="https://leonis.cc/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html" rel="alternate"></link><published>2023-04-27T00:00:00+08:00</published><updated>2023-04-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-27:/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html</id><summary type="html">&lt;p&gt;五大道的海棠花开了，天津又到了最美的时候。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-04-28T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜我们能用 Transformer 模型快速学会「翻译」活性分子吗？</title><link href="https://leonis.cc/sui-sui-nian/2023-04-28-summary-doi.org/10.1021/acs.jcim.2c01618.html" rel="alternate"></link><published>2023-04-28T00:00:00+08:00</published><updated>2023-04-28T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-28:/sui-sui-nian/2023-04-28-summary-doi.org/10.1021/acs.jcim.2c01618.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 Can We Quickly Learn to “Translate” Bioactive Molecules with Transformer Models? 文章使用 MMP 数据训练 Transformer，使其生成具有活性的分子，文章结果表明 Transformer 对于未知靶点也能生成活性分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1021/acs.jcim.2c01618" rel="noopener" target="_blank"&gt;doi.org/10.1021/acs.jcim.2c01618&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2023 年发表在 &lt;em&gt;Journal of Chemical Information and Modeling&lt;/em&gt; 上的一篇文章，文章原标题为 Can We Quickly Learn to &amp;ldquo;Translate&amp;rdquo; Bioactive Molecules with Transformer Models? 文章使用 MMP 数据训练 Transformer，使其生成具有活性的分子，文章结果表明 Transformer 对于未知靶点也能生成活性分子。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;文章所使用的分子数据来源于 ChEMBL 29，包含有 950640 个分子。数据集中的分子都由 SMILES 表示，将其输入 MMP 软件匹配其中的相似分子。输出的数据中，每对数据都由两个 SMILES 构成，形成一个 MMP 对，用 SMIRK 表示两个 SMILES 间的化学转化，最后得到了约 5700 万条 MMP 对。&lt;/p&gt;
+&lt;p&gt;接着文章对得到的 MMP 对数据进一步清洗，主要包括两个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;排除 SMIRK 出现次数少于 &lt;span class="math"&gt;\(N_1\)&lt;/span&gt; 的 MMP 对；&lt;/li&gt;
+&lt;li&gt;在剩余的 MMP 对中，随机保留 &lt;span class="math"&gt;\(N_2\)&lt;/span&gt; 条数据。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第 1 步的清洗是为了除去数据中出现频率过少的化学转化，因为它们过于特殊，并不能普适地用于所有分子；第 2 步是为了避免数据中的极端偏向影响模型，因为在数据集中，简单的转化（如 -H &amp;rarr; -CH&lt;sub&gt;3&lt;/sub&gt;）出现频率极高，这会导致模型无法学习到那些复杂的转化。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8914?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8914?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;文章使用 OpenNMT 构建 Transformer 模型，在 SMILES 数据输入模型前，都将其转化为 SELFIES 形式。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8917?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8917?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在训练过程中，使用 OpenNMT 中默认的损失函数，使用困惑度（perplexity）评估模型训练效果。困惑度是自然语言处理中所使用的评估指标，它定义为 &lt;span class="math"&gt;\(ppl=\exp(L/N)\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(L\)&lt;/span&gt; 为损失函数，&lt;span class="math"&gt;\(N\)&lt;/span&gt; 为全部备选的 token 数量。在自然语言处理中，模型根据前一个 token 预测下一个 token，并将其连成句子，困惑度的意义就是模型在获取前一个 token 的情况下，概率较高的下一个 token 的数量，所以困惑度越小时，表明模型能在目前分布下生成更合理的句子。同样，将其应用于分子生成模型，困惑度就可以表示分枝原子上可以备选的连接原子。&lt;/p&gt;
+&lt;p&gt;此外，文章测试了模型对未知靶点生成分子的效果。在上一步得到的数据中，分别除去对 COX2、DRD2 或 HERG 有活性的分子，分别用三种数据训练 Transformer，最后得到的各模型对指定靶点「不可知」。文章又将去除掉的活性分子根据活性大小分为前 5% 与后 95% 的子数据集，用后 95% 作为模型输入，测试模型是否能输出前 5% 的分子。&lt;/p&gt;
+&lt;h2 id="shi-yan_1"&gt;实验&lt;/h2&gt;
+&lt;h4&gt;Transformer 可以为未知靶点生成活性分子&lt;/h4&gt;
+&lt;p&gt;分别从训练数据中除去 COX2、DRD2 或 HERG 的活性分子，训练了 3 个 Transformer 模型，模型无法得到关于特点靶点的信息。将对相应靶点具有活性的后 95% 分子作为输入，模型生成的分子不仅满足相应的化学规则，而且相当数量的活性分子，说明模型具有相当好的泛化能力。生成分子的结果如下图所示，横轴表示分子与前 5% 高活性分子的相似性，竖轴表示分子活性，其中蓝色圆点表示生成的分子，红色菱形表示输入模型的分子。图中只展示了一部分输入-输出的变换，用箭头表示，可以看出许多生成的分子都是往右上方向移动，也就是生成活性更高、与高活性分子更相似的结构。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8916?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8916?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h4&gt;Transformer 可以为苗头化合物发现生成新颖分子&lt;/h4&gt;
+&lt;p&gt;文章统计了训练集与输入-输出分子中的 SMIRKS 化学转化，在模型生成的结果中有 1086 种化转化并未出现在训练集中，所以文章认为模型可以生成新颖的化学结构。一部分化学转化如下图所示，训练集中的化学转化都是 MMP 转化，而图中的化学换化显然并不符合规则，而是模型根据训练集中的信息所新造的化学转化。&lt;/p&gt;
+&lt;p&gt;文章认为使用深度学习实现分子生成并不是将所有可能的 SMIRKS 规则放到输入分子上，这种排列组合的模式势必会大大增加生成的数据量，将有价值的信息淹没。Transformer 能够上下文相关地获取分子信息，并根据信息通过合适的 SMIRKS 规则构建新分子，这种分子生成的手段更有帮助，同时文章发现 Transformer 所使用的 SMIRKS 并不是完全照搬训练集中的数据，而是根据已有信息新构造出的转化规则，这一点可能也是提升 Transformer 分子生成效果的方向。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8915?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8915?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章还认为，相比于更常用的 SMILES，SELFIES 更有利于 Transformer 学习其中的化学信息，因为 SMILES 无法保证分子合法，必须先训练模型使其学习生成合乎规则的分子。相反，使用 SELFIES 的分子生成模型不需要先让模型学会表示分子的语法，极少出现分子不合法的情况，可能使用 SELFIES 表示分子也是能实现文章实验中效果的重要原因。&lt;/p&gt;
+&lt;p&gt;文章也指出这只是一个尝试性的工作，还有很多的问题没有解决。首要的一点就是文章使用与活性分子的相似性来评价生成分子的效果，尽管两个分子十分相似，它们也可能具有十分悬殊的活性，这是使用深度学习手段进行药物发现尤需解决的问题。所以文章中的分子生成也只能起到「启发」的作用，并不能真接指导药物化学家找到活性更高的分子。另一点就是文章中并没有对模型做全面的评估与超参数的选择，只是验证的方法的可行性，并没有对比与其他模型的优势。文章中还推测 SELFIES 相比 SMILES 更具有优势，但也未对比两种模型的效果。&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章将 Transformer 用于苗头化合物的发现，并且发现 Transformer 对于训练集中不存在的未知靶点也能生成相当数量的活性分子，其中一部分分子与高活性的配体具有很高的相似性。文章还发现，Transformer 生成的结果中，其化学变化并不局限于用于训练的 MMP 数据，这表明 Transformer 具有上下文相关的信息识别能力，利用好这一特性有利于实现活性分子的生成。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>津城海棠</title><link href="https://leonis.cc/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html" rel="alternate"></link><published>2023-04-27T00:00:00+08:00</published><updated>2023-04-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-27:/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html</id><summary type="html">&lt;p&gt;五大道的海棠花开了，天津又到了最美的时候。&lt;/p&gt;
 &lt;p&gt;几年前初到天津时，给我印象最深刻的就是城中随处可见的海棠花。天津遍植海棠，却不是密密地栽种为若干排。而是漫步在街头时，走过几个街道，转过几个巷口，蓦地发现几枝洁白而间杂洋红的海 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;五大道的海棠花开了，天津又到了最美的时候。&lt;/p&gt;
 &lt;p&gt;几年前初到天津时，给我印象最深刻的就是城中随处可见的海棠花。天津遍植海棠，却不是密密地栽种为若干排。而是漫步在街头时，走过几个街道，转过几个巷口，蓦地发现几枝洁白而间杂洋红的海棠花在那静静地开放，而无意间的拜访者也成了唯一的赏花者，独享这春光。至于如庆王府的几处，大概是因为人们喜爱海棠，几代经营之下竟植海棠如林。阳春三月，津城就被海棠花环抱，绝不是一句虚言。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8898?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8898?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
@@ -21,7 +111,7 @@
 &lt;p&gt;我被裹挟在人群中，亦步亦趋地穿过海棠花海，流连的景色如万花筒般绚丽，而正所谓兴尽悲来，又深令人感慨春光易逝。天津人自小便生活在海棠之中，求学于海棠花下，他们是惯看了秋月春风而变得更为冷峻，还是年年见证着花朝花暮，相比他人更多了几分细心肠呢？传闻天津人大多缱绻于故乡，而他们的确是如浮萍一般的移民，终于定居在此，与繁茂的海棠杂处而居，其念兹在兹的心情亦可想而知。我不禁想象，奔走于异乡的游子是否会种下一株海棠，欣赏着它与津城的海棠同样开谢，正与记忆中同。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8908?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8908?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p class="intro"&gt;&lt;i class="fa fa-angle-double-up"&gt;&lt;/i&gt; 俨然是粉红色的世界&lt;/p&gt;
-&lt;p&gt;归来搦管撰写此文时，已经将近立夏，海棠或许早已落尽。清少纳言曾盛赞落花之后赏花为风雅之事，我虽未有此意，奈何已蹈古人之迹。寓居天津多年，我同样遥望着津城海棠的形谢，正与我的记忆同！&lt;/p&gt;
+&lt;p&gt;归来搦管撰写此文时，已经将近立夏，海棠或许早已落尽。清少纳言曾盛赞落花之后赏花为风雅之事，我虽未有此意，奈何已蹈古人之迹。寓居天津多年，我同样遥望着津城海棠的开谢，正与我的记忆同！&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8907?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8907?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="摄影"></category></entry><entry><title>文献总结｜使用上下文增强的分子表示提升少样本药物发现的效果</title><link href="https://leonis.cc/sui-sui-nian/2023-04-22-summary-openreview.html" rel="alternate"></link><published>2023-04-22T00:00:00+08:00</published><updated>2023-04-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-22:/sui-sui-nian/2023-04-22-summary-openreview.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年发表在 ICLR 2023 上的一篇文章，文章原标题为 Context-enriched molecule representations improve few-shot drug discovery，文章介绍了一种可以用于药物发现的少样本学习模型 MHNfs，MHNfs 通过 Hopfield 网络用上下文数据集少样本的强化分子表示，提升了分子性质预测的准确度。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://openreview.net/forum?id=XrMWUuEevr" rel="noopener" target="_blank"&gt;OpenReview&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年发表在 ICLR 2023 上的一篇文章，文章原标题为 Context-enriched molecule representations improve few-shot drug discovery，文章介绍了一种可以用于药物发现的少样本学习模型 MHNfs，MHNfs 通过 Hopfield 网络用上下文数据集少样本的强化分子表示，提升了分子性质预测的准确度。&lt;/p&gt;
 &lt;p&gt;深度学习已经成为了药物发现中的重要工具，但目前大部分深度学习方法都是通过大训练集获得分子信息。药物发现中的深度学习方法通常需要大量的生物试验数据，这在实际的药物研发过程中很难获取。少样本学习解决了药物发现中有效数据较少的问题，少样本学习主要有 3 种方法：&lt;/p&gt;
@@ -2248,268 +2338,4 @@ git pull origin master
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RNN"></category></entry><entry><title>CS224n 自然语言处理第二节: 词向量与词义感知</title><link href="https://leonis.cc/sui-sui-nian/2023-02-08-cs224n-lecture2.html" rel="alternate"></link><published>2023-02-08T00:00:00+08:00</published><updated>2023-02-08T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-08:/sui-sui-nian/2023-02-08-cs224n-lecture2.html</id><summary type="html">&lt;p&gt;CS224n Lecture 2: Word Vectors, Word Senses, and Neural Classifiers&lt;/p&gt;</summary><content type="html">&lt;h2 id="word2vec-de-ji-suan"&gt;word2vec 的计算&lt;/h2&gt;
-&lt;p&gt;在前一节中，介绍了 word2vec 的 Skip-grams 模式，即通过中心词预测上下文词的工作方式，接下来使用该方式计算词向量，具体步骤包括&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;初始化词向量（普遍使用 one-hot 编码）&lt;/li&gt;
-&lt;li&gt;计算每个词的条件概率
-   &lt;div class="math"&gt;$$P(o|c)=\frac{\exp(u_o^Tv_c)}{\sum_{w\in V}\exp(u_w^Tv_c)}$$&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;通过迭代优化的方法（梯度下降、随机梯度下降），改变词向量的值，最小化损失函数
-   &lt;div class="math"&gt;$$J(\theta)=-\frac{1}{T}\log L(\theta)=-\frac{1}{T}\prod^T_{t=1}\prod_{\substack{-m\leq j\leq m\\j\neq0}}P(w_{t+j}|w_t;\theta)$$&lt;/div&gt;
-   最终得到基于分布式语义的词向量结果。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="fu-cai-yang"&gt;负采样&lt;/h3&gt;
-&lt;p&gt;计算 &lt;span class="math"&gt;\(\sum_{w\in V}\exp(u_w^Tv_c)\)&lt;/span&gt; 具有巨大的开销，负采样是一种优化词向量计算效率的一种方法，负采样的思路是将由中心词预测多个上下文词的多分类问题转化为二分类问题，即判断目标词是否为中心词。&lt;/p&gt;
-&lt;p&gt;首先定义 &lt;span class="math"&gt;\(D\)&lt;/span&gt; 为词对 &lt;span class="math"&gt;\((c,o)\)&lt;/span&gt; 的集合（中心词 center，上下文 outside），那么对于任意词对 &lt;span class="math"&gt;\((c,w)\)&lt;/span&gt;，它们之间互为上下文的概率为&lt;/p&gt;
-&lt;div class="math"&gt;$$P(D=1|c,w)=\sigma(u_w^\mathrm{T}v_c)$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\sigma(x)=\frac{1}{1+e^{-x}}\)&lt;/span&gt;，又称为 Sigmoid 函数，根据 Sigmoid 函数的性质，当 &lt;span class="math"&gt;\(c\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(w\)&lt;/span&gt; 相似程度大时，二者为上下文概率高，当相似程度低时，互为上下文概率低，同样是分布式语义的思想。&lt;/p&gt;
-&lt;p&gt;全部正样本的似然函数为&lt;/p&gt;
-&lt;div class="math"&gt;$$\prod_{(c,w)\in D}P(D=1|c,w)$$&lt;/div&gt;
-&lt;p&gt;全部负样本的似然函数为&lt;/p&gt;
-&lt;div class="math"&gt;$$\prod_{(c,w)\notin D}P(D=1|c,w)$$&lt;/div&gt;
-&lt;p&gt;优化目标是使正样本尽可能多，负样本尽可能少，所以优化目标可以写作&lt;/p&gt;
-&lt;div class="math"&gt;$$\max \prod_{(c,w)\in D}P(D=1|c,w)\prod_{(c,w)\notin D}P[1-(D=1|c,w)]$$&lt;/div&gt;
-&lt;p&gt;取对数并整理后可以得到&lt;/p&gt;
-&lt;div class="math"&gt;$$J(\theta)=-\log\sigma(u^\mathrm{T}_ov_c)-\sum_{j\in \mathrm{NEG}(w)}\log\sigma(-u^\mathrm{T}_jv_c)$$&lt;/div&gt;
-&lt;p&gt;也就是说负采样需要从文本中抽取若干个词组成负样本集 &lt;span class="math"&gt;\(\mathrm{NEG}(w)\)&lt;/span&gt;，并迭代最小化损失函数得到词向量，这也是「负采样」一名的含义。通常将文本中各词的频率 &lt;span class="math"&gt;\(f(w)\)&lt;/span&gt; 缩放为 &lt;span class="math"&gt;\(f(w)^{3/4}\)&lt;/span&gt; ，以此作为概率从文本中抽取词组成负样本集，避免忽略低频词。&lt;/p&gt;
-&lt;h2 id="gong-xian-ju-zhen_1"&gt;共现矩阵&lt;/h2&gt;
-&lt;p&gt;与 word2vec 利用概率预测得到词向量不同，共现矩阵是一种通过直接计数得到词向量的方法。设定一个大小为 &lt;span class="math"&gt;\(m\)&lt;/span&gt; 的窗口，让该窗口经过语料中的所有中心词，并统计所有中心词所属窗口中不同上下文词的数量，将结果列为表格，就是一个 &lt;span class="math"&gt;\(|W|\times |W|\)&lt;/span&gt; 的矩阵，称为共现矩阵， &lt;span class="math"&gt;\(|W|\)&lt;/span&gt; 为语料中的词汇数量。在共现矩阵中，元素 &lt;span class="math"&gt;\(x_{ij}\)&lt;/span&gt; 就表示词 &lt;span class="math"&gt;\(w_j\)&lt;/span&gt; 作为中心词 &lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 上下文词的数量。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I like deep learning.&lt;br/&gt;
-I like NLP.&lt;br/&gt;
-I enjoy flying.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;例如以上三句话构成的语料，设定窗口大小为 1，可以得到以下共现矩阵：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;I&lt;/th&gt;
-&lt;th&gt;like&lt;/th&gt;
-&lt;th&gt;enjoy&lt;/th&gt;
-&lt;th&gt;deep&lt;/th&gt;
-&lt;th&gt;learning&lt;/th&gt;
-&lt;th&gt;NLP&lt;/th&gt;
-&lt;th&gt;flying&lt;/th&gt;
-&lt;th&gt;.&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;I&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;like&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;enjoy&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;deep&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;learning&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;NLP&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flying&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;.&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;共现矩阵是一个对称矩阵，从共现矩阵中也可以得到词向量，如 &lt;span class="math"&gt;\(w^\mathrm{T}(\mathrm{I})=(0\ 2\ 1\ 0\ 0\ 0\ 0\ 0)\)&lt;/span&gt;。共现矩阵得到的向量普遍较为稀疏，通过奇异值分解可以将共现矩阵转化为更为稠密的特征矩阵，从而得到稠密的词向量。&lt;/p&gt;
-&lt;h3 id="gong-xian-gai-lu"&gt;共现概率&lt;/h3&gt;
-&lt;p&gt;共现矩阵通过计数获取中心词与上下文词的关系，因此词频对共现矩阵有着很大影响，例如以下这个例子：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;&lt;span class="math"&gt;\(x=\mathrm{solid}\)&lt;/span&gt;&lt;/th&gt;
-&lt;th&gt;&lt;span class="math"&gt;\(x=\mathrm{gas}\)&lt;/span&gt;&lt;/th&gt;
-&lt;th&gt;&lt;span class="math"&gt;\(x=\mathrm{water}\)&lt;/span&gt;&lt;/th&gt;
-&lt;th&gt;&lt;span class="math"&gt;\(x=\mathrm{random}\)&lt;/span&gt;&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;span class="math"&gt;\(P(x\vert\mathrm{ice})\)&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;large&lt;/td&gt;
-&lt;td&gt;small&lt;/td&gt;
-&lt;td&gt;large&lt;/td&gt;
-&lt;td&gt;small&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;span class="math"&gt;\(P(x\vert\mathrm{steam})\)&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;small&lt;/td&gt;
-&lt;td&gt;large&lt;/td&gt;
-&lt;td&gt;large&lt;/td&gt;
-&lt;td&gt;small&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;span class="math"&gt;\(\frac{P(x\vert\mathrm{ice})}{P(x\vert\mathrm{steam})}\)&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;large&lt;/td&gt;
-&lt;td&gt;small&lt;/td&gt;
-&lt;td&gt;~1&lt;/td&gt;
-&lt;td&gt;~1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;依据直觉判断，「冰（ice）」与「固体（solid）」存在着很强的相关性，「蒸汽（steam）」与「气体（gas）」存在着很强的相关性，基于计数得到的 &lt;span class="math"&gt;\(P(x|\mathrm{ice})\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(P(x|\mathrm{steam})\)&lt;/span&gt; 确实能反映这一关系。但在遇到高频词与低频词时就有了麻烦，表中用的例子是 「water」 和 「random」，我们不妨考虑更极端的情况，考虑高频词为冠词 「the」，低频词为很难见到的「thou」，结果会怎样呢？&lt;span class="math"&gt;\(P(x|\mathrm{ice})\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(P(x|\mathrm{steam})\)&lt;/span&gt; 对于高频词都有着较大值，对低频词都有着较小值，无法判断相关性了。&lt;/p&gt;
-&lt;p&gt;为了避免高频词与低频词的影响，更加真实地反映词义，通常会使用共现概率（co-occurrence probabilities）进行词义分析，即表中的 &lt;span class="math"&gt;\(\frac{P(x\vert\mathrm{ice})}{P(x\vert\mathrm{steam})}\)&lt;/span&gt; ，共现概率通过除法消除了共有高频词与低频词的影响，只有与中心词有着较强语义关联的词才会具有较大值。&lt;/p&gt;
-&lt;h2 id="glove_1"&gt;GloVe&lt;/h2&gt;
-&lt;p&gt;基于计数的共现矩阵与基于概率预测的 word2vec 各有优缺点，而 GloVe 则结合了二者的优点。GloVe 全称为 Global Vectors，GloVe 得到的词向量既能像基于计数的方法一样全面利用信息，又能像基于概率预测的方法一样表示比相关性更多更复杂的关系。&lt;/p&gt;
-&lt;p&gt;GloVe 首先通过对共现概率建立模型，具有如下形式：&lt;/p&gt;
-&lt;div class="math"&gt;$$F(w_i,w_j,\tilde{w_k})=\frac{P_{ik}}{P_{jk}}$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(w_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(w_j\)&lt;/span&gt; 是比较的目标词，例如上表中的「ice」与「steam」，&lt;span class="math"&gt;\(\tilde{w}\)&lt;/span&gt; 为上下文词，即上表中的「solid」与「gas」等，&lt;span class="math"&gt;\(P_{ij}=P(j|i)\)&lt;/span&gt; 表示由计数得到的共现概率。&lt;/p&gt;
-&lt;p&gt;接着参考 word2vec 中相似向量具有相同语义的思想，我们会希望 GloVe 得到的相似词向量具有强相关性，也就是较大的 &lt;span class="math"&gt;\(P_{ij}\)&lt;/span&gt;，向量的数量积是衡量向量相似性的自然方法，那么模型的形式可以改为&lt;/p&gt;
-&lt;div class="math"&gt;$$F(w_i^\mathrm{T}\tilde{w}_k,w_j^\mathrm{T}\tilde{w}_k)=\frac{P_{ik}}{P_{jk}}$$&lt;/div&gt;
-&lt;p&gt;然后要让模型 &lt;span class="math"&gt;\(F\)&lt;/span&gt; 中的左侧的向量运算能够表示右侧概率的比值，GloVe 的假设是使用向量的差，也就是&lt;/p&gt;
-&lt;div class="math"&gt;$$F(w_i^\mathrm{T}\tilde{w}_k-w_j^\mathrm{T}\tilde{w}_k)=F[(w_i-w_j)^\mathrm{T}\tilde{w}_k]=\frac{P_{ik}}{P_{jk}}$$&lt;/div&gt;
-&lt;p&gt;最后求解该模型，在保证对称性等要求下得到 GloVe 模型为&lt;/p&gt;
-&lt;div class="math"&gt;$$J=\sum_{i,j=1}^Vf(X_{ij})(w_i^\mathrm{T}\tilde{w}_j+b_i+\tilde{b}_j-\log X_{ij})^2$$&lt;/div&gt;
-&lt;p&gt;具体推导过程可以参考&lt;a href="https://zhuanlan.zhihu.com/p/60208480" rel="noopener" target="_blank"&gt;CS224N笔记(二)：GloVe&lt;/a&gt;。&lt;/p&gt;
-&lt;h2 id="ci-xiang-liang-zhong-de-duo-zhong-yu-yi"&gt;词向量中的多重语义&lt;/h2&gt;
-&lt;p&gt;在自然语言中，一个词具有多重的语义，由于语境不同而具有不同的意思，例如汉语中的多音字「省」，那么词向量该如何处理这种状况呢？&lt;/p&gt;
-&lt;p&gt;要明确的是，词向量是基于语料中的分布式语义得到的，虽然这种分布与语境还存在一定差异，但二者具有很大的相似性。正如当我们看到文章中的「省」字时不会像词典一样列举出所有含义，而是根据上下文或是最常见的义项做出判断，词向量也是如此。&lt;/p&gt;
-&lt;p&gt;词向量可以看作多个语义的线性组合，因此词向量也具有多重语义，可以表示为&lt;/p&gt;
-&lt;div class="math"&gt;$$w(省)=\alpha_1w(省_1)+\alpha_2w(省_2)$$&lt;/div&gt;
-&lt;p&gt;其中权值 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 由语料中词汇的频率 &lt;span class="math"&gt;\(f\)&lt;/span&gt; 决定，可以表示为&lt;/p&gt;
-&lt;div class="math"&gt;$$\alpha_1=\frac{f_1}{f_1+f_2}$$&lt;/div&gt;
-&lt;hr/&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1214/" rel="noopener" target="_blank"&gt;CS224n: Natural Language Processing with Deep Learning&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/33799633" rel="noopener" target="_blank"&gt;全面理解 word2vec - 知乎&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/60208480" rel="noopener" target="_blank"&gt;CS224N笔记(二)：GloVe - 知乎&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="NLP"></category><category term="CS224n"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="RNN"></category></entry></feed>

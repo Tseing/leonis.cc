@@ -1,6 +1,6 @@
 [input]
 html_selector = ".post-content"
-exclude_html_selector = "script, .toc-nav, .math"
+exclude_html_selector = "script, pre, .toc-nav, .math"
 base_directory = "output"
 
 [[input.files]]
@@ -12,6 +12,11 @@ title = "About"
 path = "pages/shan-qiang-bian.html"
 url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
+
+[[input.files]]
+path = "sui-sui-nian/2023-04-28-summary-doi.org/10.1021/acs.jcim.2c01618.html"
+url = "/sui-sui-nian/2023-04-28-summary-doi.org/10.1021/acs.jcim.2c01618.html"
+title = "文献总结｜我们能用 Transformer 模型快速学会「翻译」活性分子吗？"
 
 [[input.files]]
 path = "zai-lu-shang/2023-04-27-crabapple-of-tianjin.html"
