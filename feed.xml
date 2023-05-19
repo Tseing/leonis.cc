@@ -1,5 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-05-13T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究</title><link href="https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html" rel="alternate"></link><published>2023-05-13T00:00:00+08:00</published><updated>2023-05-13T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-13:/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年东京大学发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder–decoder models in learning progress，文章，文章研究了编码器-解码器模型训练过程中对化学结构识别的过程以及将其潜变量作为分子表示用于下游任务的效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-023-00713-z" rel="noopener" target="_blank"&gt;doi.org/10.1186/s13321-023-00713-z&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-05-19T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜一种用于基于结构药物设计的 3D 生成模型</title><link href="https://leonis.cc/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html" rel="alternate"></link><published>2023-05-19T00:00:00+08:00</published><updated>2023-05-19T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-19:/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html</id><summary type="html">&lt;p&gt;本文介绍于 2021 年彭健课题组发表在 NeurIPS 2021 上的一篇文章，文章原标题为 A 3D Generative Model for Structure-Based Drug Design，文章，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2203.10446" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2203.10446&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基于结构药物设计中的一个基本问题是针对指定的蛋白结合位点生成分子，目前解决这一问题的深度学习方法可以分为两类：基于字符序列与基于图的方法。但不论是基于字符序列的 1 维模型，还是基于图的 2 维模型，其本质上缺少蛋白质 3 维空间中的信息。为了获取空间信息，目前也出现了在 3D 空间中实现分子生成的模型，但这些模型只能生成较小的分子，无法有效生成类药的更大分子。&lt;/p&gt;
+&lt;p&gt;因此，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;蛋白的结合位点可以定义为原子的集合 &lt;span class="math"&gt;\(\mathcal{C}=\{(\boldsymbol{a}_i,\boldsymbol{r}_i)\}^{N_b}_{i=1}\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(N_b\)&lt;/span&gt; 是结合位点原子的数量，&lt;span class="math"&gt;\(\boldsymbol{a}_i\)&lt;/span&gt; 是第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个原子的特征，&lt;span class="math"&gt;\(\boldsymbol{r}_i\)&lt;/span&gt; 是其空间坐标。可以将在结合位点生成原子的任务视作为模拟结合位点中各位置 &lt;span class="math"&gt;\(\boldsymbol{r}\)&lt;/span&gt; 上出现原子的概率，也就是模拟原子在结合位点上出现的概率密度 &lt;span class="math"&gt;\(p(e|\boldsymbol{r},\mathcal{C})\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(e\in\mathcal{E}=\{\mathrm{H},\mathrm{C},\mathrm{O},\cdots\}\)&lt;/span&gt; 代表生成分子的原子。&lt;/p&gt;
+&lt;p&gt;为了对 &lt;span class="math"&gt;\(p(e|\boldsymbol{r},\mathcal{C})\)&lt;/span&gt; 建模，文章设计了两个模块：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;上下文编码器（Context Encoder）：使用图神经网络（graph neural networks, GNN）学习环境 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 下各原子的表示；&lt;/li&gt;
+&lt;li&gt;空间分类器（Spatial Classifier）：输入任意位置 &lt;span class="math"&gt;\(\boldsymbol{r}\)&lt;/span&gt;，集合该位置附近所有上下文原子的表示，输出预测结果 &lt;span class="math"&gt;\(p(e|\boldsymbol{r},\mathcal{C})\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;上下文编码器&lt;/h4&gt;
+&lt;p&gt;上下文编码器用于提取特征，获得各原子的表示，在该任务中，对原子表示有两个要求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;原子表示不应只具有本身的信息，还应具有环境中的信息；&lt;/li&gt;
+&lt;li&gt;在旋转和平移变换后，原子性质的性质不会发生改变，原子表示应具有旋转和平移不变性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;基于以上两点要求，文章使用了旋转平移不变的图神经网络。&lt;/p&gt;
+&lt;p&gt;首先，针对蛋白结合位点构建 k-近邻图，基于结合位点 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 中各原子的距离得到图 &lt;span class="math"&gt;\(\mathcal{G}=\langle\mathcal{C},\boldsymbol{A}\rangle\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\boldsymbol{A}\)&lt;/span&gt; 为邻接矩阵，将 k-近邻中的第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个原子记作 &lt;span class="math"&gt;\(N_k(\boldsymbol{r}_i)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;接着，编码器将 &lt;span class="math"&gt;\(\mathcal{G}\)&lt;/span&gt; 中所有结点原子的特征 &lt;span class="math"&gt;\(\{\boldsymbol{a}_i\}\)&lt;/span&gt; 转化为嵌入表示 &lt;span class="math"&gt;\(\{\boldsymbol{h}^{(0)}_i\}\)&lt;/span&gt;，然后进入消息传递层。&lt;/p&gt;
+&lt;p&gt;一般的 GNN 消息传递过程定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\boldsymbol{h}^{(\ell+1)}_i=\sigma\left(\boldsymbol{W}^\ell_\mathrm{self}\boldsymbol{h}^{(\ell)}_i+\boldsymbol{W}^\ell_\mathrm{nergh}\sum_{j\in\mathcal{N}}\boldsymbol{h}^{(\ell)}_j\right)
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\boldsymbol{W}\)&lt;/span&gt; 为模型需要训练的参数，&lt;span class="math"&gt;\(\sigma\)&lt;/span&gt; 为激活函数。从上式中可以看出，GNN 的消息传递是在将 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 结点周围临近的 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 结点的信息按权重聚集起来。&lt;/p&gt;
+&lt;p&gt;在文章中所使用的消息传递过程为&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\boldsymbol{h}^{(\ell+1)}_i=\sigma\left(\boldsymbol{W}^\ell_0\boldsymbol{h}^{(\ell)}_i+\sum_{j\in N_k(\boldsymbol{r}_i)}\boldsymbol{W}^\ell_\mathrm{1}\boldsymbol{w}(d_{ij})\odot\boldsymbol{W}^\ell_2\boldsymbol{h}^{(\ell)}_j\right)
+$$&lt;/div&gt;
+&lt;p&gt;相比原式，文章在第 2 项中做了一些改动，&lt;span class="math"&gt;\(\boldsymbol{w}(\cdot)\)&lt;/span&gt; 是一个权重网络，&lt;span class="math"&gt;\(d_{ij}\)&lt;/span&gt; 为 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 两个结点间的距离。上述过程就是在聚集信息时，根据距离的远近分配权重，逐个原子计算后得到 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 中所有原子的嵌入表示集合 &lt;span class="math"&gt;\(\{\boldsymbol{h}^{(L)}_i\}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h4&gt;空间分类器&lt;/h4&gt;
+&lt;p&gt;在空间中的任意位置 &lt;span class="math"&gt;\(\boldsymbol{r}\)&lt;/span&gt; 上，空间分类器聚集由上下文编码器得到的原子的嵌入表示：&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\boldsymbol{v}=\sum_{j\in N_k(\boldsymbol{r})}\boldsymbol{W}_0\boldsymbol{w}_\mathrm{aggr}(||\boldsymbol{r}-\boldsymbol{r}_j||)\odot\boldsymbol{W}_i\boldsymbol{h}^{(L)}_j
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\boldsymbol{w}_\mathrm{aggr}(\cdot)\)&lt;/span&gt; 同样是一个权重网络。在这一步中，类似地根据任意位置 &lt;span class="math"&gt;\(\boldsymbol{r}\)&lt;/span&gt; 与周围结点间的距离 &lt;span class="math"&gt;\(||\boldsymbol{r}-\boldsymbol{r}_j||\)&lt;/span&gt; 分配权重，聚集该位置附近出现过原子的信息，得到特征 &lt;span class="math"&gt;\(\boldsymbol{v}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;最后通过多层感知机、归一化后得到所求概率分布：&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\boldsymbol{c}=\mathrm{MLP}(\boldsymbol{v})\\
+p(e|\boldsymbol{r},\mathcal{C})=\frac{\exp(\boldsymbol{c}[e])}{1+\sum_{e'\in\mathcal{E}}\exp(\boldsymbol{c}[e'])}
+$$&lt;/div&gt;
+&lt;h4&gt;取样&lt;/h4&gt;
+&lt;p&gt;因为 &lt;span class="math"&gt;\(p(e|\boldsymbol{r},\mathcal{C})\)&lt;/span&gt; 需要指定结合位点 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 和位置 &lt;span class="math"&gt;\(\boldsymbol{r}\)&lt;/span&gt; 得到预测的原子 &lt;span class="math"&gt;\(e\)&lt;/span&gt;，而分子生成需要根据 &lt;span class="math"&gt;\(\mathcal{C}\)&lt;/span&gt; 自动分配各原子的位置，所以由 &lt;span class="math"&gt;\(p(e|\boldsymbol{r},\mathcal{C})\)&lt;/span&gt; 导出&lt;/p&gt;
+&lt;div class="math"&gt;$$p(e,\boldsymbol{r}|\mathcal{C})=\frac{\exp(\boldsymbol{c}[e])}{Z}$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(Z\)&lt;/span&gt; 为未定的归一化常数。&lt;/p&gt;
+&lt;p&gt;分子生成的过程为，在 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 步骤，使用结合位点（环境） &lt;span class="math"&gt;\(\mathcal{C}_t\)&lt;/span&gt; 由 &lt;span class="math"&gt;\(p(e,\boldsymbol{r}|\mathcal{C}_t)\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\((e_{t+1},\boldsymbol{r}_{t+1})\)&lt;/span&gt;，将 &lt;span class="math"&gt;\((e_{t+1},\boldsymbol{r}_{t+1})\)&lt;/span&gt; 加入到环境 &lt;span class="math"&gt;\(\mathcal{C}_t\)&lt;/span&gt; 得到 &lt;span class="math"&gt;\(\mathcal{C_{t+1}}\)&lt;/span&gt;，再用于预测下一个原子的种类和位置，即&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{align}
+    &amp;amp;(e_{t+1},\boldsymbol{r}_{t+1})\sim p(e,\boldsymbol{r}|\mathcal{C}_t)\\
+    &amp;amp;\mathcal{C}_{t+1}\leftarrow\mathcal{C}_t\cup\{(e_{t+1},\boldsymbol{r}_{t+1})\}
+\end{align}
+$$&lt;/div&gt;
+&lt;p&gt;再增加一个辅助的分类网络用于判断生成原子是否为末端原子，若为末端原子则结束分子生成过程。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9062?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9062?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;CrossDocked 数据集中有 2.25 千万条对接得到的蛋白-配体对数据，经数据清洗后，使用其中的 100000 条数据训练模型，100 条数据作为测试集。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9063?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9063?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章首先测试了模型根据蛋白结合位点生成分子的整体效果。结果如上图所示，模型生成分子的对接打分略差于参考分子，但要更好于同类模型 liGAN，生成分子的 QED 与 SA 甚至好过于参考分子，生成分子的所有指标均好于 liGAN。在各分子性质分布的对比中，相比另两个数据集，生成分子的 QED 向右偏移，具有更好的类药性。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9064?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9064?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;以上结果也可以从生成分子的样例中看出，上图展示了模型针对两个蛋白生成的多个分子，生成分子的对接打分、QED 都要好于参考分子，同时许多生成分子还具有参考分子的类似结构。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9066?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9066?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;最后，文章测试了模型在 linker 预测上的应用。模型不需要经过重新训练或都微调，直需要将初始的环境 &lt;span class="math"&gt;\(\mathcal{C}_0\)&lt;/span&gt; 改变为结合位点与片段，模型就会根据环境补足片段间的 linker。测试结果如上图所示，与设计用于 linker 预测任务的 DeLinker 相比，文章中的模型在各方面都具有优势。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9065?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9065?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;文章也列举了 linker 预测结果的样例，虽然模型不一定能预测并找回参考分子，但预测生成的分子中都包含了指定的片段，同时模型是根据蛋白的 3D 信息生成 linker，这在基于结构的药物设计上可以作为应用工具。&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章使用 GNN 构建了一种用于基于结构药物设计的分子生成模型，该模型使用 GNN 通过设计用于蛋白 3D 信息的消息传递过程提取结合位点中的空间信息，根据配体各原子在结合位点中各位置出现的概率建立模型，从该概率中取样实现分子生成。模型生成的分子具有蛋白的空间信息，在各方面指标上都具有较好的表现。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究</title><link href="https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html" rel="alternate"></link><published>2023-05-13T00:00:00+08:00</published><updated>2023-05-13T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-13:/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年东京大学发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder–decoder models in learning progress，文章，文章研究了编码器-解码器模型训练过程中对化学结构识别的过程以及将其潜变量作为分子表示用于下游任务的效果。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-023-00713-z" rel="noopener" target="_blank"&gt;doi.org/10.1186/s13321-023-00713-z&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年东京大学发表在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder&amp;ndash;decoder models in learning progress，文章，文章研究了编码器-解码器模型训练过程中对化学结构识别的过程以及将其潜变量作为分子表示用于下游任务的效果。&lt;/p&gt;
 &lt;p&gt;基于结构的分子表示又被称为描述符，如何获得更好的描述符是化学信息学中很重要的问题。在近年兴起的深度学习领域，编码器-解码器（encoder-decoder, ED）类模型广受关注，以分子的字符序列 SMILES 作为输入，编码器模型会将其转化为一连串蕴含化学学信息的描述符，解码器模型通过该中间变量还原出原来的分子，这种由 SMILES（或其他）分子表示编码至隐空间中的潜变量就可以用作为数字形式的分子表示，用于各种下游任务，这也是自然语言处理中「预训练-微调」的范式。&lt;/p&gt;
 &lt;p&gt;在传统方法中，也有例如 ECFP、NFP 一类的分子指纹，但他们只描述了分子中所具有的特定结构，无法由描述符再还原出分子结构。只有更好的表示才能在下游任务得到更好的结果，所以文章研究了在 ED 模型中化学结构的识别过程，ED 模型对化学结构的识别是指模型获得反映化学结构的数字信息和将该信息还原为化学结构的能力。&lt;/p&gt;
@@ -2262,69 +2390,4 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>Pelican + Nginx 在服务器上搭载静态博客</title><link href="https://leonis.cc/sui-sui-nian/2023-02-13-deploy-pelican-by-nginx.html" rel="alternate"></link><published>2023-02-13T00:00:00+08:00</published><updated>2023-02-13T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-13:/sui-sui-nian/2023-02-13-deploy-pelican-by-nginx.html</id><summary type="html">&lt;p&gt;去年购置了一个服务器，由于后来太忙，一直没有时间折腾，终于有一段空闲的时间了，就尝试把我的 Pelican Blog 从 GitHub Pages 搬迁到服务器上，再通过 Nginx 部署我的站点。&lt;/p&gt;</summary><content type="html">&lt;p&gt;去年黑色星期五低价购置了一个海外服务器，由于后来太忙，一直没有时间折腾，终于有一段空闲的时间了。想到的我博客一直部署在 GitHub Pages 上，访问速度慢不说，还会由于各种的原因时常无法连接，所以动手把它搬到自己的服务器上吧。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8514?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;上图是我的部署方案，首先使用 Pelican（或其他静态博客生成器）在本地生成静态网页，再将静态网页 push 到 GitHub 仓库，这两步也是在 GitHub Pages 上部署、更新博客的步骤，所以对我而言没有额外的负担。&lt;/p&gt;
-&lt;p&gt;接着在服务器上 pull 静态网页，然后使用 Nginx 作为 HTTP 服务器就可以通过域名或是公网 IP 访问到网站了。虽然 Pelican 也自带有 HTTP 服务器，可以不使用 Nginx，但我觉得它的性能和通用性方面不够好，而且我主要在 PC 上写文章，在服务器上安装 Pelican 并在服务器上生成静态网页未免太繁琐。&lt;/p&gt;
-&lt;p&gt;最后为了便于管理服务器上的文件和排查问题，可以使用 SFTP 直接上传和下载服务器文件。&lt;/p&gt;
-&lt;p&gt;{warn begin}在境内服务器上部署网站必须经过 TCP 备案，否则会被拦截或是限流，引起非常多的麻烦。{warn end}&lt;/p&gt;
-&lt;h2 id="pei-zhi-nginx"&gt;配置 Nginx&lt;/h2&gt;
-&lt;p&gt;在 Debian 系统上可以使用以下命令安装 Nginx：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-bash"&gt;# Debian
-$ sudo apt install nginx
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;安装完成后可 &lt;code&gt;nginx -v&lt;/code&gt; 检查 Nginx 的版本。使用 &lt;code&gt;http://服务器 IP&lt;/code&gt; 访问 Web 服务器，不出意外的话，会出现如下页面，提示已经成功安装了 Nginx：&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8515?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;如果没有出现 Nginx 的欢迎页面，就需要检查服务器防火墙的设置，由于各个系统的防火墙设置不同，这里就不给出设置的方法了。&lt;/p&gt;
-&lt;p&gt;然后需要在 &lt;code&gt;/etc/nginx/sites-available&lt;/code&gt; 中建立我们站点的 Nginx 配置:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-bash"&gt;$ cd /etc/nginx/sites-available
-$ sudo touch blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在 Nginx 设计中，在 &lt;code&gt;sites-available&lt;/code&gt; 目录下存放站点的配置文件，并将其链接到 &lt;code&gt;sites-enabled&lt;/code&gt; 目录下。&lt;code&gt;sites-enabled&lt;/code&gt; 目录下存放了启用站点的配置，若要关闭该站点的配置，删除该链接即可。&lt;/p&gt;
-&lt;p&gt;通过以下命令进入 &lt;code&gt;sites-enabled&lt;/code&gt; 并建立软链接：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-bash"&gt;$ cd /etc/nginx/sites-enabled
-$ ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;接着再回到 &lt;code&gt;sites-available&lt;/code&gt; 中，使用 &lt;code&gt;vim blog&lt;/code&gt; 编辑配置，粘贴以下内容：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-nginx"&gt;server {
-    listen       80;
-    server_name  _;
-    root         /home/Leo/web/blog;
-
-    location / {
-    };
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;其中 &lt;code&gt;listen 80&lt;/code&gt; 指监听 80 端口，也就是 HTTP 服务的端口，&lt;code&gt;server_name&lt;/code&gt; 是网站的 url 地址，如果需要通过域名访问，例如填入 &lt;code&gt;example.com&lt;/code&gt; 即可，&lt;code&gt;root&lt;/code&gt; 是静态站点的文件目录，在该目录下存放了站点的 HTML 和 CSS 文件，&lt;code&gt;location&lt;/code&gt; 设置了网站路由，不需要修改。&lt;/p&gt;
-&lt;p&gt;最后需要将同一文件夹内 &lt;code&gt;default&lt;/code&gt; 文件中的所有内容都注释掉。&lt;/p&gt;
-&lt;h2 id="cong-github-pull-jing-tai-wang-ye"&gt;从 GitHub pull 静态网页&lt;/h2&gt;
-&lt;p&gt;在本地电脑上，使用 Pelican（或其他静态网页生成器）生成静态网页，Pelican 的命令是 &lt;code&gt;pelican content -s publishconf.py&lt;/code&gt;，然后就会生成 &lt;code&gt;output&lt;/code&gt; 文件夹，只需要将该文件夹 push 到 GitHub 仓库中，这里的操作十分简单，也不展开介绍了。&lt;/p&gt;
-&lt;p&gt;在服务器中进入 &lt;code&gt;root&lt;/code&gt; 文件夹，也就是 &lt;code&gt;/home/Leo/web/blog&lt;/code&gt; 中，&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-bash"&gt;git init
-git remote add origin https://github.com/Tseing/tseing.github.io.git
-git pull origin master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;使用 &lt;code&gt;sudo git init&lt;/code&gt; 初始化后，从链接的 GitHub 仓库中 pull 静态文件。最后使用 &lt;code&gt;sudo nginx -s reload&lt;/code&gt; 重启 Nginx 服务，在 &lt;code&gt;http://服务器 IP&lt;/code&gt; 上就能看到博客页面啦。&lt;/p&gt;
-&lt;p&gt;可以把在服务器上发布文章的流程总结为以下几步：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在本地使用 Markdown 撰写文章；&lt;/li&gt;
-&lt;li&gt;使用 Pelican 生成静态网页；&lt;/li&gt;
-&lt;li&gt;将生成的静态网页 push 至 GitHub 仓库；&lt;/li&gt;
-&lt;li&gt;连接服务器，在相应目录下 pull GitHub 仓库中的更新。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这样的流程比较繁琐，每次更新都需要连接到服务器上操作，要简化这样的流程并实现自动化部署就需要借助 webhook 的功能。简单来说，在 GitHub 仓库设置中开启 webhook，用户对仓库执行每个动作（这里为 push）后，仓库都会向目标服务器发送一段 JSON 报文（回调），那么服务器只需要一直运行着监听该报文的脚本，一旦收到 push 成功的报文就执行 pull 操作。这样就简化了工作流程，push 静态网页后，服务器上的内容也会自动更新。&lt;/p&gt;
-&lt;p&gt;webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 &lt;a href="https://github.com/adnanh/webhook" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; adnanh/webhook&lt;/a&gt;，十分轻量，配置的方法也很简单，可以参考&lt;a href="https://www.cnblogs.com/pingyeaa/p/12777626.html" rel="noopener" target="_blank"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;{warn begin}旧版 webhook 存在一些令人困恼的 bug，例如无法读取相对路径，请使用最新版本。{warn end}&lt;/p&gt;
-&lt;h2 id="guan-bi-github-pages"&gt;关闭 GitHub Pages&lt;/h2&gt;
-&lt;p&gt;在一切部署工作都完成之后，也是时候和 GitHub Pages 说再见了。避免搜索引擎抓取数据时出现大量重复网页，所以就关闭原来 GitHub Pages 上的博客吧。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;Hello world!&lt;/p&gt;&lt;br/&gt;
-&amp;mdash;&amp;mdash; &lt;em&gt;From my server&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr/&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.jianshu.com/p/87e26e644a5a" rel="noopener" target="_blank"&gt;使用 Nginx 搭建静态网站 - 简书&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.cnblogs.com/jenkin1991/p/8301983.html" rel="noopener" target="_blank"&gt;nginx 配置详解 - 博客园&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Nginx"></category><category term="Linux"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry></feed>
