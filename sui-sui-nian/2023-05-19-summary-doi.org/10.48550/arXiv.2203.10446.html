@@ -175,7 +175,7 @@
 <p>因此，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。</p>
 <h2 id="fang-fa">方法</h2>
 <h3 id="mo-xing">模型</h3>
-<p>蛋白的结合位点可以定义为原子的集合 <span class="math">\(\mathcal{C}=\{(\boldsymbol{a}_i,\boldsymbol{r}_i)\}^{N_b}_{i=1}\)</span>，其中 <span class="math">\(N_b\)</span> 是结合位点原子的数量，<span class="math">\(\boldsymbol{a}_i\)</span> 是第 <span class="math">\(i\)</span> 个原子的特征，<span class="math">\(\boldsymbol{r}_i\)</span> 是其空间坐标。可以将在结合位点生成原子的任务视作为模拟结合位点中各位置 <span class="math">\(\boldsymbol{r}\)</span> 上出现原子的概率，也就是模拟原子在结合位点上出现的概率密度 <span class="math">\(p(e|\boldsymbol{r},\mathcal{C})\)</span>，其中 <span class="math">\(e\in\mathcal{E}=\{\mathrm{H},\mathrm{C},\mathrm{O},\cdots\}\)</span> 代表生成分子的原子。</p>
+<p>蛋白的结合位点可以定义为原子的集合 <span class="math">\(\mathcal{C}=\{(\boldsymbol{a}_i,\boldsymbol{r}_i)\}^{N_b}_{i=1}\)</span>，其中 <span class="math">\(N_b\)</span> 是结合位点原子的数量，<span class="math">\(\boldsymbol{a}_i\)</span> 是第 <span class="math">\(i\)</span> 个原子的特征，<span class="math">\(\boldsymbol{r}_i\)</span> 是其空间坐标。可以将在结合位点生成原子的任务视作为模拟结合位点中各位置 <span class="math">\(\boldsymbol{r}\)</span> 上出现原子的概率，也就是模拟原子在结合位点上出现的概率密度 <span class="math">\(p(e|\boldsymbol{r},\mathcal{C})\)</span>，其中 <span class="math">\(e\in\mathcal{E}=\{\mathrm{H},\mathrm{C},\mathrm{O},\cdots\}\)</span> 代表生成分子中的原子。</p>
 <p>为了对 <span class="math">\(p(e|\boldsymbol{r},\mathcal{C})\)</span> 建模，文章设计了两个模块：</p>
 <ol>
 <li>上下文编码器（Context Encoder）：使用图神经网络（graph neural networks, GNN）学习环境 <span class="math">\(\mathcal{C}\)</span> 下各原子的表示；</li>
@@ -232,7 +232,7 @@ $$</div>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9064?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9064?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>以上结果也可以从生成分子的样例中看出，上图展示了模型针对两个蛋白生成的多个分子，生成分子的对接打分、QED 都要好于参考分子，同时许多生成分子还具有参考分子的类似结构。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9066?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9066?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>最后，文章测试了模型在 linker 预测上的应用。模型不需要经过重新训练或都微调，直需要将初始的环境 <span class="math">\(\mathcal{C}_0\)</span> 改变为结合位点与片段，模型就会根据环境补足片段间的 linker。测试结果如上图所示，与设计用于 linker 预测任务的 DeLinker 相比，文章中的模型在各方面都具有优势。</p>
+<p>最后，文章测试了模型在 linker 预测上的应用。模型不需要经过重新训练或都微调，只需将结合位点与片段作为初始的环境 <span class="math">\(\mathcal{C}_0\)</span>，模型就会根据环境补足片段间的 linker。测试结果如上图所示，与设计用于 linker 预测任务的 DeLinker 相比，文章中的模型在各方面都具有优势。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9065?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9065?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>文章也列举了 linker 预测结果的样例，虽然模型不一定能预测并找回参考分子，但预测生成的分子中都包含了指定的片段，同时模型是根据蛋白的 3D 信息生成 linker，这在基于结构的药物设计上可以作为应用工具。</p>
 <h2 id="jie-lun">结论</h2>
