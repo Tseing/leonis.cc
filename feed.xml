@@ -1,8 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-05-22T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>旧书市淘书记</title><link href="https://leonis.cc/zai-lu-shang/2023-05-22-wander-in-old-book-shop.html" rel="alternate"></link><published>2023-05-22T00:00:00+08:00</published><updated>2023-05-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-22:/zai-lu-shang/2023-05-22-wander-in-old-book-shop.html</id><summary type="html">&lt;p&gt;不得不说，在北方诸多城市中，天津的二手旧物市场可以说是相当火热的。我猜测的原因有二，一则是天津的老龄人口占比多，古玩旧物收藏有很大的受众；二则是得益于近代天津经济、文化的繁荣，许多官商士绅定居在此，天津民间仍流通有十分 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;不得不说，在北方诸多城市中，天津的二手旧物市场可以说是相当火热的。我猜测的原因有二，一则是天津的老龄人口占比多，古玩旧物收藏有很大的受众；二则是得益于近代天津经济、文化的繁荣，许多官商士绅定居在此，天津民间仍流通有十分具有价值的骨董。&lt;/p&gt;
-&lt;p&gt;我对古玩是一窍不通，再加之俚语「多看少买」的教育，我对那些地摊上的古玩也一点不感兴趣。更有许多低劣到我都能看出的赝品，常引得我在心中暗笑。但旧物中有一门类却是我的心头好，那就是旧书。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-05-27T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜可以同时完成分子语言序列回归和生成的回归 Transformer</title><link href="https://leonis.cc/sui-sui-nian/2023-05-27-summary-doi.org/10.1038/s42256-023-00639-z.html" rel="alternate"></link><published>2023-05-27T00:00:00+08:00</published><updated>2023-05-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-27:/sui-sui-nian/2023-05-27-summary-doi.org/10.1038/s42256-023-00639-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 IBM 研究团队发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Regression Transformer enables concurrent sequence regression and generation for molecular language modelling，文章提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务的 Transformer 模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;基于 Transformer 的模型是化学任务中常用的模型，但由于 Transformer 最早是用于自然语言处理的模型，难以处理回归任务，这些模型只能完成性质预测或条件分子生成，无法同时完成指定结构的生成和性质预测。若要实现有约束的分子生成，即根据指定的性质生成分子，则不得不通过在多个模型间传递参数再得到反馈的方法不断调节并得到目标的分子，如下图中 &lt;strong&gt;a&lt;/strong&gt; 所示。&lt;/p&gt;
+&lt;p&gt;文章尝试将回归任务融入到文本序列建模的过程中，提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务模型，称为 回归 Transformer（Regression Transformer, RT）。在实验部分，文章使用化学领域中常见的分子生成、性质预测、化学反应预测、生物领域中蛋白质性质预测以及自然语言处理中的文本生成等多种任务测试了模型效果，证明 RT 是一种可以通用于多种任务且可以同时完成序列回归和生成的模型。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9166?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9166?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;Transformer 原为由左至右逐次由前一个 token 预测下一个 token 的自回归模型，而在分子语言，如 SMILES 中，序列中各原子的顺序是没有特定意义的，序列中的原子也并非由前一个原子决定，因此文章选择使用非自回归模型。BERT、XLNet 都是 Transformer 的变种，BERT 使用掩码的方式随机掩盖序列中的 token，并根据周围的 token 预测被掩盖的 token，因为这个过程使用周围信息编码掩盖的 token，这类模型称为自编码模型。&lt;/p&gt;
+&lt;p&gt;XLNet 结合了自回归模型与自编码模型的优势，尽管 XLNet 还是由左至右预测 token，但它使用排列置换的方法将随机选择的待预测 token 放至序列末端，与 BERT 的掩码机制实际上相同，称为排列语言模型（Permutation language modeling, PLM）。文章使用 XLNet 作为主要的模型。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9167?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9167?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h4&gt;数值编码器&lt;/h4&gt;
+&lt;p&gt;如上图所示，输入的数据格式为 &lt;code&gt;&amp;lt;ESOL&amp;gt;-2.92|SMILES&lt;/code&gt;，&lt;code&gt;&amp;lt;ESOL&amp;gt;&lt;/code&gt; 标识了预测的性质，&lt;code&gt;-2.92&lt;/code&gt; 为该性质的数值。由于 Transformer 无法识别数值，会将其识别为数字字符，文章设计了数值编码器（numeric encoder, NE）获取数值信息。&lt;/p&gt;
+&lt;p&gt;先将 &lt;code&gt;-2.92&lt;/code&gt; 分为 &lt;code&gt;_-_&lt;/code&gt; &lt;code&gt;_2_0_&lt;/code&gt; &lt;code&gt;_._&lt;/code&gt; &lt;code&gt;_9_-1_&lt;/code&gt; &lt;code&gt;_2_-2_&lt;/code&gt; 几个 token，其中的 &lt;code&gt;_-_&lt;/code&gt; 与 &lt;code&gt;_._&lt;/code&gt; 分别表示负号与小数点，数字 &lt;code&gt;9&lt;/code&gt; 就以 &lt;code&gt;_9_-1_&lt;/code&gt; 表示，其中 &lt;code&gt;9&lt;/code&gt; 表示数值为 9，&lt;code&gt;-1&lt;/code&gt; 表示该值位于十分位（10&lt;sup&gt;-1&lt;/sup&gt;）。&lt;/p&gt;
+&lt;p&gt;对于数值 token &lt;span class="math"&gt;\(t_{v,p}\)&lt;/span&gt;，&lt;span class="math"&gt;\(v\)&lt;/span&gt; 表示该 token 的数值，&lt;span class="math"&gt;\(p\)&lt;/span&gt; 表示该 token 数值的位置，词嵌入的第 &lt;span class="math"&gt;\(j\)&lt;/span&gt; 维按下式计算：&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mathrm{NE_{Float}}(v,p,j)=(-1)^j\cdot\frac{v\cdot 10^p}{j+1}
+$$&lt;/div&gt;
+&lt;p&gt;然后与 SMILES 的常规词嵌入一起加上位置编码进入 XLNet 中进行计算。&lt;/p&gt;
+&lt;h4&gt;XLNet&lt;/h4&gt;
+&lt;p&gt;输入 RT 的 &lt;span class="math"&gt;\(\boldsymbol{x}\)&lt;/span&gt; 是由 &lt;span class="math"&gt;\(k\)&lt;/span&gt; 个性质 token &lt;span class="math"&gt;\([\boldsymbol{x}^p]_k\)&lt;/span&gt; 和 &lt;span class="math"&gt;\(l\)&lt;/span&gt; 个文本 token &lt;span class="math"&gt;\([\boldsymbol{x}^t]_l\)&lt;/span&gt; 拼接而成，即&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\boldsymbol{x}=[\boldsymbol{x}^p,\boldsymbol{x}^t]_T=[x^p_1,\cdots,x^p_k,x^t_1,\cdots,x^t_l]
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(T=k+l\)&lt;/span&gt;，为整个序列的 token 数量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PLM objective&lt;/strong&gt;（&lt;span class="math"&gt;\(\mathcal{J}_\mathrm{PLM}\)&lt;/span&gt;）：在原始的 XLNet 中，输入的序列就要做 &lt;span class="math"&gt;\(T!\)&lt;/span&gt; 次的排列，将掩盖的 token 放置到序列末端，训练目标是使模型能够预测出掩盖的 token。如上图中 PLM objective 所示，由于这种训练方法是随机选取，打断了整体的 &lt;span class="math"&gt;\(\boldsymbol{x}^p\)&lt;/span&gt; 或 &lt;span class="math"&gt;\(\boldsymbol{x}^t\)&lt;/span&gt;，因而不适合该任务，仅用于预训练。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Property prediction objective&lt;/strong&gt;（&lt;span class="math"&gt;\(\mathcal{J}_\mathrm{P}\)&lt;/span&gt;）：对于分子性质预测的回归任务，将表示分子性质的 &lt;span class="math"&gt;\(\boldsymbol{x}^p\)&lt;/span&gt; 全部掩盖并排列置换位置，使用分子的文本 &lt;span class="math"&gt;\(\boldsymbol{x}^t\)&lt;/span&gt; 预测被掩盖的分子性质。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conditional text generation objective&lt;/strong&gt;（&lt;span class="math"&gt;\(\mathcal{J}_\mathrm{G}\)&lt;/span&gt;）：对于分子生成任务，正与上述过程相反，将表示分子的 &lt;span class="math"&gt;\(\boldsymbol{x}^t\)&lt;/span&gt; 全部掩盖。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Self-consistency (SC) objective&lt;/strong&gt;（&lt;span class="math"&gt;\(\mathcal{J}_\mathrm{SC}\)&lt;/span&gt;）：为了使 RT 能够同时完成回归和生成任务，文章设计了该训练目标：&lt;/p&gt;
+&lt;div class="math"&gt;$$\mathcal{J}_\mathrm{SC}=\mathcal{J}_\mathrm{G}(\boldsymbol{x})+\alpha\cdot\mathcal{J}_\mathrm{P}(\hat{\boldsymbol{x}})$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\alpha\)&lt;/span&gt; 为权重，&lt;span class="math"&gt;\(\hat{\boldsymbol{x}}=[\boldsymbol{x}^p,\hat{\boldsymbol{x}}^t]\)&lt;/span&gt; 为生成的样本。该训练任务就是先使用分子性质生成分子，再用生成的分子预测其性质。&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;使用 SELFIES 作为分子表示，许多研究表明，相比 SMILES，SELFIES 在分子生成任务上更具有优势。&lt;/p&gt;
+&lt;p&gt;Synthetic QED dataset：由 ChEMBL 得到的约 160 万个分子，约 140 万用于训练，1000 条数据用于验证，10000 条数据用于测试。&lt;/p&gt;
+&lt;h2 id="shi-yan_1"&gt;实验&lt;/h2&gt;
+&lt;p&gt;文章中使用 RT 在化学反应、蛋白质性质预测等任务上测试了模型性能，这里仅以分子生成与分子性质预测的任务为例。&lt;/p&gt;
+&lt;p&gt;在 QED 数据集上，先使用 &lt;span class="math"&gt;\(\mathcal{J}_\mathrm{PLM}\)&lt;/span&gt; 训练模型，至验证集数据的指标收敛后，再每 50 轮用 &lt;span class="math"&gt;\(\mathcal{J}_\mathrm{P}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\mathcal{J}_\mathrm{G}\)&lt;/span&gt; 或 &lt;span class="math"&gt;\(\mathcal{J}_\mathrm{SC}\)&lt;/span&gt; 轮流微调（Alternate），不同模型设定的结果如下图所示。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9168?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9168?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;从实验结果中可以看出，（1）SELFIES 在生成任务上更有优势，但在回归任务上稍逊于 SMILES；（2）不论是回归还是生成任务，预训练使模型的表现提升；（3）设计的数值编码器有利于模型识别数值信息，提升模型表现；（4）在微调阶段轮流使用不同的训练任务，使模型在回归和生成两种任务上的泛化能力更好，在回归和生成单个任务上都具有与单任务模型接近甚至更优的表现。&lt;/p&gt;
+&lt;p&gt;能够处理回归与生成两种任务的模型也可以用于实现分子的性质优化，具体过程是设定一个 seed 分子以及目标的性质（primer），模型随机掩盖分子中 token 再通过 primer 将 token 预测出来，得到优化后的新分子，再通过新分子计算其性质的预测值，下图展示了在两种不同的数据集上微调得到的模型实现分子性质优化的样例。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9169?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9169?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章提出了回归 Transformer（RT）模型，该模型以 XLNet 为主要的结构，文章增加了数值编码器用于获取数值信息，并设计了不同的训练模式使模型在预训练-微调后能够完成数值回归与序列生成两种不同的任务。RT 设计用于数值回归与序列生成，因此也可以用于蛋白性质预测、反应预测等。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>旧书市场淘书记</title><link href="https://leonis.cc/zai-lu-shang/2023-05-22-wander-in-old-book-shop.html" rel="alternate"></link><published>2023-05-22T00:00:00+08:00</published><updated>2023-05-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-22:/zai-lu-shang/2023-05-22-wander-in-old-book-shop.html</id><summary type="html">&lt;p&gt;不得不说，在北方诸多城市中，天津的二手旧物市场可以说是相当火热的。我猜测的原因有二，一则是天津的老龄人口占比多，古玩旧物收藏有很大的受众；二则是得益于近代天津经济、文化的繁荣，许多官商士绅定居在此，天津民间仍流通有十分 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;不得不说，在北方诸多城市中，天津的二手旧物市场可以说是相当火热的。我猜测的原因有二，一则是天津的老龄人口占比多，古玩旧物收藏有很大的受众；二则是得益于近代天津经济、文化的繁荣，许多官商士绅定居在此，天津民间仍流通有十分具有价值的骨董。&lt;/p&gt;
+&lt;p&gt;我对古玩是一窍不通，再加之俚谚「多看少买」的教育，更有许多低劣到我都能看出的赝品，常引得我在心中暗笑，所以我对那些地摊上的古玩也一点不感兴趣。但旧物中有一门类却是我的心头好，那就是旧书。&lt;/p&gt;
 &lt;p&gt;我一向认为书应当是用来读的，次之才是历史等其他价值。由于许多好书由于各种原因不再出版了，或是更改了原来的版本，没有旧版本更好读了，于是有了「藏书」的群体去搜罗这些旧书。所以「藏书」的「藏」不该是像对待金银珠宝那样的「秘藏」，而是作「保存」解。这是我的藏书主张，也是我搜集旧书的信条。&lt;/p&gt;
-&lt;p&gt;之所以提及以上原则，还是因为天津旧货市场上的旧书实在太多了，近乎可以同逛书店一般，不带任何想法去，抱回好几摞的书，为了避免这种无谓的金钱开销，必须要有筛选的准绳。前些天在反复告诉自己&lt;strong&gt;买书是为了读书&lt;/strong&gt;后，终于敢入手，小有收获。&lt;/p&gt;
+&lt;p&gt;之所以提及以上原则，还是因为天津旧货市场上的旧书实在太多了，近乎可以同逛新书店一般，不带任何想法去，抱回好几摞的书，为了避免这种无谓的金钱开销，必须要有筛选的准绳。前些天在反复告诉自己&lt;dot&gt;买书是为了读书&lt;/dot&gt;后，终于敢大胆淘了几本书，对其中几本实在喜欢得紧，也算小有收获。&lt;/p&gt;
 &lt;h2 id="qie-jie-ting-za-wen-qie-jie-ting-za-wen-mo-bian"&gt;《且介亭杂文》《且介亭杂文末编》&lt;/h2&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="且介亭杂文" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9071?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="且介亭杂文" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9071?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;人文社 1973 年出版的鲁迅作品集应该是最优良的鲁迅作品版本，因为印量大，价格也不贵，但有几本很少见，凑齐全套并不容易。所以我一般是遇见了品相较好且为手中所无才购买，一切都随缘，并不特意搜集。&lt;/p&gt;
@@ -33,7 +134,7 @@
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="唐詩三百首新注扉枼" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9093?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="唐詩三百首新注扉枼" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9093?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="唐詩三百首新注内枼" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9098?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="唐詩三百首新注内枼" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9098?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;最后以全部收获的合影作结吧，共计约 50 元，从堆积成山的书堆里挑出这几本，真可谓是如大浪淘沙一般的「淘」书。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="淘书收获" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9099?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="淘书收获" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9099?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="藏书"></category></entry><entry><title>文献总结｜一种用于基于结构药物设计的 3D 生成模型</title><link href="https://leonis.cc/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html" rel="alternate"></link><published>2023-05-19T00:00:00+08:00</published><updated>2023-05-19T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-19:/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html</id><summary type="html">&lt;p&gt;本文介绍于 2021 年彭健课题组发表在 NeurIPS 2021 上的一篇文章，文章原标题为 A 3D Generative Model for Structure-Based Drug Design，文章，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2203.10446" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2203.10446&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="淘书收获" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9099?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="淘书收获" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9099?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="藏书"></category></entry><entry><title>文献总结｜一种用于基于结构药物设计的 3D 生成模型</title><link href="https://leonis.cc/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html" rel="alternate"></link><published>2023-05-19T00:00:00+08:00</published><updated>2023-05-19T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-19:/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html</id><summary type="html">&lt;p&gt;本文介绍于 2021 年彭健课题组发表在 NeurIPS 2021 上的一篇文章，文章原标题为 A 3D Generative Model for Structure-Based Drug Design，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2203.10446" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2203.10446&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;基于结构药物设计中的一个基本问题是针对指定的蛋白结合位点生成分子，目前解决这一问题的深度学习方法可以分为两类：基于字符序列与基于图的方法。但不论是基于字符序列的 1 维模型，还是基于图的 2 维模型，其本质上缺少蛋白质 3 维空间中的信息。为了获取空间信息，目前也出现了在 3D 空间中实现分子生成的模型，但这些模型只能生成较小的分子，无法有效生成类药的更大分子。&lt;/p&gt;
 &lt;p&gt;因此，文章提出了一种能够针对指定的蛋白生成药物分子的 3D 生成模型，在利用蛋白空间信息的情况下生成分子，实现基于结构的药物设计。&lt;/p&gt;
 &lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
@@ -2191,150 +2292,4 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry><entry><title>为 Pelican 博客写插件——在文章中插入豆瓣图书</title><link href="https://leonis.cc/sui-sui-nian/2023-02-22-create-pelican-plugin.html" rel="alternate"></link><published>2023-02-22T00:00:00+08:00</published><updated>2023-02-22T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-02-22:/sui-sui-nian/2023-02-22-create-pelican-plugin.html</id><summary type="html">&lt;p&gt;突然想把豆瓣图书信息插入到文章中，便于在博客里记录阅读笔记。寻找了一圈无果，只好自己动手写个插件，也正好研究了下 Pelican 插件的工作方式。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在博客上记录读书笔记是一件寻常事，但是怎么在文章中插入图书信息却是件恼人的事。直接用书名号引出？不不不，这也太不够美观了。参考一下国内图书信息最全面的豆瓣：&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8594?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;错不了，就要像这样把图书封面、出版社还有 ISBN 等等全部展示出来，才能让人满意。但是一个个截图也太麻烦了，而且信息没法更新，将这些信息都嵌入在网页中才是最好的实现方式。比较流行的博客框架例如 Hexo 和 WordPress 都有实现类似功能的插件，而我使用的是比较小众的 Pelican，只好自己动手了。&lt;/p&gt;
-&lt;h2 id="mu-biao"&gt;目标&lt;/h2&gt;
-&lt;p&gt;我在博客上写作的流程是 &lt;code&gt;撰写 Markdown&lt;/code&gt; ⇨ &lt;code&gt;使用 Pelican 生成 HTML&lt;/code&gt;，为了实现在文章中插入豆瓣图书，比较方便的方法是在 Markdown 写作时，在需要插入图书的地方写下 &lt;code&gt;{GET BOOK URL}&lt;/code&gt;，其中 &lt;code&gt;BOOK&lt;/code&gt; 填写书籍名称，&lt;code&gt;URL&lt;/code&gt; 填写书籍链接。当 URL 无效时，保留这条指令，避免遗失原来的信息；当从 URL 成功获取了图书元数据后，就将该条命令转换为 HTML 格式的图书信息，就顺利插入文章中了。&lt;/p&gt;
-&lt;p&gt;本文介绍的代码可以在 &lt;a href="https://github.com/Tseing/pelican-bookshelf" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; Tseing/pelican-bookshelf&lt;/a&gt;  上找到。&lt;/p&gt;
-&lt;h2 id="pelican-mo-kuai"&gt;Pelican 模块&lt;/h2&gt;
-&lt;p&gt;先从 Pelican 插件的原理讲起，Pelican 插件使用了信号机制，所谓信号机制就是在工作流程中，完成特定任务后就会给出特定信号，可以使用这种信号触发插件，完成正常工作流程以外额外的工作。那么在正式写插件之前，还需要了解一下 Pelican 的正常工作模块，具体可以分为以下 3 种：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Writers：负责写文件的模块，例如生成 HTML、RSS 等，Writers 模块需要创建对象，并将其传递给 Generators 模块。&lt;/li&gt;
-&lt;li&gt;Readers：用于读文件的模块，读取文件并返回元数据（作者、日期等）和用于生成 HTML 网页的内容。&lt;/li&gt;
-&lt;li&gt;Generators：产生各种各样的输出，是工作流程中的最后部分。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;回头考虑我的目标，我所要编写的插件显然是一个 Reader 模块，当读取到 Markdown 中的图书指令时开始工作，并将替换的内容传递给 Generators 模块生成最终页面。&lt;/p&gt;
-&lt;p&gt;但是由于 Pelican 文档中给出的相关介绍太少，再读了几遍源码之后仍觉得无从下手，最后我并没有使用官方推荐的方法，用了更简单粗暴的办法，可能以后有精力了会尝试再改成 Reader 模块。&lt;/p&gt;
-&lt;h2 id="dou-ban-pa-chong"&gt;豆瓣爬虫&lt;/h2&gt;
-&lt;p&gt;从指定的 URL 获取图书信息就要用爬虫了，网上关于爬虫的介绍多如牛毛，我只简单讲述一下我的设计过程。爬网解析 HTML 页面可以使用 Beautiful Soup 和 lxml 两个库，因为我需要使用的这个爬虫将在 Pelican 生成网页的过程中调用，虽然 Beautiful Soup 的功能强大也更好上手，但它的性能是不如 lxml 的，所以最后我还是选择使用 lxml。&lt;/p&gt;
-&lt;p&gt;爬虫并不复杂，通过 request 获取 HTML 信息后，使用 Xpath 定位到目标信息的节点，例如目标信息的结构为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;div id="info" class=""&amp;gt;
-    &amp;lt;span&amp;gt;
-      &amp;lt;span class="pl"&amp;gt; 作者&amp;lt;/span&amp;gt;:
-            &amp;lt;a class="" href="/author/4550936"&amp;gt;海子&amp;lt;/a&amp;gt;
-    &amp;lt;/span&amp;gt;&amp;lt;br/&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;出版社:&amp;lt;/span&amp;gt;
-      &amp;lt;a href="https://book.douban.com/press/2145"&amp;gt;江西人民出版社&amp;lt;/a&amp;gt;
-    &amp;lt;br&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;出品方:&amp;lt;/span&amp;gt;
-      &amp;lt;a href="https://book.douban.com/producers/10"&amp;gt;果麦文化&amp;lt;/a&amp;gt;
-    &amp;lt;br&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;出版年:&amp;lt;/span&amp;gt; 2017-10&amp;lt;br/&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;页数:&amp;lt;/span&amp;gt; 193&amp;lt;br/&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;定价:&amp;lt;/span&amp;gt; 42.00元&amp;lt;br/&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;装帧:&amp;lt;/span&amp;gt; 精装&amp;lt;br/&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;丛书:&amp;lt;/span&amp;gt;
-    &amp;lt;a href="https://book.douban.com/series/43038"&amp;gt;果麦经典&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;
-    &amp;lt;span class="pl"&amp;gt;ISBN:&amp;lt;/span&amp;gt; 9787210097136&amp;lt;br/&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;获取出版社信息的脚本就可以这么写：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;def get_press(meta, selector):
-    regex = '//div[@id="info"]/child::span[contains(text(), "出版社")]/following-sibling::*[1]/text()'
-    match = selector.xpath(regex)
-    if match:
-        meta["出版社"] = str(match[0])
-    else:
-        meta["出版社"] = "暂无"
-    return meta
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;regex&lt;/code&gt; 是需要匹配的 Xpath 路径，&lt;code&gt;//div[@id="info"]&lt;/code&gt; 为全文查找属性为 &lt;code&gt;id="info"&lt;/code&gt; 的 &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 节点。&lt;code&gt;child::span[contains(text(), "出版社")]&lt;/code&gt; 为在其子节点查找包含「出版社」文字的 &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; 节点，在这个节点之后的一个节点就是出版社信息了。&lt;/p&gt;
-&lt;p&gt;用类似的方法就可以得到全部的出版信息，我把所有 Xpath 路径列在下方，随时可以取用，但是注意如果豆瓣更改了网页结构可能就会失效。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python"&gt;# 封面图片
-regex = '//img[@rel="v:photo"]/@src'
-# 作者
-regex = '//div[@id="info"]/span[child::span[@class="pl"][contains(text(), "作者")]]//text()'
-# 出版社、出品方、丛书等 &amp;lt;a&amp;gt; 标签内容
-tags = ["出版社", "出品方", "丛书"]
-regex = f'//div[@id="info"]/child::span[contains(text(), "{tag}")]/following-sibling::*[1]/text()'
-# 其他非 &amp;lt;a&amp;gt; 标签出版信息
-tags = ["出版年", "页数", "定价", "装帧", "ISBN"]
-regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][following-sibling::br[1]]'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="he-xin-dai-ma"&gt;核心代码&lt;/h2&gt;
-&lt;p&gt;在解决了爬虫之后剩下的就是替换文本的一个简单任务了，由于爬虫的速度相对较慢，如果每次生成网页都要把所有 URL 都重新爬一遍，一来会大大降低生成速度，二来如此大量的请求很容易被网页反爬，所以我将原来的目标分成了两个功能。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;生成网页后，将 HTML 文件中所有 &lt;code&gt;{GET BOOK URL}&lt;/code&gt; 字段替换为图书信息。&lt;/li&gt;
-&lt;li&gt;如果指定了 &lt;code&gt;SAVE_TO_MD&lt;/code&gt;，那么除生成的网页之外，原始的 Markdown 文件也会被修改，下一次生成网页时就不需要重新爬虫。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这两个功能的具体操作相同，所以用同一个函数实现即可：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;def replace(path, context=None):
-    suffix = os.path.splitext(str(path))[-1]
-    if suffix != ".html" and suffix != ".md":
-        pass
-    elif suffix == ".md" and not BOOKSHELF_SETTING["SAVE_TO_MD"]:
-        pass
-    else:
-        pattern = r"\{GET\s\S+\s[a-zA-z]+://[^\s]*\}"
-        with open(str(path), 'r', encoding="utf-8") as f:
-            s = f.read()
-            search_target = re.search(pattern, s)
-            while search_target is not None:
-                _, book, url = search_target.group().strip("{}").split()
-                html = get_page(url)
-                time.sleep(BOOKSHELF_SETTING["WAIT_TIME"])
-                if html is not None:
-                    meta = parse_page(html)
-                    s = s.replace(search_target.group(), generate_bookshelf(meta, book))
-                    search_target = re.search(pattern, s)
-                else:
-                    search_target = re.search(pattern, s)
-                    continue
-        with open(str(path), 'w', encoding="utf-8") as f:
-            f.write(s)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;代码也十分简单，就是根据路径打开文件，通过反复通过正则表达式搜索匹配的内容并用生成的 HTML 片段替换。在每次爬虫请求之后，我加入了一个 2 秒钟的延时，否则太容易被豆瓣屏蔽了。&lt;/p&gt;
-&lt;h2 id="zhu-ce-cha-jian"&gt;注册插件&lt;/h2&gt;
-&lt;p&gt;就像上文所说的，这是因为 Pelican 可以通过信号像管道一样将插件接入正常的工作流中，这里介绍两个信号：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;content_object_init(content_object)&lt;/code&gt;：在读取完所有文件后，准备通过 Generators 模块生成 HTML 时的信号。这个信号传递的参数是 &lt;code&gt;content_object&lt;/code&gt;，也就是目前读取完文件的对象，使用 &lt;code&gt;str(content_object)&lt;/code&gt; 能直接将文件转换为文件路径，将其传递给 &lt;code&gt;replace&lt;/code&gt; 函数就能将修改原始的 Markdown 文件，但由于文件已经读取完成了，所以不会影响输出文件中的内容。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;content_written(path, context)&lt;/code&gt;：Generators 模块输出文件后的信号，每输出一个文件就会引发一次该信号。信号传递的参数是 &lt;code&gt;path&lt;/code&gt; 和 &lt;code&gt;context&lt;/code&gt;，&lt;code&gt;path&lt;/code&gt; 是输出文件的路径，&lt;code&gt;context&lt;/code&gt; 是例如修改日期等的其他信息，所以 &lt;code&gt;replace&lt;/code&gt; 函数同样接受 &lt;code&gt;path&lt;/code&gt; 参数进行处理，Pelican 每生成一个文件，&lt;code&gt;replace&lt;/code&gt; 函数就检查是否有匹配的命令并替换，而不会改变原始 Markdown 文件。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;最后通过以下方式将 &lt;code&gt;replace&lt;/code&gt; 注册到相应的信号上，就可以使用了。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;def register():
-    pelican.signals.initialized.connect(init_config)
-    pelican.signals.content_object_init.connect(replace)
-    pelican.signals.content_written.connect(replace)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;当然插件的功能只是在文件中插入了 HTML 片段，以下是个样例；&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;div class="bookshelf"&amp;gt;
-  &amp;lt;div class="book"&amp;gt;
-    &amp;lt;img src="https://img2.doubanio.com/view/subject/s/public/s29610741.jpg" referrerPolicy="no-referrer"/&amp;gt;
-    &amp;lt;div class="infos"&amp;gt;
-      &amp;lt;a class="title" href="https://book.douban.com/subject/27154094/"&amp;gt;海子的诗&amp;lt;/a&amp;gt;
-      &amp;lt;div class="作者"&amp;gt;作者：海子&amp;lt;/div&amp;gt;
-      &amp;lt;div class="出版社"&amp;gt;出版社：江西人民出版社&amp;lt;/div&amp;gt;
-      &amp;lt;div class="出版年"&amp;gt;出版年：2017-10&amp;lt;/div&amp;gt;
-      &amp;lt;div class="页数"&amp;gt;页数：193&amp;lt;/div&amp;gt;
-      &amp;lt;div class="定价"&amp;gt;定价：42.00元&amp;lt;/div&amp;gt;
-      &amp;lt;div class="ISBN"&amp;gt;ISBN：9787210097136&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-  &amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;只要编写好 CSS 样式再套上去，就能得到很不错的效果啦。&lt;/p&gt;
-&lt;h2 id="demo"&gt;Demo&lt;/h2&gt;
-&lt;p&gt;最后看一看插件的效果吧 :）&lt;/p&gt;
-&lt;div class="bookshelf"&gt;
-&lt;div class="book"&gt;
-&lt;img referrerpolicy="no-referrer" src="https://img2.doubanio.com/view/subject/s/public/s29610741.jpg"&gt;
-&lt;div class="infos"&gt;
-&lt;a class="title" href="https://book.douban.com/subject/27154094/"&gt;海子的诗&lt;/a&gt;
-&lt;div class="作者"&gt;作者：海子&lt;/div&gt;
-&lt;div class="出版社"&gt;出版社：江西人民出版社&lt;/div&gt;
-&lt;div class="出版年"&gt;出版年：2017-10&lt;/div&gt;
-&lt;div class="页数"&gt;页数：193&lt;/div&gt;
-&lt;div class="定价"&gt;定价：42.00元&lt;/div&gt;
-&lt;div class="ISBN"&gt;ISBN：9787210097136&lt;/div&gt;
-&lt;/div&gt;
-&lt;/img&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2 id="zi-ji-de-hua"&gt;自己的话&lt;/h2&gt;
-&lt;p&gt;其实我之前从未用过爬虫，写这个插件也是一时兴起，最后花了 2 天时间简单地完成了。虽然国内使用 Pelican 的人非常少，甚至在国际上使用的人也不多，但正因为这是一个如此小的社区，并没有丰富的插件，所以我也能自豪地参与其中并为它做贡献。&lt;/p&gt;
-&lt;p&gt;关于上文所提到的目标，最好的实现方式并不是爬虫，因为爬虫速度慢、发起的大量请求对服务器也并不友善，更好的方式是使用官方的 API。使用官方 API 发起的请求与对网页的请求不是同一个入口，不会影响网站的正常访问，而且需要的数据都在 JSON 中，不用费力不讨好地去解析 HTML。&lt;/p&gt;
-&lt;p&gt;然而遗憾的是，四五年前豆瓣就并闭了它的 API，原来使用 API 的「互联网难民」也转向了使用爬虫，面对于海量的爬虫，豆瓣与网友之间最终陷入到了反爬虫与爬虫的零和博弈。我相信不用多久，文章中提到的爬虫方式就会无法使用，又不得不继续参加到这场博弈中去。不知在哪看到的一句话：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;cite&gt;中国互联网公司之间，是没有 API 的，通用的 API 就是硬爬。&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;不禁苦笑，真是「萧瑟秋风今又是，换了人间」，我们正在见证着互联网走向封闭，明天又会是什么样呢？&lt;/p&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Python"></category><category term="XPath"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Algorithm"></category></entry></feed>
