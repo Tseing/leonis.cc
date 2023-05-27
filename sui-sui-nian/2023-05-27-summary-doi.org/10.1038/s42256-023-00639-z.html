@@ -170,7 +170,9 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>基于 Transformer 的模型是化学任务中常用的模型，但由于 Transformer 最早是用于自然语言处理的模型，难以处理回归任务，这些模型只能完成性质预测或条件分子生成，无法同时完成指定结构的生成和性质预测。若要实现有约束的分子生成，即根据指定的性质生成分子，则不得不通过在多个模型间传递参数再得到反馈的方法不断调节并得到目标的分子，如下图中 <strong>a</strong> 所示。</p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-023-00639-z" rel="noopener" target="_blank">doi.org/10.1038/s42256-023-00639-z</a></p>
+<p>本文介绍于 2023 年 IBM 研究团队发表在 <em>Nature Machine Intelligence</em> 上的一篇文章，文章原标题为 Regression Transformer enables concurrent sequence regression and generation for molecular language modelling，文章提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务的 Transformer 模型。</p>
+<p>基于 Transformer 的模型是化学任务中常用的模型，但由于 Transformer 最早是用于自然语言处理的模型，难以处理回归任务，这些模型只能完成性质预测或条件分子生成，无法同时完成指定结构的生成和性质预测。若要实现有约束的分子生成，即根据指定的性质生成分子，则不得不通过在多个模型间传递参数再得到反馈的方法不断调节并得到目标的分子，如下图中 <strong>a</strong> 所示。</p>
 <p>文章尝试将回归任务融入到文本序列建模的过程中，提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务模型，称为 回归 Transformer（Regression Transformer, RT）。在实验部分，文章使用化学领域中常见的分子生成、性质预测、化学反应预测、生物领域中蛋白质性质预测以及自然语言处理中的文本生成等多种任务测试了模型效果，证明 RT 是一种可以通用于多种任务且可以同时完成序列回归和生成的模型。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9166?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9166?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="fang-fa">方法</h2>
