@@ -234,6 +234,14 @@ button[title="表情包"] {
     display: none!important;
 }
 
+.wl-content blockquote::before {
+    content: none;
+}
+
+.wl-content blockquote::after {
+    content: none;
+}
+
 /* location icon */
 i.fa.fa-map-marker.fa-stack-1x {
     bottom: 25%;
