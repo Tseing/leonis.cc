@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-06-02T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜探测图表示</title><link href="https://leonis.cc/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html" rel="alternate"></link><published>2023-06-02T00:00:00+08:00</published><updated>2023-06-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-02:/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2303.03951" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2303.03951&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-06-09T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</title><link href="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" rel="alternate"></link><published>2023-06-09T00:00:00+08:00</published><updated>2023-06-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-09:/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank"&gt;doi.org/10.1007/978-3-031-29119-7_6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。&lt;/p&gt;
+&lt;p&gt;对于 ADMET 多种性质的预测，一般的方法是单任务学习，也就是一个模型只完成一种任务（预测一种性质），这种方法不仅繁琐，而且在缺少真实数据的情况下效果不佳。近年来出现的一种新范式是先通过预训练得到分子的通用表示，再将其用于多任务学习，使用一个模型完成所有预测任务，预训练的步骤弥补了缺少真实数据的问题。&lt;/p&gt;
+&lt;p&gt;文章认为，现有基于多任务的 ADMET 模型都是通过一个模型完成所有预测任务，这样的共同学习很难保证模型能够共同学习到多种性质的信息，导致效果甚至不如单任务学习。文章设想以一个任务为主要任务，多个其他任务作为辅助任务，并通过地位理论找到最佳的任务搭配，改善模型效果。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9255?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9255?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9256?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9256?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在文章设计的「一个主要任务，多个辅助任务」模式下，需要通过 3 个步骤找到这最佳的任务搭配，如上图中 &lt;strong&gt;a&lt;/strong&gt; 所示。&lt;/p&gt;
+&lt;p&gt;首先先以各任务为单任务建立模型，例如对任务 &lt;span class="math"&gt;\(t_w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(t_k\)&lt;/span&gt; 分别建立单任务模型 &lt;span class="math"&gt;\(\mathcal{S}_w\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\mathcal{S}_k\)&lt;/span&gt;，再为其建立多任务模型 &lt;span class="math"&gt;\(\mathcal{D}_{w,k}\)&lt;/span&gt;，那么 &lt;span class="math"&gt;\(t_w\)&lt;/span&gt; 对 &lt;span class="math"&gt;\(t_k\)&lt;/span&gt; 的影响就可以表示为&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\hat{Z}_{w\rightarrow k}=Z^{(d)}_{k|w}-Z^{(s)}_k
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(Z^{(s)}_k\)&lt;/span&gt; 就是 &lt;span class="math"&gt;\(\mathcal{S}_k\)&lt;/span&gt; 模型的表现，&lt;span class="math"&gt;\(Z^{(d)}_{k|w}\)&lt;/span&gt; 就是 &lt;span class="math"&gt;\(\mathcal{D}_{w,k}\)&lt;/span&gt; 模型的表现，从而可以得到类似下图中的结果：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9257?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9257?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;接着根据以上结果将相互增强的任务作为同一组的多任务，再通过地位理论决定各组任务中的主要任务，其他任务作为辅助任务。简单来说，地位理论就是将对模型表现提升最多的任务视为主要任务。&lt;/p&gt;
+&lt;p&gt;最后通过最大流优化所选择的辅助任务。经过以上步骤，就可以将许多 ADMET 性质的预测任务分组，分别建立多任务模型。&lt;/p&gt;
+&lt;p&gt;多任务模型的预测过程如上图 &lt;strong&gt;b&lt;/strong&gt; 所示，输入的分子通过两层 GCN 提取分子的信息，得到分子 embedding 表示，再在 Task-specific molecular embedding module 中得到适用于特定任务的分子表示。对于辅助任务，分子表示直接通过全连接层得到相应任务的预测结果。对于主要任务，除了针对于本任务的分子表示，还通过 Gating Network 通过可学习的权重融合来自于辅助任务的分子表示（图 &lt;strong&gt;c&lt;/strong&gt;），最后得到预测结果。&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;模型所使用的 ADMET 数据来源于各文献中收集到的 24 种性质（18 个分类任务，6 个回归任务），共包含 43291 个类药的化合物。&lt;/p&gt;
+&lt;p&gt;输入模型的分子以图的形式表示，分子图除了原子信息外，还添加了手性、电荷、芳香性、杂化等信息。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9258?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9258?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;MTGL-ADMET 在 24 种性质上的预测结果如上图所示，括号中的数字代表辅助任务的数量。与其他图模型相比，MTGL-ADMET 在 20 个任务上表现最优，另外 4 个任务上表现仅次于最优。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9259?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9259?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在消融实验中，文章验证了「主要任务+辅助任务」策略的效果，测试结果如上图所示。与单任务（Single）、随机挑选 5 个辅助任务（Ran-5）和不使用地位理论与最大流而仅挑选对模型提升最大的 5 个辅助任务（Top-5）相比，MTGL-ADMET 在所有性质的预测上表现都是最佳的，说明了文章所设计多任务策略的优势。&lt;/p&gt;
+&lt;p&gt;最后，文章展示了模型的可解释性，下图的案例展示了化合物结构片段与相应性质的相关性。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9260?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9260?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章提出了一种用于构建 ADMET 多任务的策略，该策略主要使用地位理论与最大流分析了对主要任务具有增强作用的辅助任务，将主要任务与辅助任务一起构建多任务模型，使模型最后的预测效果好过很多完成类似任务的图模型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;局限&lt;/strong&gt;：文章只评估了多任务模型中主要任务的预测结果，而没有全面评估模型包括辅助任务在内的多个预测结果，文章中的策略可以找到辅助提升主要任务结果的辅助任务，但这样的多任务模型不一定在多个任务上都表现得很好。文章中所测试的 ADMET 数据较少，在 ADMET 性质种类很多时，在两两任务间寻找是否具有性能提升的步骤就会变得繁琐。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>文献总结｜探测图表示</title><link href="https://leonis.cc/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html" rel="alternate"></link><published>2023-06-02T00:00:00+08:00</published><updated>2023-06-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-02:/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2303.03951" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2303.03951&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;
 &lt;p&gt;随着基于图的深度学习模型不断出现，亟需回答的一个问题是「图模型将什么信息编码进了表示中？」为了研究这一问题，文章构建了探测模型测试预训练图模型得到的分子表示。&lt;/p&gt;
 &lt;p&gt;探测图表示的思路很简单，如果能从图模型输出的分子表示中提取出分子性质，那么就可以认为该性质被编码进分子表示中，所以文章的工作流程是「预训练-预测」（略不同于「预训练-微调」）。通过该流程，文章测试了传统 GNN 与基于 Transformer 的图模型等不同架构、不同数据集、不同优化算法等因素对于模型编码得到的潜变量的影响。&lt;/p&gt;
@@ -2110,98 +2202,4 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 &lt;li&gt;&lt;a href="https://learn.microsoft.com/zh-cn/windows/dev-environment/rust/setup" rel="noopener" target="_blank"&gt;在 Windows 上针对 Rust 设置开发环境 - Microsoft Learn&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.cnblogs.com/skzxc/p/12129353.html" rel="noopener" target="_blank"&gt;Win10 Rust 语言安装与环境变量配置(+VSCode) - 博客园&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://course.rs/first-try/slowly-downloading.html" rel="noopener" target="_blank"&gt;下载依赖太慢了？ - Rust语言圣经(Rust Course)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Rust"></category><category term="Windows"></category></entry><entry><title>文献总结｜为蛋白质口袋定制分子：用于基于结构药物设计的 Transformer 分子生成方法</title><link href="https://leonis.cc/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html" rel="alternate"></link><published>2023-03-11T00:00:00+08:00</published><updated>2023-03-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-11:/sui-sui-nian/2023-03-11-summary-doi.org/10.48550/arXiv.2209.06158.html</id><summary type="html">&lt;p&gt;本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2209.06158" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2209.06158&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍由微软研究团队于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Tailoring Molecules for Protein Pockets: a Transformer-based Generative Solution for Structured-based Drug Design，文章使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免了训练数据有限的问题。&lt;/p&gt;
-&lt;p&gt;随着人工智能技术的发展，深度学习也进入到基于结构的药物设计（Structure Based Drug Design, SBDD）领域。SBDD 基于受体蛋白的结构设计与之适配的分子，是药物化学中的重要方法，而在深度学习辅助下的 SBDD 也将大大提升药物设计的效率，但目前这一方向还存在两个问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;用于训练模型的「靶点-药物分子对」有限；&lt;/li&gt;
-&lt;li&gt;SBDD AI 模型还不能很好利用靶点活性口袋的 3 维信息。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;针对以上两个问题，文章首先使用分子数据预训练 Transformer 生成模型，使其学习到分子数据中更通用的特征，避免标签不足；其次，文章设计了一种变种的 Transformer encoder，通过 encoder 获得氨基酸序列中的 3 维结构信息，文章将最后得到的模型称为 TamGent（Target-aware molecule generator with Transformer）。&lt;/p&gt;
-&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
-&lt;p&gt;文章使用来自于 PubChem 数据库中的 1000 万个分子的 SMILES 序列预训练用于分子生成的 Transformer decoder 模型，使用来源于文献（&lt;a href="https://arxiv.org/abs/2205.07249" rel="noopener" target="_blank"&gt;Luo et al.&lt;/a&gt;）的 12.3 万个靶点-配体对训练配体生成模型。&lt;/p&gt;
-&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8650?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;使用 &lt;span class="math"&gt;\(\boldsymbol{a}=(a_1,a_2,\cdots,a_N)\)&lt;/span&gt; 表示氨基酸序列，其中 &lt;span class="math"&gt;\(a_i\)&lt;/span&gt; 为长度为 20 的 ont-hot 向量，可以用于表示 20 种氨基酸，使用 &lt;span class="math"&gt;\(\boldsymbol{r}=(r_1,r_2,\cdots,r_N)\)&lt;/span&gt; 表示相应的 3 维坐标，其中 &lt;span class="math"&gt;\(r_i\in\mathbb{R}^3\)&lt;/span&gt;。将配体分子的 SMILES 编码转化为向量 &lt;span class="math"&gt;\(\boldsymbol{y}=(y_1,y_2,\cdots,y_M)\)&lt;/span&gt;，那么模型训练的目标就是学习从 &lt;span class="math"&gt;\(\boldsymbol{x}=(\boldsymbol{a},\boldsymbol{r})\)&lt;/span&gt; 到 &lt;span class="math"&gt;\(\boldsymbol{y}\)&lt;/span&gt; 的映射。&lt;/p&gt;
-&lt;p&gt;TamGent 的架构参考了变分自编码器的工作模式，也就是主要由活性口袋 encoder 和配体分子 decoder 构成，encoder 与 decoder 都使用了 Transformer 中的结构。&lt;/p&gt;
-&lt;p&gt;配体分子 decoder 部分与 Transformer 完全一样，具有 self-attention 机制，能够根据生成的 toekn 生成下一个 token，完成分子生成，因此使用 1000 万个分子数据预训练该模型，使其能够根据数据集中分子的普遍特征生成分子。&lt;/p&gt;
-&lt;p&gt;活性口袋 encoder 部分修改了其中的 attention 机制，文章中称为 distance-aware attention。具体来说，就是认为距离较远的氨基酸与配体的相互作用更小，所以将输入的氨基酸序列和坐标转化为特征矩阵后，再与 &lt;span class="math"&gt;\(\exp(-\mathrm{distance}^2/\tau)\)&lt;/span&gt; 相乘，距离越远的氨基酸的权重就会越小。&lt;/p&gt;
-&lt;p&gt;在推断过程中，将氨基酸序列及其坐标输入模型，embedding 为特征矩阵后进入活性口袋 encoder 部分计算 distance-aware attention，得到活性口袋的表示，最后将其作为配体分子 decoder 部分中的 pocket-SMILES attention，生成分子得到预测的活性配体结果。&lt;/p&gt;
-&lt;h2 id="jie-guo-yu-tao-lun_1"&gt;结果与讨论&lt;/h2&gt;
-&lt;h3 id="sheng-cheng-fen-zi-jie-guo"&gt;生成分子结果&lt;/h3&gt;
-&lt;p&gt;文章使用 DrugBank 数据库中 1641 个靶点-配体对的数据用于测试模型效果，随机抽取其中的 100 个靶点-配体对，使用 TamGent、3DGen 和 SECSE 三种模型针对每个靶点生成 20 个分子，对比生成效果。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8651?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;三种模型生成分子的对接打分中，TamGent 生成的分子明显更低，说明分子与靶点具有更好的亲和力，同时其平均值也与标签数据最为接近。对比三种模型生成的分子与标签分子的相似性，同样是 TamGent 具有更大的相似性，生成的分子最接近标签分子。同时，在 QED、MD 和 SA 几项的分子指标上，TamGent 也都高于其他两种模型，以上几点可以表明 TamGent 在 DrugBank 数据上根据靶点生成分子具有明显的优势。&lt;/p&gt;
-&lt;h3 id="an-li-yan-jiu"&gt;案例研究&lt;/h3&gt;
-&lt;p&gt;接下来文章使用 TamGent 针对于具体的靶点生成配体，分析模型表现。文章选择 SARS-CoV-2 主糖蛋白酶（&lt;em&gt;M&lt;/em&gt; &lt;sup&gt;pro&lt;/sup&gt;）作为靶点生成分子，收集了 415 个高分辨率结构后，使用模型生成了 4563 个分子，其中找到了先前报道过的一种 &lt;em&gt;M&lt;/em&gt; &lt;sup&gt;pro&lt;/sup&gt; 候选抑制剂（GC-376）和 6 个可能的先导化合物片段。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8652?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;上图展示了相应分子的二维分布，其中灰色表示在 PubChem 中随机选取的 3 万个分子，蓝色表示 TamGent 生成的分子，黄色表示在先前报道中提到了可能的 &lt;em&gt;M&lt;/em&gt; &lt;sup&gt;pro&lt;/sup&gt; 抑制剂。&lt;/p&gt;
-&lt;p&gt;明显可以看出 TamGent 生成的分子与随机选取的分子具有不同的分布并且成簇聚集，主要分为 ① 和 ② 两簇。在第 ① 簇中，生成分子与 GC-376 的谷本相似度达到 0.82，并且此前报道的 6 种候选抑制剂都位于该簇中。但在第 ② 簇中没有找到对接分数较好的分子，只在分子中找到了一些可能的活性片段。&lt;/p&gt;
-&lt;p&gt;最后文章选出了第 ① 簇中两个结构不同的分子与 &lt;em&gt;M&lt;/em&gt; &lt;sup&gt;pro&lt;/sup&gt; 对接，两种分子都能很好地填充活性口袋，对接分数分别为 -10.2 和 -9.5，而先前的 GC-376 是 -9.4，说明 TamGent 能够根据口性口袋生成具有良好活性的分子。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8653?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h2 id="jie-lun_1"&gt;结论&lt;/h2&gt;
-&lt;p&gt;文章参考变分自编码器的结构使用 Transformer 构建了一种能够获取受体 3 维信息的分子生成模型 TamGent，其中分子生成部分使用了预训练模型，避免模型依赖于有限的「靶点-药物分子对」。在分子生成任务中，TamGent 生成分子的效果优于以往的两种模型，使用 TamGent 针对 SARS-CoV-2 主糖蛋白酶生成活性分子，甚至找到了比先前报道的候选抑制剂具有更好对接打分的分子，表现出 TamGent 的优异性能。&lt;/p&gt;
-&lt;p&gt;对于 TamGent，文章提出了 3 点改进措施，第一是使用更多实验测试得到的「靶点-药物分子对」进一步优化模型，第二是在模型中整合考虑 ADMET 待药理性质，第三是在具体靶点上微调模型，使其帮助提升针对相应靶点的药物研发效率。&lt;/p&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category><category term="VAE"></category></entry></feed>
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Rust"></category><category term="Windows"></category></entry></feed>

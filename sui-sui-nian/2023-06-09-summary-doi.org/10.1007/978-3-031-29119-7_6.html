@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Literature Summary">
+    <meta name="tags" content="CADD">
+    <meta name="tags" content="GNN">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-06-09 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架",
+  "headline": "文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架",
+  "datePublished": "2023-06-09 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html",
+  "description": "本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced..."
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 6月09日">2023年 6月09日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank">doi.org/10.1007/978-3-031-29119-7_6</a></p>
+<p>本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。</p>
+<p>对于 ADMET 多种性质的预测，一般的方法是单任务学习，也就是一个模型只完成一种任务（预测一种性质），这种方法不仅繁琐，而且在缺少真实数据的情况下效果不佳。近年来出现的一种新范式是先通过预训练得到分子的通用表示，再将其用于多任务学习，使用一个模型完成所有预测任务，预训练的步骤弥补了缺少真实数据的问题。</p>
+<p>文章认为，现有基于多任务的 ADMET 模型都是通过一个模型完成所有预测任务，这样的共同学习很难保证模型能够共同学习到多种性质的信息，导致效果甚至不如单任务学习。文章设想以一个任务为主要任务，多个其他任务作为辅助任务，并通过地位理论找到最佳的任务搭配，改善模型效果。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9255?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9255?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h2 id="fang-fa">方法</h2>
+<h3 id="mo-xing">模型</h3>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9256?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9256?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在文章设计的「一个主要任务，多个辅助任务」模式下，需要通过 3 个步骤找到这最佳的任务搭配，如上图中 <strong>a</strong> 所示。</p>
+<p>首先先以各任务为单任务建立模型，例如对任务 <span class="math">\(t_w\)</span> 与 <span class="math">\(t_k\)</span> 分别建立单任务模型 <span class="math">\(\mathcal{S}_w\)</span> 与 <span class="math">\(\mathcal{S}_k\)</span>，再为其建立多任务模型 <span class="math">\(\mathcal{D}_{w,k}\)</span>，那么 <span class="math">\(t_w\)</span> 对 <span class="math">\(t_k\)</span> 的影响就可以表示为</p>
+<div class="math">$$
+\hat{Z}_{w\rightarrow k}=Z^{(d)}_{k|w}-Z^{(s)}_k
+$$</div>
+<p>其中 <span class="math">\(Z^{(s)}_k\)</span> 就是 <span class="math">\(\mathcal{S}_k\)</span> 模型的表现，<span class="math">\(Z^{(d)}_{k|w}\)</span> 就是 <span class="math">\(\mathcal{D}_{w,k}\)</span> 模型的表现，从而可以得到类似下图中的结果：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9257?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9257?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>接着根据以上结果将相互增强的任务作为同一组的多任务，再通过地位理论决定各组任务中的主要任务，其他任务作为辅助任务。简单来说，地位理论就是将对模型表现提升最多的任务视为主要任务。</p>
+<p>最后通过最大流优化所选择的辅助任务。经过以上步骤，就可以将许多 ADMET 性质的预测任务分组，分别建立多任务模型。</p>
+<p>多任务模型的预测过程如上图 <strong>b</strong> 所示，输入的分子通过两层 GCN 提取分子的信息，得到分子 embedding 表示，再在 Task-specific molecular embedding module 中得到适用于特定任务的分子表示。对于辅助任务，分子表示直接通过全连接层得到相应任务的预测结果。对于主要任务，除了针对于本任务的分子表示，还通过 Gating Network 通过可学习的权重融合来自于辅助任务的分子表示（图 <strong>c</strong>），最后得到预测结果。</p>
+<h3 id="shu-ju">数据</h3>
+<p>模型所使用的 ADMET 数据来源于各文献中收集到的 24 种性质（18 个分类任务，6 个回归任务），共包含 43291 个类药的化合物。</p>
+<p>输入模型的分子以图的形式表示，分子图除了原子信息外，还添加了手性、电荷、芳香性、杂化等信息。</p>
+<h2 id="jie-guo_1">结果</h2>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9258?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9258?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>MTGL-ADMET 在 24 种性质上的预测结果如上图所示，括号中的数字代表辅助任务的数量。与其他图模型相比，MTGL-ADMET 在 20 个任务上表现最优，另外 4 个任务上表现仅次于最优。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9259?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9259?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在消融实验中，文章验证了「主要任务+辅助任务」策略的效果，测试结果如上图所示。与单任务（Single）、随机挑选 5 个辅助任务（Ran-5）和不使用地位理论与最大流而仅挑选对模型提升最大的 5 个辅助任务（Top-5）相比，MTGL-ADMET 在所有性质的预测上表现都是最佳的，说明了文章所设计多任务策略的优势。</p>
+<p>最后，文章展示了模型的可解释性，下图的案例展示了化合物结构片段与相应性质的相关性。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9260?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9260?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h2 id="jie-lun">结论</h2>
+<p>文章提出了一种用于构建 ADMET 多任务的策略，该策略主要使用地位理论与最大流分析了对主要任务具有增强作用的辅助任务，将主要任务与辅助任务一起构建多任务模型，使模型最后的预测效果好过很多完成类似任务的图模型。</p>
+<p><strong>局限</strong>：文章只评估了多任务模型中主要任务的预测结果，而没有全面评估模型包括辅助任务在内的多个预测结果，文章中的策略可以找到辅助提升主要任务结果的辅助任务，但这样的多任务模型不一定在多个任务上都表现得很好。文章中所测试的 ADMET 数据较少，在 ADMET 性质种类很多时，在两两任务间寻找是否具有性能提升的步骤就会变得繁琐。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架&amp;url=https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html&amp;title=文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架&amp;body=https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/gnn.html">GNN</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜探测图表示</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
