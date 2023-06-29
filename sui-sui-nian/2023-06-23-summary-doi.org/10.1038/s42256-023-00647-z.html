@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究</title>
+  <title>文献总结｜结构诱导的预训练</title>
 
 
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html" rel="canonical" />
+<link href="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" rel="canonical" />
   <!-- Feed -->
 
   <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
@@ -55,31 +55,33 @@
 
 
 
-    <meta name="description" content="本文介绍于 2023 年东京大学发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder–decoder models...">
+    <meta name="description" content="本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing...">
 
     <meta name="author" content="Leo">
 
     <meta name="tags" content="Literature Summary">
     <meta name="tags" content="CADD">
-    <meta name="tags" content="RNN">
+    <meta name="tags" content="GNN">
+    <meta name="tags" content="Transformer">
 
 
 
 
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2023 年东京大学发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder–decoder models..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="文献总结｜结构诱导的预训练"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing..."/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-05-13 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-06-23 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
 <meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
 <meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Literature Summary"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:tag" content="CADD"/>
-<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="RNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GNN"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Transformer"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
 
 <!-- Twitter Card -->
@@ -88,9 +90,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究",
-  "headline": "文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究",
-  "datePublished": "2023-05-13 00:00:00+08:00",
+  "name": "文献总结｜结构诱导的预训练",
+  "headline": "文献总结｜结构诱导的预训练",
+  "datePublished": "2023-06-23 00:00:00+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -98,8 +100,8 @@
     "url": "https://leonis.cc/author/leo.html"
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
-  "url": "https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html",
-  "description": "本文介绍于 2023 年东京大学发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder–decoder models..."
+  "url": "https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html",
+  "description": "本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing..."
 }
 </script>
 
@@ -148,11 +150,11 @@
             </a>
           </span>
         </nav>
-        <h1 class="post-title">文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究</h1>
+        <h1 class="post-title">文献总结｜结构诱导的预训练</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://leonis.cc/author/leo.html">Leo</a>
-            | <time datetime="2023年 5月13日">2023年 5月13日</time>
+            | <time datetime="2023年 6月23日">2023年 6月23日</time>
         </span>
             <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
       </div>
@@ -165,39 +167,51 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li><li><a class="toc-href" href="#zhi-biao" title="指标">指标</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#fang-fa" title="方法">方法</a><ul><li><a class="toc-href" href="#xian-shi-he-shen-ceng-jie-gou-yue-shu" title="显式和深层结构约束">显式和深层结构约束</a></li><li><a class="toc-href" href="#mo-xing" title="模型">模型</a></li><li><a class="toc-href" href="#shu-ju" title="数据">数据</a></li></ul></li><li><a class="toc-href" href="#jie-guo_1" title="结果">结果</a></li><li><a class="toc-href" href="#jie-lun" title="结论">结论</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-023-00713-z" rel="noopener" target="_blank">doi.org/10.1186/s13321-023-00713-z</a></p>
-<p>本文介绍于 2023 年东京大学发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder&ndash;decoder models in learning progress，文章，文章研究了编码器-解码器模型训练过程中对化学结构识别的过程以及将其潜变量作为分子表示用于下游任务的效果。</p>
-<p>基于结构的分子表示又被称为描述符，如何获得更好的描述符是化学信息学中很重要的问题。在近年兴起的深度学习领域，编码器-解码器（encoder-decoder, ED）类模型广受关注，以分子的字符序列 SMILES 作为输入，编码器模型会将其转化为一连串蕴含化学学信息的描述符，解码器模型通过该中间变量还原出原来的分子，这种由 SMILES（或其他）分子表示编码至隐空间中的潜变量就可以用作为数字形式的分子表示，用于各种下游任务，这也是自然语言处理中「预训练-微调」的范式。</p>
-<p>在传统方法中，也有例如 ECFP、NFP 一类的分子指纹，但他们只描述了分子中所具有的特定结构，无法由描述符再还原出分子结构。只有更好的表示才能在下游任务得到更好的结果，所以文章研究了在 ED 模型中化学结构的识别过程，ED 模型对化学结构的识别是指模型获得反映化学结构的数字信息和将该信息还原为化学结构的能力。</p>
+                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-023-00647-z" rel="noopener" target="_blank">doi.org/10.1038/s42256-023-00647-z</a></p>
+<p>本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。</p>
+<p>预训练-微调的学习模式在自然语言处理及其他相关领域都已经得到广泛的应用，预训练通过在隐空间中提取样本的特征，从而提升模型在下游任务上的表现。但目前的预训练模型都没能在潜变量 <span class="math">\(\boldsymbol{z}\)</span> 上添加结构约束，从而获得既显式又深层的特征，这是目前预训练模型的一大缺陷。</p>
 <h2 id="fang-fa">方法</h2>
+<p>对于数据集 <span class="math">\(\boldsymbol{X}_\mathrm{PT}\in\mathcal{X}^{N_\mathrm{PT}}\)</span>，预训练的目标就是从学习过程中得到编码器 <span class="math">\(f_\theta:\mathcal{X}\rightarrow\mathcal{Z}\)</span>，然后将 <span class="math">\(f_\theta\)</span> 用于各种各样的下游任务。</p>
+<h3 id="xian-shi-he-shen-ceng-jie-gou-yue-shu">显式和深层结构约束</h3>
+<ul>
+<li><strong>显示结构约束</strong>：如果能从隐空间 <span class="math">\(\mathcal{Z}\)</span> 中的两个样本 <span class="math">\(\boldsymbol{z}_i\)</span> 与 <span class="math">\(\boldsymbol{z}_j\)</span> 直接推导出两者间的关系（如距离），那么该预训练过程就有显示的结构约束。</li>
+<li><strong>深层结构约束</strong>：预训练过程中所使用的信息越多（如维数），那么预训练过程所使用的结构约束越深。</li>
+</ul>
+<p>目前大部分的预训练模型都无法同时保证显式与深层的结构约束，调查目前超过 90 种的预训模型，其方法可以分为以下几类：</p>
+<ol>
+<li>完全不使用样本间的关系，例如 prompt 训练，主要用于文本生成。</li>
+<li>使用显式，但浅层的监督预训练目标，例如 BERT 的 Next Sentence Prediction 训练模式。</li>
+<li>使用深层，但隐式的无监督或自监督预训练目标，例如通过添加噪声的数据强化方法。</li>
+</ol>
 <h3 id="mo-xing">模型</h3>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9036?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9036?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>模型的编码器部分是 3 层的 GRU，后面的全连接层将 GRU 的输出映射到 256 维的潜空间，解码器部分以该潜变量为输入，进入全连接层后同样是 3 层 GRU，输出还原的 SMILES。模型以输出 SMILES 与目标 SMILES 的交叉熵损失作为损失函数，训练模型的过程是使其能通过输入的随机化 SMILES 输出标准 SMILES。</p>
-<p>为了评估将 ED 模型中潜变量作为分子表示的效果，文章使用 ToxCast 中 113 个任务分别训练了 XGBoost，使用其预测结果（即下游任务结果）判断分子表示的优劣。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9284?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9284?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>因此文章设计了一种同时使用显式与深层的结构约束的预训练框架，称这种方法为结构诱导的预训练。</p>
+<p>首先将预训练问题表示为图 <span class="math">\(G_\mathrm{PT}=(V,E)\)</span>，其中结点 <span class="math">\(V\)</span> 表示 <span class="math">\(\boldsymbol{X}_\mathrm{PT}\)</span> 中的预训练样本，<span class="math">\(E\)</span> 表示预先定义的样本间关系。</p>
+<p>接着预训练的损失函数就定义为</p>
+<div class="math">$$
+\mathcal{L}_\mathrm{PT}=(1-\lambda_\mathrm{SI})\mathcal{L}_\mathrm{M}+\lambda_\mathrm{SI}\mathcal{L}_{SI}
+$$</div>
+<p>其中 <span class="math">\(\mathcal{L}_\mathrm{M}\)</span> 为传统预训练模型所使用的损失函数，<span class="math">\(\mathcal{L}_\mathrm{SI}\)</span> 是定义用于实现结构诱导目标的损失函数，使隐空间的各潜变量满足 <span class="math">\(G_\mathrm{PT}\)</span> 中的边（样本间关系）。</p>
 <h3 id="shu-ju">数据</h3>
-<p>模型所使用的训练数据来源于 ZINC15，从中随机获取了 3 千万个分子，后续通过去除非有机物常见原子、去除重原子等方式清洗数据。</p>
-<h3 id="zhi-biao">指标</h3>
-<p>文章定义了两个指标用于评估 ED 模型的准确率，完全准确率定义为</p>
-<div class="math">$$\mathrm{perfect\ accuracy}=\frac 1n\sum^n_iI(t=p)$$</div>
-<p>其中 <span class="math">\(t\)</span> 表示正确的 SMILES，<span class="math">\(p\)</span> 表示预测的 SMILES，即计算与标签值相同的输出所占比例。</p>
-<p>另一个指标部分准确率定义为</p>
-<div class="math">$$\mathrm{partial\ accuracy}=\frac 1n\sum^n_i\left\{\frac{1}{\max(l(t),l(p))}\sum^{\min(l(t),l(p))}_jI(t_i=p_i)\right\}$$</div>
-<p><span class="math">\(t_i\)</span> 表示 <span class="math">\(i\)</span> 位置上正确的 SMILES 字符，<span class="math">\(p_i\)</span> 表示 <span class="math">\(i\)</span> 位置上预测的 SMILES 字符，该式即计算所有 SMILES 字符中，预测结果与标签值相同位置上相同的字符所占比例。</p>
-<p>在 XGBoost 模型中，使用 ROC 曲线下面积（AUROC）与 Matthews 相关系数（MCC）评估模型准确率。</p>
+<p>文章使用了 3 类数据用于预训练：</p>
+<ul>
+<li>Proteins：来自 Stanford tree-of-life 数据集约 150 万条蛋白序列</li>
+<li>Abstracts：来自 Microsoft Academic Graph 数据集约 650,000 篇的生物医学相关的文本摘要</li>
+<li>Networks：来自文献的 70,000 条蛋白-蛋白相互作用网络的子图</li>
+</ul>
+<p>Proteins 与 Abstracts 预训练的编码器是 Transformer 架构，Networks 预训练所使用的模型是具有图同构网络（Graph Isomorphism Network, GIN）编码器的图卷积神经网络（graph convolutional neural network, GNN）。</p>
 <h2 id="jie-guo_1">结果</h2>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9035?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9035?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>文章首先分别使用 10 k、100 k、1 M 的测诫集测试了训练过程中的 ED 模型，结果如上图所示。随着训练轮次的增加，模型还原出化学结构的准确率也在上升，对比部分准确率与完全准确率，可以发现在相同时刻下，部分准确率要高于完全准确率，这说明模型先学习到了还原出分子中若干个字符组成的小片段，然后才将其拼合还原出整个分子。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9038?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9038?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>以训练后的还原准确率命名模型，例如 94% 的模型记为「Model_94」，测试各模型的分子表示在 ToxCast 任务上的效果，结果如上图（a）所示。可以看出，除了未经训练完全无法还原出分子的 Model_0，其他模型都能较好地完成分类任务，而且分类效果比较接近。接着文章选定了三类结构的分子，使用 UMAP 降维的方法绘制出了其分子表示在化学空间中的位置，如上图（b）所示，在 Model_0 中，三种结构混杂在一起，很难完成分类，而 ED 模型只需要经过训练，三种结构就区别开来，与前一个实验的结果也吻合，这说明 ED 模型生成的潜变量很适用于分子分类的任务。</p>
-<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9037?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9037?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>最后，文章比较了训练过程中还原出分子的分子量与 SMILES 长度的准确关系，在上图中只有在黄线上的样本表明还原分子与标签值一致，可以看出虽然 DE 模型在训练的靠前阶段无法还原出分子的特定性质，但其潜变量在化学空间中已经有了区分度，这种区分度足可以完成分类任务，但其所蕴含的化学信息还不能使模型还原出结构。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9285?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9285?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>预训练模型在下游任务上的测试结果如上图所示，&Delta; 一列中以 &uarr; 表示相对传统预训练模型性质的提升，可以看出不管是相对于 per-token 还是 per-sample 的传统预训练策略，文中提出的结构诱导的预训练方法（structure-inducing pre-training, SIPT）在各下游任务上具有更好的表现。</p>
+<p>分析 Networks 任务得到的各种预训练模型在下游任务中微调的过程，SIPT 方法相比其他预训练方法得到的特征能够更快收敛，且在最后得到更好的效果。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9286?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9286?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h2 id="jie-lun">结论</h2>
-<p>文章研究了 DE 模型训练过程中对化学结构的识别以及将其中的潜变量作为分子表示的效果，文章的实验结果展示了模型训练过程中分子表示的变化，证明了将其作为下游任务的分子表示的可行性。</p>
-<p>在目前，预训练-微调是广泛使用的模型训练范式，而在化学信息学领域，其中的关键步骤，也就是将潜变量作为分子表示尚缺乏研究。文章研究的是较早的 GRU（RNN）所构成的 DE 模型，还应该对 Transformer、GPT 等目前更广泛使用的模型进行潜变量的深入研究。</p>
+<p>文章调查了多种预训练模型，分析其训练目标发现大多数都没有引入显式且深层的结构约束，文章设计了一种预训练策略 SIPT，通过预训练图 <span class="math">\(G_\mathrm{PT}\)</span> 在隐空间中加入了显式且深层的结构约束，相比于传统的预训练方法，这种策略在下游任务的层次上提升上模型表现。</p>
+<p>文章借鉴了图结构来对样本与样本间的关系建模，但文中并未对得到「显式且深层」的特征做详尽的研究，只能推测这种方法更适用于蛋白-蛋白相互作用等更关注于样本间关系的任务，还不能证明 SIPT 得到的例如分子表示比传统预训练方法得到的分子表示更好。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -264,23 +278,23 @@
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究&amp;url=https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=文献总结｜结构诱导的预训练&amp;url=https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                       <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                       <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html&amp;title=文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html&amp;title=文献总结｜结构诱导的预训练" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
                       <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
                     </a>
-                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜对编码器-解码器模型学习过程中化学结构识别的研究&amp;body=https://leonis.cc/sui-sui-nian/2023-05-13-summary-doi.org/10.1186/s13321-023-00713-z.html">
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=文献总结｜结构诱导的预训练&amp;body=https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html">
                       <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
                     </a>
                     <div class="clear"></div>
                 </div> -->
 
                 <aside class="post-tags">
-<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/rnn.html">RNN</a>                </aside>
+<a href="https://leonis.cc/tag/literature-summary.html">Literature Summary</a><a href="https://leonis.cc/tag/cadd.html">CADD</a><a href="https://leonis.cc/tag/gnn.html">GNN</a><a href="https://leonis.cc/tag/transformer.html">Transformer</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -306,18 +320,11 @@
 
 
                 <aside class="post-nav">
-                    <a class="post-nav-next" href="https://leonis.cc/sui-sui-nian/2023-05-19-summary-doi.org/10.48550/arXiv.2203.10446.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-left"></i>
-                                <h2 class="post-nav-title">文献总结｜一种用于基于结构药物设计的 3D 生成模型</h2>
-                            <p class="post-nav-excerpt">本文介绍于 2021 年彭健课题组发表在 NeurIPS 2021...</p>
-                        </section>
-                    </a>
-                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-04-28-summary-doi.org/10.1021/acs.jcim.2c01618.html">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">文献总结｜我们能用 Transformer 模型快速学会「翻译」活性分子吗？</h2>
-                            <p class="post-nav-excerpt">本文介绍于 2023 年发表在 Journal of Chemical...</p>
+                                <h2 class="post-nav-title">文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023...</p>
                         </section>
                     </a>
                     <div class="clear"></div>

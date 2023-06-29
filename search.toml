@@ -14,6 +14,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html"
+url = "/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html"
+title = "文献总结｜结构诱导的预训练"
+
+[[input.files]]
 path = "sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html"
 url = "/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html"
 title = "文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架"
