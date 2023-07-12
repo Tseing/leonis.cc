@@ -1,5 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-06-09T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</title><link href="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" rel="alternate"></link><published>2023-06-09T00:00:00+08:00</published><updated>2023-06-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-09:/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank"&gt;doi.org/10.1007/978-3-031-29119-7_6&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-06-23T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜结构诱导的预训练</title><link href="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" rel="alternate"></link><published>2023-06-23T00:00:00+08:00</published><updated>2023-06-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-23:/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-023-00647-z" rel="noopener" target="_blank"&gt;doi.org/10.1038/s42256-023-00647-z&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。&lt;/p&gt;
+&lt;p&gt;预训练-微调的学习模式在自然语言处理及其他相关领域都已经得到广泛的应用，预训练通过在隐空间中提取样本的特征，从而提升模型在下游任务上的表现。但目前的预训练模型都没能在潜变量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt; 上添加结构约束，从而获得既显式又深层的特征，这是目前预训练模型的一大缺陷。&lt;/p&gt;
+&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
+&lt;p&gt;对于数据集 &lt;span class="math"&gt;\(\boldsymbol{X}_\mathrm{PT}\in\mathcal{X}^{N_\mathrm{PT}}\)&lt;/span&gt;，预训练的目标就是从学习过程中得到编码器 &lt;span class="math"&gt;\(f_\theta:\mathcal{X}\rightarrow\mathcal{Z}\)&lt;/span&gt;，然后将 &lt;span class="math"&gt;\(f_\theta\)&lt;/span&gt; 用于各种各样的下游任务。&lt;/p&gt;
+&lt;h3 id="xian-shi-he-shen-ceng-jie-gou-yue-shu"&gt;显式和深层结构约束&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;显示结构约束&lt;/strong&gt;：如果能从隐空间 &lt;span class="math"&gt;\(\mathcal{Z}\)&lt;/span&gt; 中的两个样本 &lt;span class="math"&gt;\(\boldsymbol{z}_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{z}_j\)&lt;/span&gt; 直接推导出两者间的关系（如距离），那么该预训练过程就有显示的结构约束。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;深层结构约束&lt;/strong&gt;：预训练过程中所使用的信息越多（如维数），那么预训练过程所使用的结构约束越深。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目前大部分的预训练模型都无法同时保证显式与深层的结构约束，调查目前超过 90 种的预训模型，其方法可以分为以下几类：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;完全不使用样本间的关系，例如 prompt 训练，主要用于文本生成。&lt;/li&gt;
+&lt;li&gt;使用显式，但浅层的监督预训练目标，例如 BERT 的 Next Sentence Prediction 训练模式。&lt;/li&gt;
+&lt;li&gt;使用深层，但隐式的无监督或自监督预训练目标，例如通过添加噪声的数据强化方法。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9284?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9284?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;因此文章设计了一种同时使用显式与深层的结构约束的预训练框架，称这种方法为结构诱导的预训练。&lt;/p&gt;
+&lt;p&gt;首先将预训练问题表示为图 &lt;span class="math"&gt;\(G_\mathrm{PT}=(V,E)\)&lt;/span&gt;，其中结点 &lt;span class="math"&gt;\(V\)&lt;/span&gt; 表示 &lt;span class="math"&gt;\(\boldsymbol{X}_\mathrm{PT}\)&lt;/span&gt; 中的预训练样本，&lt;span class="math"&gt;\(E\)&lt;/span&gt; 表示预先定义的样本间关系。&lt;/p&gt;
+&lt;p&gt;接着预训练的损失函数就定义为&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mathcal{L}_\mathrm{PT}=(1-\lambda_\mathrm{SI})\mathcal{L}_\mathrm{M}+\lambda_\mathrm{SI}\mathcal{L}_{SI}
+$$&lt;/div&gt;
+&lt;p&gt;其中 &lt;span class="math"&gt;\(\mathcal{L}_\mathrm{M}\)&lt;/span&gt; 为传统预训练模型所使用的损失函数，&lt;span class="math"&gt;\(\mathcal{L}_\mathrm{SI}\)&lt;/span&gt; 是定义用于实现结构诱导目标的损失函数，使隐空间的各潜变量满足 &lt;span class="math"&gt;\(G_\mathrm{PT}\)&lt;/span&gt; 中的边（样本间关系）。&lt;/p&gt;
+&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
+&lt;p&gt;文章使用了 3 类数据用于预训练：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Proteins：来自 Stanford tree-of-life 数据集约 150 万条蛋白序列&lt;/li&gt;
+&lt;li&gt;Abstracts：来自 Microsoft Academic Graph 数据集约 650,000 篇的生物医学相关的文本摘要&lt;/li&gt;
+&lt;li&gt;Networks：来自文献的 70,000 条蛋白-蛋白相互作用网络的子图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Proteins 与 Abstracts 预训练的编码器是 Transformer 架构，Networks 预训练所使用的模型是具有图同构网络（Graph Isomorphism Network, GIN）编码器的图卷积神经网络（graph convolutional neural network, GNN）。&lt;/p&gt;
+&lt;h2 id="jie-guo_1"&gt;结果&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9285?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9285?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;预训练模型在下游任务上的测试结果如上图所示，&amp;Delta; 一列中以 &amp;uarr; 表示相对传统预训练模型性质的提升，可以看出不管是相对于 per-token 还是 per-sample 的传统预训练策略，文中提出的结构诱导的预训练方法（structure-inducing pre-training, SIPT）在各下游任务上具有更好的表现。&lt;/p&gt;
+&lt;p&gt;分析 Networks 任务得到的各种预训练模型在下游任务中微调的过程，SIPT 方法相比其他预训练方法得到的特征能够更快收敛，且在最后得到更好的效果。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9286?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9286?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
+&lt;p&gt;文章调查了多种预训练模型，分析其训练目标发现大多数都没有引入显式且深层的结构约束，文章设计了一种预训练策略 SIPT，通过预训练图 &lt;span class="math"&gt;\(G_\mathrm{PT}\)&lt;/span&gt; 在隐空间中加入了显式且深层的结构约束，相比于传统的预训练方法，这种策略在下游任务的层次上提升上模型表现。&lt;/p&gt;
+&lt;p&gt;文章借鉴了图结构来对样本与样本间的关系建模，但文中并未对得到「显式且深层」的特征做详尽的研究，只能推测这种方法更适用于蛋白-蛋白相互作用等更关注于样本间关系的任务，还不能证明 SIPT 得到的例如分子表示比传统预训练方法得到的分子表示更好。&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category><category term="Transformer"></category></entry><entry><title>文献总结｜MTGL-ADMET：一种通过地位理论与最大流增强并用于 ADMET 预测的多任务图学习框架</title><link href="https://leonis.cc/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html" rel="alternate"></link><published>2023-06-09T00:00:00+08:00</published><updated>2023-06-09T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-09:/sui-sui-nian/2023-06-09-summary-doi.org/10.1007/978-3-031-29119-7_6.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank"&gt;doi.org/10.1007/978-3-031-29119-7_6&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。&lt;/p&gt;
 &lt;p&gt;对于 ADMET 多种性质的预测，一般的方法是单任务学习，也就是一个模型只完成一种任务（预测一种性质），这种方法不仅繁琐，而且在缺少真实数据的情况下效果不佳。近年来出现的一种新范式是先通过预训练得到分子的通用表示，再将其用于多任务学习，使用一个模型完成所有预测任务，预训练的步骤弥补了缺少真实数据的问题。&lt;/p&gt;
 &lt;p&gt;文章认为，现有基于多任务的 ADMET 模型都是通过一个模型完成所有预测任务，这样的共同学习很难保证模型能够共同学习到多种性质的信息，导致效果甚至不如单任务学习。文章设想以一个任务为主要任务，多个其他任务作为辅助任务，并通过地位理论找到最佳的任务搭配，改善模型效果。&lt;/p&gt;
@@ -91,7 +193,7 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>文献总结｜探测图表示</title><link href="https://leonis.cc/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html" rel="alternate"></link><published>2023-06-02T00:00:00+08:00</published><updated>2023-06-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-02:/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2303.03951" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2303.03951&lt;/a&gt;&lt;/p&gt;
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>文献总结｜探测图表示</title><link href="https://leonis.cc/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html" rel="alternate"></link><published>2023-06-02T00:00:00+08:00</published><updated>2023-06-02T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-02:/sui-sui-nian/2023-06-02-summary-doi.org/10.48550/arXiv.2303.03951.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2303.03951" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2303.03951&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年 德国亥姆霍兹信息安全中心研究团队发表在 AISTATS 2023 上的一篇文章，文章原标题为 Probing Graph Representations，文章设计了多种分子表示的探测模型，并通过探测模型研究了图模型在预训练后所编码分子信息。&lt;/p&gt;
 &lt;p&gt;随着基于图的深度学习模型不断出现，亟需回答的一个问题是「图模型将什么信息编码进了表示中？」为了研究这一问题，文章构建了探测模型测试预训练图模型得到的分子表示。&lt;/p&gt;
 &lt;p&gt;探测图表示的思路很简单，如果能从图模型输出的分子表示中提取出分子性质，那么就可以认为该性质被编码进分子表示中，所以文章的工作流程是「预训练-预测」（略不同于「预训练-微调」）。通过该流程，文章测试了传统 GNN 与基于 Transformer 的图模型等不同架构、不同数据集、不同优化算法等因素对于模型编码得到的潜变量的影响。&lt;/p&gt;
@@ -2118,88 +2220,4 @@ for Structure-Based Drug Design），实验结果表明该模型能够获取指�
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>为 Pelican 博客加入搜索功能</title><link href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="alternate"></link><published>2023-03-14T00:00:00+08:00</published><updated>2023-03-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-14:/sui-sui-nian/2023-03-14-deploy-pelican-search.html</id><summary type="html">&lt;p&gt;博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。&lt;/p&gt;</summary><content type="html">&lt;p&gt;在目前的博客生态圈中，静态博客占了相当大的比例。静态博客因为足够轻量、便于备份和迁移而受到包括我在内的许多用户喜欢，但由于静态博客没有数据库，在组织内容上就不免有所不足，这就涉及到题中所说的搜索功能了。为静态博客部署搜索功能比较麻烦，一个稍简单的方法就是借于「必应」「谷歌」等搜索引擎的 API，用它们来搜索站内的内容，但是这种方法的效果并不好，如果网页还未被收录或是相应头键字在网页中的占比太小，就很难搜索到目标信息。另一种方法就是在站内建立本地的搜索，例如 Hexo 等博客框架都提供了相应的插件，在本地生成搜索匹配所需的文件，将其一并推送至服务器实现全站搜索，这种方法的兼容性、准确性都要更好，也是我选择的方案。&lt;/p&gt;
-&lt;p&gt;Pelican 也有类似的搜索插件 &lt;a href="https://github.com/pelican-plugins/search" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; pelican-plugins/search&lt;/a&gt;，它主要是借助了 &lt;a href="https://stork-search.net/" rel="noopener" target="_blank"&gt;Stork&lt;/a&gt; 来实现搜索功能。Stork 在官方文档中指出，它可以用于为静态站点构建关速美观的搜索接口，所以理应可以用于所有类型的静态博客，我不了解其他博客框架是否使用了这个工具，但不得不提其搜索体验非常不错，十分值得一试。&lt;/p&gt;
-&lt;h2 id="an-zhuang-stork"&gt;安装 Stork&lt;/h2&gt;
-&lt;h3 id="an-zhuang-c-sheng-cheng-gong-ju"&gt;安装 C++ 生成工具&lt;/h3&gt;
-&lt;p&gt;Stork 是基于 Rust 构建的工具，需要使用 Rust 的包管理器 Cargo 安装，若是在 macOS 或 Linux 系统上，直接按照官方文档给出的方法安装即可，而在 Windows 上就会比较麻烦，我在这里介绍一下 Windows 的操作方法。&lt;/p&gt;
-&lt;p&gt;{note begin}后文所涉及的操作系统都是 Windows 10 系统，终端指的是 Windows 终端（Windows Terminal）。{note end}&lt;/p&gt;
-&lt;p&gt;首先，在 Windows 上，Rust 需要某些 C++ 生成工具，可以选择安装 Visual Studio 或仅安装 Microsoft C++ 生成工具。安装 Visual Studio 的方法非常简单（推荐），按下不表，若仅安装 Microsoft C++ 生成工具，可以在终端中输入&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;winget install Microsoft.VisualStudio.2022.BuildTools
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;由于 winget 下载速度感人，实在不推荐这种方法。&lt;/p&gt;
-&lt;p&gt;在安装好 Visual Studio 后，在开始界面搜索并打开 Visual Studio Installer，选择 &lt;code&gt;修改&lt;/code&gt; - &lt;code&gt;使用 C++ 的桌面开发&lt;/code&gt;，等待安装完成。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Visual Studio" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Visual Studio" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8654?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h3 id="an-zhuang-rust"&gt;安装 Rust&lt;/h3&gt;
-&lt;p&gt;Rust 也可以使用 winget 安装，命令很简单：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;winget install rustup
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;但是不太好用，所以我还是选择到 &lt;a href="https://www.rust-lang.org/zh-CN/tools/install" rel="noopener" target="_blank"&gt;Rust 官网&lt;/a&gt;下载。下载完成后打开安装程序，弹出的是命令行窗口，默认安装在 &lt;code&gt;C:\Users&lt;/code&gt; 路径下的目录中，如果不需要额外的设置，键入 &lt;code&gt;1&lt;/code&gt; 后按回车即可。&lt;/p&gt;
-&lt;p&gt;但由于 C 盘空间不太够了，我需要修改一下安装的路径，在目标路径下创建以下两个文件夹并新建环境变量：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml"&gt;CARGO_HOME: E:\RUST\.cargo
-RUSTUP_HOME: E:\RUST\.rustup
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在 &lt;code&gt;PATH&lt;/code&gt; 中添加变量 &lt;code&gt;%CARGO_HOME%&lt;/code&gt;、&lt;code&gt;%RUSTUP_HOME%&lt;/code&gt; 和 &lt;code&gt;%CARGO_HOME%\bin&lt;/code&gt;，然后再打开安装程序，默认路径就已经改变，键入 &lt;code&gt;1&lt;/code&gt; 按回车安装。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-txt"&gt;Rustup metadata and toolchains will be installed into the Rustup
-home directory, located at:
-
-  E:\RustT\.rustup
-
-This can be modified with the RUSTUP_HOME environment variable.
-
-The Cargo home directory is located at:
-
-  E:\Rust\.cargo
-
-This can be modified with the CARGO_HOME environment variable.
-
-The cargo, rustc, rustup and other commands will be added to
-Cargo's bin directory, located at:
-
-  E:\Rust\.cargo\bin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;安装完成后，在终端中输入 &lt;code&gt;cargo --version&lt;/code&gt; 理应输出版本信息。&lt;/p&gt;
-&lt;h3 id="tong-guo-cargo-an-zhuang-stork"&gt;通过 Cargo 安装 Stork&lt;/h3&gt;
-&lt;p&gt;虽然安装好了 Cargo，但不出意外的话，与其他包管理器类似，从官方的源下载内容的速度非常之慢，所以需要修改配置使用镜像源。&lt;/p&gt;
-&lt;p&gt;在 &lt;code&gt;.cargo&lt;/code&gt; 目录下创建文件 &lt;code&gt;config.toml&lt;/code&gt;，写入以下内容：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-toml"&gt;[source.crates-io]
-replace-with = 'ustc'
-
-[source.ustc]
-registry = "git://mirrors.ustc.edu.cn/crates.io-index"
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;就使用了科大的镜像源，然后在终端中使用以下命令安装 Stork：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;cargo install stork-search --locked
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;最后可以使用 &lt;code&gt;stork --version&lt;/code&gt; 验证是否成功安装 Stork。&lt;/p&gt;
-&lt;h2 id="bu-shu-pelican-search_1"&gt;部署 Pelican Search&lt;/h2&gt;
-&lt;p&gt;安装好 Stork 后的步骤就很简单了，在 Pelican 的 Python 环境中安装插件：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh"&gt;python -m pip install pelican-search
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后在 Pelican 设置中的 &lt;code&gt;PLUGINS&lt;/code&gt; 引入 &lt;code&gt;search&lt;/code&gt;，在主题的模板文件（一般是 &lt;code&gt;base.html&lt;/code&gt;）中引入 Stork CSS 的 CDN（当然也可以改写后自己部署）：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;link rel="stylesheet" href="https://files.stork-search.net/basic.css" /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以及 JavaScript：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;script src="https://files.stork-search.net/releases/v1.5.0/stork.js"&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script&amp;gt;
-    stork.register("sitesearch", "{{ SITEURL }}/search-index.st")
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;最后就可以在设计的搜索区域通过以下方式调用 Stork 搜索了：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;Search: &amp;lt;input data-stork="sitesearch" /&amp;gt;
-&amp;lt;div data-stork="sitesearch-output"&amp;gt;&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{warn begin}以上 CSS 应在页面的头部，例如 &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; 中引入，而 JavaScript 则应在 &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; 的尾部引入。这是因为 HTML 文件是自上至下顺序执行的，如果加载 JavaScript 的位置靠前，比如在 &lt;code&gt;&amp;lt;input data-stork="sitesearch" /&amp;gt;&lt;/code&gt; 元素之前引入，在执行时该元素还未生成，就会找不到匹配的搜索框，提示没有 &lt;code&gt;query selector `input[data-stork="sitesearch"]`&lt;/code&gt;，导致 &lt;code&gt;Uncaught StorkError&lt;/code&gt;。{warn end}&lt;/p&gt;
-&lt;h3 id="pelican-search-de-she-zhi-xiang"&gt;Pelican Search 的设置项&lt;/h3&gt;
-&lt;p&gt;pelican-search 的设置项只有两项，一项 &lt;code&gt;SEARCH_MODE&lt;/code&gt; 设定从 Markdown 文件建立索引还是从 HTML 建立索引，&lt;code&gt;SEARCH_HTML_SELECTOR&lt;/code&gt; 可以用于指定从 HTML 的哪些内容中建立索引。但 Stork 的设置项不止这些，将其整合进 pelican-search 应该也不太难，留到以后有精力的时候尝试一下。&lt;/p&gt;
-&lt;p&gt;我浏览了一下 &lt;a href="https://stork-search.net/docs/config-ref" rel="noopener" target="_blank"&gt;Stork 官方文档&lt;/a&gt;中的内容，发现了很多很有意思的东西。例如 &lt;code&gt;minimum_indexed_substring_length&lt;/code&gt; 一项设置了建立索引的匹配项最短长度，默认值为 3，通俗来讲就是长于 3 的单词才会用于建立索引，那么在搜索时也需要起码键入 3 个字母才有结果。但这种做法对于中文来说就存在很大的问题，中文中最普遍的是双字词，所以文档中也提到 &lt;code&gt;minimum_index_ideographic_substring_length&lt;/code&gt; 一项设置，默认值是 1，对于 CJK 字符而言，长于 1 的词就可以建立索引。可惜在我的试验中这个设置貌似并没有效果，在我使用汉字搜索时，也必须输入 3 个汉字才有结果，若要搜索双字词，只好用两个汉字加上空格的方法将就一下。除了这个问题之外就是使用中文搜索的精度不高，很难找到匹配项，所以 Stork 的最大不足其实就在于对中文的支持不好。据作者的消息，他也很希望能够提高 Stork 在中文搜索上的表现，可以期待一下后续的更新。&lt;/p&gt;
-&lt;p&gt;再来说说 Stork 的优点，那就是「快」。Stork 搜索的速度特别快，不论是汉字还是字母，击入三个字符秒出搜索结果，这一点的体验就特别好。另外 Stork 还支持包括英语在内的多种欧洲语言的词根检索，例如输入「get」，它亦能返回「getting」的检索结果，这个功能对于静态站点而言可谓强大。如果是英文语境下，Stork 搜索精度高、速度快、支持词根检索，简直是最为优雅的静态站点搜索插件，也期待一下后续它能否在中文搜索上也能提供如此流畅的体验。&lt;/p&gt;
-&lt;p&gt;{note begin}不知是我的原因还是 Stork 的问题，生成的索引文件巨大，足足有 16 MB，完全不能在网页上使用。于是我花了一整天的时间升级 Nginx 并配置上了 Brotli 压缩传输，压缩后只有大约 900 KB 了，加载速度大大提升。{note end}&lt;/p&gt;
-&lt;hr/&gt;
-&lt;h2 id="references_1"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/maphew/95fb9e986edfab887e4ff36547d5da59" rel="noopener" target="_blank"&gt;Install Stork-search on Windows - GitHub Gist&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://learn.microsoft.com/zh-cn/windows/dev-environment/rust/setup" rel="noopener" target="_blank"&gt;在 Windows 上针对 Rust 设置开发环境 - Microsoft Learn&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.cnblogs.com/skzxc/p/12129353.html" rel="noopener" target="_blank"&gt;Win10 Rust 语言安装与环境变量配置(+VSCode) - 博客园&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://course.rs/first-try/slowly-downloading.html" rel="noopener" target="_blank"&gt;下载依赖太慢了？ - Rust语言圣经(Rust Course)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Blog"></category><category term="Pelican"></category><category term="Rust"></category><category term="Windows"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry></feed>
