@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>如何在 X86 设备上使用 Docker 构建 ARM 镜像</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Docker">
+    <meta name="tags" content="Linux">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="如何在 X86 设备上使用 Docker 构建 ARM 镜像"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-07-28 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Docker"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "如何在 X86 设备上使用 Docker 构建 ARM 镜像",
+  "headline": "如何在 X86 设备上使用 Docker 构建 ARM 镜像",
+  "datePublished": "2023-07-28 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html",
+  "description": "最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …"
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">如何在 X86 设备上使用 Docker 构建 ARM 镜像</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 7月28日">2023年 7月28日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#qemu-user-static" title="qemu-user-static">qemu-user-static</a></li><li><a class="toc-href" href="#docker-chang-yong-ming-ling" title="Docker 常用命令">Docker 常用命令</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要的依赖就可以直接上传使用了，完全不用跟驱动安装等等令人头疼又心累的事情打交道。</p>
+<p>但在使用 Docker 构建镜像时，有一个挺棘手的问题。计算平台或是服务器所使用的设备一般是 ARM 架构，个人电脑使用基本上是 X86 架构。由于二者 CPU 指令集不同，尽管可以在 X86 设备上用 <code>docker pull --platform=linux/arm64</code> 拉取用于 ARM 设备的镜像，但无法使用 <code>docker run</code> 或 <code>docker build</code> 运行或是通过构建的方法修改该镜像。</p>
+<h2 id="qemu-user-static">qemu-user-static</h2>
+<p>去寻找 ARM 设备再使用 Docker 构建镜像就太麻烦了，幸好找到了一个工具 <a href="https://github.com/multiarch/qemu-user-static" rel="noopener" target="_blank"><i class="fa fa-github"></i> qemu-user-static</a>，专门用于解决这个问题。先来看看仓库中给出的示例：</p>
+<pre><code class="language-sh">$ uname -m
+x86_64
+
+$ docker run --rm -t arm64v8/ubuntu uname -m
+standard_init_linux.go:211: exec user process caused "exec format error"
+
+$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+$ docker run --rm -t arm64v8/ubuntu uname -m
+aarch64
+</code></pre>
+<ul>
+<li>第一行的 <code>uname -m</code> 用于检测宿主机的架构，终端给出的信息表明这是一台 X86 设备。</li>
+<li>第二行命令用 Docker 运行 <code>arm64v8/ubuntu</code> 镜像，并运行同样的 <code>uname -m</code>，当然由于架构不同，无法运行该镜像，给出了 <code>standard_init_linux.go:211: exec user process caused "exec format error"</code> 错误。在使用 Dockerfile 构建镜像时，遇到类似的 <code>exec /bin/bash: exec format error</code> 错误也需要考虑是不是架构的问题。</li>
+<li>运行 <code>qemu-user-static</code> 镜像后，<code>arm64v8/ubuntu</code> 就可以成功运行了，终端给出的信息表明 <code>arm64v8/ubuntu</code> 是一个用于 ARM 设备的镜像。</li>
+</ul>
+<p>简单来说，qemu-user-static 通过 QEMU 模拟器模拟出了 ARM 设备，从而实现在 X86 设备上运行或是构建 ARM 镜像。当然，qemu-user-static 能模拟的硬件不仅限于 ARM，对于支持的硬件，官网上有更详细的介绍。</p>
+<p>qemu-user-static 的安装和使用都可以通过以下命令完成，若本地不存在该镜像，Docker 会自动从云端拉取：</p>
+<pre><code class="language-sh">$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+</code></pre>
+<p>也有人会让 qemu-user-static 在后台一直运行，我嫌维护起来麻烦，就直接使用上面的命令，如果后台挂掉了，再运行一次就好。</p>
+<h2 id="docker-chang-yong-ming-ling">Docker 常用命令</h2>
+<p>最后再记录几个创建环境时常用的 Docker 命令：</p>
+<pre><code class="language-sh"># 检查镜像的架构
+$ docker inspect {image_name}:{tag} | grep "Architecture"
+
+# 用终端交互模式进入镜像的 /bin/bash
+$ docker run -it {image_name}:{tag} /bin/bash
+
+# 使用当前文件夹中的 Dockerfile 构建镜像，不使用缓存并输出详细信息
+$ docker build -t {image_name}:{tag} . --progress=plain --no-cache
+</code></pre>
+<p>Dockerfile 中记录了配置镜像的所有步骤，其他人也可以通过分享出去的 Dockerfile 构建相同的环境。而在撰写 Dockerfile 时，由于不熟悉基本镜像，一般都需要参考着终端给出的反馈来修改 Dockerfile 中的命令。这时候使用 <code>docker run -it</code> 就很方便，特别是运行 qemu-user-static 后，可以直接进入 ARM 镜像的交互终端中，一步步安装依赖后再保存命令。</p>
+<p>上面的方法在简单的镜像中尚可，有的基本镜像做了特别复杂的操作，就算使用 qemu-user-static 也无法执行 <code>docker run</code>，这种情况下就必须根据 <code>docker build</code> 给出的错误信息修改 Dockerfile 了。在对 Dockerfile Debug 时，指定 <code>--progress=plain --no-cache</code> 两个参数能输出更为完整的错误。</p>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.cnblogs.com/chen2ha/p/17180287.html" rel="noopener" target="_blank">x86 平台利用 qemu-user-static 实现 arm64 平台 docker 镜像的运行和构建 - 博客园</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html&amp;title=如何在 X86 设备上使用 Docker 构建 ARM 镜像" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;body=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/docker.html">Docker</a><a href="https://leonis.cc/tag/linux.html">Linux</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">文献总结｜结构诱导的预训练</h2>
+                            <p class="post-nav-excerpt">本文介绍于 2023 年 MIT 研究团队在 Nature Machine...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+</body>
+</html>

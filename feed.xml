@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-06-23T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>文献总结｜结构诱导的预训练</title><link href="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" rel="alternate"></link><published>2023-06-23T00:00:00+08:00</published><updated>2023-06-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-23:/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-023-00647-z" rel="noopener" target="_blank"&gt;doi.org/10.1038/s42256-023-00647-z&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-07-28T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>如何在 X86 设备上使用 Docker 构建 ARM 镜像</title><link href="https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" rel="alternate"></link><published>2023-07-28T00:00:00+08:00</published><updated>2023-07-28T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-07-28:/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html</id><summary type="html">&lt;p&gt;最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要的依赖就可以直接上传使用了，完全不用跟驱动安装等等令人头疼又心累的事情打交道。&lt;/p&gt;
+&lt;p&gt;但在使用 Docker 构建镜像时，有一个挺棘手的问题。计算平台或是服务器所使用的设备一般是 ARM 架构，个人电脑使用基本上是 X86 架构。由于二者 CPU 指令集不同，尽管可以在 X86 设备上用 &lt;code&gt;docker pull --platform=linux/arm64&lt;/code&gt; 拉取用于 ARM 设备的镜像，但无法使用 &lt;code&gt;docker run&lt;/code&gt; 或 &lt;code&gt;docker build&lt;/code&gt; 运行或是通过构建的方法修改该镜像。&lt;/p&gt;
+&lt;h2 id="qemu-user-static"&gt;qemu-user-static&lt;/h2&gt;
+&lt;p&gt;去寻找 ARM 设备再使用 Docker 构建镜像就太麻烦了，幸好找到了一个工具 &lt;a href="https://github.com/multiarch/qemu-user-static" rel="noopener" target="_blank"&gt;&lt;i class="fa fa-github"&gt;&lt;/i&gt; qemu-user-static&lt;/a&gt;，专门用于解决这个问题。先来看看仓库中给出的示例：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;$ uname -m
+x86_64
+
+$ docker run --rm -t arm64v8/ubuntu uname -m
+standard_init_linux.go:211: exec user process caused "exec format error"
+
+$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+$ docker run --rm -t arm64v8/ubuntu uname -m
+aarch64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;第一行的 &lt;code&gt;uname -m&lt;/code&gt; 用于检测宿主机的架构，终端给出的信息表明这是一台 X86 设备。&lt;/li&gt;
+&lt;li&gt;第二行命令用 Docker 运行 &lt;code&gt;arm64v8/ubuntu&lt;/code&gt; 镜像，并运行同样的 &lt;code&gt;uname -m&lt;/code&gt;，当然由于架构不同，无法运行该镜像，给出了 &lt;code&gt;standard_init_linux.go:211: exec user process caused "exec format error"&lt;/code&gt; 错误。在使用 Dockerfile 构建镜像时，遇到类似的 &lt;code&gt;exec /bin/bash: exec format error&lt;/code&gt; 错误也需要考虑是不是架构的问题。&lt;/li&gt;
+&lt;li&gt;运行 &lt;code&gt;qemu-user-static&lt;/code&gt; 镜像后，&lt;code&gt;arm64v8/ubuntu&lt;/code&gt; 就可以成功运行了，终端给出的信息表明 &lt;code&gt;arm64v8/ubuntu&lt;/code&gt; 是一个用于 ARM 设备的镜像。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;简单来说，qemu-user-static 通过 QEMU 模拟器模拟出了 ARM 设备，从而实现在 X86 设备上运行或是构建 ARM 镜像。当然，qemu-user-static 能模拟的硬件不仅限于 ARM，对于支持的硬件，官网上有更详细的介绍。&lt;/p&gt;
+&lt;p&gt;qemu-user-static 的安装和使用都可以通过以下命令完成，若本地不存在该镜像，Docker 会自动从云端拉取：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;也有人会让 qemu-user-static 在后台一直运行，我嫌维护起来麻烦，就直接使用上面的命令，如果后台挂掉了，再运行一次就好。&lt;/p&gt;
+&lt;h2 id="docker-chang-yong-ming-ling"&gt;Docker 常用命令&lt;/h2&gt;
+&lt;p&gt;最后再记录几个创建环境时常用的 Docker 命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;# 检查镜像的架构
+$ docker inspect {image_name}:{tag} | grep "Architecture"
+
+# 用终端交互模式进入镜像的 /bin/bash
+$ docker run -it {image_name}:{tag} /bin/bash
+
+# 使用当前文件夹中的 Dockerfile 构建镜像，不使用缓存并输出详细信息
+$ docker build -t {image_name}:{tag} . --progress=plain --no-cache
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dockerfile 中记录了配置镜像的所有步骤，其他人也可以通过分享出去的 Dockerfile 构建相同的环境。而在撰写 Dockerfile 时，由于不熟悉基本镜像，一般都需要参考着终端给出的反馈来修改 Dockerfile 中的命令。这时候使用 &lt;code&gt;docker run -it&lt;/code&gt; 就很方便，特别是运行 qemu-user-static 后，可以直接进入 ARM 镜像的交互终端中，一步步安装依赖后再保存命令。&lt;/p&gt;
+&lt;p&gt;上面的方法在简单的镜像中尚可，有的基本镜像做了特别复杂的操作，就算使用 qemu-user-static 也无法执行 &lt;code&gt;docker run&lt;/code&gt;，这种情况下就必须根据 &lt;code&gt;docker build&lt;/code&gt; 给出的错误信息修改 Dockerfile 了。在对 Dockerfile Debug 时，指定 &lt;code&gt;--progress=plain --no-cache&lt;/code&gt; 两个参数能输出更为完整的错误。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.cnblogs.com/chen2ha/p/17180287.html" rel="noopener" target="_blank"&gt;x86 平台利用 qemu-user-static 实现 arm64 平台 docker 镜像的运行和构建 - 博客园&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Docker"></category><category term="Linux"></category></entry><entry><title>文献总结｜结构诱导的预训练</title><link href="https://leonis.cc/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html" rel="alternate"></link><published>2023-06-23T00:00:00+08:00</published><updated>2023-06-23T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-06-23:/sui-sui-nian/2023-06-23-summary-doi.org/10.1038/s42256-023-00647-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-023-00647-z" rel="noopener" target="_blank"&gt;doi.org/10.1038/s42256-023-00647-z&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年 MIT 研究团队在 Nature Machine Intelligence 发表上的一篇文章，文章原标题为 Structure-inducing pre-training，文章调查了目前广泛应用的多种预训练模型，设计了一种通过图结构在预训练过程中引入显式且深层结构约束的方法。&lt;/p&gt;
 &lt;p&gt;预训练-微调的学习模式在自然语言处理及其他相关领域都已经得到广泛的应用，预训练通过在隐空间中提取样本的特征，从而提升模型在下游任务上的表现。但目前的预训练模型都没能在潜变量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt; 上添加结构约束，从而获得既显式又深层的特征，这是目前预训练模型的一大缺陷。&lt;/p&gt;
 &lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
@@ -2117,107 +2159,4 @@ molecule generation, PBMG）。LBMG 方法难以跳出目前的化空间，因�
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="但丁广场" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8695?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="但丁广场" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8695?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p class="intro"&gt;&lt;i class="fa fa-angle-double-up"&gt;&lt;/i&gt; 但丁握着哪部文集的稿子？&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="意式风情街" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8696?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="意式风情街" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8696?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa fa-angle-double-up"&gt;&lt;/i&gt; 某无人居住的故居，窗前桃花已开，主人归未？&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="游记"></category><category term="摄影"></category></entry><entry><title>文献总结｜使用等变扩散模型进行基于结构的药物设计</title><link href="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" rel="alternate"></link><published>2023-03-17T00:00:00+08:00</published><updated>2023-03-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-17:/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html</id><summary type="html">&lt;p&gt;本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.48550/arXiv.2210.13695" rel="noopener" target="_blank"&gt;doi.org/10.48550/arXiv.2210.13695&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。&lt;/p&gt;
-&lt;p&gt;近年来，越来越多的深度学习模型被应于用基于结构的药物设计，但这些模型主要采用了序列生成的方式，这些方法所面临的一个重要问题是序列生成忽视了原子的几何顺序，可能并不能反映设计分子的真实原理，最后无法获取到目标分子的化学空间。&lt;/p&gt;
-&lt;p&gt;针对于这个问题，文章考虑了分子中各原子的空间坐标，使用等变扩散模型完成了针对特定靶点的分子生成，称为 DiffSBDD（Equivariant Diffusion Model
-for Structure-Based Drug Design），实验结果表明该模型能够获取指定蛋白活性口袋的信息并生成多样、具有类药性且具有高亲合力的分子。&lt;/p&gt;
-&lt;h2 id="mo-xing"&gt;模型&lt;/h2&gt;
-&lt;h3 id="qu-zao-sheng-kuo-san-gai-lu-mo-xing"&gt;去噪声扩散概率模型&lt;/h3&gt;
-&lt;p&gt;去噪声扩散概率模型（Denoising Diffusion Probabilistic Models, DDPMs）是近年应用于多个领域的一类生成模型，DDPM 通过马尔可夫链逐次向样本数据上添加噪声，然后由神经网络学习该马尔可夫链的逆过程，实现从噪声中重建采样数据。&lt;/p&gt;
-&lt;p&gt;就分子生成任务而言，样本数据是原子点云（简称分子） &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}=[\boldsymbol{x},\boldsymbol{h}]\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\boldsymbol{x}\in\mathbb{R}^{N\times3}\)&lt;/span&gt;，表示原子的空间坐标，&lt;span class="math"&gt;\(\boldsymbol{h}\in\mathbb{R}^{N\times d}\)&lt;/span&gt;，表示原子的特征。那么对原子点由 &lt;span class="math"&gt;\(t=0\)&lt;/span&gt; 至 &lt;span class="math"&gt;\(t=T\)&lt;/span&gt; 逐次加噪声的过程就可以表示为&lt;/p&gt;
-&lt;div class="math"&gt;$$q(\boldsymbol{z}_t|\boldsymbol{z}_\mathrm{data})=\mathcal{N}(\boldsymbol{z}_t|\alpha_t\boldsymbol{z}_\mathrm{data},\sigma^2_t\boldsymbol{I})$$&lt;/div&gt;
-&lt;p&gt;由 &lt;span class="math"&gt;\(t\)&lt;/span&gt; 至 &lt;span class="math"&gt;\(s&amp;lt;t\)&lt;/span&gt; 的去噪声的过程同是马尔可夫链，记作 &lt;span class="math"&gt;\(q(\boldsymbol{z}_s|\boldsymbol{z}_\mathrm{data},\boldsymbol{z}_t)\)&lt;/span&gt;，可以看出去噪声的过程依赖于样本数据 &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}\)&lt;/span&gt;，即标签数据。&lt;/p&gt;
-&lt;p&gt;但当使用模型进行预测时，由于预测的分子 &lt;span class="math"&gt;\(\boldsymbol{z}_\mathrm{data}\)&lt;/span&gt; 是未知的，该模型使用神经网络 &lt;span class="math"&gt;\(\phi_\theta\)&lt;/span&gt; 拟合得到 &lt;span class="math"&gt;\(\hat{\boldsymbol{z}}_\mathrm{data}\)&lt;/span&gt;。具体来说，加噪声后的分子可以表示为&lt;/p&gt;
-&lt;div class="math"&gt;$$\boldsymbol{z}_t=\alpha_t\boldsymbol{z}_\mathrm{data}+\sigma_t\boldsymbol{\epsilon},\ \epsilon\sim\mathcal{N}(\boldsymbol{0},\boldsymbol{I})$$&lt;/div&gt;
-&lt;p&gt;神经网络就是用于预测噪声 &lt;span class="math"&gt;\(\hat{\boldsymbol{\epsilon}}_\theta=\phi_\theta(\boldsymbol{z}_t,t)\)&lt;/span&gt;，那么显然有&lt;/p&gt;
-&lt;div class="math"&gt;$$\hat{\boldsymbol{z}}_\mathrm{data}=\frac{1}{\alpha_t}\boldsymbol{z}_t-\frac{\sigma_t}{\alpha_t}\hat{\boldsymbol{\epsilon}}_\theta$$&lt;/div&gt;
-&lt;p&gt;所以训练的目标也就是最小化神经网络预测值 &lt;span class="math"&gt;\(\hat{\boldsymbol{\epsilon}}_\theta\)&lt;/span&gt; 与真实值 &lt;span class="math"&gt;\(\boldsymbol{\epsilon}\)&lt;/span&gt; 间的差距，损失函数为&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathcal{L}_\mathrm{train}=\frac{1}{2}||\boldsymbol{\epsilon}-\phi_\theta(\boldsymbol{z}_t,t)||^2$$&lt;/div&gt;
-&lt;h3 id="en-deng-bian-tu-shen-jing-wang-luo"&gt;&lt;em&gt;E(n)&lt;/em&gt; - 等变图神经网络&lt;/h3&gt;
-&lt;p&gt;在使生成的分子与蛋白活性口袋配合的过程中，需要重新打乱原子生成新的结构，所以需要对原子点云做置换、旋转等变换。传统的图神经网络无法很好处理这类具有等变对称性质的特征，因而提出的一类改进后用于处理等变性质的图神经网络就被称为等变图神经网络。&lt;/p&gt;
-&lt;h3 id="diffsbdd"&gt;DiffSBDD&lt;/h3&gt;
-&lt;p&gt;结合以上两种模型，就得到了文章中所设计的 DiffSBDD，DiffSBDD 具有两种分子生成方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;蛋白口袋条件分子生成（Conditional generation）&lt;/li&gt;
-&lt;li&gt;通过联合分布实现分子生成（Inpainting）&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8663?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h4&gt;Conditional generation&lt;/h4&gt;
-&lt;p&gt;在 conditional generation 模式中，给模型的每个去噪声过程都指定了相同的蛋白口袋，简单来讲，就是在分子生成过程中，原子点云会不断发生置换、旋转等变换，而蛋白口袋不发生变化，使配体分子去「适配」蛋白口袋。&lt;/p&gt;
-&lt;h3 id="inpainting"&gt;Inpainting&lt;/h3&gt;
-&lt;p&gt;而在 inpainting 模式中，需要首先训练一个无指定条件的 DDPM 用于拟合配体分子与蛋白口袋的联合概率分布 &lt;span class="math"&gt;\(p(\boldsymbol{z}^{(L)}_\mathrm{data},\boldsymbol{z}^{(P)}_\mathrm{data})\)&lt;/span&gt;，该概率分布的主要用于从噪声数据中得到配合的配体分子与蛋白口袋对。&lt;/p&gt;
-&lt;p&gt;在预测过程中，首先将加噪声后的样本 &lt;span class="math"&gt;\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P)}_t]\)&lt;/span&gt; 中的蛋白口袋掩盖掉，将得到其中的配体部分与加噪声后的蛋白口袋重新组合为 &lt;span class="math"&gt;\([\boldsymbol{z}^{(L)}_t,\boldsymbol{z}^{(P')}_t]\)&lt;/span&gt;，最后用已训练得到的联合概率分布 DDPM 为该组合去噪声，即生成目标分子。&lt;/p&gt;
-&lt;h2 id="shu-ju_1"&gt;数据&lt;/h2&gt;
-&lt;p&gt;文章分别使用了 CrossDocked 中 10 万个蛋白-配体对和 Binding MOAD 中 40354 个蛋白-配体对作为模型的数据集。&lt;/p&gt;
-&lt;h2 id="jie-guo-yu-tao-lun"&gt;结果与讨论&lt;/h2&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8664?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;首先文章对生成分子进行了评估，可以看出不管使用哪一个数据集训练模型、使用哪一个模式生成分子，最终结果中只有很小一部分生成的分子不合法，生成分子中大部分都满足新颖、合法的要求。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8665?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;接着文章将分子生成结果与目前在基于结构的药物设计上表现最好的 3D-SBDD 和 Pocaket2Mol 两种模型比较。从表中的数据可以看出，在 Vina Score 上，DiffSBDD 与另外两种模型都比较接近，也就是模型都识别到了配体与蛋白口袋间的相互作用，生成了具有亲合力的分子。DiffSBDD 在 QED、Lipinski 这些分子性质上并没有实现优化，而是与测试集保持相似。其中，DiffSBDD 在 SA 上显著低于其他两种模型，文章认为 SA 在一定程度上并不能反映分子真实的合成难度，低 SA 反而说明 DiffSBDD 能够探索更大的化学空间，因此具有最高的 Diversity。最后，DiffSBDD 所需的计算时间远远少于另外两种模型，相比之下更加高效。&lt;/p&gt;
-&lt;p&gt;文章展示了针对靶点 2jjg 和 3kc1 生成的分子，其中为 3kc1 生成的第二个分子具有三环结构，该分子也曾在传统的基于结构的药物设计中被设计出来，说明 DiffSBDD 具有应用潜力。在生成的许多分子，还可以找到大环、三元环化合物，这些分子很难合成，所以 DiffSBDD 可能还需要考虑分子的可合成性。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8667?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
-&lt;p&gt;文章中所提出的 DiffSBDD 首次将等变扩散模型应用于基于结构的药物设计领域，实验证明了 DiffSBDD 在完成分子生成任务上不仅高效而且有效，能够针对给定的靶点生成多样且具有高亲合力的配体分子，该模型不需要再训练就可以直接应用于先导化合物优化等药物设计实践。&lt;/p&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry></feed>
+&lt;p class="intro"&gt;&lt;i class="fa fa-angle-double-up"&gt;&lt;/i&gt; 某无人居住的故居，窗前桃花已开，主人归未？&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="游记"></category><category term="摄影"></category></entry></feed>
