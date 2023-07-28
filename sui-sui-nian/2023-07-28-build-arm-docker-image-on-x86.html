@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" rel="canonical" />
+<link href="https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html" rel="canonical" />
   <!-- Feed -->
         <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
 
@@ -71,7 +71,7 @@
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="如何在 X86 设备上使用 Docker 构建 ARM 镜像"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:description" content="最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-07-28 00:00:00+08:00"/>
 <meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
@@ -97,7 +97,7 @@
     "url": "https://leonis.cc/author/leo.html"
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
-  "url": "https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html",
+  "url": "https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html",
   "description": "最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要 …"
 }
 </script>
@@ -215,16 +215,16 @@ $ docker build -t {image_name}:{tag} . --progress=plain --no-cache
 
             <section class="post-info">
                 <!-- <div class="post-share">
-                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                       <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                       <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html&amp;title=如何在 X86 设备上使用 Docker 构建 ARM 镜像" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html&amp;title=如何在 X86 设备上使用 Docker 构建 ARM 镜像" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
                       <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
                     </a>
-                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;body=https://leonis.cc/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html">
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=如何在 X86 设备上使用 Docker 构建 ARM 镜像&amp;body=https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html">
                       <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
                     </a>
                     <div class="clear"></div>

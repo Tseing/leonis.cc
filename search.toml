@@ -14,8 +14,8 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
-path = "sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html"
-url = "/sui-sui-nian/2023-07-28-ru-he-zai-x86-she-bei-shang-shi-yong-docker-gou-jian-arm-jing-xiang.html"
+path = "sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html"
+url = "/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html"
 title = "如何在 X86 设备上使用 Docker 构建 ARM 镜像"
 
 [[input.files]]
