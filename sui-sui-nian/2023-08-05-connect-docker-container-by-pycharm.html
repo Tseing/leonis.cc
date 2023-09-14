@@ -125,6 +125,7 @@
           <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
           <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
           <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://boulder-eoraptor-e45.notion.site/093af471f4f749628fd4ddc244a6b08d?v=3ec2eda75795443bb9530c901685a54b&pvs=4" role="presentation">破橱簏</a></li>
           <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
           <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
 
@@ -251,11 +252,13 @@ mindspore/mindspore-gpu-cuda11.6   2.0.0-alpha         01db14982624        6 mon
 <li><code>-v</code> 参数是将本地的硬盘路径挂载到容器中，其中 <code>-v /dev/shm:/dev/shm</code> 是 Mindspore 的要求，<code>-v /home/code:/home/code</code> 则是将工程文件挂载到容器里，这两个目录双向同步；</li>
 <li><code>--runtime=nvidia</code> 参数使容器能够使用宿主机的 GPU 硬件。</li>
 </ul>
+<p>{info begin}有时运行调用 GPU 资源的容器会遇到问题，提示 <code>Error response from daemon: Unknown runtime specified nvidia</code>。而我则是更换了内核和驱动版本后，尝试重启容器时出现了类似的错误，提示 <code>Error response from daemon: Cannot restart container or invalid runtime name: nvdia</code>，暂时还不确定原因。在 <a href="https://github.com/NVIDIA/nvidia-docker/issues/838" rel="noopener" target="_blank">GitHub</a> 上有关于该问题的讨论，其中的方法都可以尝试一下，将 <code>--runtime=nvidia</code> 参数替换为 <code>--gpus all</code> 普遍可以解决问题。{info end}</p>
 <p>容器运行后可以在终端尝试用 SSH 连接容器，输入 <code>yes</code> 再输入用户密码（前文 Dockerfile 中设置为 <code>12345</code>）后若能成功连接就表示 SSH 服务正常。</p>
 <pre><code class="language-sh">$ ssh root@127.0.0.1 -p 2222
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 </code></pre>
 <p>还可以在连接上的终端中输入 <code>nvidia-smi</code> 检查容器是否连接上 GPU 硬件。</p>
+<p>如果在这一步中，没有显示 SSH 成功连接的提示，多半是因为容器中的 SSH 服务没有成功启动。用 <code>docker exec -it work /bin/bash</code> 进入容器的交互界面，用 <code>service ssh status</code> 检查服务是否已经启动。</p>
 <p><div class="lightgallery"><a data-sub-html="登录" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9929?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="登录" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9929?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>确保容器一切正常后，打开 Gateway，选择 <code>New Connection</code>，输入用户名、IP 地址和端口号，选择 <code>Check Connection and Continue</code>，Gateway 使用 SHH 成功连接后就可以选择需要的 IDE。</p>
 <p><div class="lightgallery"><a data-sub-html="选择 IDE" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="选择 IDE" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
@@ -341,6 +344,13 @@ $ docker rm {容器名称或 ID}
 
 
                 <aside class="post-nav">
+                    <a class="post-nav-next" href="https://leonis.cc/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-left"></i>
+                                <h2 class="post-nav-title">RIME 脚本食用方法举隅：以输入苏州码为例</h2>
+                            <p class="post-nav-excerpt">RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有...</p>
+                        </section>
+                    </a>
                     <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-07-28-build-arm-docker-image-on-x86.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
