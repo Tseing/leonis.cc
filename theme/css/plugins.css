@@ -21,6 +21,7 @@ dot {
 
 #about-columns img{
     margin: 2em 0 0 0;
+    border-radius: 0;
 }
 
 #search-wrapper {
@@ -254,6 +255,10 @@ button[title="表情包"] {
 
 .wl-content blockquote::after {
     content: none;
+}
+
+.wl-content img {
+    margin: 1em;
 }
 
 /* location icon */
@@ -591,7 +596,8 @@ i.fa.fa-map-marker.fa-stack-1x {
 }
 
 @media only screen and (max-width: 400px){
-    #map {
+    #map,
+    #map iframe {
         height: 55vh;
     }
     .intro {
