@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-09-14T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>RIME 脚本食用方法举隅：以输入苏州码为例</title><link href="https://leonis.cc/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html" rel="alternate"></link><published>2023-09-14T00:00:00+08:00</published><updated>2023-09-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-09-14:/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html</id><summary type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不着很仔细区分。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-10-31T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>把博客站点交给了 Cloudflare 托管</title><link href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="alternate"></link><published>2023-10-31T00:00:00+08:00</published><updated>2023-10-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-10-31:/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html</id><summary type="html">&lt;p&gt;博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。&lt;/p&gt;
+&lt;p&gt;但由于 Cloudflare 为网站提供的各种免费服务十分诱人，加之我想利用 Cloudflare 的 CDN 搭建博客图床，终究是把站点交给了 Cloudflare 管理。本文记录了从阿里云迁移站点的过程和一些必要的 Nginx 配置。&lt;/p&gt;
+&lt;h2 id="cloudflare-zhu-ce-zhan-dian"&gt;Cloudflare 注册站点&lt;/h2&gt;
+&lt;p&gt;打开 &lt;a href="https://www.cloudflare-cn.com/" rel="noopener" target="_blank"&gt;Cloudflare 官网&lt;/a&gt;，注册帐号后选择添加站点，输入域名后点击继续。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Cloudflare" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11535?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Cloudflare" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11535?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;按需选择计划，对于普通的小站点来说，Free 计划足矣。点击继续后，Cloudflare 会检测站点目前已有的部分 DNS 记录，其余未检测出的记录日后再手动添加，最关键的是检查域名指向服务器 IP 地址的 A 记录是否正确。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="DNS records" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11536?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="DNS records" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11536?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在「代理状态」一列可以选择该 DNS 记录是否使用 Cloudflare 的 CDN，激活后图标显示一朵黄色的云。Cloudflare 的 CDN 在国内速度很慢，一直被称为减速 CDN，所以我都选择「仅 DNS」。此前我也担心 Cloudflare 的 DNS 解析会不会也像其 CDN 一样龟速，幸好解析速度并不慢，我的担心是多虑了。&lt;/p&gt;
+&lt;p&gt;提交 DNS 记录后，Cloudflare 会提示删除阿里云的 DNS 服务器，以 Cloudflare 的 DNS 服务器代替之，接着就转到阿里云的控制中心操作。&lt;/p&gt;
+&lt;h2 id="geng-huan-dns-fu-wu-qi"&gt;更换 DNS 服务器&lt;/h2&gt;
+&lt;p&gt;登录&lt;a href="https://www.aliyun.com" rel="noopener" target="_blank"&gt;阿里云&lt;/a&gt;，进入控制台。在云解析 DNS - 域名解析下找到迁移的域名，在解析设置中保存了站点的 DNS 记录。将记录备份，后续要将所有记录导入 Cloudflare。站点交由 Cloudflare 解析后，阿里云中的解析设置也会失效，所以也在解析设置中将所有解析都停用。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="aliyun DNS records" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11537?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="aliyun DNS records" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11537?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在阿里云控制台中来到域名控制台 - 域名列表，选择域名的管理 - DNS 管理 - DNS 修改 - 修改 DNS 服务器，将 Cloudflare 提供的两个 DNS 服务器地址填入其中。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="DNS server" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11538?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="DNS server" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11538?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;修改 DNS 服务器一般需要 24-48 h 生效，生效后 Cloudflare 会发送邮件通知。如果迟迟没有收到邮件，也可以到 Cloudflare 手动验证网站。验证成功后 Cloudflare 会指引是否开启 Brotli 压缩等功能，按需选择即可。至此，站点已经交由 Cloudflare 托管。如果站点是由 Nginx 搭建的，那么还需要考虑 Nginx 的 SSL 设置是否与 Cloudflare 兼容。&lt;/p&gt;
+&lt;h2 id="nginx-zhong-de-ssl-xiang-guan-pei-zhi"&gt;Nginx 中的 SSL 相关配置&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Cloudflare SSL" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11539?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Cloudflare SSL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11539?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在 Cloudflare 的 SSL/TLS 设置界面可以看到，用户访问由 Cloudflare 托管的站点的过程中有 3 个实体，根据实体间通信安全等级的不同可以分为 4 种模式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;关闭：浏览器-Cloudflare 间和 Cloudflare-服务器间都使用 HTTP；&lt;/li&gt;
+&lt;li&gt;灵活：浏览器-Cloudflare 间使用 HTTPS，Cloudflare-服务器间使用 HTTP；&lt;/li&gt;
+&lt;li&gt;完全：浏览器-Cloudflare 间和 Cloudflare-服务器间都使用 HTTPS，需要 SSL 证书；&lt;/li&gt;
+&lt;li&gt;完全（严格）：浏览器-Cloudflare 间和 Cloudflare-服务器间都使用 HTTPS，需要非自签名 SSL 证书。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;现在的站点一般都使用了 HTTPS&lt;del&gt;，还在使用 HTTP 的站长快去申请个 SSL 证书吧&lt;/del&gt;，同时通过 Nginx 将访问 80 端口的 HTTP 流量强制重定向到 HTTPS 入口。若使用这样的 Nginx 配置又开启的「灵活」模式，用户发起访问请求后，Cloudflare 使用 HTTP 交由 Nginx，Nginx 告知用户重定向为 HTTPS，但Cloudflare 仍使用 HTTP 与 Nginx 通信，该过程无限循环，出现 &lt;strong&gt;301 重定向次数过多&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为了保证站点的安全性和避免以上问题，推荐配置好站点的 HTTPS 后，在 Cloudflare 的 SSL/TLS 中&lt;dot&gt;使用完全或完全（严格）两种模式。&lt;/dot&gt;&lt;/p&gt;
+&lt;p&gt;最后附上我的 Nginx 配置供参考：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-nginx"&gt;server {
+    listen                              443 ssl http2;
+    server_name                         leonis.cc;
+    root                                /home/Leo/web/blog;
+
+    # SSL 配置
+    ssl_certificate                     /etc/nginx/cert/leonis.cc.cer;
+    ssl_certificate_key                 /etc/nginx/cert/leonis.cc.key;
+    ssl_session_timeout                 5m;
+    ssl_ciphers                         ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols                       TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers           on;
+
+    location / {
+        index index.html;
+    }
+}
+
+server {
+    listen                              80;
+    server_name                         leonis.cc
+    # 重定向至 HTTPS，开启 Cloudflare 完全模式后不会访问 80 端口，也不会用上此处的重定向
+    rewrite ^/(.*)$ https://leonis.cc:443/$1 permanent;
+}
+&lt;/code&gt;&lt;/pre&gt;</content><category term="碎碎念"></category><category term="Cloudflare"></category><category term="DNS"></category><category term="Nginx"></category></entry><entry><title>RIME 脚本食用方法举隅：以输入苏州码为例</title><link href="https://leonis.cc/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html" rel="alternate"></link><published>2023-09-14T00:00:00+08:00</published><updated>2023-09-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-09-14:/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html</id><summary type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不着很仔细区分。&lt;/p&gt;
 &lt;p&gt;我很早就听说了 RIME，作为开源输入法，用户可以自己构建码表、输入方案，因而一问世就很受方言、汉字、打字爱好者的青睐。方言爱好者用 RIME 实现各种方言输入方案，汉字爱好者用来输入扩展区汉字，打字爱好者则是用来改进各种音码、形码方案，不一而足。&lt;/p&gt;
 &lt;p&gt;但早年间 RIME 的 bug 比较多，入门的门槛高，一直只在小圈子内流行。经过数次版本迭代后，现而今的 RIME 可以说是非常好用，哪怕是仅追求不窃取用户资料的「圈外人」也可以轻松体验。&lt;/p&gt;
 &lt;p&gt;网络上关于配置 RIME 的入门教程很多，我不在此赘言。这篇文章主要谈谈如何用 RIME 的 Lua 脚本实现一些高级输入，也是我最近折腾 RIME 的一些心得。&lt;/p&gt;
@@ -2276,91 +2327,4 @@ molecule generation, PBMG）。LBMG 方法难以跳出目前的化空间，因�
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GAN"></category></entry><entry><title>在明清小说中索隐：读《中国叙事学》</title><link href="https://leonis.cc/gu-zhi-dui/2023-03-30-book-chinese-narratology.html" rel="alternate"></link><published>2023-03-30T00:00:00+08:00</published><updated>2023-03-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-03-30:/gu-zhi-dui/2023-03-30-book-chinese-narratology.html</id><summary type="html">&lt;p&gt;浦安迪的《中国叙事学》是一本讨论中国叙事传统和明清小说的小书，页数并不多，不消四五天即可翻完。虽然这是一本学术著作，但语言流畅、分析丝丝入扣，读起来时并不觉得枯燥乏味，反而觉得酣畅淋漓。书题虽为《中国叙事学》，但全书中专门论述 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;浦安迪的《中国叙事学》是一本讨论中国叙事传统和明清小说的小书，页数并不多，不消四五天即可翻完。虽然这是一本学术著作，但语言流畅、分析丝丝入扣，读起来时并不觉得枯燥乏味，反而觉得酣畅淋漓。书题虽为《中国叙事学》，但全书中专门论述中国叙事的篇幅并不多，只是在全书的前面部分章节立起「中国叙事」的概念与分析方法，在后文中则全是基于这些概念与方法来分析中国的奇书文体，也就是范围更窄的明清小说，我在后文中即以「明清小说」这一更为通俗的文学类别指代书中所说的「奇书文体」。&lt;/p&gt;
-&lt;p&gt;全书只有前一部分中才真正讨论了「中国叙事学」，但这一部分中不乏许多精要切当的论述，让人觉得豁然开朗；作者将其作为分析方法，一以贯之用于剖析明清小说，又深让人惊异于明清小说原来还能这么读，读完这本书后再去重读明清小说，相信又会有另一番收获。基于以上的原因，本文另起了一个标题&amp;mdash;&amp;mdash;「在明清小说中索隐」，我认为能够更准确地概括全书的主题。&lt;/p&gt;
-&lt;div class="bookshelf"&gt;
-&lt;div class="book"&gt;
-&lt;img referrerpolicy="no-referrer" src="https://img2.doubanio.com/view/subject/s/public/s33747413.jpg"/&gt;
-&lt;div class="infos"&gt;
-&lt;a class="title" href="https://book.douban.com/subject/30244064/"&gt;中国叙事学&lt;/a&gt;
-&lt;div class="作者"&gt;作者：[美] 浦安迪 (Andrew H. Plaks)&lt;/div&gt;
-&lt;div class="出版社"&gt;出版社：北京大学出版社&lt;/div&gt;
-&lt;div class="出版年"&gt;出版年：2018-8&lt;/div&gt;
-&lt;div class="页数"&gt;页数：292&lt;/div&gt;
-&lt;div class="定价"&gt;定价：45.00元&lt;/div&gt;
-&lt;div class="ISBN"&gt;ISBN：9787301295960&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2 id="he-wei-xu-shi"&gt;何为叙事&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;任何时代，任何地方，任何社会，都少不了叙述。它从远古时代就开始存在，古往今来，哪里有人，哪里就有叙述。&lt;/p&gt;
-&amp;mdash;&amp;mdash;法国当代文论家 罗兰・巴特&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;书中认为文学作品是在传递某种人生本质，那么文学中的三大体式就也可以按传递人生本质的方式区别，即&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;抒情诗：直接描绘绘静态的人生本质，有叙述人但没有故事&lt;/li&gt;
-&lt;li&gt;戏剧：关注人生矛盾，通过舞台传达人生本质，有场面、故事但没有叙述人&lt;/li&gt;
-&lt;li&gt;叙事文：不直接描绘人生本质，而以传事为主要目标，从而展示延绵不断的经验流中的人生本质&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;我们不妨回忆我们曾经接触过的文学作品，一定是可以将大体的内容归置到上述的 3 个类别中去的。之所以说「大体的内容」，就是因为三种体式间不是完全孤立的，实际上三者相互交融渗透，抒情中存在着叙事，叙事中同样存在着抒情。这里用这种机械的分类有助于我们厘清全书讨论的对象&amp;mdash;&amp;mdash;那也就是叙事文，在三者对比之下，相信我们对「何为叙事」已经有了朦胧的答案。&lt;/p&gt;
-&lt;h2 id="xu-shi-wen-xue-de-yuan-liu"&gt;叙事文学的源流&lt;/h2&gt;
-&lt;p&gt;西方叙事文学的历史可以概括为「&lt;dot&gt;史诗（epic）&amp;rarr; 罗曼史（romance）&amp;rarr; 小说（novel）&lt;/dot&gt;」。&lt;/p&gt;
-&lt;p&gt;而中国的古代传统文学则是一条「三百篇 - 骚 - 赋 - 乐府 - 律诗 - 词曲 - 小说」的发展脉络，也就是说，中国传统文学的重心是抒情。&lt;/p&gt;
-&lt;p&gt;中国的叙事文学源头应当是《尚书》以及《左传》，作者认为二者深刻地影响了后世的叙事文学，并画下了一定的定式。二者都属于史文，而后世的虚构文学则是从六朝志怪发源，分化为「文言小说」和「白话小说」两大类别。&lt;/p&gt;
-&lt;p&gt;作者强调，文言小说和白话小说泾渭分明，「杂录」「志怪」等文言小说又被称为「史余」，与史文的关系更为密切，书中提到纪昀将《山海经》等书从史部抽出，纳入小说，可为一证。而白话小说则可能是由民间说书的「通俗文学」发展而来（鲁迅等持此说），也可能是由当时文人所创作的「才子书」（作者持此说）。&lt;/p&gt;
-&lt;p&gt;书中将中国的叙事文学历史总结为「&lt;dot&gt;神话 &amp;rarr; 史文 &amp;rarr; 明清奇书&lt;/dot&gt;」，正如在对 novel 的批评不得不在 epic 的传统中一样，在批评中国的明清奇书时也脱不开神话与史文对其的影响。&lt;/p&gt;
-&lt;h2 id="shi-wen-de-ying-xiang"&gt;史文的影响&lt;/h2&gt;
-&lt;p&gt;在介绍书中分析史文与神话的内容之前，我想先引用顾颉刚先生的观点奠定一个基调，那就是应当审慎地对待传世文献，未经检验的文献是不可信的。经常有人被民族主义裹挟，把「疑古」简单地想象为「否认一切历史」并言之凿凿地抨击顾颉刚先生，我只能对此深表遗憾。在面对浩如烟海的史料时，「疑古」才是去伪存真、还原历史的科学方法。&lt;/p&gt;
-&lt;p&gt;书中的想法与顾颉刚先生的观点不谋而合，我不了解作者是否参考了顾颉刚先生的著作，如若不然，就是顾颉刚先生从历史研究的经验中总结出了「疑古」的观点，而作者从文学分析的角度告诉读者对史文的应当审慎，可以称得上合作。原书中的文字足够精彩，无需我的赘言，兹引录原文如下：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;中国的史书虽然力图给我们造成一种客观记载的感觉，但实际上不外乎一种美学上的幻觉，是用各种人为的方法和手段造成的「拟客观」效果。&lt;/p&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;由于中国历代长期形成的对史近乎宗教的狂热崇拜，也由于在清亡以前史料永远只对史官开放的历史事实，中国正史叙述者总是摆出一副「全知全能者」的姿态；然而，这种全知全能却只是局限在冠冕堂皇的庙堂里。它的触角甚至伸不进皇家的后院，当然更难看见「处江湖之远」的草民百姓的众生相。一种纯客观的叙事幻觉由此产生，并且成为一种经久不坏的模式，从史官实录到虚构文本，横贯中国叙事的各种文体。&lt;/p&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;西方的史诗原则上是虚构的艺术，只与历史传说有些微弱的关联；而中国的史文对于「虚构」和「实事」却从来就没有严格的分界线。西方文学理论家一般认为，历史讲实事，小说讲虚构。中国古代批评家则强调，「历史中有小说，小说中有历史」。&lt;/p&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;p class="cite"&gt;西人重「模仿」，等于假定所讲述的一切都是出于虚构，中国人尚「传述」，等于宣称所述的一切都出于实事。&lt;/p&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id="shen-hua-de-ying-xiang"&gt;神话的影响&lt;/h2&gt;
-&lt;p&gt;由史文上溯至远古神话，可以发现中国神话具有「人本位」倾向，也就是通常借神话来表人事，因而常常把历史与神话混作一团，譬如说我们都知道宙斯是虚构的，而禹究竟是神是人仍无定论，再例如我们都知道十个太阳是断无可能的，但后羿是远古的君主还是人格化的神呢？或许我们习于这些神话，在面对这样的疑难时会将其推作中国的神话过于琐碎繁杂而不成体系，但希腊神话何尝不零碎，却没有这种明显的「人本位」特征。&lt;/p&gt;
-&lt;p&gt;再来考查中神话的叙事，在中国古代典籍中，对神话的具体情节都是话焉不详的，这可以说是&lt;dot&gt;在中国的美学原动力中缺乏一种要求「头身尾」连贯的结构原型&lt;/dot&gt;，这种「非叙述性」美学原型导致了中西叙事传统的分流。这两种不同的叙事传统在神话中表现为希腊神话以时间为轴心，故重过程而善于讲述故事；中国神话以空间为宗旨，故重本体而善于画图案。&lt;/p&gt;
-&lt;p&gt;这里要注意，神话是诞生于远古时代的故事，但其叙述未并产生于远古时代，例如《淮南子》《庄子》中的神话显然不能用于作神话叙述的分析，所以作者更花精力着眼于例如《尚书》中的神话。&lt;/p&gt;
-&lt;h2 id="zhong-guo-de-xu-shi"&gt;中国的叙事&lt;/h2&gt;
-&lt;p&gt;在神话与史文的孳乳中，中国的叙事形成了不同于西方的叙事传统，这种叙事传统的影响绵延至明清小说乃至其后。中国的叙事传统中，普遍将重点放在「事隙」上，与西方恰恰相反，也就是真正的具有动作的「事」，都被诸如宴会等「无事之事」包围。&lt;/p&gt;
-&lt;p&gt;至于为什么中国的叙事传统如此，没有形成或是拋弃了「叙述性」，甚至在远古神话中已经接受了了这一范式，作者认为这可能是因为中国人重礼的传统，因而中国人把诸如阴阳交替、四时更换等仪礼形式作为了一种基本原则，从而将其「空间化」，抹杀了其中的「时间性」。&lt;/p&gt;
-&lt;h2 id="ming-qing-xiao-shuo-zhong-de-xu-shi"&gt;明清小说中的叙事&lt;/h2&gt;
-&lt;p&gt;今人在读明清小说时，相当大部分人会因为叙事中的时间性或因果性不强感觉琐碎或是乏味，想必很多人在中学时代读四大名著时，除了《西游记》与《三国演义》以外都觉得昏昏欲睡，这很大程度上就是因为《西游记》具有「取经」这条真正的具有动作的「事」贯穿始终，《三国演义》的时间性则明显更强，就算书中没有明显地以时间为线索，但汉末三分天下终而三家归晋的历史在开卷之前已经为读者熟知。&lt;/p&gt;
-&lt;p&gt;西人在读明清小说时亦有这种感受，他们用「缀段性」批评明清小说的叙事方法。缀段性来源于西方对诗歌的文学批评，亚里士多德曾说「缀段性的情节是所有情节中最坏的一种。我所谓的缀段性情节，是指前后毫无因果关系而串接成的情节。」&lt;/p&gt;
-&lt;p&gt;但是我们要注意，这是批评西方诗歌的方法，将这一术语用于评价明清小说时已经陷入了西方视角。西方之所以贬斥缀段性，是因为西方文学中有重视「头身尾」结构完整性的传统，这种叙述完整性的要求下，缀段性显然是一种低格。但这种结构完整性的要求并不是金科玉律，我们将眼光放回到「叙事」这一行为上，就会发现叙事天然就带有一定缀段性的特征，因为叙事就是在处理人类经验的一个个片段单元，例如中国的史文，就是由史官将一长段的时间线的人类经验分割为一个个事件片段而创作出的巨制。&lt;/p&gt;
-&lt;p&gt;明清小说在结构上的一个明显特征就是「百回」，古人刻意将一部小说分为百回或是百廿回本身就反映了一种中式的美感，一种中国人追求平衡的美学倾向。再者，明清小说的百回完帙在出版时又惯被分作十卷，这是今人难以注意到的细节，同时这也不是出于偶然。作者发现，每十回就能组成一个小故事，百回中的十个小故事又现出一种特殊的韵律感。&lt;/p&gt;
-&lt;p&gt;若以《水浒传》为为例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;武（松）十回&lt;/li&gt;
-&lt;li&gt;林（冲）十回&lt;/li&gt;
-&lt;li&gt;宋（江）十回&lt;/li&gt;
-&lt;li&gt;第七十二至八十二回：受招安&lt;/li&gt;
-&lt;li&gt;第八十三至九十回：平辽&lt;/li&gt;
-&lt;li&gt;第九十一至一百回：平田虎&lt;/li&gt;
-&lt;li&gt;第一百一至一百十回：平王庆&lt;/li&gt;
-&lt;li&gt;第一百十一至一百二十回：平方腊&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;若以《三国演义》为例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第一至九回：董卓传，至董卓身死&lt;/li&gt;
-&lt;li&gt;第十至十九回：吕布传，至吕布战死白门楼&lt;/li&gt;
-&lt;li&gt;第二十至三十一回：曹操传，至大破袁绍&lt;/li&gt;
-&lt;li&gt;第三十二至三十八回：刘备传，至隆中对&lt;/li&gt;
-&lt;li&gt;第三十九至五十回：诸葛亮传，至华容道&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在这些十回的小故事中，又有相应的重心，这个重心大约是在三四回左右，在全书之中丝毫不乱，作者也基于这些结构上的巧妙安排而认定明清小说属于独运匠心的「才子书」，绝不可能脱胎于民间说书人口中。&lt;/p&gt;
-&lt;p&gt;再将全书的十回目故事缀合起来，对于全书而言还有一个结构上的经典范式，那就是「二十-六十-二十」的叙述程式。《金瓶梅》就是具有这种对称美的典型，在前二十回与后二十回中，书中都是在描写西门庆院墙外的故事，在中间六十回转入展开这间深宅大院中离合，同时前二十回叙述家中新添金、瓶、梅三小妾，奠定全书格局，后二十回则是西门庆死去，树倒猢孙散，这种对称的安排不能说不是作者的心思。&lt;/p&gt;
-&lt;p&gt;作者还发现，明清小说中的另一个叙事特点就是情节的高潮在终点前就已经发生了，大约在全书四分之三位置处，同时全书又可以分成上下两截相互照应。以《三国演义》为例子最为简单，第五十回赤壁之战确定了天下三分的格局，在此全书分为两截，而在第七十八回曹操死去，全书自此高潮突然收束，一路走向下坡。《金瓶梅》要更为规整，以第四十九回为上下截的分水岭，上截描述西门庆升官发财、步步高升的经历，下截则是其春风得意而加速自毁的过程，同样在第七十九回死去，达到故事的最高潮。&lt;/p&gt;
-&lt;p&gt;作者认为这种绵延不绝的故事布局是中国叙事独特的「转轮式」布局，故事的发展正像一个不断旋转的法轮，暗给人天道循环的感受。正如《三国演义》所要强调的「合久并分，分久并合」，故事开始于东汉末年的纷乱，结束于一统于晋，故事从刘、关、张等主人公手中交递给他们的后辈，正像长江后浪推前浪，呈现出一种无了局的形式，作者想表达的思想也暗含其中了。&lt;/p&gt;
-&lt;p&gt;作者在书的最后部分上述方法分析了四大奇书中的中心思想，对于只接触教科书式解读的我，其分析方法与结果都可谓是别开生面，例如《西游记》不能简单理解为明末政治的黑暗，在一定程度上它还与明末的思想主流「心学」有关，书中「心猿」等等用语肯定另有所指，作者将其解读为告诫人们「诚意正心」。但部分观点有些冒进而难免令人觉得略显穿凿，但我认为作者只是提出了他的观点，真正怎样理解和解读明清小说还是依赖于读者。我相信在看过作者的一系列剖析后，再去重新读一读四大奇书，一定会有新的理解，这些新收获才是作者浦安迪撰写此书想要传达给我们的东西。&lt;/p&gt;</content><category term="故纸堆"></category><category term="阅读"></category><category term="文学"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GAN"></category></entry></feed>
