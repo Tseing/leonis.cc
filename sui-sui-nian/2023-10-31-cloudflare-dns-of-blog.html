@@ -56,7 +56,7 @@
 
 
 
-    <meta name="description" content="博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺 …">
+    <meta name="description" content="因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …">
 
     <meta name="author" content="Leo">
 
@@ -70,7 +70,7 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="把博客站点交给了 Cloudflare 托管"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -100,7 +100,7 @@
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "url": "https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html",
-  "description": "博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺 …"
+  "description": "因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …"
 }
 </script>
 
@@ -167,11 +167,11 @@
     <main class="content" role="main">
         <article class="post">
             <div class="toc-nav">
-              <div id="toc"><ul><li><a class="toc-href" href="#cloudflare-zhu-ce-zhan-dian" title="Cloudflare 注册站点">Cloudflare 注册站点</a></li><li><a class="toc-href" href="#geng-huan-dns-fu-wu-qi" title="更换 DNS 服务器">更换 DNS 服务器</a></li><li><a class="toc-href" href="#nginx-zhong-de-ssl-xiang-guan-pei-zhi" title="Nginx 中的 SSL 相关配置">Nginx 中的 SSL 相关配置</a></li></ul></div>
+              <div id="toc"><ul><li><a class="toc-href" href="#cloudflare-zhu-ce-zhan-dian" title="Cloudflare 注册站点">Cloudflare 注册站点</a></li><li><a class="toc-href" href="#geng-huan-dns-fu-wu-qi" title="更换 DNS 服务器">更换 DNS 服务器</a></li><li><a class="toc-href" href="#nginx-zhong-de-ssl-xiang-guan-pei-zhi" title="Nginx 中的 SSL 相关配置">Nginx 中的 SSL 相关配置</a></li><li><a class="toc-href" href="#hou-ji" title="后记">后记</a></li></ul></div>
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。</p>
+                <p>因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。</p>
 <p>但由于 Cloudflare 为网站提供的各种免费服务十分诱人，加之我想利用 Cloudflare 的 CDN 搭建博客图床，终究是把站点交给了 Cloudflare 管理。本文记录了从阿里云迁移站点的过程和一些必要的 Nginx 配置。</p>
 <h2 id="cloudflare-zhu-ce-zhan-dian">Cloudflare 注册站点</h2>
 <p>打开 <a href="https://www.cloudflare-cn.com/" rel="noopener" target="_blank">Cloudflare 官网</a>，注册帐号后选择添加站点，输入域名后点击继续。</p>
@@ -185,7 +185,7 @@
 <p><div class="lightgallery"><a data-sub-html="aliyun DNS records" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11537?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="aliyun DNS records" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11537?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在阿里云控制台中来到域名控制台 - 域名列表，选择域名的管理 - DNS 管理 - DNS 修改 - 修改 DNS 服务器，将 Cloudflare 提供的两个 DNS 服务器地址填入其中。</p>
 <p><div class="lightgallery"><a data-sub-html="DNS server" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11538?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="DNS server" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11538?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>修改 DNS 服务器一般需要 24-48 h 生效，生效后 Cloudflare 会发送邮件通知。如果迟迟没有收到邮件，也可以到 Cloudflare 手动验证网站。验证成功后 Cloudflare 会指引是否开启 Brotli 压缩等功能，按需选择即可。至此，站点已经交由 Cloudflare 托管。如果站点是由 Nginx 搭建的，那么还需要考虑 Nginx 的 SSL 设置是否与 Cloudflare 兼容。</p>
+<p>修改 DNS 服务器一般需要 24-48 h 生效，生效后 Cloudflare 会发送邮件通知。如果迟迟没有收到邮件，也可以到 Cloudflare 手动验证网站。验证成功后 Cloudflare 会指引是否开启 Brotli 压缩等功能，按需选择即可。至此，站点已经交由 Cloudflare 托管。如果站点是由 Nginx 搭建的，那么就还需要考虑 Nginx 的 SSL 设置是否与 Cloudflare 兼容。</p>
 <h2 id="nginx-zhong-de-ssl-xiang-guan-pei-zhi">Nginx 中的 SSL 相关配置</h2>
 <p><div class="lightgallery"><a data-sub-html="Cloudflare SSL" href="https://storage.live.com/items/4D18B16B8E0B1EDB!11539?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Cloudflare SSL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11539?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在 Cloudflare 的 SSL/TLS 设置界面可以看到，用户访问由 Cloudflare 托管的站点的过程中有 3 个实体，根据实体间通信安全等级的不同可以分为 4 种模式：</p>
@@ -223,6 +223,8 @@ server {
     rewrite ^/(.*)$ https://leonis.cc:443/$1 permanent;
 }
 </code></pre>
+<h2 id="hou-ji">后记</h2>
+<p>Cloudflare 总体来说还是很好用的，提供了很多有意思的功能，很便利地就能体验，免去了自己动手配置的烦恼。Cloudflare 的不足仅在于在国内有时访问不畅，添加 DNS 记录后也要等比较长的时间才会更新到国内网络上，若能接受这两点，Cloudflare 的可玩性还是比其他平台更高的。</p>
             </section>
 
             <section class="post-info">
