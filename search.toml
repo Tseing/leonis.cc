@@ -14,6 +14,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "sui-sui-nian/2023-11-11-necessary-config-of-new-server.html"
+url = "/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html"
+title = "新服务器必做的基本设置——服务器迁移之记录"
+
+[[input.files]]
 path = "sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html"
 url = "/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html"
 title = "把博客站点交给了 Cloudflare 托管"

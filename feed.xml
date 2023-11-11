@@ -1,5 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-10-31T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>把博客站点交给了 Cloudflare 托管</title><link href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="alternate"></link><published>2023-10-31T00:00:00+08:00</published><updated>2023-10-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-10-31:/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html</id><summary type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …&lt;/p&gt;</summary><content type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-11-11T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>新服务器必做的基本设置——服务器迁移之记录</title><link href="https://leonis.cc/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html" rel="alternate"></link><published>2023-11-11T00:00:00+08:00</published><updated>2023-11-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-11-11:/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html</id><summary type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来，在又遇上新服务器时就能方便查阅。&lt;/p&gt;
+&lt;h2 id="ji-ben-she-zhi"&gt;基本设置&lt;/h2&gt;
+&lt;h3 id="wang-luo-lian-tong-xing"&gt;网络连通性&lt;/h3&gt;
+&lt;p&gt;我租赁的都是海外服务器，可以免去很多麻烦，也会带来很多麻烦。海外服务器最首要的麻烦就是网络问题，厂商提供的 IP 可能会被防火墙污染，一买来就无法连接。比较方便的方法是在网站 &lt;a href="https://ping.pe/" rel="noopener" target="_blank"&gt;https://ping.pe/&lt;/a&gt; 上输入服务器 IP 检查服务器在全球范围内的连通状态，如果在大陆地区一片飘红，那么就必须联系客服申请更换 IP 了。&lt;/p&gt;
+&lt;p&gt;我在 RackNerd 上更换过 IP，客服的回应很快，更换也是免费的。但至于其他 IP 余量比较紧张的厂商，可能就会收取少许的额外费用。&lt;/p&gt;
+&lt;h3 id="fu-wu-qi-can-shu"&gt;服务器参数&lt;/h3&gt;
+&lt;p&gt;GitHub 上可以找到很多用于测试服务器参数的 bash 脚本，我比较常用的是 &lt;a href="https://bench.sh/" rel="noopener" target="_blank"&gt;Bench.sh&lt;/a&gt;。使用 SSH 连接并登录 root 用户后，输入 &lt;code&gt;wget -qO- bench.sh | bash&lt;/code&gt;，自动下载脚本并开始测试。给出的测试结果包括系统信息、I/O 读写速度、网络速度：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;-------------------- A Bench.sh Script By Teddysun -------------------
+ Version            : v2023-10-15
+ Usage              : wget -qO- bench.sh | bash
+----------------------------------------------------------------------
+ CPU Model          : Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz
+ CPU Cores          : 2 @ 2699.998 MHz
+ CPU Cache          : 30720 KB
+ AES-NI             : &amp;checkmark; Enabled
+ VM-x/AMD-V         : &amp;cross; Disabled
+ Total Disk         : 49.2 GB (1.9 GB Used)
+ Total Mem          : 976.2 MB (96.0 MB Used)
+ Total Swap         : 1023.0 MB (340.0 KB Used)
+ System uptime      : 23 days, 4 hour 40 min
+ Load average       : 0.03, 0.01, 0.00
+ OS                 : Debian GNU/Linux 11
+ Arch               : x86_64 (64 Bit)
+ Kernel             : 5.10.0-8-amd64
+ TCP CC             : 
+ Virtualization     : Dedicated
+ IPv4/IPv6          : &amp;checkmark; Online / &amp;cross; Offline
+ Organization       : AS35916 MULTACOM CORPORATION
+ Location           : Los Angeles / US
+ Region             : California
+----------------------------------------------------------------------
+ I/O Speed(1st run) : 133 MB/s
+ I/O Speed(2nd run) : 264 MB/s
+ I/O Speed(3rd run) : 296 MB/s
+ I/O Speed(average) : 231.0 MB/s
+----------------------------------------------------------------------
+ Node Name        Upload Speed      Download Speed      Latency
+ Speedtest.net    917.95 Mbps       911.80 Mbps         0.48 ms
+ Los Angeles, US  917.27 Mbps       906.25 Mbps         1.04 ms
+ Dallas, US       919.58 Mbps       129.57 Mbps         31.06 ms
+ Montreal, CA     792.01 Mbps       674.81 Mbps         72.70 ms
+ Paris, FR        567.70 Mbps       655.98 Mbps         144.64 ms
+ Amsterdam, NL    584.61 Mbps       271.38 Mbps         139.27 ms
+ Shanghai, CN     387.34 Mbps       25.47 Mbps          187.49 ms
+ Chongqing, CN    27.54 Mbps        0.65 Mbps           224.27 ms
+ Hongkong, CN     528.81 Mbps       23.52 Mbps          145.39 ms
+ Mumbai, IN       358.96 Mbps       430.29 Mbps         235.43 ms
+ Singapore, SG    366.75 Mbps       638.25 Mbps         184.59 ms
+ Tokyo, JP        375.91 Mbps       198.06 Mbps         118.29 ms
+----------------------------------------------------------------------
+ Finished in        : 6 min 31 sec
+ Timestamp          : 2023-11-10 03:01:34 EST
+----------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在测试结果中主要比对提供的服务器参数是否与购买时的配置清单匹配、网络状况是否满足要求，同时也可对服务器的具体工作状况加深印象。我的测试结果没有什么问题，相比旧服务器硬件有所升级，网络的连接比顺畅很多。新服务器来自于 CloudCone，这款 2 核 1 GB 的服务器售价是每年 $16.5，还是比较划算的。&lt;/p&gt;
+&lt;p&gt;由于我对 Debian 系统有着特殊的感情，不管 PC 设备还是服务器的首选 Linux OS 都是 Debian。后续涉及的安装软件等操作在不同 OS 上可能有所不同，读者自行留意，不再反复重提。&lt;/p&gt;
+&lt;h3 id="lu-you-ce-shi"&gt;路由测试&lt;/h3&gt;
+&lt;p&gt;购买海外服务器的用户一般会比较看重线路，即去回程的数据需要经过哪些路由的转发，例如拥有 CN2 GIA 线路的海外服务器在大陆访问也十分通畅，很受追捧。我购买的廉价服务器自然没有这样的线路，不过研究研究数据如何穿越海底光缆到达大洋彼岸也是很有意思的事。&lt;/p&gt;
+&lt;p&gt;网站 &lt;a href="https://tools.ipip.net/traceroute.php" rel="noopener" target="_blank"&gt;https://tools.ipip.net/traceroute.php&lt;/a&gt; 提供了各地区节点，可以查询各地去往服务器的数据线路。另一种方法是使用系统自带的测试工具，可以追踪由本机发出的数据。&lt;/p&gt;
+&lt;p&gt;后文的例子中，&lt;dot&gt;&lt;b&gt;将 8.8.8.8 当作为服务器的 IP 地址，将 1.1.1.1 当作为本地 IP 地址&lt;/b&gt;&lt;/dot&gt;，读者需要根据自己的实际情况修改。&lt;/p&gt;
+&lt;p&gt;在本地电脑上打开终端，使用 &lt;code&gt;tracert&lt;/code&gt; 命令追踪住服务器需要经过的路由：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-ps"&gt;&amp;gt; tracert 8.8.8.8
+
+通过最多 30 个跃点跟踪到 [8.8.8.8] 的路由
+
+  1     3 ms     2 ms     1 ms  10.131.192.1
+  2     3 ms     2 ms     3 ms  202.113.18.233
+  3     1 ms     1 ms     1 ms  202.113.18.102
+  4     3 ms     4 ms     2 ms  117.131.219.1
+  5     6 ms     3 ms     3 ms  117.131.131.13
+  6     *        *        *     请求超时。
+  7     *        *        *     请求超时。
+  8     7 ms     8 ms     7 ms  221.183.89.121
+  9     *        *        *     请求超时。
+ 10     *        *        *     请求超时。
+ 11     *        *        *     请求超时。
+ 12     *        *        *     请求超时。
+ 13   193 ms   192 ms   192 ms  eth-0-19.10g.cr1.ny1.ip.coresite.com [206.223.143.40]
+ 14     *        *        *     请求超时。
+ 15   195 ms   195 ms   195 ms  8.8.8.8
+
+跟踪完成。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查询一下 IP 的归属就能知道，去程数据先往北京，走寻常不过的 &lt;code&gt;221.183.*.*&lt;/code&gt; 的 AS9808 路由再跨过大洋。&lt;/p&gt;
+&lt;p&gt;在服务器端可以查看回程线路，使用 mtr 命令向本地 IP 传递数据：&lt;/p&gt;
+&lt;p&gt;{note begin}有的服务器厂商可能没有在 OS 里预装 mtr 工具，可以通过 &lt;code&gt;apt-get install mtr-tiny&lt;/code&gt; 安装。{note end}&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;# mtr 1.1.1.1 -r
+HOST: cc.server                   Loss%   Snt   Last   Avg  Best  Wrst StDev
+  1.|-- undefined.hostname.localh  0.0%    10    9.1   5.3   0.7  15.1   6.1
+  2.|-- multacom.com               0.0%    10    0.8   0.8   0.7   1.1   0.1
+  3.|-- 182.54.129.88              0.0%    10    0.5   6.7   0.5  61.5  19.2
+  4.|-- 218.30.54.189              0.0%    10    5.9   5.3   2.5   7.9   1.8
+  5.|-- ???                       100.0    10    0.0   0.0   0.0   0.0   0.0
+  6.|-- 202.97.58.121              0.0%    10  154.4 155.1 152.7 156.3   1.2
+  7.|-- 202.97.48.209             90.0%    10  175.8 175.8 175.8 175.8   0.0
+  8.|-- 202.97.108.126             0.0%    10  178.8 175.0 166.5 178.8   5.4
+  9.|-- 219.150.49.154            20.0%    10  179.2 177.2 172.5 182.1   3.5
+ 10.|-- 221.238.222.118           10.0%    10  169.8 167.8 159.2 175.3   5.1
+ 11.|-- 218.69.12.90              10.0%    10  188.9 184.8 176.4 189.0   5.1
+ 12.|-- ???                       100.0    10    0.0   0.0   0.0   0.0   0.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;线路中的路由主要是 &lt;code&gt;202.97.*.*&lt;/code&gt;，也就是传统的 163 骨干网。据说在网络较空闲时，该款服务器线路会动态切换为 CN2，我对此也不是很在意就是了。&lt;/p&gt;
+&lt;p&gt;{warn begin}测试结果中的路由 IP 地址会暴露设备所处的地理位置，在社交平台上公开前务必三思。{warn end}&lt;/p&gt;
+&lt;h2 id="chuang-jian-xin-yong-hu_1"&gt;创建新用户&lt;/h2&gt;
+&lt;p&gt;在购买服务器后，除了服务器 IP 地址外，供应商还会提供 root 用户的密码，用户可以通过 SSH 连接服务器。但 root 用户的权限太高，误操作容易造成不可逆的结果。在 Linux 的使用中，不论是服务器还是本地 PC，通常都是新建普通用户供日常使用，在权限不足时通过 &lt;code&gt;sudo&lt;/code&gt; 命令提权，完成操作后自动「尽早」地退出 root 模式。&lt;/p&gt;
+&lt;p&gt;首先是使用 &lt;code&gt;adduser 用户名&lt;/code&gt; 新建用户，创建用户的过程中会提示设定并确认密码，按提示输入即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;# adduser leo
+Adding user `leo' ...
+Adding new group `leo' (1000) ...
+Adding new user `leo' (1000) with group `leo' ...
+Creating home directory `/home/leo' ...
+Copying files from `/etc/skel' ...
+New password: 
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for leo
+Enter the new value, or press ENTER for the default
+        Full Name []: Leo
+        Room Number []: 
+        Work Phone []: 
+        Home Phone []: 
+        Other []: 
+Is the information correct? [Y/n] y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接着安装 &lt;code&gt;sudo&lt;/code&gt; 命令，以后就用 &lt;code&gt;sudo&lt;/code&gt; 命令管理 root 权限。安装完成后用 &lt;code&gt;visudo&lt;/code&gt; 进入配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;# apt-get install sudo
+# visudo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在配置文件中找到以下片段：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;# User privilege specification
+root    ALL=(ALL:ALL) ALL
+leo     ALL=(ALL:ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 root 用户的下一行填上新建用户的用户名，同样填上 &lt;code&gt;ALL=(ALL:ALL) ALL&lt;/code&gt;。根据窗口下方的快捷键提示，依次摁 &lt;code&gt;CTRL&lt;/code&gt; + &lt;code&gt;O&lt;/code&gt; 保存，摁 &lt;code&gt;ENTER&lt;/code&gt; 确认，摁 &lt;code&gt;CTRL&lt;/code&gt; + &lt;code&gt;X&lt;/code&gt; 退出。&lt;/p&gt;
+&lt;h2 id="ssh-she-zhi"&gt;SSH 设置&lt;/h2&gt;
+&lt;p&gt;几乎所有远端服务器都是通过 SSH 与用户相连接，当服务器暴露在公网上时，就有无数人尝试爆破 SSH 口令盗取控制权，所以 SSH 的安全是保护服务器的第一道关口。为了避免服务器变成肉鸡，最为基础且最为有效的方法就是修改 SSH 的默认配置。&lt;/p&gt;
+&lt;h3 id="geng-gai-ssh-duan-kou"&gt;更改 SSH 端口&lt;/h3&gt;
+&lt;p&gt;SSH 的默认端口是 22，将其改为非常见端口就可以躲过大量定向的爆破。上文中新建的用户名为 &lt;code&gt;leo&lt;/code&gt;，通过 &lt;code&gt;ssh leo@8.8.8.8&lt;/code&gt; 换用新用户登录 SSH。&lt;/p&gt;
+&lt;p&gt;打开 SSH 的配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将文件中 &lt;code&gt;Port&lt;/code&gt; 一项改为自定义端口，并将 &lt;code&gt;PermitRootLogin&lt;/code&gt; 一项改为 &lt;code&gt;no&lt;/code&gt;，禁止直接使用 root 用户登录，修改后例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;Port 2222
+PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后重启 SSH 服务加载配置：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo service sshd restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此时可以测试是否可以通过 &lt;code&gt;ssh  -p 2222 leo@8.8.8.8&lt;/code&gt; 登录，若配置无误，以下两种方式都会失效：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;ssh leo@8.8.8.8
+ssh root@8.8.8.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="jin-zhi-mi-ma-deng-lu"&gt;禁止密码登录&lt;/h3&gt;
+&lt;p&gt;凡使用密码作为登录口令，终究有被爆破的可能，况且长密码也很难记忆。更为安全有效的方法是禁止使用密码登录 SSH，使用公私钥完成用户的验证。&lt;/p&gt;
+&lt;p&gt;在服务器上生成公私钥：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/leo/.ssh/id_rsa):    # 此处摁回车，存储在默认位置
+Created directory '/home/leo/.ssh'.
+Enter passphrase (empty for no passphrase):                     # 输入 passphrase，若不设置则直接摁回车
+Enter same passphrase again:                                    # 重复 passphrase
+Your identification has been saved in /home/leo/.ssh/id_rsa     # 私钥保存路径
+Your public key has been saved in /home/leo/.ssh/id_rsa.pub     # 公钥保存路径
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在生成过程中会提示用户输入 passphrase，若设置了该口令，在私钥验证通过后还需要通过该口令的验证。在私钥被他人盗取的情况下，对方不知道该口令也无法登录，安全性更高。&lt;/p&gt;
+&lt;p&gt;公钥相当于一把锁，存放在服务器上，私钥相当于一把钥匙，存放在本地。服务器上的授权文件则决定了使不使用该公钥完成验证，所以还要按下列步骤为新生成的公钥添加授权：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ cd .ssh
+$ cat id_rsa.pub &amp;gt;&amp;gt; authorized_keys
+$ chmod 600 authorized_keys
+$ chmod 700 ~/.ssh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;打开 SSH 的配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;找到以下项目，编辑设置开启公钥验证：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;PubkeyAuthentication yes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用 &lt;code&gt;cat /home/leo/.ssh/id_rsa&lt;/code&gt; 在终端中输出私钥内容，将其复制后写入到本地的记事本中，将文件保存为 &lt;code&gt;id_rsa&lt;/code&gt;，存放在自定义的目录下。接着在本地打开终端，尝试使用私钥连接服务器：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh"&gt;ssh -p 端口号 -i "私钥路径" 用户名@主机名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{note begin}相信许多读者使用的是 PuTTY 等更为便捷的 SSH 客户端，在设置项中一定也可以使用私钥的方式完成登录，各种客户端的设置方式不尽相同，就不在此罗列了。 {note end}&lt;/p&gt;
+&lt;p&gt;成功登录后，SSH 的公私钥设置就没有问题了。再次打开 SSH 配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将密码登录关闭，以后全部使用私钥登录：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;PasswordAuthentication no
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后重启 SSH 服务，SSH 的设置内容就全部完成了：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo service sshd restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="an-zhuang-fail2ban_1"&gt;安装 Fail2Ban&lt;/h2&gt;
+&lt;p&gt;更改 SSH 的默认设置提升了防御等级，但只顾着防守而没有反制措施，暴露在外的防护手段在积年累月的攻击下，始终有被攻破的风险。Fail2Ban 是用于反制非法访问的有力工具，Fail2Ban 能够根据服务器的访问日志找出密码失败次数过多等具有风险的 IP 并自动封禁，是避免暴力攻击的有效手段。&lt;/p&gt;
+&lt;p&gt;Fail2Ban 亦可设置邮件通知等功能，读者如有兴趣可以自行搜索，在这里仅介绍基础的 SSH 安全设置。首先在服务器上安装 Fail2Ban：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo apt-get install fail2ban
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fail2Ban 的默认设置文件为 &lt;code&gt;/etc/fail2ban/jail.conf&lt;/code&gt;，一般不改写该文件，而是在同目录下新建 &lt;code&gt;jail.local&lt;/code&gt;，其中的设置项会添加入 &lt;code&gt;jail.conf&lt;/code&gt; 并覆盖同名设置项。使用 Vim 新建 &lt;code&gt;jail.local&lt;/code&gt; 文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/fail2ban/jail.local
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在文件中写入针对 SSH 服务的封禁规则：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[sshd]
+enable = ture
+filter = sshd
+port = 2222                     # SSH 服务对应的端口
+logpath = /var/log/auth.log     # 日志路径
+maxretry = 3                    # 最大允许试错次数
+bantime = -1                    # IP 封禁时间（无限）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;保存设置后通过 &lt;code&gt;sudo systemctl start fail2ban&lt;/code&gt; 启动，Fail2Ban 就开始保护服务器了。以下罗列了在维护时经常需要用到的命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ w                                             # 查看当前服务器登录的用户
+$ last                                          # 查看过去一段时间的登录用户
+$ sudo systemctl enable fail2ban.service        # 开机启动
+$ sudo systemctl status fail2ban.service        # 查看服务运行状态
+$ sudo cat /var/log/fail2ban.log                # 查看日志文件
+$ sudo fail2ban-client status                   # 查看 fail2ban 的运行状态
+$ sudo fail2ban-client status sshd              # 查看 sshd 的详细信息，包括封禁 IP 等
+$ sudo fail2ban-client set sshd unbanip 1.1.1.1 # 解封指定 IP 1.1.1.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或许有读者认为，有必要这么麻烦地折腾 SSH 安全吗？也没见有什么人来连接我的服务器。事实并非如此，当服务器以公网 IP 直接接入互联网后，每天都要面临大量连接请求，多亏了厂商默认设置的强密码，将很多隐患挡在了外头。&lt;/p&gt;
+&lt;p&gt;诸君如若不信，可以通过以下命令查询指定日期的失败访问：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ lastb -s 2023-11-6 -t 2023-11-7&amp;ZeroWidthSpace;
+administ ssh:notty    185.224.128.160  Mon Nov  6 04:53 - 04:53  (00:00)
+esroot   ssh:notty    170.64.161.15    Mon Nov  6 04:53 - 04:53  (00:00)
+administ ssh:notty    185.224.128.160  Mon Nov  6 04:53 - 04:53  (00:00)
+admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+esroot   ssh:notty    170.64.161.15    Mon Nov  6 04:52 - 04:52  (00:00)
+admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    180.101.88.222   Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    180.101.88.222   Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    180.101.88.222   Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+odoo     ssh:notty    170.64.161.15    Mon Nov  6 04:52 - 04:52  (00:00)
+odoo     ssh:notty    170.64.161.15    Mon Nov  6 04:52 - 04:52  (00:00)
+Admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+Admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+opc      ssh:notty    170.64.161.15    Mon Nov  6 04:52 - 04:52  (00:00)
+Admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+opc      ssh:notty    170.64.161.15    Mon Nov  6 04:52 - 04:52  (00:00)
+Admin    ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+root     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+user     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+user     ssh:notty    185.224.128.160  Mon Nov  6 04:52 - 04:52  (00:00)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我查询了还未修改 SSH 默认设置时的失败访问，这里仅截取了很小一部分结果。可以看见，全世界各地都有人在很频繁地尝试连接，爆破 &lt;code&gt;root&lt;/code&gt;、&lt;code&gt;Admin&lt;/code&gt; 等常见用户的密码，由此也可见以上安全措施的重要性。&lt;/p&gt;
+&lt;h2 id="ufw-fang-huo-qiang-she-zhi"&gt;UFW 防火墙设置&lt;/h2&gt;
+&lt;p&gt;UFW 可以用于很方便地管理服务器上的端口，关闭无用的端口也是保证服务器安全的基本措施。安装 UFW 后仅打开需要的服务端口：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo apt-get install ufw
+$ sudo ufw allow ssh
+$ sudo ufw allow http
+$ sudo ufw allow https
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;千万别忘了我们已经修改了 SSH 的默认端口，再将自定义端口打开并尝看规则是否有误：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo ufw allow 2222
+$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443                        ALLOW       Anywhere
+2222                       ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+443 (v6)                   ALLOW       Anywhere (v6)
+2222 (v6)                  ALLOW       Anywhere (v6)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;用 systemd 打开 UFW 服务并设定自动启动，服务器上的端口就受 UFW 规则控制了：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;sudo systemctl start ufw
+sudo systemctl enable ufw
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="kai-qi-bbr"&gt;开启 BBR&lt;/h2&gt;
+&lt;p&gt;BBR（Bottleneck Bandwidth and Round-trip propagation time）是 Google 提出的一种拥塞控制算法，能够保证在有丢包率的不良网络环境下的连接，这对于海外服务器是一项比较重要的功能。&lt;/p&gt;
+&lt;p&gt;有些服务器默认开启了 BBR，可以通过以下命令检查：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo sysctl net.ipv4.tcp_available_congestion_control | grep bbr
+$ sudo sysctl net.ipv4.tcp_congestion_control | grep bbr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若没有输出，就需要通过以下方式手动开启：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo sh -c 'echo "net.core.default_qdisc=fq" &amp;gt;&amp;gt; /etc/sysctl.conf'
+$ sudo sh -c 'echo "net.ipv4.tcp_congestion_control=bbr" &amp;gt;&amp;gt; /etc/sysctl.conf'
+$ sudo sysctl -p
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;至此，新购买服务器的配置就差不多完成了，大部分都是和网络安全相关的设置，虽显得繁琐却又不得不做。若服务器厂商另外提供备份和 DDoS 防御等功能也应选择开启，因为廉价服务器不会提供此类服务且各厂商的设置方法都不相同，这类功能就超出本文的范围了。不过将文中的基础功能配置下来，后续就已经可以在服务器上放心地部署服务了。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://kiku.vip/2021/10/13/VPS%20%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/" rel="noopener" target="_blank"&gt;VPS 初体验（一）基础配置 - Kiku 的个人博客&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ivo-wang.github.io/2019/04/08/vps-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E8%AE%BE%E7%BD%AE/" rel="noopener" target="_blank"&gt;VPS 服务器 安全防护设置 - 老王的自留地 | ivo Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.logcg.com/archives/884.html" rel="noopener" target="_blank"&gt;购买了 VPS 之后你应该做足的安全措施 - 落格博客&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="VPS"></category></entry><entry><title>把博客站点交给了 Cloudflare 托管</title><link href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="alternate"></link><published>2023-10-31T00:00:00+08:00</published><updated>2023-10-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-10-31:/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html</id><summary type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …&lt;/p&gt;</summary><content type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。&lt;/p&gt;
 &lt;p&gt;但由于 Cloudflare 为网站提供的各种免费服务十分诱人，加之我想利用 Cloudflare 的 CDN 搭建博客图床，终究是把站点交给了 Cloudflare 管理。本文记录了从阿里云迁移站点的过程和一些必要的 Nginx 配置。&lt;/p&gt;
 &lt;h2 id="cloudflare-zhu-ce-zhan-dian"&gt;Cloudflare 注册站点&lt;/h2&gt;
 &lt;p&gt;打开 &lt;a href="https://www.cloudflare-cn.com/" rel="noopener" target="_blank"&gt;Cloudflare 官网&lt;/a&gt;，注册帐号后选择添加站点，输入域名后点击继续。&lt;/p&gt;
@@ -2239,94 +2531,4 @@ with graph transformer‑based reinforcement learning，文章介绍了使用包
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>文献总结｜用于从蛋白序列进行药物设计的深度生成模型</title><link href="https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html" rel="alternate"></link><published>2023-04-01T00:00:00+08:00</published><updated>2023-04-01T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-01:/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html</id><summary type="html">&lt;p&gt;本文介绍 2023 年发布在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN 的蛋白配体分子生成模型，该模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-023-00702-2" rel="noopener" target="_blank"&gt;doi.org/10.1186/s13321-023-00702-2&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍 2023 年发布在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN 的蛋白配体分子生成模型，该模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体。&lt;/p&gt;
-&lt;p&gt;目前的分子生成方法可以分为两类，其中一种是基于配体的分子生成（ligand-based molecule generation, LBMG），另一种是基于口袋的分子生成（pocketbased
-molecule generation, PBMG）。LBMG 方法难以跳出目前的化空间，因而难以生成具有新颖结构的分子；PBMG 方法需要获取更多蛋白口袋的信息，但计算蛋白 3D 构象通常开销巨大。&lt;/p&gt;
-&lt;p&gt;文章提出了一种输入蛋白序列即可获得配体的分子生成模型，称为 DeepTarget。DeepTarget 既不需要考虑蛋白口袋的构象信息，也不需要在特定的分子库上微调，有效避免了上述两种方法的局限。&lt;/p&gt;
-&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
-&lt;p&gt;文章使用了来自于 ChEMBL 的分子-蛋白对数据，经数据清洗后，共得到 551223 个分子-蛋白对，涉及 1970 种蛋白质与 333399 种分子的 SMILES 序列。&lt;/p&gt;
-&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8733?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;DeepTarget 由 3 个部分构成，分别是氨基酸序列嵌入（Amino Acid Sequence Embedding, AASE）、结构特征推理（Structural Feature Inference, SFI）和分子生成（Molecule Generation, MG）。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;氨基酸序列嵌入：AASE 是模型的嵌入层，使用了 Transformer 的架构，主要用于将序列数据转化为模型计算并处理的特征向量。&lt;/li&gt;
-&lt;li&gt;结构特征推理：SFI 部分采用了 GAN 的结构，其主要任务是在 AASE 中得到蛋白特征表示上加上一定的噪声，再通过多层感知机得到潜变量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt;。&lt;/li&gt;
-&lt;li&gt;分子生成：MG 部分使用了 LSTM 结构，是一个预训练的解码器，它将潜变量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt; 解码为目标分子。该解码器是一个在 ChEMBL 大数据集上训练好的模型，能将分子的潜变量转换为相似的分子。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;SFI 中的 GAN 模型是 DeepTarget 生成蛋白配体的关键，GAN 由生成器与分别器两个模块构成，生成器从潜变量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt; 生成分子，而分别器则识别生成分子与该蛋白口袋之间的关系，训练 GAN 就是让生成器不断生成分子，直至生成的分子可以「欺骗」分别器，也就是此时生成的分子满足该蛋白口袋的配体分布特征。在推理阶段，则将此生成分子的表示送入 MG 中得到分子的 SMILES 编码。&lt;/p&gt;
-&lt;p&gt;传统的生成模型关注于生成器与生成结果之间的关系，而在文章所设计的任务中，不同的蛋白口袋与配体分子在化学空间中有着不同的分布，这也是影响分子生成的因素。因此文章引入了对比学习（Contrastive Learning, CL）的手段，将不同的蛋白作为标签而使分子分簇，在相应的化学空间中生成分子。&lt;/p&gt;
-&lt;h2 id="jie-guo-yu-tao-lun_1"&gt;结果与讨论&lt;/h2&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8734?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章首先针对 DRD2 和 PARP1 两个蛋白的活性口袋生成分子。图 a 展示了对应的真实配体分子与生成分子的对接打分，生成分子相对于真实分子向打分更低方向偏移，说明具有更高的亲合力。&lt;/p&gt;
-&lt;p&gt;图 b 挑出了生成分子中的代表分子，与训练集分子计算相似性，两个分子与训练集的相似性都在 0.2-0.6 左右，说明这两个分子与训练集分子存在一定差异，DeepTarget 能生成新颖的分子。&lt;/p&gt;
-&lt;p&gt;图 c 展示了是否在模型中引入对比学习的了生成结果，使用对比学习策略模型生成的分子明显向打分更低处偏移，具有更好的效果。&lt;/p&gt;
-&lt;p&gt;图 d 测试了模型的泛化能力，先在训练集中删去 DRD2 和 PARP1 两个蛋白的数据，将生成分子与先前生成的分子对比，从测试结果中可以看出，删除相应训练数据后，生成分子的对接打分上升，但还是生成了相当数量打分低于 -6 的分子，作者认为这可以说明 DeepTarget 能针对训练集中不存在的活性口袋生成配体分子。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8735?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8735?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章对 DeepTarget 生成的分子与其他模型针对这两个口袋生成的分子做了评估，结果如上表所示，DeepTarget 生成分子的 Valid 高于两个 GAN 模型，其他指标与其他模型相当。&lt;/p&gt;
-&lt;p&gt;作者认为这些指标只能做为模型的参考，因为模型并没有针对生成分子的 Valid 和 Unique 等指标进行优化，DeepTarget 的目标更着重于生成与指定口袋真正具有相互作用的配体分子。&lt;/p&gt;
-&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
-&lt;p&gt;文章设计了一种基于 GAN 的蛋白配体分子生成模型，模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体，文章验证了生成分子具有较好的对接打分，并且模型表现出了一定的泛化能力，可用于针对训练集以外的蛋白生成配体。但文章中设计的模型评估实验有限，只针对两个靶点生成了分子，从文章中的数据来看，与其他模型相比该模型没有特别明显的优势。&lt;/p&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GAN"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry></feed>
