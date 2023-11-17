@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Cloudflare + Backblaze 实现免费的博客图床方案</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- awesome-font icon -->
+  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- umami analytics -->
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+
+
+
+    <meta name="description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Cloudflare">
+    <meta name="tags" content="Blog">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="Cloudflare + Backblaze 实现免费的博客图床方案"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2023-11-17 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Cloudflare"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Cloudflare + Backblaze 实现免费的博客图床方案",
+  "headline": "Cloudflare + Backblaze 实现免费的博客图床方案",
+  "datePublished": "2023-11-17 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html",
+  "description": "图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …"
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://boulder-eoraptor-e45.notion.site/093af471f4f749628fd4ddc244a6b08d?v=3ec2eda75795443bb9530c901685a54b&pvs=4" role="presentation">破橱簏</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">Cloudflare + Backblaze 实现免费的博客图床方案</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2023年 11月17日">2023年 11月17日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#chuang-jian-tong" title="创建桶">创建桶</a></li><li><a class="toc-href" href="#tian-jia-dns-ji-lu" title="添加 DNS 记录">添加 DNS 记录</a></li><li><a class="toc-href" href="#pei-zhi-zhuan-huan-gui-ze" title="配置转换规则">配置转换规则</a></li><li><a class="toc-href" href="#she-zhi-ye-mian-gui-ze" title="设置页面规则">设置页面规则</a></li><li><a class="toc-href" href="#zheng-he-jing-tai-zi-yuan" title="整合静态资源">整合静态资源</a></li><li><a class="toc-href" href="#she-zhi-fang-dao-lian" title="设置防盗链">设置防盗链</a></li><li><a class="toc-href" href="#picgo-she-zhi" title="PicGo 设置">PicGo 设置</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。<a href="https://weilining.github.io/177.html" rel="noopener" target="_blank">Ln's Blog</a> 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。</p>
+<p>遗憾的是尝试过的许多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。</p>
+<p>辗转之下我发现了 Backblaze 提供的存储服务，B2 云存储提供 10 GB 的免费空间，同时 Cloudflare 与 Backblaze 之间的流量不计费，用作为图床是完全足够了，就算超出免费额度，$0.006 GB/Month 的价格也很合适。</p>
+<p>使用 Backblaze B2 作为图床的唯一要求就是拥有一条托管在 Cloudflare 上的域名。若不知道如何将域名转移到 Cloudflare 上，可以参考先前写的<a href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="noopener" target="_blank">迁移教程</a>，完成后就可以按照本文的步骤操作了。</p>
+<h2 id="chuang-jian-tong">创建桶</h2>
+<p><div class="lightgallery"><a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>打开 <a href="https://www.backblaze.com/" rel="noopener" target="_blank">Backblaze 官网</a>很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。</p>
+<p><div class="lightgallery"><a data-sub-html="Create Bucket" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Create Bucket" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。</p></div></p>
+<p>选择 <code>Create a Bucket</code>，在 Bucket Unique Name 一栏填入桶名称，桶名决定了源站的 URL，应尽可能复杂避免被他人猜测到。若源站 URL 泄露，绕过 Cloudflare 的直接访问就会产生额外流量了。其余项如下图保持默认即可：</p>
+<p><div class="lightgallery"><a data-sub-html="Bucket config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Bucket config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>创建完成后，选择 <code>Upload / Download</code> 尝试在桶中上传一张图片，查看图片的详细信息，其中 Friendly URL 一项就是生成的图片链接。</p>
+<p><div class="lightgallery"><a data-sub-html="Image URL" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Image URL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>以 <code>f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg</code> 为例，图片链接可以都分成以下几个部分：</p>
+<ul>
+<li>主机名：<code>f000.backblaze.com</code></li>
+<li>后缀：<code>file</code></li>
+<li>桶名：<code>a-complicated-name</code></li>
+<li>图片路径： <code>hokciu.jpg</code></li>
+</ul>
+<p>因为 Friendly URL 中包含了桶名，不宜直接引用。假设想要将链接改写为 <code>img.leonis.cc/hokciu.jpg</code>，显然要修改主机名、隐藏固定的后缀和桶名，再拼接上图片路径，URL 的改写就通过 Cloudflare 实现。</p>
+<h2 id="tian-jia-dns-ji-lu">添加 DNS 记录</h2>
+<p>改写的目标 URL 必须使用 Cloudflare CDN，打开 Cloudflare 控制台，添加名称为 <code>img</code> 目标为 <code>f000.backblazeb2.com</code> 的 CNAME 记录，并<dot>将代理状态设为打开</dot>。待 DNS 记录生效后，就实现了 <code>img.leonis.cc</code> &rarr; <code>f000.backblazeb2.com</code> 的跳转。</p>
+<p><div class="lightgallery"><a data-sub-html="DNS record" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12730?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="DNS record" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12730?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<h2 id="pei-zhi-zhuan-huan-gui-ze">配置转换规则</h2>
+<p>同样在 Cloudflare 控制台中，找到 <code>规则</code> - <code>转换规则</code> 页面并创建新规则，填写规则自定义名称后就来处理 URL 的转换问题。</p>
+<p>第一次接触 Cloudflare 的转换规则功能时，我被界面上各个选项弄得很迷糊，所以我在这里介绍一下转换规则各个功能的使用方法，读者理解了就能根据自己的想法配置图片链接了。</p>
+<p><dot>规则页面上的「传入请求」是指访客对托管站点发起的请求</dot>，例如访客所浏览的页面上有一条 <code>img.leonis.cc/hokciu.jpg</code> 链接，该请求先进入到 Cloudflare 的服务器，再根据设定的规则前往 <code>f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg</code> 取出图片资源，最终呈现在页面上。</p>
+<p>前文为了表述简单，说的是将 <code>f000.backblazeb2.com/*</code> 改为 <code>img.leonis.cc/*</code>，实则是我们要设定一个规则，让访客能通过 <code>img.leonis.cc/*</code> 到 <code>f000.backblazeb2.com/*</code> 中取得需要的图片。</p>
+<p>在规则页面中的设置项可以参考下图：</p>
+<p><div class="lightgallery"><a data-sub-html="Transform rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12731?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Transform rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12731?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>该规则筛选得到所有主机名为 <code>img.leonis.cc</code> 的请求，将其 URL 重写到 <code>concat("/file/a-complicated-name", http.request.uri.path)</code>，也就是把所有对 <code>img.leonis.cc/*</code> 的请求指向 <code>img.leonis.cc/file/a-complicated-name/*</code>。而因为 <code>img.leonis.cc</code> 已经通过 CNAME 指向了 <code>f000.backblazeb2.com</code>，最终请求都到达 <code>f000.backblazeb2.com/file/a-complicated-name/*</code> 并取得图片资源。</p>
+<p>上述请求过程可以表示成</p>
+<pre><code class="language-txt">GET: https://img.leonis.cc/hokciu.jpg
+&rarr; https://img.leonis.cc/file/a-complicated-name/hokciu.jpg
+&rarr; https://f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg
+</code></pre>
+<p>需要注意的是，因为这里使用的是<strong>重写</strong>（rewrite）而非<strong>重定向</strong>（redirect），请求的改变发生在服务端而非客户端，<dot>整个过程中用户都不会看见 URL 发生变化</dot>，所以也就达到了隐藏桶名的目的。</p>
+<p>若设置全部无误，这时候就可以通过 <code>https://img.leonis.cc/example.jpg</code> 打开先前上传的图片了，由于 Backblaze 只支持 HTTPS，若打开 <code>http://img.leonis.cc/example.jpg</code> 则会弹出无效页面，用户体验不太好，所以接下来我们还需要通过 Cloudflare 页面规则完成 HTTPS 重写和缓存的相关设置。</p>
+<h2 id="she-zhi-ye-mian-gui-ze">设置页面规则</h2>
+<p>回到 Backblaze 找到 Bucket Settings 一项，在 Bucket Info 中填入 <code>{"cache-control":"max-age=720000"}</code>，该项将 Cloudflare 回到源站获取资源的周期设定为 720000 s，用于避免回源次数过多导致加载速度过慢。当然，该周期过长也会导致源文件更改后不能及时更新，可以按自己的需求更改。</p>
+<p><div class="lightgallery"><a data-sub-html="Bucket cache" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Bucket cache" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在 Cloudflare 中打开 <code>规则</code> - <code>页面规则</code>，新建一条页面规则，在 URL 一栏中填入 <code>img.leonis.cc/*</code>，按下图设置设置缓存和 HTTPS 即可。</p>
+<p><div class="lightgallery"><a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。</p></div></p>
+<p>再打开样例图片的链接，查看浏览器的开发者工具，在响应头中有一项 <code>cd-cache-status</code>，其值若为 <code>HIT</code>，则表示 Cloudflare 命中了缓存，该图片是由缓存中取出的。</p>
+<p><div class="lightgallery"><a data-sub-html="Cache response" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Cache response" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>至此关于 Backblaze + Cloudflare 的图床就设置完了，接下来还可以借助 PicGo 等第三方工具更方便地上传图片并获取图片链接，这部分内容可以根据章节标题向后文寻找。</p>
+<h2 id="zheng-he-jing-tai-zi-yuan">整合静态资源</h2>
+<p>由于博客通常会使用到包括图片、字体在内的多种静态资源，我希望将他们都整合到相同的子域名下。当某些静态资源由于各种原由突然挂掉的时候<del>（说的就是 jsDelivr 和 Google Fonts）</del>，我就可以直接在 Cloudflare 控制台上将其指向备用服务而不用去网页中一个个修改引用的链接，在管理维护上更方便。如果读者没有此需求，就可以完整跳过这一节了。</p>
+<p><div class="lightgallery"><a data-sub-html="URL design" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12735?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="URL design" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12735?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在我的设想中，所有静态资源都由 <code>cdn.leonis.cc</code> 分发，通过 URL 路径转向不同的子域名取得目标资源，后面就以图片资源为例实现这个构想。</p>
+<h4>添加 CDN 子域名</h4>
+<p>先在 Cloudflare 中添加子域名 <code>cdn.leonis.cc</code> 的 DNS 记录，暂时任意设置一个解析目标，能让 Cloudflare 获取缓存即可。</p>
+<h4>处理 URL 重定向</h4>
+<p>接着要实现对 URL 路径的处理，例如将 <code>cdn.leonis.cc/img/*</code> 重定向到 <code>img.leonis.cc/*</code>，这种重定向可以通过 Cloudflare 规则功能下的页面规则或重定向规则实现。</p>
+<p>若使用<strong>页面规则</strong>，可以使用下图中的方案，用通配符实现 URL 解析：</p>
+<p><div class="lightgallery"><a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12736?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12736?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>该方案的一个小缺点在于无法将规则应用于 <code>cdn.leonis.cc/img</code> 等不带后一个 <code>/</code> 的页面。使用<strong>重定向规则</strong>可以解决这个问题，但重定向规则中的正则匹配是收费功能，无法批量处理，每种后缀都必须添加一条规则，配置方案可以参考下图：</p>
+<p><div class="lightgallery"><a data-sub-html="Redirect rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12737?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Redirect rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12737?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>表达式 <code>concat("https://img.leonis.cc", substring(http.request.uri.path, 4))</code> 中的 <code>substring()</code> 用于除去 <code>/img/*</code> 的前 4 个字符，若是用于处理 <code>/js/*</code> 等不同的 URL 则需要根据字符数量更改该数值。以上两种方案各有优劣，读者可以根据自己的需求选择。</p>
+<h2 id="she-zhi-fang-dao-lian">设置防盗链</h2>
+<p>防盗链是用于屏蔽其他站点对静态资源引用的常用手段，倒不是不愿意分享资源，至少本站内的各种照片都可随意使用，而是个人站点的服务容量有限，很难做到再向外提供服务。除此以外，设置防盗链对于避免流量被恶意浪费也很有必要。防盗链的功能可以通过 Cloudflare 的防火墙规则实现，打开 <code>安全性</code> - <code>WAF</code> 页面即可创建规则。</p>
+<p>防盗链功能一般通过请求头中的 <code>Referer</code> 字段判断是否允许请求，例如允许自己的站点引用图片（<strong>Referer 为本站</strong> <code>leonis.cc</code>），不允许他人的站点引用图片（<strong>Referer 为外站</strong> <code>bing.com</code>）。另外还有一种<strong>没有 Referer</strong> 的情况，例如直接打开图片、在各种 Markdown 编辑器中使用图片都属于这一类。</p>
+<p>为了不影响正常使用，我使用的防盗链规则是<dot>允许无 Referer 与白名单站点访问</dot>。很棘手的是，Cloudflare 没有提供判断有无 Referer 的功能，所以我使用了比较曲折的方法实现该方案。</p>
+<p>首先新建一条防火墙规则，对于静态资源的 URL，阻止所有 Referer 中包含 <code>"http"</code> 的请求：</p>
+<p><div class="lightgallery"><a data-sub-html="WAF rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="WAF rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 <code>"http"</code> 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。</p></div></p>
+<p>再新建一条规则，这条规则用于根据 Referer 放行请求，作用等同于白名单，设置项如下：</p>
+<p><div class="lightgallery"><a data-sub-html="Whitelist" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Whitelist" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>设置生效后可以发现，先前的图片链接可以直接打开，却不能在其他网站上引用了。Cloudflare 阻止了白名单以外站点的引用请求，在防火墙事件中还可以查看阻止请求的来源 IP 等具体信息。</p>
+<p><div class="lightgallery"><a data-sub-html="Blocking" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Blocking" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;后来发现在 Cloudflare 控制台中的 <code>Scrape Shield</code> 页面中有一项 <strong>Hotlink 保护</strong>功能，一键即可开启防盗链，在 <code>Configuration Rules</code> 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。</p></div></p>
+<h2 id="picgo-she-zhi">PicGo 设置</h2>
+<p>若每次上传图片都要打开 Backblaze 网站终归还是很麻烦，好在 PicGo 能够让整个过程自动化。PicGo 还提供了丰富的插件，可以实现自定义文件路径、文件名哈希化等功能。</p>
+<p>设置 PicGo 作为 Backblaze 的图片上传工具，需要先打开 Backblaze Buckets 页面，在桶信息中记录下 <code>Endpoint</code> 的内容：</p>
+<p><div class="lightgallery"><a data-sub-html="Endpoint" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12741?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Endpoint" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12741?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>再在页面中找到 <code>Application Keys</code> 界面，选择 <code>Add a New Application Key</code>，填入 key 的名字：</p>
+<p><div class="lightgallery"><a data-sub-html="Key config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12743?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Key config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12743?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>在 <code>Duration</code> 一项可以设置 key 的有效期，过期后需要重新申请。选择提交后，页面就会给出生成的 <code>keyID</code> 和 <code>applicationKey</code>，将内容复制保存下来，一凡离开该页面就再也无法查看了。</p>
+<p><div class="lightgallery"><a data-sub-html="Generated key" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12744?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Generated key" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12744?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
+<p>安装好 PicGo 后，搜索并安装 s3 插件，打开 Amazon S3 的设置界面，填入先前保存下的信息，我的设置如下：</p>
+<pre><code class="language-json">"aws-s3": {
+    "accessKeyID": "Backblaze keyID",
+    "secretAccessKey": "Backblaze applicationKey",
+    "endpoint": "https://s3.us-west-000.backblazeb2.com",
+    "bucketName": "a-complicated-name",
+    "uploadPath": "{year}/{month}/{sha256}.{extName}",
+    "urlPrefix": "https://cdn.leonis.cc/img/"
+}
+</code></pre>
+<p>其中比较关键的是 <code>accessKeyID</code>、<code>secretAccessKey</code>、<code>endpoint</code> 三项，确保填写正确，另外不要忘了在 endpoint 前加上 <code>https://</code>。其余项则用于自定义图片路径和得到的 URL，具体配置可以参考<a href="https://github.com/wayjam/picgo-plugin-s3" rel="noopener" target="_blank">插件仓库</a>中的说明。</p>
+<p>到这里就大功告成了，下面两张图片都存放在 Backblaze 上，一张是前文手动上传的示例图片，另一张则是通过 PicGo 上传。关于图片的加载速度和链接，不用我多说，诸君查看这两张图片即可自明。</p>
+<p><div class="lightgallery"><a data-sub-html="PicGo demo" href="https://cdn.leonis.cc/img/2023/11/9c341684e296247e896e1f4131fc36f8da3e897335572206adc8774849f2fa8b.jpg" rel="noopener" target="_blank"><img alt="PicGo demo" src="https://cdn.leonis.cc/img/2023/11/9c341684e296247e896e1f4131fc36f8da3e897335572206adc8774849f2fa8b.jpg"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="Demo" href="https://cdn.leonis.cc/img/hokciu.jpg" rel="noopener" target="_blank"><img alt="Demo" src="https://cdn.leonis.cc/img/hokciu.jpg"/></a></div></p>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.backblaze.com/docs/cloud-storage-deliver-public-backblaze-b2-content-through-cloudflare-cdn" rel="noopener" target="_blank">Deliver Public Backblaze B2 Content Through Cloudflare CDN</a></li>
+<li><a href="https://blog.winer.website/archives/use_blackblaze_b2_and_cloudflare_cdn_to_bulid_a_free_oss.html" rel="noopener" target="_blank">使用 Backblaze B2 + Cloudflare CDN + PicGo 实现可自定义域名的 10G 免费图床解决方案 - winer's Blog</a></li>
+<li><a href="https://blog.mitsea.com/67b8601211284a25b68bb8afe65b80a7/" rel="noopener" target="_blank">Backblaze B2 + CloudFlare 搭建图床 - Mitsea Blog</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=Cloudflare + Backblaze 实现免费的博客图床方案&amp;url=https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html&amp;title=Cloudflare + Backblaze 实现免费的博客图床方案" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=Cloudflare + Backblaze 实现免费的博客图床方案&amp;body=https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/cloudflare.html">Cloudflare</a><a href="https://leonis.cc/tag/blog.html">Blog</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                            <span class="post-author-website"><a rel="noopener" target="_blank" href="https://leonis.cc"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">新服务器必做的基本设置——服务器迁移之记录</h2>
+                            <p class="post-nav-excerpt">最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <div id="search-wrapper" style="display: none;">
+      <a class="search-close">
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="search">
+        <div class="search-form">
+          <input class="input-field" data-stork="storksearch" />
+        </div>
+        <div class="search-result">
+          <div data-stork="storksearch-output"></div>
+        </div>
+      </div>>
+		</div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/dockerfile.min.js"></script>
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/markdown.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/nginx.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+  <!-- visitor count -->
+  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+</body>
+</html>

@@ -1,5 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-11-11T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>新服务器必做的基本设置——服务器迁移之记录</title><link href="https://leonis.cc/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html" rel="alternate"></link><published>2023-11-11T00:00:00+08:00</published><updated>2023-11-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-11-11:/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html</id><summary type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来，在又遇上新服务器时就能方便查阅。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2023-11-17T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>Cloudflare + Backblaze 实现免费的博客图床方案</title><link href="https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html" rel="alternate"></link><published>2023-11-17T00:00:00+08:00</published><updated>2023-11-17T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-11-17:/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html</id><summary type="html">&lt;p&gt;图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。&lt;a href="https://weilining.github.io/177.html" rel="noopener" target="_blank"&gt;Ln's Blog&lt;/a&gt; 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。&lt;/p&gt;
+&lt;p&gt;遗 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。&lt;a href="https://weilining.github.io/177.html" rel="noopener" target="_blank"&gt;Ln's Blog&lt;/a&gt; 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。&lt;/p&gt;
+&lt;p&gt;遗憾的是尝试过的许多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。&lt;/p&gt;
+&lt;p&gt;辗转之下我发现了 Backblaze 提供的存储服务，B2 云存储提供 10 GB 的免费空间，同时 Cloudflare 与 Backblaze 之间的流量不计费，用作为图床是完全足够了，就算超出免费额度，$0.006 GB/Month 的价格也很合适。&lt;/p&gt;
+&lt;p&gt;使用 Backblaze B2 作为图床的唯一要求就是拥有一条托管在 Cloudflare 上的域名。若不知道如何将域名转移到 Cloudflare 上，可以参考先前写的&lt;a href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="noopener" target="_blank"&gt;迁移教程&lt;/a&gt;，完成后就可以按照本文的步骤操作了。&lt;/p&gt;
+&lt;h2 id="chuang-jian-tong"&gt;创建桶&lt;/h2&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;打开 &lt;a href="https://www.backblaze.com/" rel="noopener" target="_blank"&gt;Backblaze 官网&lt;/a&gt;很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Create Bucket" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Create Bucket" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;{note begin}Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。{note end}&lt;/p&gt;
+&lt;p&gt;选择 &lt;code&gt;Create a Bucket&lt;/code&gt;，在 Bucket Unique Name 一栏填入桶名称，桶名决定了源站的 URL，应尽可能复杂避免被他人猜测到。若源站 URL 泄露，绕过 Cloudflare 的直接访问就会产生额外流量了。其余项如下图保持默认即可：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Bucket config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Bucket config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;创建完成后，选择 &lt;code&gt;Upload / Download&lt;/code&gt; 尝试在桶中上传一张图片，查看图片的详细信息，其中 Friendly URL 一项就是生成的图片链接。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Image URL" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Image URL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;以 &lt;code&gt;f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg&lt;/code&gt; 为例，图片链接可以都分成以下几个部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主机名：&lt;code&gt;f000.backblaze.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;后缀：&lt;code&gt;file&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;桶名：&lt;code&gt;a-complicated-name&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;图片路径： &lt;code&gt;hokciu.jpg&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为 Friendly URL 中包含了桶名，不宜直接引用。假设想要将链接改写为 &lt;code&gt;img.leonis.cc/hokciu.jpg&lt;/code&gt;，显然要修改主机名、隐藏固定的后缀和桶名，再拼接上图片路径，URL 的改写就通过 Cloudflare 实现。&lt;/p&gt;
+&lt;h2 id="tian-jia-dns-ji-lu"&gt;添加 DNS 记录&lt;/h2&gt;
+&lt;p&gt;改写的目标 URL 必须使用 Cloudflare CDN，打开 Cloudflare 控制台，添加名称为 &lt;code&gt;img&lt;/code&gt; 目标为 &lt;code&gt;f000.backblazeb2.com&lt;/code&gt; 的 CNAME 记录，并&lt;dot&gt;将代理状态设为打开&lt;/dot&gt;。待 DNS 记录生效后，就实现了 &lt;code&gt;img.leonis.cc&lt;/code&gt; &amp;rarr; &lt;code&gt;f000.backblazeb2.com&lt;/code&gt; 的跳转。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="DNS record" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12730?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="DNS record" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12730?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h2 id="pei-zhi-zhuan-huan-gui-ze"&gt;配置转换规则&lt;/h2&gt;
+&lt;p&gt;同样在 Cloudflare 控制台中，找到 &lt;code&gt;规则&lt;/code&gt; - &lt;code&gt;转换规则&lt;/code&gt; 页面并创建新规则，填写规则自定义名称后就来处理 URL 的转换问题。&lt;/p&gt;
+&lt;p&gt;第一次接触 Cloudflare 的转换规则功能时，我被界面上各个选项弄得很迷糊，所以我在这里介绍一下转换规则各个功能的使用方法，读者理解了就能根据自己的想法配置图片链接了。&lt;/p&gt;
+&lt;p&gt;&lt;dot&gt;规则页面上的「传入请求」是指访客对托管站点发起的请求&lt;/dot&gt;，例如访客所浏览的页面上有一条 &lt;code&gt;img.leonis.cc/hokciu.jpg&lt;/code&gt; 链接，该请求先进入到 Cloudflare 的服务器，再根据设定的规则前往 &lt;code&gt;f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg&lt;/code&gt; 取出图片资源，最终呈现在页面上。&lt;/p&gt;
+&lt;p&gt;前文为了表述简单，说的是将 &lt;code&gt;f000.backblazeb2.com/*&lt;/code&gt; 改为 &lt;code&gt;img.leonis.cc/*&lt;/code&gt;，实则是我们要设定一个规则，让访客能通过 &lt;code&gt;img.leonis.cc/*&lt;/code&gt; 到 &lt;code&gt;f000.backblazeb2.com/*&lt;/code&gt; 中取得需要的图片。&lt;/p&gt;
+&lt;p&gt;在规则页面中的设置项可以参考下图：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Transform rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12731?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Transform rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12731?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;该规则筛选得到所有主机名为 &lt;code&gt;img.leonis.cc&lt;/code&gt; 的请求，将其 URL 重写到 &lt;code&gt;concat("/file/a-complicated-name", http.request.uri.path)&lt;/code&gt;，也就是把所有对 &lt;code&gt;img.leonis.cc/*&lt;/code&gt; 的请求指向 &lt;code&gt;img.leonis.cc/file/a-complicated-name/*&lt;/code&gt;。而因为 &lt;code&gt;img.leonis.cc&lt;/code&gt; 已经通过 CNAME 指向了 &lt;code&gt;f000.backblazeb2.com&lt;/code&gt;，最终请求都到达 &lt;code&gt;f000.backblazeb2.com/file/a-complicated-name/*&lt;/code&gt; 并取得图片资源。&lt;/p&gt;
+&lt;p&gt;上述请求过程可以表示成&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;GET: https://img.leonis.cc/hokciu.jpg
+&amp;rarr; https://img.leonis.cc/file/a-complicated-name/hokciu.jpg
+&amp;rarr; https://f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;需要注意的是，因为这里使用的是&lt;strong&gt;重写&lt;/strong&gt;（rewrite）而非&lt;strong&gt;重定向&lt;/strong&gt;（redirect），请求的改变发生在服务端而非客户端，&lt;dot&gt;整个过程中用户都不会看见 URL 发生变化&lt;/dot&gt;，所以也就达到了隐藏桶名的目的。&lt;/p&gt;
+&lt;p&gt;若设置全部无误，这时候就可以通过 &lt;code&gt;https://img.leonis.cc/example.jpg&lt;/code&gt; 打开先前上传的图片了，由于 Backblaze 只支持 HTTPS，若打开 &lt;code&gt;http://img.leonis.cc/example.jpg&lt;/code&gt; 则会弹出无效页面，用户体验不太好，所以接下来我们还需要通过 Cloudflare 页面规则完成 HTTPS 重写和缓存的相关设置。&lt;/p&gt;
+&lt;h2 id="she-zhi-ye-mian-gui-ze"&gt;设置页面规则&lt;/h2&gt;
+&lt;p&gt;回到 Backblaze 找到 Bucket Settings 一项，在 Bucket Info 中填入 &lt;code&gt;{"cache-control":"max-age=720000"}&lt;/code&gt;，该项将 Cloudflare 回到源站获取资源的周期设定为 720000 s，用于避免回源次数过多导致加载速度过慢。当然，该周期过长也会导致源文件更改后不能及时更新，可以按自己的需求更改。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Bucket cache" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Bucket cache" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在 Cloudflare 中打开 &lt;code&gt;规则&lt;/code&gt; - &lt;code&gt;页面规则&lt;/code&gt;，新建一条页面规则，在 URL 一栏中填入 &lt;code&gt;img.leonis.cc/*&lt;/code&gt;，按下图设置设置缓存和 HTTPS 即可。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;{note begin}暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。{note end}&lt;/p&gt;
+&lt;p&gt;再打开样例图片的链接，查看浏览器的开发者工具，在响应头中有一项 &lt;code&gt;cd-cache-status&lt;/code&gt;，其值若为 &lt;code&gt;HIT&lt;/code&gt;，则表示 Cloudflare 命中了缓存，该图片是由缓存中取出的。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Cache response" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Cache response" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;至此关于 Backblaze + Cloudflare 的图床就设置完了，接下来还可以借助 PicGo 等第三方工具更方便地上传图片并获取图片链接，这部分内容可以根据章节标题向后文寻找。&lt;/p&gt;
+&lt;h2 id="zheng-he-jing-tai-zi-yuan"&gt;整合静态资源&lt;/h2&gt;
+&lt;p&gt;由于博客通常会使用到包括图片、字体在内的多种静态资源，我希望将他们都整合到相同的子域名下。当某些静态资源由于各种原由突然挂掉的时候&lt;del&gt;（说的就是 jsDelivr 和 Google Fonts）&lt;/del&gt;，我就可以直接在 Cloudflare 控制台上将其指向备用服务而不用去网页中一个个修改引用的链接，在管理维护上更方便。如果读者没有此需求，就可以完整跳过这一节了。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="URL design" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12735?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="URL design" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12735?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在我的设想中，所有静态资源都由 &lt;code&gt;cdn.leonis.cc&lt;/code&gt; 分发，通过 URL 路径转向不同的子域名取得目标资源，后面就以图片资源为例实现这个构想。&lt;/p&gt;
+&lt;h4&gt;添加 CDN 子域名&lt;/h4&gt;
+&lt;p&gt;先在 Cloudflare 中添加子域名 &lt;code&gt;cdn.leonis.cc&lt;/code&gt; 的 DNS 记录，暂时任意设置一个解析目标，能让 Cloudflare 获取缓存即可。&lt;/p&gt;
+&lt;h4&gt;处理 URL 重定向&lt;/h4&gt;
+&lt;p&gt;接着要实现对 URL 路径的处理，例如将 &lt;code&gt;cdn.leonis.cc/img/*&lt;/code&gt; 重定向到 &lt;code&gt;img.leonis.cc/*&lt;/code&gt;，这种重定向可以通过 Cloudflare 规则功能下的页面规则或重定向规则实现。&lt;/p&gt;
+&lt;p&gt;若使用&lt;strong&gt;页面规则&lt;/strong&gt;，可以使用下图中的方案，用通配符实现 URL 解析：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12736?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12736?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;该方案的一个小缺点在于无法将规则应用于 &lt;code&gt;cdn.leonis.cc/img&lt;/code&gt; 等不带后一个 &lt;code&gt;/&lt;/code&gt; 的页面。使用&lt;strong&gt;重定向规则&lt;/strong&gt;可以解决这个问题，但重定向规则中的正则匹配是收费功能，无法批量处理，每种后缀都必须添加一条规则，配置方案可以参考下图：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Redirect rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12737?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Redirect rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12737?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;表达式 &lt;code&gt;concat("https://img.leonis.cc", substring(http.request.uri.path, 4))&lt;/code&gt; 中的 &lt;code&gt;substring()&lt;/code&gt; 用于除去 &lt;code&gt;/img/*&lt;/code&gt; 的前 4 个字符，若是用于处理 &lt;code&gt;/js/*&lt;/code&gt; 等不同的 URL 则需要根据字符数量更改该数值。以上两种方案各有优劣，读者可以根据自己的需求选择。&lt;/p&gt;
+&lt;h2 id="she-zhi-fang-dao-lian"&gt;设置防盗链&lt;/h2&gt;
+&lt;p&gt;防盗链是用于屏蔽其他站点对静态资源引用的常用手段，倒不是不愿意分享资源，至少本站内的各种照片都可随意使用，而是个人站点的服务容量有限，很难做到再向外提供服务。除此以外，设置防盗链对于避免流量被恶意浪费也很有必要。防盗链的功能可以通过 Cloudflare 的防火墙规则实现，打开 &lt;code&gt;安全性&lt;/code&gt; - &lt;code&gt;WAF&lt;/code&gt; 页面即可创建规则。&lt;/p&gt;
+&lt;p&gt;防盗链功能一般通过请求头中的 &lt;code&gt;Referer&lt;/code&gt; 字段判断是否允许请求，例如允许自己的站点引用图片（&lt;strong&gt;Referer 为本站&lt;/strong&gt; &lt;code&gt;leonis.cc&lt;/code&gt;），不允许他人的站点引用图片（&lt;strong&gt;Referer 为外站&lt;/strong&gt; &lt;code&gt;bing.com&lt;/code&gt;）。另外还有一种&lt;strong&gt;没有 Referer&lt;/strong&gt; 的情况，例如直接打开图片、在各种 Markdown 编辑器中使用图片都属于这一类。&lt;/p&gt;
+&lt;p&gt;为了不影响正常使用，我使用的防盗链规则是&lt;dot&gt;允许无 Referer 与白名单站点访问&lt;/dot&gt;。很棘手的是，Cloudflare 没有提供判断有无 Referer 的功能，所以我使用了比较曲折的方法实现该方案。&lt;/p&gt;
+&lt;p&gt;首先新建一条防火墙规则，对于静态资源的 URL，阻止所有 Referer 中包含 &lt;code&gt;"http"&lt;/code&gt; 的请求：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="WAF rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="WAF rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;{note begin}该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 &lt;code&gt;"http"&lt;/code&gt; 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。{note end}&lt;/p&gt;
+&lt;p&gt;再新建一条规则，这条规则用于根据 Referer 放行请求，作用等同于白名单，设置项如下：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Whitelist" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Whitelist" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;设置生效后可以发现，先前的图片链接可以直接打开，却不能在其他网站上引用了。Cloudflare 阻止了白名单以外站点的引用请求，在防火墙事件中还可以查看阻止请求的来源 IP 等具体信息。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Blocking" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Blocking" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;{note begin}后来发现在 Cloudflare 控制台中的 &lt;code&gt;Scrape Shield&lt;/code&gt; 页面中有一项 &lt;strong&gt;Hotlink 保护&lt;/strong&gt;功能，一键即可开启防盗链，在 &lt;code&gt;Configuration Rules&lt;/code&gt; 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。{note end}&lt;/p&gt;
+&lt;h2 id="picgo-she-zhi"&gt;PicGo 设置&lt;/h2&gt;
+&lt;p&gt;若每次上传图片都要打开 Backblaze 网站终归还是很麻烦，好在 PicGo 能够让整个过程自动化。PicGo 还提供了丰富的插件，可以实现自定义文件路径、文件名哈希化等功能。&lt;/p&gt;
+&lt;p&gt;设置 PicGo 作为 Backblaze 的图片上传工具，需要先打开 Backblaze Buckets 页面，在桶信息中记录下 &lt;code&gt;Endpoint&lt;/code&gt; 的内容：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Endpoint" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12741?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Endpoint" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12741?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;再在页面中找到 &lt;code&gt;Application Keys&lt;/code&gt; 界面，选择 &lt;code&gt;Add a New Application Key&lt;/code&gt;，填入 key 的名字：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Key config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12743?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Key config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12743?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;Duration&lt;/code&gt; 一项可以设置 key 的有效期，过期后需要重新申请。选择提交后，页面就会给出生成的 &lt;code&gt;keyID&lt;/code&gt; 和 &lt;code&gt;applicationKey&lt;/code&gt;，将内容复制保存下来，一凡离开该页面就再也无法查看了。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Generated key" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12744?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Generated key" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12744?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;安装好 PicGo 后，搜索并安装 s3 插件，打开 Amazon S3 的设置界面，填入先前保存下的信息，我的设置如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json"&gt;"aws-s3": {
+    "accessKeyID": "Backblaze keyID",
+    "secretAccessKey": "Backblaze applicationKey",
+    "endpoint": "https://s3.us-west-000.backblazeb2.com",
+    "bucketName": "a-complicated-name",
+    "uploadPath": "{year}/{month}/{sha256}.{extName}",
+    "urlPrefix": "https://cdn.leonis.cc/img/"
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中比较关键的是 &lt;code&gt;accessKeyID&lt;/code&gt;、&lt;code&gt;secretAccessKey&lt;/code&gt;、&lt;code&gt;endpoint&lt;/code&gt; 三项，确保填写正确，另外不要忘了在 endpoint 前加上 &lt;code&gt;https://&lt;/code&gt;。其余项则用于自定义图片路径和得到的 URL，具体配置可以参考&lt;a href="https://github.com/wayjam/picgo-plugin-s3" rel="noopener" target="_blank"&gt;插件仓库&lt;/a&gt;中的说明。&lt;/p&gt;
+&lt;p&gt;到这里就大功告成了，下面两张图片都存放在 Backblaze 上，一张是前文手动上传的示例图片，另一张则是通过 PicGo 上传。关于图片的加载速度和链接，不用我多说，诸君查看这两张图片即可自明。&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="PicGo demo" href="https://cdn.leonis.cc/img/2023/11/9c341684e296247e896e1f4131fc36f8da3e897335572206adc8774849f2fa8b.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="PicGo demo" src="https://cdn.leonis.cc/img/2023/11/9c341684e296247e896e1f4131fc36f8da3e897335572206adc8774849f2fa8b.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Demo" href="https://cdn.leonis.cc/img/hokciu.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="Demo" src="https://cdn.leonis.cc/img/hokciu.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.backblaze.com/docs/cloud-storage-deliver-public-backblaze-b2-content-through-cloudflare-cdn" rel="noopener" target="_blank"&gt;Deliver Public Backblaze B2 Content Through Cloudflare CDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.winer.website/archives/use_blackblaze_b2_and_cloudflare_cdn_to_bulid_a_free_oss.html" rel="noopener" target="_blank"&gt;使用 Backblaze B2 + Cloudflare CDN + PicGo 实现可自定义域名的 10G 免费图床解决方案 - winer's Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.mitsea.com/67b8601211284a25b68bb8afe65b80a7/" rel="noopener" target="_blank"&gt;Backblaze B2 + CloudFlare 搭建图床 - Mitsea Blog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Cloudflare"></category><category term="Blog"></category></entry><entry><title>新服务器必做的基本设置——服务器迁移之记录</title><link href="https://leonis.cc/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html" rel="alternate"></link><published>2023-11-11T00:00:00+08:00</published><updated>2023-11-11T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-11-11:/sui-sui-nian/2023-11-11-necessary-config-of-new-server.html</id><summary type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近各大服务器厂商都开始做年末的促销了，不满于先前服务器时断时续的网络质量，我也趁着优惠换了一家供应商租赁了服务器，着手将所有服务迁移到新服务器上来。新购置的服务器空空如也，各种设置不免繁琐，于是我把过程记录下来，在又遇上新服务器时就能方便查阅。&lt;/p&gt;
 &lt;h2 id="ji-ben-she-zhi"&gt;基本设置&lt;/h2&gt;
 &lt;h3 id="wang-luo-lian-tong-xing"&gt;网络连通性&lt;/h3&gt;
 &lt;p&gt;我租赁的都是海外服务器，可以免去很多麻烦，也会带来很多麻烦。海外服务器最首要的麻烦就是网络问题，厂商提供的 IP 可能会被防火墙污染，一买来就无法连接。比较方便的方法是在网站 &lt;a href="https://ping.pe/" rel="noopener" target="_blank"&gt;https://ping.pe/&lt;/a&gt; 上输入服务器 IP 检查服务器在全球范围内的连通状态，如果在大陆地区一片飘红，那么就必须联系客服申请更换 IP 了。&lt;/p&gt;
@@ -291,7 +393,7 @@ net.ipv4.tcp_congestion_control = bbr
 &lt;li&gt;&lt;a href="https://kiku.vip/2021/10/13/VPS%20%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/" rel="noopener" target="_blank"&gt;VPS 初体验（一）基础配置 - Kiku 的个人博客&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://ivo-wang.github.io/2019/04/08/vps-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E8%AE%BE%E7%BD%AE/" rel="noopener" target="_blank"&gt;VPS 服务器 安全防护设置 - 老王的自留地 | ivo Blog&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.logcg.com/archives/884.html" rel="noopener" target="_blank"&gt;购买了 VPS 之后你应该做足的安全措施 - 落格博客&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="VPS"></category></entry><entry><title>把博客站点交给了 Cloudflare 托管</title><link href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="alternate"></link><published>2023-10-31T00:00:00+08:00</published><updated>2023-10-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-10-31:/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html</id><summary type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …&lt;/p&gt;</summary><content type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="VPS"></category><category term="Blog"></category><category term="SSH"></category></entry><entry><title>把博客站点交给了 Cloudflare 托管</title><link href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="alternate"></link><published>2023-10-31T00:00:00+08:00</published><updated>2023-10-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-10-31:/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html</id><summary type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare …&lt;/p&gt;</summary><content type="html">&lt;p&gt;因为博客域名是在阿里云购买的，先前一直顺理成章地用着阿里云的 DNS 解析。阿里云的 DNS 解析在各方面的体验都很不错，例如修改配置后就能很快更新、配置平台访问速度快、站点不会被国内的运营商污染等等，这些优点反过来可是说尽是 Cloudflare 的缺点。&lt;/p&gt;
 &lt;p&gt;但由于 Cloudflare 为网站提供的各种免费服务十分诱人，加之我想利用 Cloudflare 的 CDN 搭建博客图床，终究是把站点交给了 Cloudflare 管理。本文记录了从阿里云迁移站点的过程和一些必要的 Nginx 配置。&lt;/p&gt;
 &lt;h2 id="cloudflare-zhu-ce-zhan-dian"&gt;Cloudflare 注册站点&lt;/h2&gt;
 &lt;p&gt;打开 &lt;a href="https://www.cloudflare-cn.com/" rel="noopener" target="_blank"&gt;Cloudflare 官网&lt;/a&gt;，注册帐号后选择添加站点，输入域名后点击继续。&lt;/p&gt;
@@ -344,7 +446,7 @@ server {
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="hou-ji"&gt;后记&lt;/h2&gt;
-&lt;p&gt;Cloudflare 总体来说还是很好用的，提供了很多有意思的功能，很便利地就能体验，免去了自己动手配置的烦恼。Cloudflare 的不足仅在于在国内有时访问不畅，添加 DNS 记录后也要等比较长的时间才会更新到国内网络上，若能接受这两点，Cloudflare 的可玩性还是比其他平台更高的。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Cloudflare"></category><category term="DNS"></category><category term="Nginx"></category></entry><entry><title>RIME 脚本食用方法举隅：以输入苏州码为例</title><link href="https://leonis.cc/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html" rel="alternate"></link><published>2023-09-14T00:00:00+08:00</published><updated>2023-09-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-09-14:/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html</id><summary type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不着很仔细区分。&lt;/p&gt;
+&lt;p&gt;Cloudflare 总体来说还是很好用的，提供了很多有意思的功能，很便利地就能体验，免去了自己动手配置的烦恼。Cloudflare 的不足仅在于在国内有时访问不畅，添加 DNS 记录后也要等比较长的时间才会更新到国内网络上，若能接受这两点，Cloudflare 的可玩性还是比其他平台更高的。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Cloudflare"></category><category term="DNS"></category><category term="Nginx"></category><category term="Blog"></category></entry><entry><title>RIME 脚本食用方法举隅：以输入苏州码为例</title><link href="https://leonis.cc/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html" rel="alternate"></link><published>2023-09-14T00:00:00+08:00</published><updated>2023-09-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-09-14:/sui-sui-nian/2023-09-14-rime-script-simple-tutorial.html</id><summary type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;RIME 或称中州韵输入法，另一个更风行的名字是小狼毫输入法，当然这并不准确，因为只有 Windows 平台上的 RIME 才称为小狼毫。不过也无妨，作为一款开源输入法，RIME 可以部署在 Windows、MacOS、Linux、Android 等多个平台上，实现大同小异的功能，大部分配置文件也都通用，用不着很仔细区分。&lt;/p&gt;
 &lt;p&gt;我很早就听说了 RIME，作为开源输入法，用户可以自己构建码表、输入方案，因而一问世就很受方言、汉字、打字爱好者的青睐。方言爱好者用 RIME 实现各种方言输入方案，汉字爱好者用来输入扩展区汉字，打字爱好者则是用来改进各种音码、形码方案，不一而足。&lt;/p&gt;
 &lt;p&gt;但早年间 RIME 的 bug 比较多，入门的门槛高，一直只在小圈子内流行。经过数次版本迭代后，现而今的 RIME 可以说是非常好用，哪怕是仅追求不窃取用户资料的「圈外人」也可以轻松体验。&lt;/p&gt;
 &lt;p&gt;网络上关于配置 RIME 的入门教程很多，我不在此赘言。这篇文章主要谈谈如何用 RIME 的 Lua 脚本实现一些高级输入，也是我最近折腾 RIME 的一些心得。&lt;/p&gt;
@@ -2419,116 +2521,4 @@ tensor([[0, 6, 3, 4, 5, 7, 6, 4, 3, 1]])
 &lt;td&gt;142.90&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;</content><category term="在路上"></category><category term="园艺"></category></entry><entry><title>文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计</title><link href="https://leonis.cc/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html" rel="alternate"></link><published>2023-04-06T00:00:00+08:00</published><updated>2023-04-06T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-06:/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html</id><summary type="html">&lt;p&gt;本文介绍 2023 年发布在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design with graph transformer‑based reinforcement learning，文章介绍了使用包括 Transformer 和 LSTM 模型实现以分子骨架为约束的药物设计的方法并对比了使用 SMILES 与图两种方式的分子表示在分子生成中的区别。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1186/s13321-023-00694-z" rel="noopener" target="_blank"&gt;doi.org/10.1186/s13321-023-00694-z&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本文介绍 2023 年发布在 &lt;em&gt;Journal of Cheminformatics&lt;/em&gt; 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design
-with graph transformer‑based reinforcement learning，文章介绍了使用包括 Transformer 和 LSTM 模型实现以分子骨架为约束的药物设计的方法，并且对比了使用 SMILES 与图两种分子表示方式在分子生成中的区别。&lt;/p&gt;
-&lt;p&gt;在先前的工作中，作者设计了名为 DrugEx 的 RNN 模型，它能够通过基于分布的方式探索化学空间并通过强化学习的策略实现基于目标的分子生成，但它无法接受用户的输入，无法基于先验知识给出结果，只能在已有的化学空间中给出结果，当任务改变后又需要重新训练模型，这些方面的问题使其在具体应用上具有很大的局限性。&lt;/p&gt;
-&lt;p&gt;因此这篇文章使用多种深度学习模型重构了 DrugEx，DrugEx 可以接受用户指定的分子骨架生成具有目标结构的分子，并且在模型中引入强化学习策略，更加有效地控制生成分子的目标性质，此外文章对比了不同深度学习模型和以 SMILES 或图两种不同编码方式实现以分子骨架为约束的药物设计的效果。&lt;/p&gt;
-&lt;h2 id="fang-fa"&gt;方法&lt;/h2&gt;
-&lt;h3 id="shu-ju"&gt;数据&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8738?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;由来源于 ChEMBL 的约 170 万条分子数据构成 ChEMBL 数据集，用于预训练模型，由对人腺苷受体具有活性的 10828 条分子数据构成 LIGAND 数据集，用于微调生成模型。&lt;/p&gt;
-&lt;p&gt;所有数据都构建为「输入- 输出」对的形式，使用 BRICS 规则将每个分子分割为最多 4 个的一系列片段，片段的排列组合就作为输入部分，被分割的分子就作为输出部分。分割完成后，用于预训练生成模型的分子对数据有 9335410 万条。&lt;/p&gt;
-&lt;p&gt;若以 SMILES 作为分子表示，则是使用词表将每条 SMILES 序列分为若干 token，就可以将 SMILES 表示为 token 的索引序列，用于模型计算。&lt;/p&gt;
-&lt;p&gt;若以图作为分子表示，首先需要计算分子的临接矩阵，接着每个分子都会被表示为具有 5 行的矩阵，前两行分别代表原子类型和化学键类型，第三行表示连接原子的索引，第四行表示目前原子的索引，第五行表示片段索引。按列连接 start、fragment、growing、end 和 linking 五个部分的上述五种信息，start 与 end 两部分分别具有一列，只有标记分隔的作用，fragment 部分中组织了各分子骨架中的原子信息，growing 部分组织了分子中去除分子骨架后剩余原子的信息，linking 部分组织了 fragment 与 growing 部分间相互连接的化学键信息。&lt;/p&gt;
-&lt;h3 id="mo-xing"&gt;模型&lt;/h3&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8739?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章中设计了 4 种模型用于完成分子生成成任务：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;图 Transformer&lt;/li&gt;
-&lt;li&gt;LSTM&lt;/li&gt;
-&lt;li&gt;LSTM + 注意力机制&lt;/li&gt;
-&lt;li&gt;序列 Transformer&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;其中分子的图表示只用于图 Transformer 模型中，其他三种模型都使用 SMILES 表示分子。&lt;/p&gt;
-&lt;p&gt;由于图 Transformer 无法同时处理原子与化学键的信息，因此按下式组合原子和化学键索引：&lt;/p&gt;
-&lt;div class="math"&gt;$$W=T_\mathrm{atom}\times 4+T_\mathrm{bond}$$&lt;/div&gt;
-&lt;p&gt;通过将原子类型与化学键类型的总数相乘再加上化学键类型得到结果 &lt;span class="math"&gt;\(W\)&lt;/span&gt;，用于计算词向量。&lt;/p&gt;
-&lt;p&gt;由于图 Transformer 处理的不是序列信息，原有的位置编码计算方式同样无法使用，文章设计了以下位置编码：&lt;/p&gt;
-&lt;div class="math"&gt;$$P=I_\mathrm{atom}\times L_\mathrm{max}+I_\mathrm{connected}$$&lt;/div&gt;
-&lt;p&gt;式中将当前原子索引 &lt;span class="math"&gt;\(I_\mathrm{atom}\)&lt;/span&gt; 与最大长度 &lt;span class="math"&gt;\(L_\mathrm{max}\)&lt;/span&gt; 相乘，然后再加上连接原子的索引 &lt;span class="math"&gt;\(I_\mathrm{connected}\)&lt;/span&gt; 得到位置编码。&lt;/p&gt;
-&lt;h3 id="ping-gu-zhi-biao"&gt;评估指标&lt;/h3&gt;
-&lt;p&gt;为了更好评估生成分子的多样性，除了常见的分子指标外，文章中还使用了 Solow Polasky measurement，由下式给出：&lt;/p&gt;
-&lt;div class="math"&gt;$$I(A)=\frac{1}{|A|}\boldsymbol{e}^\mathrm{T}F(\boldsymbol{s})^{-1}\boldsymbol{e}$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(A\)&lt;/span&gt; 表示分子数据集，&lt;span class="math"&gt;\(|A|\)&lt;/span&gt; 为数据集大小，&lt;span class="math"&gt;\(\boldsymbol{e}\)&lt;/span&gt; 为 &lt;span class="math"&gt;\(|A|\)&lt;/span&gt; 维元素全为 &lt;span class="math"&gt;\(1\)&lt;/span&gt; 的向量，&lt;span class="math"&gt;\(F(s)=[f(d_{ij})]\)&lt;/span&gt;，&lt;span class="math"&gt;\(f(d_{ij})\)&lt;/span&gt; 是表示每对分子间距离的函数：&lt;/p&gt;
-&lt;div class="math"&gt;$$f(d)=\mathrm{e}^{-\theta d_{ij}}$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; 为常数，取 &lt;span class="math"&gt;\(\theta=0.5\)&lt;/span&gt;，&lt;span class="math"&gt;\(d_{ij}\)&lt;/span&gt; 为分子 &lt;span class="math"&gt;\(s_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(s_j\)&lt;/span&gt; 的分子指纹间的谷本距离。&lt;/p&gt;
-&lt;h2 id="jie-guo-yu-tao-lun_1"&gt;结果与讨论&lt;/h2&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8751?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8751?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;首先分别使用 ChEMBL 数据集预训练四种模型，再用 LIGAND 数据集微调预训练的生成模型，使用测试集生成分子的结果如上表所示。&lt;/p&gt;
-&lt;p&gt;同样使用 SMILES 表示分子，相比于 LSTM 模型，训练 Transformer 模型需要的计算资源更多，但训练时间更短而且效果更好。使用 SMILES 的模型在微调后表现有所上升，但还是差于使用图的模型，这主要是由于用图表示分子更容易获得原子的几何关系信息。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8752?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8752?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;文章绘制了图 Transformer 生成分子的降维结果，可以看出图 Transformer 生成的分子很好地覆盖了 ChEMBL 和 LIGAND 两个数据集的化学空间。在对生成分子进一步评估中发现，图 Transformer 生成分子的可合成性低于使用 SMILES 的模型，作者认为这是因为基于图的模型能够生成更复杂的结构，导致可合成性降低。&lt;/p&gt;
-&lt;p&gt;文章总结了图 Transformer 的 4 点优势：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;局部尺度上的不变性：图 Transformer 能够很好地识别输入的分子骨架，并使输出的生成分子中具有相同的结构；&lt;/li&gt;
-&lt;li&gt;全局尺度上的可扩展性：图 Transformer 在生成分子的过程中，可以将生成部分直接插入到表示图的矩阵中，具有很大灵活性；&lt;/li&gt;
-&lt;li&gt;无语法约束：图 Transformer 不需要关注 SMILES 语法要求，模型不需要额外学习分子中的语法特征；&lt;/li&gt;
-&lt;li&gt;可引入化学规则：可以在图 Transformer 中引入化学规则，例如价键匹配规则，提高生成分子的准确性。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;最后文章还在图 Transformer 中引入了强化学习的策略，模型能够生成对 A&lt;sub&gt;2A&lt;/sub&gt;AR 的亲合力和 QED 分数更高的分子。文章中输入模型的分子骨架与生成分子如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8753?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8753?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h2 id="jie-lun"&gt;结论&lt;/h2&gt;
-&lt;p&gt;文章重构了以前的 DrugEx 的模型，在对多种深度模型的试验中，图 Transformer 具有最好的分子生成效果。相比于 SMILES，分子的图表示在分子生成任务中可以更好地识别输入的分子结构，并且可以很容易地改造分子结构生成分子，这一点在发现先导化合物以及先导化合物的优化上都能发挥很大的作用。&lt;/p&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry></feed>
+&lt;/table&gt;</content><category term="在路上"></category><category term="园艺"></category></entry></feed>
