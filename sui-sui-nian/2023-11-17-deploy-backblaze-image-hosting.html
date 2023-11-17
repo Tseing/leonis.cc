@@ -56,7 +56,7 @@
 
 
 
-    <meta name="description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …">
+    <meta name="description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 我对图床的要求只有访问速度可靠、数据受控几点，遗 …">
 
     <meta name="author" content="Leo">
 
@@ -69,7 +69,7 @@
 <!-- Open Graph -->
 <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Cloudflare + Backblaze 实现免费的博客图床方案"/>
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="图床一直是困扰 Markdown 以及静态博客用户的麻烦事，Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 我对图床的要求只有访问速度可靠、数据受控几点，遗 …"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html"/>
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
@@ -98,7 +98,7 @@
   },
   "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "url": "https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html",
-  "description": "图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 遗 …"
+  "description": "图床一直是困扰 Markdown 以及静态博客用户的麻烦事，Ln's Blog 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。 我对图床的要求只有访问速度可靠、数据受控几点，遗 …"
 }
 </script>
 
@@ -169,8 +169,8 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p>图床一直是困扰 Markdown 以及静态博客用户的麻烦事，我对图床的要求只有访问速度可靠、数据受控几点。<a href="https://weilining.github.io/177.html" rel="noopener" target="_blank">Ln's Blog</a> 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。</p>
-<p>遗憾的是尝试过的许多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。</p>
+                <p>图床一直是困扰 Markdown 以及静态博客用户的麻烦事，<a href="https://weilining.github.io/177.html" rel="noopener" target="_blank">Ln's Blog</a> 总结了一些免费图床服务，还分别列出了测试链接，可以比较主观地比较各图床的速度，也可以判断在所处网络环境下该图床是否可用。</p>
+<p>我对图床的要求只有访问速度可靠、数据受控几点，遗憾的是尝试过的众多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。</p>
 <p>辗转之下我发现了 Backblaze 提供的存储服务，B2 云存储提供 10 GB 的免费空间，同时 Cloudflare 与 Backblaze 之间的流量不计费，用作为图床是完全足够了，就算超出免费额度，$0.006 GB/Month 的价格也很合适。</p>
 <p>使用 Backblaze B2 作为图床的唯一要求就是拥有一条托管在 Cloudflare 上的域名。若不知道如何将域名转移到 Cloudflare 上，可以参考先前写的<a href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="noopener" target="_blank">迁移教程</a>，完成后就可以按照本文的步骤操作了。</p>
 <h2 id="chuang-jian-tong">创建桶</h2>
