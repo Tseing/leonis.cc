@@ -187,7 +187,7 @@ dot {
     font-size: 1.2em;
     line-height: 1.5em;
     width: 7em;
-    font-family: "Noto Serif KR", "Noto Serif SC";
+    font-family: "Advocate Ancient Serif SC", sans-serif;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -299,7 +299,7 @@ i.fa.fa-map-marker.fa-stack-1x {
 }
 
 .cite {
-    font-family: "Noto Serif KR", "Noto Serif SC";
+    font-family: "Advocate Ancient Serif SC", sans-serif;
     font-weight: 700;
     font-size: 1.2em;
 }

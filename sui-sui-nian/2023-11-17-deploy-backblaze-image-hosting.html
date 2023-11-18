@@ -46,8 +46,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" /> -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
-  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700223889225" rel="stylesheet" />
-  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700223610575" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
@@ -186,12 +187,24 @@
 <p>创建完成后，选择 <code>Upload / Download</code> 尝试在桶中上传一张图片，查看图片的详细信息，其中 Friendly URL 一项就是生成的图片链接。</p>
 <p><div class="lightgallery"><a data-sub-html="Image URL" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Image URL" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12729?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>以 <code>f000.backblazeb2.com/file/a-complicated-name/hokciu.jpg</code> 为例，图片链接可以都分成以下几个部分：</p>
-<ul>
-<li>主机名：<code>f000.backblaze.com</code></li>
-<li>后缀：<code>file</code></li>
-<li>桶名：<code>a-complicated-name</code></li>
-<li>图片路径： <code>hokciu.jpg</code></li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">主机名</th>
+<th style="text-align: center;">后缀</th>
+<th style="text-align: center;">桶名</th>
+<th style="text-align: center;">图片路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>f000.backblze.com</code></td>
+<td style="text-align: center;"><code>file</code></td>
+<td style="text-align: center;"><code>a-complicated-name</code></td>
+<td style="text-align: center;"><code>hokciu.jpg</code></td>
+</tr>
+</tbody>
+</table>
 <p>因为 Friendly URL 中包含了桶名，不宜直接引用。假设想要将链接改写为 <code>img.leonis.cc/hokciu.jpg</code>，显然要修改主机名、隐藏固定的后缀和桶名，再拼接上图片路径，URL 的改写就通过 Cloudflare 实现。</p>
 <h2 id="tian-jia-dns-ji-lu">添加 DNS 记录</h2>
 <p>改写的目标 URL 必须使用 Cloudflare CDN，打开 Cloudflare 控制台，添加名称为 <code>img</code> 目标为 <code>f000.backblazeb2.com</code> 的 CNAME 记录，并<dot>将代理状态设为打开</dot>。待 DNS 记录生效后，就实现了 <code>img.leonis.cc</code> &rarr; <code>f000.backblazeb2.com</code> 的跳转。</p>
@@ -271,8 +284,8 @@
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://www.backblaze.com/docs/cloud-storage-deliver-public-backblaze-b2-content-through-cloudflare-cdn" rel="noopener" target="_blank">Deliver Public Backblaze B2 Content Through Cloudflare CDN</a></li>
-<li><a href="https://blog.winer.website/archives/use_blackblaze_b2_and_cloudflare_cdn_to_bulid_a_free_oss.html" rel="noopener" target="_blank">使用 Backblaze B2 + Cloudflare CDN + PicGo 实现可自定义域名的 10G 免费图床解决方案 - winer's Blog</a></li>
 <li><a href="https://blog.mitsea.com/67b8601211284a25b68bb8afe65b80a7/" rel="noopener" target="_blank">Backblaze B2 + CloudFlare 搭建图床 - Mitsea Blog</a></li>
+<li><a href="https://blog.winer.website/archives/use_blackblaze_b2_and_cloudflare_cdn_to_bulid_a_free_oss.html" rel="noopener" target="_blank">使用 Backblaze B2 + Cloudflare CDN + PicGo 实现可自定义域名的 10G 免费图床解决方案 - winer's Blog</a></li>
 </ul>
             </section>
 
