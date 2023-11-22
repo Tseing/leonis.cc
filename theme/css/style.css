@@ -130,7 +130,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: "Fira Mono", monospace, monospace;
+    font-family: "Fira Mono", monospace;
     font-size: 18px
 }
 
@@ -453,7 +453,10 @@ html.menu-active,
 }
 
 body {
-    font: 400 2em / 1.5em "ChiuKong Gothic CL";
+    font-family: "Fira Sans", Arial, "ChiuKong Gothic CL", sans-serif;
+    font-weight: 400;
+    font-size: 2em;
+    line-height: 1.5em;
     color: #45484d;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -479,7 +482,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Fira Sans', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;
     text-rendering: optimizeLegibility;
     color: #000;
 }
@@ -607,7 +610,7 @@ blockquote {
     font-weight: 400;
     color: #45484d;
     background: #faf9f7;
-    font-family: "ChiuKong Gothic CL";
+    font-family: "Fira sans", Arial, "ChiuKong Gothic CL", sans-serif;
     font-size: 0.9em;
     margin-left: 11%;
     margin-right: 11%;
@@ -704,7 +707,7 @@ tt {
     position: relative;
     margin: 0 0;
     padding: 0.25em 5px;
-    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", monospace;
     font-size: 0.9em;
     /* white-space: pre; */
     background: #faf9f7;
@@ -718,7 +721,7 @@ pre {
     margin-top: 40px;
     padding: 1em;
     overflow-y: hidden;
-    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", monospace;
     white-space: pre;
     background: #faf9f7;
     border: 1px solid #e5e4e1;
@@ -810,7 +813,7 @@ table td {
 }
 
 table th {
-    font-family: 'Fira Sans', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;
     font-weight: 500;
     font-size: 0.85em;
     line-height: 1.25em;
@@ -959,7 +962,7 @@ img {
     z-index: 10;
     margin: 0;
     padding: 0;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 2em;
     line-height: 1em;
@@ -989,7 +992,7 @@ img {
     padding: 0;
     font-size: 1em;
     line-height: 1.5em;
-    font-family: "Cardo";
+    font-family: "Palatino Linotype", "Palatino", serif;
     user-select: none;
 }
 
@@ -1090,7 +1093,7 @@ img {
     margin-bottom: 1em;
     padding: 0.5em 1.25em;
     border: 1px solid #c2c7cc;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 0.75em;
     line-height: 1.666em;
     text-shadow: none;
@@ -1146,7 +1149,7 @@ img {
     border-left: 1px solid #e5e4e1;
     z-index: 400;
     overflow: hidden;
-    font-family: 'Fira Sans', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;
     box-shadow: inset -2px 0 7px rgba(0, 0, 0, 0.1);
     transform: translate3d(16em, 0, 0);
     transition: all ease-out 0.25s
@@ -1333,7 +1336,7 @@ img {
 #footer {
     position: relative;
     z-index: 20;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     line-height: 1em;
     padding-bottom: 2em
 }
@@ -1529,7 +1532,7 @@ img {
     z-index: 10;
     display: block;
     margin-bottom: 1.333em;
-    font-family: 'Fira Sans', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;
     font-size: 0.8em;
     font-weight: 400;
     line-height: 1.333em;
@@ -1562,7 +1565,7 @@ img {
     margin-top: 0px;
     margin-bottom: 0px;
     text-align: justify;
-    font-family: "Fira Sans", "ChiuKong Gothic CL";
+    font-family: "Fira Sans", Arial, "ChiuKong Gothic CL";
     word-break: normal;
 }
 
@@ -1570,7 +1573,7 @@ img {
     margin-top: 30px;
     text-align: left;
     font-size: 0.9em;
-    font-family: "Fira Sans", "ChiuKong Gothic CL";
+    font-family: "Fira Sans", Arial, "ChiuKong Gothic CL";
 }
 
 .index-tags a {
@@ -1692,7 +1695,7 @@ img {
 .post-tags {
     /* max-width: 75%;
     float: left; */
-    font-family: 'Fira Sans', "ChiuKong Gothic CL", sans-serif;
+    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;
     text-align: center;
     margin-left: 17%;
     margin-right: 17%;
@@ -1759,7 +1762,7 @@ img {
 
 .post-author-bio {
     padding-left: 25%;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 0.9em;
     line-height: 1.333em
 }
@@ -1820,7 +1823,7 @@ img {
     margin: 0;
     padding: 0.5em 1.25em;
     border: 1px solid #c2c7cc;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 0.75em;
     line-height: 1.333em;
     color: #8a9199;
@@ -2043,7 +2046,7 @@ img {
     margin-bottom: 0.6em;
     margin-right: 0.3em;
     padding: 0.35em 1.25em;
-    font-family: "Livvic", "ChiuKong Gothic CL";
+    font-family: "Livvic", Arial, "ChiuKong Gothic CL", sans-serif;
 }
 
 .tag:focus,
