@@ -325,7 +325,7 @@ i.fa.fa-map-marker.fa-stack-1x {
 
 .prompt {
     user-select: none;
-    font-family: "Ubuntu mono";
+    font-family: "Fira Code";
     width: 4em;
     display: block;
     text-align: right;
@@ -415,6 +415,13 @@ i.fa.fa-map-marker.fa-stack-1x {
             animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     stroke-linecap: round;
   }
+
+/* Tone letters */
+@font-face {
+font-family: "Fira Sans";
+src: local(Arial);
+unicode-range: U+02E5-02E9;
+}
 
 @-webkit-keyframes rotate {
     100% {

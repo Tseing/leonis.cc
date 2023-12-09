@@ -174,7 +174,7 @@
 &lt;p&gt;网站 &lt;a href="https://tools.ipip.net/traceroute.php" rel="noopener" target="_blank"&gt;https://tools.ipip.net/traceroute.php&lt;/a&gt; 提供了各地区节点，可以查询各地去往服务器的数据线路。另一种方法是使用系统自带的测试工具，可以追踪由本机发出的数据。&lt;/p&gt;
 &lt;p&gt;后文的例子中，&lt;dot&gt;&lt;b&gt;将 8.8.8.8 当作为服务器的 IP 地址，将 1.1.1.1 当作为本地 IP 地址&lt;/b&gt;&lt;/dot&gt;，读者需要根据自己的实际情况修改。&lt;/p&gt;
 &lt;p&gt;在本地电脑上打开终端，使用 &lt;code&gt;tracert&lt;/code&gt; 命令追踪住服务器需要经过的路由：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-ps"&gt;&amp;gt; tracert 8.8.8.8
+&lt;pre&gt;&lt;code class="language-powershell"&gt;&amp;gt; tracert 8.8.8.8
 
 通过最多 30 个跃点跟踪到 [8.8.8.8] 的路由
 
@@ -225,16 +225,16 @@ Adding new group `leo' (1000) ...
 Adding new user `leo' (1000) with group `leo' ...
 Creating home directory `/home/leo' ...
 Copying files from `/etc/skel' ...
-New password: 
-Retype new password: 
+New password:
+Retype new password:
 passwd: password updated successfully
 Changing the user information for leo
 Enter the new value, or press ENTER for the default
         Full Name []: Leo
-        Room Number []: 
-        Work Phone []: 
-        Home Phone []: 
-        Other []: 
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
 Is the information correct? [Y/n] y
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接着安装 &lt;code&gt;sudo&lt;/code&gt; 命令，以后就用 &lt;code&gt;sudo&lt;/code&gt; 命令管理 root 权限。安装完成后用 &lt;code&gt;visudo&lt;/code&gt; 进入配置文件：&lt;/p&gt;
@@ -312,7 +312,7 @@ $ chmod 700 ~/.ssh
 &lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/fail2ban/jail.local
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;在文件中写入针对 SSH 服务的封禁规则：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[sshd]
+&lt;pre&gt;&lt;code class="language-ini"&gt;[sshd]
 enable = ture
 filter = sshd
 port = 2222                     # SSH 服务对应的端口
@@ -382,8 +382,8 @@ To                         Action      From
 2222 (v6)                  ALLOW       Anywhere (v6)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;用 systemd 打开 UFW 服务并设定自动启动，服务器上的端口就受 UFW 规则控制了：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;sudo systemctl start ufw
-sudo systemctl enable ufw
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo systemctl start ufw
+$ sudo systemctl enable ufw
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="kai-qi-bbr"&gt;开启 BBR&lt;/h2&gt;
 &lt;p&gt;BBR（Bottleneck Bandwidth and Round-trip propagation time）是 Google 提出的一种拥塞控制算法，能够保证在有丢包率的不良网络环境下的连接，这对于海外服务器是一项比较重要的功能。&lt;/p&gt;

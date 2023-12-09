@@ -130,7 +130,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: "Fira Mono", monospace;
+    font-family: "Hack", monospace;
     font-size: 18px
 }
 
@@ -610,7 +610,7 @@ blockquote {
     font-weight: 400;
     color: #45484d;
     background: #faf9f7;
-    font-family: "Fira sans", Arial, "ChiuKong Gothic CL", sans-serif;
+    font-family: "Fira Sans", Arial, "ChiuKong Gothic CL", sans-serif;
     font-size: 0.9em;
     margin-left: 11%;
     margin-right: 11%;
@@ -706,9 +706,9 @@ code,
 tt {
     position: relative;
     margin: 0 0;
-    padding: 0.25em 5px;
-    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", monospace;
-    font-size: 0.9em;
+    padding: 0.175em 5px;
+    font-family: 'Hack', "ChiuKong Gothic CL", monospace;
+    font-size: 0.85em;
     /* white-space: pre; */
     background: #faf9f7;
     border: 1px solid #e5e4e1;
@@ -721,7 +721,7 @@ pre {
     margin-top: 40px;
     padding: 1em;
     overflow-y: hidden;
-    font-family: 'Ubuntu Mono', "ChiuKong Gothic CL", monospace;
+    font-family: 'Hack', "ChiuKong Gothic CL", monospace;
     white-space: pre;
     background: #faf9f7;
     border: 1px solid #e5e4e1;
@@ -1600,8 +1600,8 @@ img {
 }
 
 .post-content img {
-    max-width: none;
-    width: 80%;
+    /* max-width: none; */
+    max-width: 80%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -2077,6 +2077,7 @@ img {
     }
     .post-content img,
     .post-content .fluid-width-video-wrapper {
+        max-width: none;
         width: 90%;
         margin-left: auto
     }
@@ -2149,6 +2150,7 @@ img {
     }
     .post-content img,
     .post-content .fluid-width-video-wrapper {
+        max-width: none;
         width: 90%;
         margin-left: auto
     }
@@ -2258,6 +2260,7 @@ img {
     }
     .post-content img,
     .post-content .fluid-width-video-wrapper {
+        max-width: none;
         width: 90%;
         margin-left: auto
     }

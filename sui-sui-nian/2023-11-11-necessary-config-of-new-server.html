@@ -35,28 +35,16 @@
   <!-- awesome-font icon -->
   <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- umami analytics -->
-  <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script> -->
   <!-- fonts -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet" /> -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
-  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/hack-font/3.003/web/hack.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&display=swap" rel="stylesheet" /> -->
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
 
 
 
@@ -238,7 +226,7 @@
 <p>网站 <a href="https://tools.ipip.net/traceroute.php" rel="noopener" target="_blank">https://tools.ipip.net/traceroute.php</a> 提供了各地区节点，可以查询各地去往服务器的数据线路。另一种方法是使用系统自带的测试工具，可以追踪由本机发出的数据。</p>
 <p>后文的例子中，<dot><b>将 8.8.8.8 当作为服务器的 IP 地址，将 1.1.1.1 当作为本地 IP 地址</b></dot>，读者需要根据自己的实际情况修改。</p>
 <p>在本地电脑上打开终端，使用 <code>tracert</code> 命令追踪住服务器需要经过的路由：</p>
-<pre><code class="language-ps">&gt; tracert 8.8.8.8
+<pre><code class="language-powershell">&gt; tracert 8.8.8.8
 
 通过最多 30 个跃点跟踪到 [8.8.8.8] 的路由
 
@@ -289,16 +277,16 @@ Adding new group `leo' (1000) ...
 Adding new user `leo' (1000) with group `leo' ...
 Creating home directory `/home/leo' ...
 Copying files from `/etc/skel' ...
-New password: 
-Retype new password: 
+New password:
+Retype new password:
 passwd: password updated successfully
 Changing the user information for leo
 Enter the new value, or press ENTER for the default
         Full Name []: Leo
-        Room Number []: 
-        Work Phone []: 
-        Home Phone []: 
-        Other []: 
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
 Is the information correct? [Y/n] y
 </code></pre>
 <p>接着安装 <code>sudo</code> 命令，以后就用 <code>sudo</code> 命令管理 root 权限。安装完成后用 <code>visudo</code> 进入配置文件：</p>
@@ -376,7 +364,7 @@ $ chmod 700 ~/.ssh
 <pre><code class="language-shell">$ sudo vim /etc/fail2ban/jail.local
 </code></pre>
 <p>在文件中写入针对 SSH 服务的封禁规则：</p>
-<pre><code>[sshd]
+<pre><code class="language-ini">[sshd]
 enable = ture
 filter = sshd
 port = 2222                     # SSH 服务对应的端口
@@ -446,8 +434,8 @@ To                         Action      From
 2222 (v6)                  ALLOW       Anywhere (v6)
 </code></pre>
 <p>用 systemd 打开 UFW 服务并设定自动启动，服务器上的端口就受 UFW 规则控制了：</p>
-<pre><code class="language-shell">sudo systemctl start ufw
-sudo systemctl enable ufw
+<pre><code class="language-shell">$ sudo systemctl start ufw
+$ sudo systemctl enable ufw
 </code></pre>
 <h2 id="kai-qi-bbr">开启 BBR</h2>
 <p>BBR（Bottleneck Bandwidth and Round-trip propagation time）是 Google 提出的一种拥塞控制算法，能够保证在有丢包率的不良网络环境下的连接，这对于海外服务器是一项比较重要的功能。</p>
@@ -596,5 +584,6 @@ net.ipv4.tcp_congestion_control = bbr
   </script>
   <!-- visitor count -->
   <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <!--  -->
 </body>
 </html>
