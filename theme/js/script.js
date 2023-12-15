@@ -33,42 +33,42 @@ jQuery(function($) {
 	/* ==========================================================================
 	   Search (TODO)
 	   ========================================================================== */
-	function search() {
-		html.toggleClass('search-active');
-	};
-
-    function showSearch() {
-		search();
-		$('html').css('overflow-y', 'hidden');
-        $('#search-wrapper').css('display','block');
-		$('#search-wrapper').css('opacity','1');
-    };
-
-    function closeSearch() {
-		search();
-		$('html').css('overflow-y', 'unset');
-        $('#search-wrapper').css('display','none');
-		$('#search-wrapper').css('opacity','0');
-		$(".input-field").val("");
-    };
-
-	// function click_body_to_close_search() {
-	// 	var search_active = document.getElementsByClassName('search-active');
-	// 	search_active ? closeSearch(): {};
+	// function search() {
+	// 	html.toggleClass('search-active');
 	// };
 
-	$('.search-button').on({
-		'click': function() {
-			showSearch();
-		}
-	});
+    // function showSearch() {
+	// 	search();
+	// 	$('html').css('overflow-y', 'hidden');
+    //     $('#search-wrapper').css('display','block');
+	// 	$('#search-wrapper').css('opacity','1');
+    // };
 
-	$('.search-close').on({
-		'click':function() {
-			closeSearch();
-		}
+    // function closeSearch() {
+	// 	search();
+	// 	$('html').css('overflow-y', 'unset');
+    //     $('#search-wrapper').css('display','none');
+	// 	$('#search-wrapper').css('opacity','0');
+	// 	$(".input-field").val("");
+    // };
 
-	});
+	// // function click_body_to_close_search() {
+	// // 	var search_active = document.getElementsByClassName('search-active');
+	// // 	search_active ? closeSearch(): {};
+	// // };
+
+	// $('.search-button').on({
+	// 	'click': function() {
+	// 		showSearch();
+	// 	}
+	// });
+
+	// $('.search-close').on({
+	// 	'click':function() {
+	// 		closeSearch();
+	// 	}
+
+	// });
 
 	// document.body.onclick = function() {
 	// 	click_body_to_close_search();

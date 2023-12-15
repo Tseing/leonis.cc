@@ -24,32 +24,6 @@ dot {
     border-radius: 0;
 }
 
-#search-wrapper {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 450;
-    box-sizing: border-box;
-    padding: 2rem;
-    transition: opacity ease-out 0.2s;
-    background: rgba(37,40,43,0.9);
-}
-
-#search-wrapper .search {
-    position: relative;
-    top: 4em;
-    max-height: 80vh;
-    width: 100%;
-    max-width: calc(64rem + 8vw);
-    margin: auto;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 8px 24px -2px rgba(0,0,0,0.4);
-    font-family: "Noto Sans KR", "Noto Sans SC";
-}
-
 #search-button {
     right: 5em;
 }
@@ -57,90 +31,6 @@ dot {
 .search-button {
     border: none!important;
     background: none!important;
-}
-
-.search-form {
-    position: relative;
-    padding: .5em 0;
-    border-bottom: solid 1px #E1E3E6;
-}
-
-.search-form .input-field,
-.stork-message {
-    font-size: 1em;
-    width: 100%;
-    height: 5rem;
-    margin: 0;
-    padding: 0 .5em;
-    border: 0;
-    background: transparent;
-    box-sizing: border-box;
-    box-shadow: none !important;
-    outline: 0 !important;
-}
-
-.stork-message {
-    font-family: "Fira Sans", Arial, sans-serif;
-    font-style: italic;
-    color: #787878;
-    font-size: 0.9em;
-    line-height: 2.5em;
-    border-bottom: solid 1px #E1E3E6;
-}
-
-.stork-results {
-    max-height: 50vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0em;
-}
-
-.stork-results .stork-title {
-    font-size: 175%;
-    line-height: 1.2em;
-    font-weight: 500;
-    padding: .5em 0;
-}
-
-.stork-result {
-    line-height: 1.5em;
-    font-size: 0.65em;
-    padding: 1.5em;
-    border-bottom: solid 1px #eee;
-}
-
-.stork-result:hover {
-    background-color: #eee;
-    transform: background-color ease-out 0.2s;
-}
-
-.stork-results p,
-.stork-results ul,
-.stork-results ol {
-    margin: 0;
-}
-
-.stork-results li::before {
-    display: none;
-}
-
-.stork-close-button,
-.stork-attribution {
-    display: none;
-}
-
-.search-close {
-    color: white;
-    font-size: 2em;
-    position: fixed;
-    right: 1em;
-    opacity: 0.6;
-}
-
-.search-close:hover {
-    color: white;
-    opacity: 0.8;
 }
 
 .links {

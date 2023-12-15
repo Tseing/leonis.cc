@@ -1334,8 +1334,10 @@ img {
 }
 
 #footer {
-    position: relative;
+    position: absolute;
     z-index: 20;
+    bottom: 0;
+    width: 100%;
     font-family: 'Fira Sans', Arial, sans-serif;
     line-height: 1em;
     padding-bottom: 2em
