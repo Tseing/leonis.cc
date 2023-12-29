@@ -1,6 +1,7 @@
 [input]
 html_selector = ".post-content"
 exclude_html_selector = "script, pre, .toc-nav, .math"
+minimum_index_ideographic_substring_length = 2
 base_directory = "output"
 
 [[input.files]]
@@ -384,4 +385,4 @@ url = "/sui-sui-nian/2022-07-12-pelican-to-publish.html"
 title = "使用 Pelican 发布文章的流程"
 
 [output]
-excerpts_per_result = 1
+excerpts_per_result = 0
