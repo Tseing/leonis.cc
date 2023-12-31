@@ -15,6 +15,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "zai-lu-shang/2023-12-31-2023-summary.html"
+url = "/zai-lu-shang/2023-12-31-2023-summary.html"
+title = "忙忙碌碌中匆匆过眼我的 2023 年"
+
+[[input.files]]
 path = "sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html"
 url = "/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html"
 title = "Cloudflare + Backblaze 实现免费的博客图床方案"
