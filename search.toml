@@ -15,6 +15,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "zai-lu-shang/2024-01-14-seal-record.html"
+url = "/zai-lu-shang/2024-01-14-seal-record.html"
+title = "为友治藏书印一方"
+
+[[input.files]]
 path = "zai-lu-shang/2023-12-31-2023-summary.html"
 url = "/zai-lu-shang/2023-12-31-2023-summary.html"
 title = "忙忙碌碌中匆匆过眼我的 2023 年"
