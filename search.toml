@@ -395,4 +395,4 @@ url = "/sui-sui-nian/2022-07-12-pelican-to-publish.html"
 title = "使用 Pelican 发布文章的流程"
 
 [output]
-excerpts_per_result = 0
+excerpts_per_result = 1
