@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -167,7 +165,7 @@
 <p><div class="lightgallery"><a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>打开 <a href="https://www.backblaze.com/" rel="noopener" target="_blank">Backblaze 官网</a>很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。</p>
 <p><div class="lightgallery"><a data-sub-html="Create Bucket" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Create Bucket" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。</p></div></p>
 <p>选择 <code>Create a Bucket</code>，在 Bucket Unique Name 一栏填入桶名称，桶名决定了源站的 URL，应尽可能复杂避免被他人猜测到。若源站 URL 泄露，绕过 Cloudflare 的直接访问就会产生额外流量了。其余项如下图保持默认即可：</p>
 <p><div class="lightgallery"><a data-sub-html="Bucket config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Bucket config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>创建完成后，选择 <code>Upload / Download</code> 尝试在桶中上传一张图片，查看图片的详细信息，其中 Friendly URL 一项就是生成的图片链接。</p>
@@ -215,7 +213,7 @@
 <p><div class="lightgallery"><a data-sub-html="Bucket cache" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Bucket cache" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>在 Cloudflare 中打开 <code>规则</code> - <code>页面规则</code>，新建一条页面规则，在 URL 一栏中填入 <code>img.leonis.cc/*</code>，按下图设置设置缓存和 HTTPS 即可。</p>
 <p><div class="lightgallery"><a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。</p></div></p>
 <p>再打开样例图片的链接，查看浏览器的开发者工具，在响应头中有一项 <code>cd-cache-status</code>，其值若为 <code>HIT</code>，则表示 Cloudflare 命中了缓存，该图片是由缓存中取出的。</p>
 <p><div class="lightgallery"><a data-sub-html="Cache response" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Cache response" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>至此关于 Backblaze + Cloudflare 的图床就设置完了，接下来还可以借助 PicGo 等第三方工具更方便地上传图片并获取图片链接，这部分内容可以根据章节标题向后文寻找。</p>
@@ -238,12 +236,12 @@
 <p>为了不影响正常使用，我使用的防盗链规则是<dot>允许无 Referer 与白名单站点访问</dot>。很棘手的是，Cloudflare 没有提供判断有无 Referer 的功能，所以我使用了比较曲折的方法实现该方案。</p>
 <p>首先新建一条防火墙规则，对于静态资源的 URL，阻止所有 Referer 中包含 <code>"http"</code> 的请求：</p>
 <p><div class="lightgallery"><a data-sub-html="WAF rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="WAF rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 <code>"http"</code> 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 <code>"http"</code> 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。</p></div></p>
 <p>再新建一条规则，这条规则用于根据 Referer 放行请求，作用等同于白名单，设置项如下：</p>
 <p><div class="lightgallery"><a data-sub-html="Whitelist" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Whitelist" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>设置生效后可以发现，先前的图片链接可以直接打开，却不能在其他网站上引用了。Cloudflare 阻止了白名单以外站点的引用请求，在防火墙事件中还可以查看阻止请求的来源 IP 等具体信息。</p>
 <p><div class="lightgallery"><a data-sub-html="Blocking" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Blocking" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;后来发现在 Cloudflare 控制台中的 <code>Scrape Shield</code> 页面中有一项 <strong>Hotlink 保护</strong>功能，一键即可开启防盗链，在 <code>Configuration Rules</code> 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;后来发现在 Cloudflare 控制台中的 <code>Scrape Shield</code> 页面中有一项 <strong>Hotlink 保护</strong>功能，一键即可开启防盗链，在 <code>Configuration Rules</code> 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。</p></div></p>
 <h2 id="picgo-she-zhi">PicGo 设置</h2>
 <p>若每次上传图片都要打开 Backblaze 网站终归还是很麻烦，好在 PicGo 能够让整个过程自动化。PicGo 还提供了丰富的插件，可以实现自定义文件路径、文件名哈希化等功能。</p>
 <p>设置 PicGo 作为 Backblaze 的图片上传工具，需要先打开 Backblaze Buckets 页面，在桶信息中记录下 <code>Endpoint</code> 的内容：</p>
@@ -350,9 +348,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -360,6 +358,8 @@
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

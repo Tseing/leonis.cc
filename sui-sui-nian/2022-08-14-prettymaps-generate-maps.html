@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -231,7 +229,7 @@ plt.savefig('macao.png')
 <h2 id="yuan-xing-mo-shi">圆形模式</h2>
 <p>与示例代码相同，只要将 <code>perimeter</code> 留空，默认的绘图模式就是圆形模式。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7539?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span>外滩  The Bund, Shanghai</p>
+<p class="intro"><span class='fa-stack fa-1x'><i class='fa-regular fa-map fa-stack-1x'></i><i class='fa-solid fa-location-dot fa-stack-1x'></i></span>外滩  The Bund, Shanghai</p>
 <h2 id="yuan-jiao-ju-xing-mo-shi">圆角矩形模式</h2>
 <p>圆角矩形模式下，需要新建一个变量 <code>dilate</code> 用于控制圆角半径，并在每一个图层的参数中添加 <code>'circle': False</code> 与 <code>'dilate': dilate</code> 就能生成圆角矩形地图。</p>
 <p>在各个图层中添加键值时要注意括号的嵌套，特别容易出错，可以复制以下代码修改。</p>
@@ -312,7 +310,7 @@ layers = plot(
 )
 </code></pre>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7540?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span>三坊七巷  Sanfang Qixiang, Fuzhou</p>
+<p class="intro"><span class='fa-stack fa-1x'><i class='fa-regular fa-map fa-stack-1x'></i><i class='fa-solid fa-location-dot fa-stack-1x'></i></span>三坊七巷  Sanfang Qixiang, Fuzhou</p>
 <h2 id="fang-xing-mo-shi">方形模式</h2>
 <p>欲使地图布满整个方形画面，需要使用 <code>matplotlib</code> 的命令，指定绘制出的 x 与 y 轴范围。只需要在圆角矩形的代码中末插入以下代码：</p>
 <pre><code class="language-py">xmin, ymin, xmax, ymax = layers['perimeter'].bounds
@@ -323,7 +321,7 @@ ax.set_ylim(ymin+a*dy, ymax-a*dy)
 </code></pre>
 <p>变量 <code>a</code> 表示裁去的四周比例。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7541?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span>闽江  Min River, Fuzhou</p>
+<p class="intro"><span class='fa-stack fa-1x'><i class='fa-regular fa-map fa-stack-1x'></i><i class='fa-solid fa-location-dot fa-stack-1x'></i></span>闽江  Min River, Fuzhou</p>
 <h2 id="jin-jie-cao-zuo">进阶操作</h2>
 <p>但不止如此，我想讨论一些进阶的操作。<code>layers</code> 参数指定了绘制的图层，在 <code>drawing_kwargs</code> 中可以指定图层的样式，由底至上常见以下几个图层：</p>
 <ul>
@@ -416,7 +414,7 @@ plt.savefig('pku.png')
 </code></pre>
 <p>由于 <code>prettymaps</code> 的封闭边界太过于靠近建筑，可以使用 <code>buffer()</code> 将边界向外扩张一部分，能获得更好的视觉效果。</p>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7542?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span>北京大学  Peking University, Beijing</p>
+<p class="intro"><span class='fa-stack fa-1x'><i class='fa-regular fa-map fa-stack-1x'></i><i class='fa-solid fa-location-dot fa-stack-1x'></i></span>北京大学  Peking University, Beijing</p>
 <p>调用相应的图层标签，还可以绘制铁路、地铁线路。以下代码调用了了铁路、地铁、站台并将这些元素各自组合为图层：</p>
 <pre><code class="language-py">'railway': {
     'custom_filter': '["railway"~"rail"]',
@@ -440,7 +438,7 @@ plt.savefig('pku.png')
 }
 </code></pre>
 <p><div class="lightgallery"><a data-sub-html="NoCaption" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="NoCaption" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7543?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><span class='fa-stack fa-1x'><i class='fa fa-map-o fa-stack-1x'></i><i class='fa fa-map-marker fa-stack-1x'></i></span>天津站  Tianjin Railway Station, Tianjin</p>
+<p class="intro"><span class='fa-stack fa-1x'><i class='fa-regular fa-map fa-stack-1x'></i><i class='fa-solid fa-location-dot fa-stack-1x'></i></span>天津站  Tianjin Railway Station, Tianjin</p>
 <h2 id="zi-ji-de-hua">自己的话</h2>
 <p>不得不说，<code>prettymaps</code> 是一款十分优秀的 Python 绘图包，它的操作十分简单，足以让我这样不了解 GIS 的用户迅速入门，绘制出十分惊艳的地图。但在实际使用中，<code>prettymaps</code> 还是存在着这样那样的问题，使得它的定位可能只能止步于一个发挥创意的工具，而不能成为一个合适的创作工具。</p>
 <p>譬如说，各种各样的用户因为各种各样的需求接触到 <code>prettymaps</code>，其中不乏有些用户想为某些场所、学校绘制导览地图，但 <code>prettymaps</code> 添加元素的方式不够灵活，这会让这些用户使用起来相当费劲。</p>
@@ -448,7 +446,7 @@ plt.savefig('pku.png')
 <p>这方面具体表现为大面积缺失建筑，绘制的地图上十分空旷；缺少海洋、海岸线数据，绘制近海区域时呈现为大片空白等等。</p>
 <p>OpenStreetMap 的封闭边界是非常亮眼的功能，在 <code>prettymaps</code> 中用字符描述地点就能绘制出行政区、建筑群等等。但从另一个方面考虑，OpenStreetMap 的封闭边界是由用户贡献的，所以在涉边境线、涉敏感地区时务必小心。</p>
 <p>总而言之，<code>prettymaps</code> 为我们提供了另一个视角，让我们俯瞰日常生活的这座城市，感受建筑布局的美。而 OpenStreetMap 可以说是一个伟大的项目，它借助所有人的力量去描绘我们所生活的这个世界的经纬，这个理念闪耀着国际主义与理想主义的光芒。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;悲报：OpenStreetMap 在国内已经被墙，所以 prettymaps 也就完全用不了了 😕
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;悲报：OpenStreetMap 在国内已经被墙，所以 prettymaps 也就完全用不了了 😕
 &mdash;&mdash;2023 年 03 月 07 日 志</p></div></p>
             </section>
 
@@ -534,9 +532,9 @@ plt.savefig('pku.png')
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -544,6 +542,8 @@ plt.savefig('pku.png')
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

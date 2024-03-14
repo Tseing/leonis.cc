@@ -158,7 +158,7 @@ button[title="表情包"] {
 }
 
 /* location icon */
-i.fa.fa-map-marker.fa-stack-1x {
+i.fa-solid.fa-location-dot.fa-stack-1x {
     bottom: 25%;
 }
 

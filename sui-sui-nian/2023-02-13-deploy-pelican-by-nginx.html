@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -168,7 +166,7 @@
 <p>上图是我的部署方案，首先使用 Pelican（或其他静态博客生成器）在本地生成静态网页，再将静态网页 push 到 GitHub 仓库，这两步也是在 GitHub Pages 上部署、更新博客的步骤，所以对我而言没有额外的负担。</p>
 <p>接着在服务器上 pull 静态网页，然后使用 Nginx 作为 HTTP 服务器就可以通过域名或是公网 IP 访问到网站了。虽然 Pelican 也自带有 HTTP 服务器，可以不使用 Nginx，但我觉得它的性能和通用性方面不够好，而且我主要在 PC 上写文章，在服务器上安装 Pelican 并在服务器上生成静态网页未免太繁琐。</p>
 <p>最后为了便于管理服务器上的文件和排查问题，可以使用 SFTP 直接上传和下载服务器文件。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;在境内服务器上部署网站必须经过 TCP 备案，否则会被拦截或是限流，引起非常多的麻烦。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;在境内服务器上部署网站必须经过 TCP 备案，否则会被拦截或是限流，引起非常多的麻烦。</p></div></p>
 <h2 id="pei-zhi-nginx">配置 Nginx</h2>
 <p>在 Debian 系统上可以使用以下命令安装 Nginx：</p>
 <pre><code class="language-bash"># Debian
@@ -214,8 +212,8 @@ git pull origin master
 <li>连接服务器，在相应目录下 pull GitHub 仓库中的更新。</li>
 </ol>
 <p>这样的流程比较繁琐，每次更新都需要连接到服务器上操作，要简化这样的流程并实现自动化部署就需要借助 webhook 的功能。简单来说，在 GitHub 仓库设置中开启 webhook，用户对仓库执行每个动作（这里为 push）后，仓库都会向目标服务器发送一段 JSON 报文（回调），那么服务器只需要一直运行着监听该报文的脚本，一旦收到 push 成功的报文就执行 pull 操作。这样就简化了工作流程，push 静态网页后，服务器上的内容也会自动更新。</p>
-<p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook" rel="noopener" target="_blank"><i class="fa fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html" rel="noopener" target="_blank">这篇文章</a>。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;旧版 webhook 存在一些令人困恼的 bug，例如无法读取相对路径，请使用最新版本。</p></div></p>
+<p>webhook 脚本可以使用不同语言实现，例如 PHP、JavaScript 和 Python 等等。但是考虑了服务器的性能，我不打算在服务器上配置过于重的环境。于是我选择了基于 Go 语言的 <a href="https://github.com/adnanh/webhook" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> adnanh/webhook</a>，十分轻量，配置的方法也很简单，可以参考<a href="https://www.cnblogs.com/pingyeaa/p/12777626.html" rel="noopener" target="_blank">这篇文章</a>。</p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;旧版 webhook 存在一些令人困恼的 bug，例如无法读取相对路径，请使用最新版本。</p></div></p>
 <h2 id="guan-bi-github-pages">关闭 GitHub Pages</h2>
 <p>在一切部署工作都完成之后，也是时候和 GitHub Pages 说再见了。避免搜索引擎抓取数据时出现大量重复网页，所以就关闭原来 GitHub Pages 上的博客吧。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8516?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
@@ -313,9 +311,9 @@ git pull origin master
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -323,6 +321,8 @@ git pull origin master
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

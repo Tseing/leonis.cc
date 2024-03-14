@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -203,7 +201,7 @@
 <div class="math">$$E_P(f)=\sum_{x,y}\tilde{P}(x)P(y|x)f(x,y)$$</div>
 <p>若模型准确，二者理应相等，即</p>
 <div class="math">$$E_{\tilde{P}}(f)=E_P(f)$$</div>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;回忆条件概率基本公式 <span class="math">\(P(x,y)=P(y|x)P(x)\)</span>。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;回忆条件概率基本公式 <span class="math">\(P(x,y)=P(y|x)P(x)\)</span>。</p></div></p>
 <p>满足所有约束条件的模型构成的集合为</p>
 <div class="math">$$\mathcal{C}\equiv \{P\in\mathcal{P}|E_P(f_i)=E_{\tilde{P}}(f_i)\}$$</div>
 <p>在条件概率分布 <span class="math">\(P(Y|X)\)</span> 上的条件熵为</p>
@@ -220,7 +218,7 @@
     &amp;=\sum_i[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i)]
 \end{align}$$</div>
 <p>那么求 <span class="math">\(L(w)\)</span> 的极大值，就能得到估计值 <span class="math">\(\hat{w}\)</span>，得到回归模型。也就是说，求解逻辑斯谛回归模型就是对于对数似然函数的最优化问题。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;似然函数定义为 <span class="math">\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)</span>，即抽样结果中各概率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是<dot>最大似然估计</dot>的原理。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;似然函数定义为 <span class="math">\(L(p)=\prod_i p^{x_i}(1-p)^{1-x_i}\)</span>，即抽样结果中各概率之积。由于每次抽样独立同分布的前提，可以认为似然函数为抽样结果（该事件）发生的概率。因为已经得到了该抽样结果，该事件发生的概率理应为 1，所以就要使似然函数最大化，这就是<dot>最大似然估计</dot>的原理。</p></div></p>
 <h3 id="yan-yi-la-ge-lang-ri-han-shu">广义拉格朗日函数</h3>
 <p>最大熵模型中使用了拉格朗日乘数法，因此有必要先介绍一下广义拉格朗日函数。回忆一下高等数学中的拉格朗日函数，若函数 <span class="math">\(z=f(x,y)\)</span> 有约束条件 <span class="math">\(\varphi(x,y)=0\)</span>，那么拉格朗日函数就为</p>
 <div class="math">$$L(x,y)=f(x,y)+\lambda\varphi(x,y)$$</div>
@@ -316,7 +314,7 @@
 \end{align}$$</div>
 <p>将其中的 <span class="math">\(\nabla^2f(x^{(k)})^{-1}\)</span> 记作 <span class="math">\(H^{-1}_k\)</span>，是黑塞矩阵的逆，将 <span class="math">\(\nabla f(x^{(k)})\)</span> 记作 <span class="math">\(g_k\)</span>。令 <span class="math">\(p_k=-H^{-1}_kg_k\)</span>，称为牛顿方向，那么每次迭代的过程就是</p>
 <div class="math">$$x^{(k+1)}=x^{k}+p_k$$</div>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;这里的泰勒展开为矩阵形式，因此式中带有转置与逆等符号，若对求导过程有疑惑，可以参考<a href="https://zhuanlan.zhihu.com/p/382683133" rel="noopener" target="_blank">泰勒展开的矩阵形式</a>。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;这里的泰勒展开为矩阵形式，因此式中带有转置与逆等符号，若对求导过程有疑惑，可以参考<a href="https://zhuanlan.zhihu.com/p/382683133" rel="noopener" target="_blank">泰勒展开的矩阵形式</a>。</p></div></p>
 <h4>拟牛顿法</h4>
 <p>考虑以上推导过程中得到的</p>
 <div class="math">$$\begin{align}
@@ -344,7 +342,7 @@
 \end{align}$$</div>
 <p>那么就可以得到迭代公式：</p>
 <div class="math">$$B_{k+1}=B_k+\frac{y_ky^\mathrm{T}_k}{y^\mathrm{T}_k\delta_k}-\frac{B_k\delta_k\delta^\mathrm{T}_kB_k}{\delta^\mathrm{T}_kB_k\delta_k}$$</div>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;式中有许多 <span class="math">\(y_ky^\mathrm{T}_k\)</span> 类型结构，这是为了将向量转化为方阵，才有逆运算，否则向量不具有除法运算。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;式中有许多 <span class="math">\(y_ky^\mathrm{T}_k\)</span> 类型结构，这是为了将向量转化为方阵，才有逆运算，否则向量不具有除法运算。</p></div></p>
 <p><strong>算法 6.2（最大熵模型的 BFGS 算法）</strong></p>
 <blockquote>
 <p>输入：特征函数 <span class="math">\(f_i\)</span>；经验分布 <span class="math">\(\tilde{P}(x,y)\)</span>；目标函数 <span class="math">\(f(w)=-L(w)\)</span>，梯度 <span class="math">\(g(w)=\nabla f(w)\)</span>，精度 <span class="math">\(\varepsilon\)</span>；<br/>
@@ -513,9 +511,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -523,6 +521,8 @@
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -168,7 +166,7 @@
 <p>错不了，就要像这样把图书封面、出版社还有 ISBN 等等全部展示出来，才能让人满意。但是一个个截图也太麻烦了，而且信息没法更新，将这些信息都嵌入在网页中才是最好的实现方式。比较流行的博客框架例如 Hexo 和 WordPress 都有实现类似功能的插件，而我使用的是比较小众的 Pelican，只好自己动手了。</p>
 <h2 id="mu-biao">目标</h2>
 <p>我在博客上写作的流程是 <code>撰写 Markdown</code> ⇨ <code>使用 Pelican 生成 HTML</code>，为了实现在文章中插入豆瓣图书，比较方便的方法是在 Markdown 写作时，在需要插入图书的地方写下 <code>{GET BOOK URL}</code>，其中 <code>BOOK</code> 填写书籍名称，<code>URL</code> 填写书籍链接。当 URL 无效时，保留这条指令，避免遗失原来的信息；当从 URL 成功获取了图书元数据后，就将该条命令转换为 HTML 格式的图书信息，就顺利插入文章中了。</p>
-<p>本文介绍的代码可以在 <a href="https://github.com/Tseing/pelican-bookshelf" rel="noopener" target="_blank"><i class="fa fa-github"></i> Tseing/pelican-bookshelf</a>  上找到。</p>
+<p>本文介绍的代码可以在 <a href="https://github.com/Tseing/pelican-bookshelf" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> Tseing/pelican-bookshelf</a>  上找到。</p>
 <h2 id="pelican-mo-kuai">Pelican 模块</h2>
 <p>先从 Pelican 插件的原理讲起，Pelican 插件使用了信号机制，所谓信号机制就是在工作流程中，完成特定任务后就会给出特定信号，可以使用这种信号触发插件，完成正常工作流程以外额外的工作。那么在正式写插件之前，还需要了解一下 Pelican 的正常工作模块，具体可以分为以下 3 种：</p>
 <ol>
@@ -394,9 +392,9 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -404,6 +402,8 @@ regex = f'//text()[preceding-sibling::span[1][contains(text(),"{tag}")]][followi
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

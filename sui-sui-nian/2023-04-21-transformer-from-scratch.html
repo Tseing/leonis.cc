@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -276,9 +274,9 @@ $$</div>
 <p>这里的 <span class="math">\(\boldsymbol{X}\)</span> 分作两路进入到 decoder 中，在 decoder 的该多头注意力层中，query 与 key 为 <span class="math">\(\boldsymbol{X}\)</span>，而 value 为类似步骤得到的 <span class="math">\(\boldsymbol{Y}\)</span>，该层的输出为</p>
 <div class="math">$$\boldsymbol{Z}=\mathrm{Attention}(\boldsymbol{X},\boldsymbol{X},\boldsymbol{Y})$$</div>
 <p>这也是 decoder 与 encoder 的关键不同。输出结果 <span class="math">\(\boldsymbol{Z}\)</span> 完成后续的计算过程后，就得到各 token 的概率，用各 token 替换即可得到模型输出的文本结果。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;有兴趣的读者不妨根据各矩阵的形状尝试计算一下各个变量的维度在 Transformer 在各步骤中是如何变化的，一定会对 Transformer 的计算过程收获更深的了解。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;有兴趣的读者不妨根据各矩阵的形状尝试计算一下各个变量的维度在 Transformer 在各步骤中是如何变化的，一定会对 Transformer 的计算过程收获更深的了解。</p></div></p>
 <h2 id="dai-ma-chai-jie_1">代码拆解</h2>
-<p>有了对 Transformer 原理的基本认识，就可以动手实现一个 Transformer 了，通过代码更深入了解 Transformer 的一些细节。这里使用 PyTorch 搭建一个标准的 Transformer，参考代码见 <a href="https://github.com/aladdinpersson/Machine-Learning-Collection/blob/master/ML/Pytorch/more_advanced/transformer_from_scratch/transformer_from_scratch.py" rel="noopener" target="_blank"><i class="fa fa-github"></i> aladdinpersson / Machine-Learning-Collection </a>。</p>
+<p>有了对 Transformer 原理的基本认识，就可以动手实现一个 Transformer 了，通过代码更深入了解 Transformer 的一些细节。这里使用 PyTorch 搭建一个标准的 Transformer，参考代码见 <a href="https://github.com/aladdinpersson/Machine-Learning-Collection/blob/master/ML/Pytorch/more_advanced/transformer_from_scratch/transformer_from_scratch.py" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> aladdinpersson / Machine-Learning-Collection </a>。</p>
 <p>代码中的各模块如下图所示，接下来对各模块逐个拆解。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8825?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8825?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <h3 id="positionembedding">PositionEmbedding</h3>
@@ -368,7 +366,7 @@ $$</div>
 <p><code>values</code>、<code>keys</code>、<code>queries</code> 都是计算多头注意力前的线性变换，<code>fc_out</code> 是拼接多头注意力后的线性变换。线性变换可以直接调用 <code>nn.Linear(in_dim, out_dim)</code>，只需要指定线性变换前后的维数即可，这里线性变换前后维数没有变化。</p>
 <p>可能会有读者疑惑为什么这里所设定的线性变换不改变维数，原文中所描述的步骤不是应该将 <span class="math">\(d_\mathrm{model}\)</span> 升至 <span class="math">\(d_v\)</span> 再计算注意力吗？这是正确的，原文中的计算流程确实如此。如下图所示，在线性变换后复制 <code>h</code> 份（例中为 2） <span class="math">\(\boldsymbol{Q}\)</span>，用若干份 <span class="math">\(\boldsymbol{Q}\)</span> 分别计算注意力再拼合起来，得到注意力的维数自然就是 <code>h * d_v</code> （例中为 2 * 6），再用一个线性变换将其转化回模型所处理的维数 <code>d_model</code>（例中为 5）。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8812?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8812?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p>但代码中优化了一部分比较繁琐的操作，也有其他版本的代码使用了更接近原文的实现方式，如  <a href="https://github.com/jadore801120/attention-is-all-you-need-pytorch/blob/master/transformer/SubLayers.py" rel="noopener" target="_blank"><i class="fa fa-github"></i> jadore801120 / attention-is-all-you-need-pytorch </a>，流程就如下图所示，勉强称之为「单头注意力变多头注意力」的一种代码实现吧。</p>
+<p>但代码中优化了一部分比较繁琐的操作，也有其他版本的代码使用了更接近原文的实现方式，如  <a href="https://github.com/jadore801120/attention-is-all-you-need-pytorch/blob/master/transformer/SubLayers.py" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> jadore801120 / attention-is-all-you-need-pytorch </a>，流程就如下图所示，勉强称之为「单头注意力变多头注意力」的一种代码实现吧。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8814?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8814?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>例中 <code>d_model</code> 也就是词嵌入的维数还是 5，<code>heads</code> 仍为 2，<code>d_value</code> 仍为 6，但模型不再是将 <span class="math">\(d_\mathrm{model}\)</span> 升至 <span class="math">\(d_v\)</span>，而是将 <span class="math">\(d_\mathrm{model}\)</span> 直接升至 <span class="math">\(hd_v\)</span>，然后将 <span class="math">\(\boldsymbol{Q}\)</span> 分成 <code>h</code> 份，每份分别用于计算并拼接为注意力。与上例相比，本质上其实并无区别，区别仅仅是上例先复制多个矩阵再分别做线性变换，而该例只使用了一个更大的矩阵乘法就完成了上述操作，效率上更优。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8815?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8815?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
@@ -969,9 +967,9 @@ tensor([[0, 6, 3, 4, 5, 7, 6, 4, 3, 1]])
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -979,6 +977,8 @@ tensor([[0, 6, 3, 4, 5, 7, 6, 4, 3, 1]])
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

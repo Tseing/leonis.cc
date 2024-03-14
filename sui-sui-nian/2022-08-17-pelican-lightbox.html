@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -196,7 +194,7 @@
 <li><code>dist/fonts/lg.*</code>&emsp;&rarr;&emsp;<code>themes/{theme_name}/font/</code></li>
 <li><code>dist/img/loading.gif</code>&emsp;&rarr;&emsp;<code>themes/{theme_name}/images/</code></li>
 </ul>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;由于文件目录结构不同，需要将 <code>lightgallery.min.css</code> 中的字体、图片路径修改为相应路径。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;由于文件目录结构不同，需要将 <code>lightgallery.min.css</code> 中的字体、图片路径修改为相应路径。</p></div></p>
 <p>修改 <code>themes/{theme_name}/templates/base.html</code>，在其中添加以下代码</p>
 <pre><code class="language-html">&lt;!-- 引入.css与.js文件--&gt;
 &lt;link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/lightgallery.min.css" type="text/css" rel="stylesheet" /&gt;
@@ -227,11 +225,11 @@
 <pre><code class="language-javascript">if (subHtml === '' || subHtml === 'NoCaption')
 </code></pre>
 <p>这时只要是标题设置为 <code>"NoCaption"</code> 的图片就不会显示下方信息栏，Pelican 也不会因为缺少标题而给出警告。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;<code>lightgallery.min.js</code> 经过压缩，体积较小，加载速度更快，但代码可读性较差，不便于修改，可以先修改 <code>lightgallery.js</code> 再压缩为 <code>lightgallery.min.js</code>。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;<code>lightgallery.min.js</code> 经过压缩，体积较小，加载速度更快，但代码可读性较差，不便于修改，可以先修改 <code>lightgallery.js</code> 再压缩为 <code>lightgallery.min.js</code>。</p></div></p>
 <h2 id="demo">Demo 🥳</h2>
 <p><div class="lightgallery"><a data-sub-html="demo" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="demo" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7545?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
-<p class="intro"><i class="fa fa-camera"></i> 135 mm&emsp;f/5.6&emsp;1/125&emsp;ISO-800&emsp;Photo by Leo</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 17 日，请确定内容是否过时。</p></div></p>
+<p class="intro"><i class="fa-solid fa-camera"></i> 135 mm&emsp;f/5.6&emsp;1/125&emsp;ISO-800&emsp;Photo by Leo</p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;本文最后更新于 2022 年 08 月 17 日，请确定内容是否过时。</p></div></p>
             </section>
 
             <section class="post-info">
@@ -316,9 +314,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -326,6 +324,8 @@
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

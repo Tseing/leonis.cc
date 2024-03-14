@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -161,7 +159,7 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank">doi.org/10.1007/978-3-031-29119-7_6</a></p>
+                <p><i class="fa-solid fa-arrow-up-right-from-square"></i> <a href="https://doi.org/10.1007/978-3-031-29119-7_6" rel="noopener" target="_blank">doi.org/10.1007/978-3-031-29119-7_6</a></p>
 <p>本文介绍于 2023 年 西北工业大学发表在 RECOMB 2023 上的一篇文章，文章原标题为 MTGL-ADMET: A Novel Multi-task Graph Learning Framework for ADMET Prediction Enhanced by Status-Theory and Maximum Flow，文章通过地位理论与最大流构造了由主要任务与辅助任务构成的多任务模型，相比单任务模型在预测准确性上有很大提高。</p>
 <p>对于 ADMET 多种性质的预测，一般的方法是单任务学习，也就是一个模型只完成一种任务（预测一种性质），这种方法不仅繁琐，而且在缺少真实数据的情况下效果不佳。近年来出现的一种新范式是先通过预训练得到分子的通用表示，再将其用于多任务学习，使用一个模型完成所有预测任务，预训练的步骤弥补了缺少真实数据的问题。</p>
 <p>文章认为，现有基于多任务的 ADMET 模型都是通过一个模型完成所有预测任务，这样的共同学习很难保证模型能够共同学习到多种性质的信息，导致效果甚至不如单任务学习。文章设想以一个任务为主要任务，多个其他任务作为辅助任务，并通过地位理论找到最佳的任务搭配，改善模型效果。</p>
@@ -338,9 +336,9 @@ $$</div>
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -348,6 +346,8 @@ $$</div>
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -223,7 +221,7 @@ RUN mkdir -p /var/run/sshd
 # 将 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf 命令作为容器启动的入口，即让 supervisor 启动 SSH
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 </code></pre>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;在 Ubuntu 系统下，使用 <code>/usr/sbin/sshd -D</code> 命令启动 SSH 服务会出现错误，提示找不到文件夹 <code>Missing privilege separation directory: /var/run/sshd</code>，我检索到的解决方法是用 <code>mkdir -p /var/run/sshd</code> 创建该文件夹，所以在 Dockerfile 中加上了这行命令。我不确定其他系统是否有这个错误，文末附上了关于这个错误的两个链接。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;在 Ubuntu 系统下，使用 <code>/usr/sbin/sshd -D</code> 命令启动 SSH 服务会出现错误，提示找不到文件夹 <code>Missing privilege separation directory: /var/run/sshd</code>，我检索到的解决方法是用 <code>mkdir -p /var/run/sshd</code> 创建该文件夹，所以在 Dockerfile 中加上了这行命令。我不确定其他系统是否有这个错误，文末附上了关于这个错误的两个链接。</p></div></p>
 <p>用终端进入 Dockerfile 所在文件夹，用下列命令构建镜像：</p>
 <pre><code class="language-sh">$ docker build -t ms:200a-cu116 .
 </code></pre>
@@ -253,7 +251,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 <p>确保容器一切正常后，打开 Gateway，选择 <code>New Connection</code>，输入用户名、IP 地址和端口号，选择 <code>Check Connection and Continue</code>，Gateway 使用 SHH 成功连接后就可以选择需要的 IDE。</p>
 <p><div class="lightgallery"><a data-sub-html="选择 IDE" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="选择 IDE" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>不知道为什么 Linux 上可选择的 IDE 这么少，好在可以通过从官网手动下载安装包的方式安装。例如<a href="https://www.jetbrains.com/pycharm/download/?section=linux" rel="noopener" target="_blank">下载 Pycharm</a> 的安装包后，选择 <code>Installation options</code> - <code>Upload installer file</code>，Gateway 就会在远端（容器中）安装指定的 IDE。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;目前 Gateway 的远端只支持 Linux 系统，所以下载的 IDE 安装包也应为 Linux 版本，这与上文构建的 Linux 镜像匹配。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;目前 Gateway 的远端只支持 Linux 系统，所以下载的 IDE 安装包也应为 Linux 版本，这与上文构建的 Linux 镜像匹配。</p></div></p>
 <p><div class="lightgallery"><a data-sub-html="解释器" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9931?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="解释器" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9931?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>进入 IDE 后需要选择 Python 解释器，注意此时 Gateway 已经连接到容器，local 指的也是容器内，所以要选择的解释器正是本地解释器。Gateway 检测到的 Python 路径可能不正确，需要额外确认一下。在 Docker 中一般直接使用系统的 Python，不需要使用 Anaconda 一类的虚拟环境，可以通过以下命设查找系统 Python 路径：</p>
 <pre><code class="language-sh">$ which python
@@ -372,9 +370,9 @@ $ docker rm {容器名称或 ID}
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -382,6 +380,8 @@ $ docker rm {容器名称或 ID}
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

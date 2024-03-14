@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -166,7 +164,7 @@
 <p>OpenNMT 的中文学习资料较少，于是我只能参考<a href="https://opennmt.net/OpenNMT-py/main.html" rel="noopener" target="_blank">官方文档</a>学习。在这篇笔记中，我会把文档中的模型都试验一遍（希望别🕊️），记录下整个过程或许能帮助到需要的人。</p>
 <h2 id="zhun-bei-gong-zuo">准备工作</h2>
 <p>首先介绍一下我的运行环境，我的设备搭载一块 <code>GTX 1080</code> GPU，系统为 <code>Ubuntu 20.04</code>，需要提前在设备上安装好 CUDA，我使用 Anaconda 配置 Python 环境。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;OpenNMT 不支持过旧的 GPU，之前在 <code>GTX 970</code> 的设备上就无法训练模型，这个问题可能除了换设备无解😭</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;OpenNMT 不支持过旧的 GPU，之前在 <code>GTX 970</code> 的设备上就无法训练模型，这个问题可能除了换设备无解😭</p></div></p>
 <h2 id="kuai-su-shang-shou">快速上手</h2>
 <h3 id="an-zhuang-opennmt">安装 OpenNMT</h3>
 <p>OpenNMT 有 PyTorch 与 TensorFlow 两个版本，PyTorch 在环境搭建上方便很多，所以我选择 PyTorch 版本。先创建虚拟环境，再直接通过 <code>pip</code> 安装 OpenNMT-py，Python 版本为 <code>3.9</code>，OpenNMT-py 为 <code>3.0.2</code>。</p>
@@ -177,7 +175,7 @@ conda activate nlp
 # 安装 OpenNMT
 pip install OpenNMT-py==3.0.2
 </code></pre>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 <code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}</code>，将其中的 <code>{some-package}</code> 替换为需要安装的包名称。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;国内直连 PyPI 的速度可能很慢，可以使用清华源，命令为 <code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {some-package}</code>，将其中的 <code>{some-package}</code> 替换为需要安装的包名称。</p></div></p>
 <p>直接安装 <code>OpenNMT-py</code> 很有可能会有问题，主要原因是 Pytorch 与 CUDA 版本不匹配。可以用 <code>nvcc -V</code> 查询 CUDA 版本，再在 <a href="https://pytorch.org/get-started/previous-versions/" rel="noopener" target="_blank">Pytorch 官网</a>找到相应的版本。例如我的 CUDA 版本为 <code>11.4</code>，那么就需要重新安装以下版本的包解决依赖问题：</p>
 <pre><code class="language-sh">pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
 </code></pre>
@@ -189,12 +187,12 @@ pip install OpenNMT-py==3.0.2
 <li><code>src-val.txt</code></li>
 <li><code>tgt-val.txt</code></li>
 </ul>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;可以想象到，如果处理的是英语、法语等以空格分隔单词的语言，只需要将文本数据处理为每行一句话的格式即可。但对于汉语、日语等不以特殊标记分隔词语的语言，数据需要经过额外的分词步骤后才可以使用。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;可以想象到，如果处理的是英语、法语等以空格分隔单词的语言，只需要将文本数据处理为每行一句话的格式即可。但对于汉语、日语等不以特殊标记分隔词语的语言，数据需要经过额外的分词步骤后才可以使用。</p></div></p>
 <p>官方提供了英语-德语的数据文件，可以直接下载：</p>
 <pre><code class="language-sh">wget https://s3.amazonaws.com/opennmt-trainingdata/toy-ende.tar.gz
 tar xf toy-ende.tar.gz
 </code></pre>
-<p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data" rel="noopener" target="_blank"><i class="fa fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
+<p>也可以到 <a href="https://github.com/OpenNMT/OpenNMT-py/tree/master/data" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> OpenNMT-py/data/</a> 在线查看数据长什么样子。</p>
 <p>接着通过 <code>vim toy_en_de.yaml</code> 在目录下创建 <code>.yaml</code> 配置文件，内容为</p>
 <pre><code class="language-yaml"># toy_en_de.yaml
 
@@ -230,7 +228,7 @@ data:
 <pre><code class="language-sh">onmt_build_vocab -config toy_en_de.yaml -n_sample 10000
 </code></pre>
 <p>其中 <code>n_sample</code> 设定了从语料中获取多少行的数据用于构建词库。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;若使用虚拟环境，需要进入虚拟环境后才能运行上述命令，若使用 Anaconda，也需要先激活环境。Pytorch 与 CUDA 版本不匹配会导致 <code>undefined symbol: cublasLtGetStatusString, version libcublasLt.so</code> 错误。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;若使用虚拟环境，需要进入虚拟环境后才能运行上述命令，若使用 Anaconda，也需要先激活环境。Pytorch 与 CUDA 版本不匹配会导致 <code>undefined symbol: cublasLtGetStatusString, version libcublasLt.so</code> 错误。</p></div></p>
 <h3 id="xun-lian-mo-xing">训练模型</h3>
 <p>训练模型也十分简单，在 <code>.yaml</code> 文件中追加以下内容：</p>
 <pre><code class="language-yaml"># Vocabulary files that were just created
@@ -269,9 +267,9 @@ Die &lt;unk&gt; der &lt;unk&gt; der &lt;unk&gt; , die die &lt;unk&gt; der &lt;un
 </code></pre>
 <p>由于训练时间很短，数据集很小，预测结果不会好，再加上不认识德语，也无法判断结果的优劣，所以接下来尝试在更大的中文语料上进行翻译任务。</p>
 <h2 id="wen-yan-fan-yi_1">文言翻译</h2>
-<p>B 站上有一个展示 OpenNMT 的<a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651" rel="noopener" target="_blank">视频</a>，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 <a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb" rel="noopener" target="_blank">GitHub</a> 上，可以和本文相互参照，本文中的代码也可以在 <a href="https://github.com/Tseing/OpenNMT-wenyan" rel="noopener" target="_blank"><i class="fa fa-github"></i> Tseing/OpenNMT-wenyan </a> 找到。</p>
+<p>B 站上有一个展示 OpenNMT 的<a href="https://www.bilibili.com/video/BV1NL4y1t73c/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a5a1b5dd5c760997f9e16b7806d64651" rel="noopener" target="_blank">视频</a>，实在很不错。视频中展示的翻译任务是将白话译为文言，不仅直观而且十分有趣，我觉得特别适合用来入门，作者的代码也公开在 <a href="https://github.com/qhduan/notebook_gist/blob/master/%E7%BF%BB%E8%AF%91%E5%8F%A4%E6%96%87.ipynb" rel="noopener" target="_blank">GitHub</a> 上，可以和本文相互参照，本文中的代码也可以在 <a href="https://github.com/Tseing/OpenNMT-wenyan" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> Tseing/OpenNMT-wenyan </a> 找到。</p>
 <h3 id="zhun-bei-shu-ju_1">准备数据</h3>
-<p>白话文与文言文的平行语料来自于 <a href="https://github.com/NiuTrans/Classical-Modern" rel="noopener" target="_blank"><i class="fa fa-github"></i> NiuTrans/Classical-Modern</a>，包含了大量内容：</p>
+<p>白话文与文言文的平行语料来自于 <a href="https://github.com/NiuTrans/Classical-Modern" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> NiuTrans/Classical-Modern</a>，包含了大量内容：</p>
 <pre><code class="language-txt"># Classical-Modern/source/
 元史  北齐书  南齐书  后汉书  太平广记  宋史    新五代史  旧五代史  明史  梁书      汉书              辽史  陈书  魏书
 北史  南史    史记    周书    宋书      徐霞客  新唐书    旧唐书    晋书  水经注全  短篇章和资治通鉴  金史  隋书
@@ -354,7 +352,7 @@ sep_model.cut_f('dataset/target_raw.txt', 'dataset/source.txt')
 <li>使用 <code>thulac</code> 首先要加载分词模型，<code>seg_only</code> 指定只分词，不输出词性</li>
 <li><code>cut_f(input, output)</code> 用于对文件 <code>input</code> 分词，并将结果保存到 <code>output</code></li>
 </ul>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;使用 thulac 处理文件时一般会输出 <code>UnicodeDecodeError</code> 错误，主要是读取文件时的编码错误，是 thulac 本身的一个 bug，请看下文的解决方法<del>（也可能官方修好了）</del>。</p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;使用 thulac 处理文件时一般会输出 <code>UnicodeDecodeError</code> 错误，主要是读取文件时的编码错误，是 thulac 本身的一个 bug，请看下文的解决方法<del>（也可能官方修好了）</del>。</p>
 <p>找到错误信息中的 <code>site-packages\thulac\__init__.py</code> 文件，第 187 行与第 188 行的代码为</p>
 <pre><code class="language-py">input_f = open(input_file, 'r')
 output_f = open(output_file, 'w')
@@ -480,7 +478,7 @@ else:
 <p>ACC 和 PPL 是自然语言处理中常用的指标，当然还有更好用的 BELU 等指标。可以看出训练过程收敛得非常快，PPL 迅速下降，ACC 也在第 20 个模型后保持稳定了，检查一下日志文件发现果然在第 23 个模型后学习率变成 0 了。这就说明不需要指定那么多的训练步骤，降低到 300000 可能是比较合适的。</p>
 <h3 id="mo-xing-yu-ce_1">模型预测</h3>
 <p>那么就选最后一个模型作为最终用于预测的模型，将其他模型全部删除。</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;可以在 <code>.yaml</code> 文件中通过参数 <code>keep_checkpoint</code> 指定需要保存的模型数量，在训练过程中会自动删去多余的模型，节省存储空间。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;可以在 <code>.yaml</code> 文件中通过参数 <code>keep_checkpoint</code> 指定需要保存的模型数量，在训练过程中会自动删去多余的模型，节省存储空间。</p></div></p>
 <p>在目录中新建一个文本 <code>input.txt</code>，写入需要翻译的语句，每行一句话：</p>
 <pre><code class="language-txt">这样的事情是很难令人相信的。
 传说西北方有一座海岛，居住着神仙，留下这部书。
@@ -489,7 +487,7 @@ else:
 命令大臣在几十年里翻遍了所有的藏书。
 最后确定封面上写着《算法：C语言实现》。
 </code></pre>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;每句话以换行（<code>\n</code>）分隔，注意最后一行不能有空行，否则会报错。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;每句话以换行（<code>\n</code>）分隔，注意最后一行不能有空行，否则会报错。</p></div></p>
 <p>接着需要对输入文本分词，同样使用 <code>thulac</code>，新建一个 <code>input_sep.py</code>：</p>
 <pre><code class="language-py">import thulac
 
@@ -598,9 +596,9 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -608,6 +606,8 @@ sep_model.cut_f('input.txt', 'input_sep.txt')
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

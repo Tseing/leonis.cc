@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -161,7 +159,7 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1038/s42256-023-00639-z" rel="noopener" target="_blank">doi.org/10.1038/s42256-023-00639-z</a></p>
+                <p><i class="fa-solid fa-arrow-up-right-from-square"></i> <a href="https://doi.org/10.1038/s42256-023-00639-z" rel="noopener" target="_blank">doi.org/10.1038/s42256-023-00639-z</a></p>
 <p>本文介绍于 2023 年 IBM 研究团队发表在 <em>Nature Machine Intelligence</em> 上的一篇文章，文章原标题为 Regression Transformer enables concurrent sequence regression and generation for molecular language modelling，文章提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务的 Transformer 模型。</p>
 <p>基于 Transformer 的模型是化学任务中常用的模型，但由于 Transformer 最早是用于自然语言处理的模型，难以处理回归任务，这些模型只能完成性质预测或条件分子生成，无法同时完成指定结构的生成和性质预测。若要实现有约束的分子生成，即根据指定的性质生成分子，则不得不通过在多个模型间传递参数再得到反馈的方法不断调节并得到目标的分子，如下图中 <strong>a</strong> 所示。</p>
 <p>文章尝试将回归任务融入到文本序列建模的过程中，提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务模型，称为 回归 Transformer（Regression Transformer, RT）。在实验部分，文章使用化学领域中常见的分子生成、性质预测、化学反应预测、生物领域中蛋白质性质预测以及自然语言处理中的文本生成等多种任务测试了模型效果，证明 RT 是一种可以通用于多种任务且可以同时完成序列回归和生成的模型。</p>
@@ -349,9 +347,9 @@ $$</div>
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -359,6 +357,8 @@ $$</div>
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

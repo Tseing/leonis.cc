@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -248,7 +246,7 @@
 </code></pre>
 <p>查询一下 IP 的归属就能知道，去程数据先往北京，走寻常不过的 <code>221.183.*.*</code> 的 AS9808 路由再跨过大洋。</p>
 <p>在服务器端可以查看回程线路，使用 mtr 命令向本地 IP 传递数据：</p>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;有的服务器厂商可能没有在 OS 里预装 mtr 工具，可以通过 <code>apt-get install mtr-tiny</code> 安装。</p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;有的服务器厂商可能没有在 OS 里预装 mtr 工具，可以通过 <code>apt-get install mtr-tiny</code> 安装。</p></div></p>
 <pre><code class="language-shell"># mtr 1.1.1.1 -r
 HOST: cc.server                   Loss%   Snt   Last   Avg  Best  Wrst StDev
   1.|-- undefined.hostname.localh  0.0%    10    9.1   5.3   0.7  15.1   6.1
@@ -265,7 +263,7 @@ HOST: cc.server                   Loss%   Snt   Last   Avg  Best  Wrst StDev
  12.|-- ???                       100.0    10    0.0   0.0   0.0   0.0   0.0
 </code></pre>
 <p>线路中的路由主要是 <code>202.97.*.*</code>，也就是传统的 163 骨干网。据说在网络较空闲时，该款服务器线路会动态切换为 CN2，我对此也不是很在意就是了。</p>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;测试结果中的路由 IP 地址会暴露设备所处的地理位置，在社交平台上公开前务必三思。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;测试结果中的路由 IP 地址会暴露设备所处的地理位置，在社交平台上公开前务必三思。</p></div></p>
 <h2 id="chuang-jian-xin-yong-hu_1">创建新用户</h2>
 <p>在购买服务器后，除了服务器 IP 地址外，供应商还会提供 root 用户的密码，用户可以通过 SSH 连接服务器。但 root 用户的权限太高，误操作容易造成不可逆的结果。在 Linux 的使用中，不论是服务器还是本地 PC，通常都是新建普通用户供日常使用，在权限不足时通过 <code>sudo</code> 命令提权，完成操作后自动「尽早」地退出 root 模式。</p>
 <p>首先是使用 <code>adduser 用户名</code> 新建用户，创建用户的过程中会提示设定并确认密码，按提示输入即可：</p>
@@ -343,7 +341,7 @@ $ chmod 700 ~/.ssh
 <p>使用 <code>cat /home/leo/.ssh/id_rsa</code> 在终端中输出私钥内容，将其复制后写入到本地的记事本中，将文件保存为 <code>id_rsa</code>，存放在自定义的目录下。接着在本地打开终端，尝试使用私钥连接服务器：</p>
 <pre><code class="language-sh">ssh -p 端口号 -i "私钥路径" 用户名@主机名
 </code></pre>
-<p><div class="note-info"><p><i class="fa fa-sticky-note"></i>&ensp;<b>Note</b>&emsp;相信许多读者使用的是 PuTTY 等更为便捷的 SSH 客户端，在设置项中一定也可以使用私钥的方式完成登录，各种客户端的设置方式不尽相同，就不在此罗列了。 </p></div></p>
+<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;相信许多读者使用的是 PuTTY 等更为便捷的 SSH 客户端，在设置项中一定也可以使用私钥的方式完成登录，各种客户端的设置方式不尽相同，就不在此罗列了。 </p></div></p>
 <p>成功登录后，SSH 的公私钥设置就没有问题了。再次打开 SSH 配置文件：</p>
 <pre><code class="language-shell">$ sudo vim /etc/ssh/sshd_config
 </code></pre>
@@ -540,9 +538,9 @@ net.ipv4.tcp_congestion_control = bbr
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -550,6 +548,8 @@ net.ipv4.tcp_congestion_control = bbr
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

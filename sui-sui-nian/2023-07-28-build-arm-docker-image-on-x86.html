@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -162,7 +160,7 @@
                 <p>最近一直在使用华为 ModelArts 的计算平台，使用这类计算平台的一般流程是先在本地用 Docker 构建镜像，再上传至云端，然后就可以在该环境下部署具体的计算作业了。使用 Docker 构建环境非常方便，基于官方或其他用户提供的基础镜像安装上自己所需要的依赖就可以直接上传使用了，完全不用跟驱动安装等等令人头疼又心累的事情打交道。</p>
 <p>但在使用 Docker 构建镜像时，有一个挺棘手的问题：计算平台或是服务器所使用的设备一般是 ARM 架构，个人电脑使用基本上是 X86 架构。由于二者 CPU 指令集不同，尽管可以在 X86 设备上用 <code>docker pull --platform=linux/arm64</code> 拉取用于 ARM 设备的镜像，但无法使用 <code>docker run</code> 或 <code>docker build</code> 运行或是通过构建的方法修改该镜像。</p>
 <h2 id="qemu-user-static">qemu-user-static</h2>
-<p>去寻找 ARM 设备再使用 Docker 构建镜像就太麻烦了，幸好找到了一个工具 <a href="https://github.com/multiarch/qemu-user-static" rel="noopener" target="_blank"><i class="fa fa-github"></i> qemu-user-static</a>，专门用于解决这个问题。先来看看仓库中给出的示例：</p>
+<p>去寻找 ARM 设备再使用 Docker 构建镜像就太麻烦了，幸好找到了一个工具 <a href="https://github.com/multiarch/qemu-user-static" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> qemu-user-static</a>，专门用于解决这个问题。先来看看仓库中给出的示例：</p>
 <pre><code class="language-sh">$ uname -m
 x86_64
 
@@ -286,9 +284,9 @@ $ docker build -t {image_name}:{tag} . --progress=plain --no-cache
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -296,6 +294,8 @@ $ docker build -t {image_name}:{tag} . --progress=plain --no-cache
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

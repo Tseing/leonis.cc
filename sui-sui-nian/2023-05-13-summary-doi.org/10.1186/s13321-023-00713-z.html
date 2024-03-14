@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -161,7 +159,7 @@
             </div>
         <div class="inner">
             <section class="post-content">
-                <p><i class="fa fa-external-link"></i> <a href="https://doi.org/10.1186/s13321-023-00713-z" rel="noopener" target="_blank">doi.org/10.1186/s13321-023-00713-z</a></p>
+                <p><i class="fa-solid fa-arrow-up-right-from-square"></i> <a href="https://doi.org/10.1186/s13321-023-00713-z" rel="noopener" target="_blank">doi.org/10.1186/s13321-023-00713-z</a></p>
 <p>本文介绍于 2023 年东京大学发表在 <em>Journal of Cheminformatics</em> 上的一篇文章，文章原标题为 Investigation of chemical structure recognition by encoder&ndash;decoder models in learning progress，文章，文章研究了编码器-解码器模型训练过程中对化学结构识别的过程以及将其潜变量作为分子表示用于下游任务的效果。</p>
 <p>基于结构的分子表示又被称为描述符，如何获得更好的描述符是化学信息学中很重要的问题。在近年兴起的深度学习领域，编码器-解码器（encoder-decoder, ED）类模型广受关注，以分子的字符序列 SMILES 作为输入，编码器模型会将其转化为一连串蕴含化学学信息的描述符，解码器模型通过该中间变量还原出原来的分子，这种由 SMILES（或其他）分子表示编码至隐空间中的潜变量就可以用作为数字形式的分子表示，用于各种下游任务，这也是自然语言处理中「预训练-微调」的范式。</p>
 <p>在传统方法中，也有例如 ECFP、NFP 一类的分子指纹，但他们只描述了分子中所具有的特定结构，无法由描述符再还原出分子结构。只有更好的表示才能在下游任务得到更好的结果，所以文章研究了在 ED 模型中化学结构的识别过程，ED 模型对化学结构的识别是指模型获得反映化学结构的数字信息和将该信息还原为化学结构的能力。</p>
@@ -336,9 +334,9 @@
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -346,6 +344,8 @@
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>

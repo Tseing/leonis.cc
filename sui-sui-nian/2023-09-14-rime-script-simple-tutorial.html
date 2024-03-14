@@ -32,8 +32,6 @@
 
     <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
-  <!-- awesome-font icon -->
-  <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!-- fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
@@ -237,7 +235,7 @@
   - script_translator
   - lua_translator@number_translator
 </code></pre>
-<p><div class="warn-info"><p><i class="fa fa-exclamation-circle"></i>&ensp;<b>Warning</b>&emsp;YAML 文件对缩进敏感，一定要检查缩进是否正确。</p></div></p>
+<p><div class="warn-info"><p><i class="fa-solid fa-circle-exclamation"></i>&ensp;<b>Warning</b>&emsp;YAML 文件对缩进敏感，一定要检查缩进是否正确。</p></div></p>
 <h3 id="lua-jiao-ben">Lua 脚本</h3>
 <p>接着在用户文件夹，即 <code>*.schema.yaml</code> 所在文件夹中新建一个名为 <code>rime.lua</code> 的文件，写入</p>
 <pre><code class="language-lua">number_translator = require("number")
@@ -357,7 +355,7 @@ return translator
 <p>用户输入的字符符合匹配规则，字符串经处理后用 <code>yield(Candidate())</code> 生成候选词。<code>Candidate()</code> 需要填入 5 个参数，不过其实也只用更改后两个参数就好。</p>
 <p>完成后仍然要重新部署一下，就可以试试输入效果了~</p>
 <p><img alt="demo" src="https://storage.live.com/items/4D18B16B8E0B1EDB!11206?authkey=ALYpzW-ZQ_VBXTU"/></p>
-<p>了解在 RIME 上套用 Lua 脚本的方法后，相信编写自己的脚本也不觉得困难了，参考模版就能实现自己的奇思妙想。<a href="https://github.com/hchunhui/librime-lua/tree/master" rel="noopener" target="_blank"><i class="fa fa-github"></i> librime-lua</a> 提供了许多 Lua 脚本，已经实现了很多有意思的想法，供额外参考。</p>
+<p>了解在 RIME 上套用 Lua 脚本的方法后，相信编写自己的脚本也不觉得困难了，参考模版就能实现自己的奇思妙想。<a href="https://github.com/hchunhui/librime-lua/tree/master" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> librime-lua</a> 提供了许多 Lua 脚本，已经实现了很多有意思的想法，供额外参考。</p>
 <hr/>
 <h2 id="references_1">References</h2>
 <ul>
@@ -449,9 +447,9 @@ return translator
         <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa fa-github fa-fw"></i><b>Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa fa-rss fa-fw"></i><b>Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b>Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b>Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b>Sitemap</b></a></span>
           <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
         </section>
       </div>
@@ -459,6 +457,8 @@ return translator
   </section>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
   <!-- code highlight -->
   <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
