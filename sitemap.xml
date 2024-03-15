@@ -5,22 +5,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://leonis.cc/</loc>
-<lastmod>2024-03-14T15:31:41-00:00</lastmod>
+<lastmod>2024-03-15T15:07:41-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.8</priority>
 </url>
 
 <url>
 <loc>https://leonis.cc/pages/about.html</loc>
-<lastmod>2024-03-14T15:31:41-00:00</lastmod>
+<lastmod>2024-03-15T15:07:41-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://leonis.cc/pages/shan-qiang-bian.html</loc>
-<lastmod>2024-03-14T15:31:41-00:00</lastmod>
+<lastmod>2024-03-15T15:07:41-00:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html</loc>
+<lastmod>2024-03-15T00:00:00+08:00</lastmod>
+<changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -558,7 +565,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://leonis.cc/author/leo.html</loc>
-<lastmod>2024-01-14T00:00:00+08:06</lastmod>
+<lastmod>2024-03-15T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.8</priority>
 </url>

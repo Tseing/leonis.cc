@@ -1,5 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-01-14T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>为友治藏书印一方</title><link href="https://leonis.cc/zai-lu-shang/2024-01-14-seal-record.html" rel="alternate"></link><published>2024-01-14T00:00:00+08:00</published><updated>2024-01-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-01-14:/zai-lu-shang/2024-01-14-seal-record.html</id><summary type="html">&lt;p&gt;上次动刀还是在很久很久以前了。早先时候朋友向我抱怨白文的藏书印不容易干，稍不慎就把书印成了「大花脸」。我也不自揣，心想索性为他刻一方朱文的藏书印。因为日常各种事务迁延，这想法一直拖到了最近都还没开始动手，再拖下去就要到 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;上次动刀还是在很久很久以前了。早先时候朋友向我抱怨白文的藏书印不容易干，稍不慎就把书印成了「大花脸」。我也不自揣，心想索性为他刻一方朱文的藏书印。因为日常各种事务迁延，这想法一直拖到了最近都还没开始动手，再拖下去就要到年后了，想到那时的忙闲也未可知，赶紧挤着时间操起刀来。要没有这样的「任务」记挂在心头，每天忙忙碌碌后谁又会有心思去做这些无用之事。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo's blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-03-15T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误</title><link href="https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html" rel="alternate"></link><published>2024-03-15T00:00:00+08:00</published><updated>2024-03-15T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-03-15:/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html</id><summary type="html">&lt;p&gt;最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 &lt;code&gt;[Errno 2] No such file or directory&lt;/code&gt; 的错误，一层层查找后发现这可能是一个由代理设置引起 URL 编码错误而导致的 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 &lt;code&gt;[Errno 2] No such file or directory&lt;/code&gt; 的错误，一层层查找后发现这可能是一个由代理设置引起 URL 编码错误而导致的 bug。由于网络上几乎没有找到任何相关的资料，就把整个过程留下来作为记录。&lt;/p&gt;
+&lt;p&gt;首先从安装 Nginx 所需的依赖开始：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+...
+Error:
+ Problem: package pcre-devel-8.32-15.1.h6.aarch64 requires libpcre16.so.0()(64bit), but none of the providers can be installed
+  - package pcre-devel-8.32-15.1.h6.aarch64 requires libpcre32.so.0()(64bit), but none of the providers can be installed
+  - package pcre-devel-8.32-15.1.h6.aarch64 requires libpcrecpp.so.0()(64bit), but none of the providers can be installed
+  - cannot install both pcre-8.32-15.1.h1.aarch64 and pcre-8.42-4.h3.eulerosv2r8.aarch64
+  - cannot install both pcre-8.32-15.1.h6.aarch64 and pcre-8.42-4.h3.eulerosv2r8.aarch64
+  - cannot install the best candidate for the job
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;竟然提示没有找到可用的包，按理来说 BMS 已经配置了华为官方的源，既不会有网络问题也不会缺失 pcre-devel 这样的常见包。于是我开始排查 yum 源的问题，先检查设备的系统和架构：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ uname -m
+aarch64
+$ cat /etc/os-release
+NAME="EulerOS"
+VERSION="2.0 (SP8)"
+ID="euleros"
+ID_LIKE="rhel fedora centos"
+VERSION_ID="2.0"
+PRETTY_NAME="EulerOS 2.0 (SP8)"
+ANSI_COLOR="0;31"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到操作系统是华为的 EulerOS 2.0 (SP8)，架构是 aarch64。再检查默认的 yum 源：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo cat /etc/yum.repos.d/EulerOS.repo
+[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.3/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.3/os/RPM-GPG-KEY-EulerOS
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;仔细看默认的 yum 源，系统版本明明是 &lt;code&gt;2.0 (SP8)&lt;/code&gt;，URL 却指向了 &lt;code&gt;2.3&lt;/code&gt;。测试直接替换后的链接 &lt;code&gt;http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/&lt;/code&gt; 可达，那么就尝试改为使用该 yum 源。&lt;/p&gt;
+&lt;h2 id="geng-huan-yum-yuan"&gt;更换 yum 源&lt;/h2&gt;
+&lt;p&gt;这里的修改很简单，我就没有额外备份，使用 vim 直接编辑文件 &lt;code&gt;/etc/yum.repos.d/EulerOS.repo&lt;/code&gt; 并保存，修改后的 yum 源信息为&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-toml"&gt;[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过以下命令更新 yum 源：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo yum clean all            # 清除旧 yum 源缓存
+$ sudo yum makecache            # 生成新 yum 源缓存
+$ sudo yum repolist             # 检查 yum 源连接状态
+EulerOS-2.0SP8 local repo for internal use          0.0  B/s |   0  B     00:00
+EulerOS-2.0SP8 base                                 7.4 MB/s |  17 MB     00:02
+Failed to synchronize cache for repo 'base', ignoring this repo.
+Last metadata expiration check: 0:00:06 ago on Fri 15 Mar 2024 09:54:47 AM CST.
+repo id                           repo name                              status
+euler-base                        EulerOS-2.0SP8 base                    16,599
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上述信息中的 Fail 指示 &lt;code&gt;EulerOS-2.0SP8 local repo for internal use&lt;/code&gt; 这个源不可用，看名字应该是内部使用的 yum 源，在此处没有影响。列举出的 repolist 中有 &lt;code&gt;EulerOS-2.0SP8 base&lt;/code&gt; 一项，说明更改后的源已经可用。&lt;/p&gt;
+&lt;h2 id="errno-2-no-such-file-or-directory"&gt;[Errno 2] No such file or directory&lt;/h2&gt;
+&lt;p&gt;再次尝试安装 Nginx 的依赖：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+...
+(19/29): gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm         6.2 MB/s | 7.4 MB     00:01
+...
+[Errno 2] No such file or directory: '/var/cache/dnf/euler-base-85cc05102200a8ac/packages/gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm'
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing 'dnf clean packages'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;提示 &lt;code&gt;[Errno 2] No such file or directory&lt;/code&gt;，没有找到 &lt;code&gt;gcc-c++&lt;/code&gt; 的 RPM 文件，奇怪的是在安装输出的信息中分明提示已经成功下载了 &lt;code&gt;gcc-c++&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;错误信息中指引了一个文件目录 &lt;code&gt;/var/cache/dnf/euler-base-85cc05102200a8ac/packages/&lt;/code&gt;，不妨检查一下其中的文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo ls /var/cache/dnf/euler-base-85cc05102200a8ac/packages/
+cpp-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm                  make-4.2.1-10.h3.eulerosv2r8.aarch64.rpm
+gcc-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm                  openssl-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+gcc-c%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm          openssl-devel-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+gcc-gfortran-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm         openssl-libs-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+keyutils-libs-devel-1.5.10-8.h4.eulerosv2r8.aarch64.rpm         pcre2-devel-10.32-3.h1.eulerosv2r8.aarch64.rpm
+krb5-devel-1.16.1-21.h1.eulerosv2r8.aarch64.rpm                 pcre2-utf16-10.32-3.h1.eulerosv2r8.aarch64.rpm
+libcom_err-devel-1.44.3-1.h4.eulerosv2r8.aarch64.rpm            pcre2-utf32-10.32-3.h1.eulerosv2r8.aarch64.rpm
+libgfortran-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm          pcre-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libgomp-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm              pcre-cpp-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libkadm5-1.16.1-21.h1.eulerosv2r8.aarch64.rpm                   pcre-devel-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libselinux-devel-2.8-4.h2.eulerosv2r8.aarch64.rpm               pcre-utf16-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libsepol-devel-2.8-2.eulerosv2r8.aarch64.rpm                    pcre-utf32-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libstdc%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm        zlib-1.2.11-14.h4.eulerosv2r8.aarch64.rpm
+libstdc%2b%2b-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm  zlib-devel-1.2.11-14.h4.eulerosv2r8.aarch64.rpm
+libverto-devel-0.3.0-6.h1.eulerosv2r8.aarch64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到下载的 29 个文件都在其中，从中寻找报错的 &lt;code&gt;gcc-c++&lt;/code&gt;，看到文件名时恍然大悟，&lt;code&gt;gcc-c++&lt;/code&gt; 被转义成了 &lt;code&gt;gcc-c%2b%2b&lt;/code&gt;。同样带有 &lt;code&gt;+&lt;/code&gt; 的 &lt;code&gt;libstdc++&lt;/code&gt; 和 &lt;code&gt;libstdc++-devel&lt;/code&gt; 两个安装文件也都被用 &lt;code&gt;%2b&lt;/code&gt; 转义，用未转义前的名称自然无法寻找到这些文件。&lt;/p&gt;
+&lt;p&gt;起初以为这是 yum 在处理特殊符号时 URL 编码的 bug，但在互联网上用关键词检索找不到任何相关的信息。仔细一想，yum 是无数 Linux 平台上默认的包管理器，怎么可能犯这么低级的错误，况且在安装这么常见的依赖时就能引发的 bug 理应很快就被修复了。&lt;/p&gt;
+&lt;p&gt;在许久漫无目的地寻找后，偶然发现了 GitHub 上的一篇 &lt;a href="https://github.com/tmatilai/vagrant-proxyconf/issues/129" rel="noopener" target="_blank"&gt;&lt;i class="fa-brands fa-github"&gt;&lt;/i&gt; Issue&lt;/a&gt;，大意是说代理软件应当支持识别 &lt;code&gt;yum.conf&lt;/code&gt; 中的 URL 编码，否则会导致一些问题。这倒提醒了我，会不会是代理导致的问题呢？&lt;/p&gt;
+&lt;h2 id="xiu-gai-yum-yuan-dai-li"&gt;修改 yum 源代理&lt;/h2&gt;
+&lt;p&gt;设备可能带有华为用来日常管理维护设备的内部默认代理，不宜擅自修改，最好是仅修改 yum 源所使用的代理，不影响其他服务的运作。同样用 vim 修改 &lt;code&gt;/etc/yum.repos.d/EulerOS.repo&lt;/code&gt; 文件的内容，仅在最后添加一行：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-toml"&gt;[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS
+proxy=_none_
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后用同样的操作尝试更新 yum 源：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo yum clean all
+$ sudo yum makecache
+EulerOS-2.0SP8 local repo for internal use                          0.0  B/s |   0  B     00:00
+EulerOS-2.0SP8 base                                                 0.0  B/s |   0  B     00:01
+Failed to synchronize cache for repo 'base', ignoring this repo.
+Failed to synchronize cache for repo 'euler-base', ignoring this repo.
+Metadata cache created.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;发现禁止源 &lt;code&gt;EulerOS-2.0SP8 base&lt;/code&gt; 使用代理后，就无法连接上源仓库了。可以确定华为云上的 BMS 确实设置有供 yum 安装所使用的特殊代理，文件名的 URL 编码异常可能由该代理导致，从而引起 &lt;code&gt;[Errno 2] No such file or directory&lt;/code&gt; 的错误。&lt;/p&gt;
+&lt;h2 id="jie-jue-fang-an"&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;由于华为云 BMS 获取 yum 源仓库必须通过默认代理，不能通过取消代理解决该问题。那么就只能通过最朴素、最直接的方法解决这个问题了&amp;mdash;&amp;mdash;手动改文件名。注意核对 cache 文件目录，手动将文件名中的 &lt;code&gt;%2b&lt;/code&gt; 改回为 &lt;code&gt;+&lt;/code&gt;，我这里有 &lt;code&gt;gcc-c%2b%2b&lt;/code&gt; &lt;code&gt;libstdc%2b%2b&lt;/code&gt; &lt;code&gt;libstdc%2b%2b-devel&lt;/code&gt; 三个文件需要修改：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ cd /var/cache/dnf/
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/gcc-c%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/libstdc++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/libstdc++-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后再尝试原先的安装命令，就发现先前提示无法找到的安装包能够成功安装上了。&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://pshizhsysu.gitbook.io/linux/yum/wei-yum-yuan-pei-zhi-dai-li" rel="noopener" target="_blank"&gt;为 yum 源配置代理 - GitBook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://linux.cn/article-15657-1.html" rel="noopener" target="_blank"&gt;如何知道你是否使用了代理服务器？ - Linux 中国&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="碎碎念"></category><category term="Linux"></category><category term="BMS"></category><category term="EulerOS"></category><category term="Proxy"></category><category term="Bug"></category></entry><entry><title>为友治藏书印一方</title><link href="https://leonis.cc/zai-lu-shang/2024-01-14-seal-record.html" rel="alternate"></link><published>2024-01-14T00:00:00+08:00</published><updated>2024-01-14T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-01-14:/zai-lu-shang/2024-01-14-seal-record.html</id><summary type="html">&lt;p&gt;上次动刀还是在很久很久以前了。早先时候朋友向我抱怨白文的藏书印不容易干，稍不慎就把书印成了「大花脸」。我也不自揣，心想索性为他刻一方朱文的藏书印。因为日常各种事务迁延，这想法一直拖到了最近都还没开始动手，再拖下去就要到 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;上次动刀还是在很久很久以前了。早先时候朋友向我抱怨白文的藏书印不容易干，稍不慎就把书印成了「大花脸」。我也不自揣，心想索性为他刻一方朱文的藏书印。因为日常各种事务迁延，这想法一直拖到了最近都还没开始动手，再拖下去就要到年后了，想到那时的忙闲也未可知，赶紧挤着时间操起刀来。要没有这样的「任务」记挂在心头，每天忙忙碌碌后谁又会有心思去做这些无用之事。&lt;/p&gt;
 &lt;p&gt;让我刻印不是朋友的主意，自然也没有交待我文字内容，我就自作主张以他的斋号起首，下缀以「收藏经籍记」几个字，刻一方扁章。虽说是斋号，天下广厦千万间尚没有容身之所，哪里还有这额外的书斋。&lt;/p&gt;
 &lt;p&gt;明清文人有个说法，大意是「书斋大都建在石头上」。这不是说以石料来架梁构椽，而是说凡有书斋必有斋馆印，哪怕是在心头上的书斋，也需有斋馆印作为凭信。所以我也可以戏言，有了这方印，朋友的书斋才总算是「建」起来了。&lt;/p&gt;
 &lt;p&gt;这样的重任在肩，我不敢懈怠。于是费心经营结构，又操刀几日，终于完成了这方藏书印。藏书印还是以朱文最好，不易遮盖文字，也不易污损纸面。扁章具有独特的书卷气，盖在书上也很是典雅。这方印基本能够满意，但也有几处毛病欠推敲。日前已经将藏书印转交了朋友，第一次创作这样风格的扁章，用照片给自己留个纪念。&lt;/p&gt;
@@ -1784,728 +1904,4 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>从零起步的 Transformer 与代码拆解</title><link href="https://leonis.cc/sui-sui-nian/2023-04-21-transformer-from-scratch.html" rel="alternate"></link><published>2023-04-21T00:00:00+08:00</published><updated>2023-04-21T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-21:/sui-sui-nian/2023-04-21-transformer-from-scratch.html</id><summary type="html">&lt;p&gt;自 Google 的论文 &lt;a href="https://arxiv.org/abs/1706.03762" rel="noopener" target="_blank"&gt;Attention Is All You Need&lt;/a&gt; 发布后，几年内涌现了大量基于 Transformer 的模型，俨然形成了 Transformer 横扫人工智能领域的态势。&lt;/p&gt;
-&lt;p&gt;网络上也出现了大量解读论文或是讲解 Transformer 的文章，其中也不乏许多高水平人工智能从业者的解读。虽然有些可以称得上是高屋建瓴，但 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;自 Google 的论文 &lt;a href="https://arxiv.org/abs/1706.03762" rel="noopener" target="_blank"&gt;Attention Is All You Need&lt;/a&gt; 发布后，几年内涌现了大量基于 Transformer 的模型，俨然形成了 Transformer 横扫人工智能领域的态势。&lt;/p&gt;
-&lt;p&gt;网络上也出现了大量解读论文或是讲解 Transformer 的文章，其中也不乏许多高水平人工智能从业者的解读。虽然有些可以称得上是高屋建瓴，但相当大部分难以避免地落入了知识的诅咒（curse of knowledge），起码在我初开始了解 Transformer 时难以读懂这些文章。&lt;/p&gt;
-&lt;p&gt;随着 Transformer 广泛应用到各领域，学习 Transformer 也成了一门「显学」。尽管我已经能读懂一些更深层次的 Transformer 剖析，但我还是未找见一篇合我心意的入门文章，所以我希望能撰写一篇小文章，以初学者的角度来讲解 Transformer，是为序。&lt;/p&gt;
-&lt;h2 id="xie-zi"&gt;楔子&lt;/h2&gt;
-&lt;p&gt;Transformer 是设计用于 NLP 的一种模型，尽管目前 Transformer 所能完成的任务已经大大扩展，但这里还是以最原始的翻译任务为例。&lt;/p&gt;
-&lt;p&gt;在翻译任务中，所需要的数据包括原始语句与目标语句，也就是 Transformer 原论文中所指的「input」和「output」，因为名字太容易混淆，还是将其原始语句与目标语句或是「source」与「target」。&lt;/p&gt;
-&lt;p&gt;假设 source 为 &lt;code&gt;你好，世界！&lt;/code&gt;，target 为 &lt;code&gt;Hello, world!&lt;/code&gt;，完成这个中译英任务首先要将文本转化为利于模型处理的数值，这一步称为词嵌入（embedding）。&lt;/p&gt;
-&lt;p&gt;常见的词嵌入方法有 word2vec 等等，在这里不做介绍。词嵌入步骤大致的流程是先将 &lt;code&gt;你好，世界！&lt;/code&gt; 转化为 &lt;code&gt;&amp;lt;start&amp;gt; 你好 ， 世界 ！ &amp;lt;end&amp;gt;&lt;/code&gt;，每个「词」都用空格划分开，其中 &lt;code&gt;&amp;lt;start&amp;gt;&lt;/code&gt; 与 &lt;code&gt;&amp;lt;end&amp;gt;&lt;/code&gt; 分别表示文本的起讫，这些「词」在 NLP 通常称为「token」。接着再为每个 token 分配索引，例如 &lt;code&gt;&amp;lt;start&amp;gt;&lt;/code&gt; 为 &lt;code&gt;1&lt;/code&gt;，&lt;code&gt;&amp;lt;end&amp;gt;&lt;/code&gt;为 &lt;code&gt;0&lt;/code&gt;，照这个思路，文本就可以转换为 &lt;code&gt;[1 2 3 4 5 0]&lt;/code&gt; 的表示。当然这是很简单的做法，实际上，每个 token 都会被转化为指定维度的向量，用这一连串向量就可以表示文本。&lt;/p&gt;
-&lt;p&gt;将上述过程抽象出来，在词嵌入后，可以得到 source 的表示 &lt;span class="math"&gt;\(\boldsymbol{X}=(\boldsymbol{x}_1,\boldsymbol{x}_2,\cdots,\boldsymbol{x}_t)\)&lt;/span&gt; 与 target 的表示 &lt;span class="math"&gt;\(\boldsymbol{Y}=(\boldsymbol{y}_1,\boldsymbol{y}_2,\cdots,\boldsymbol{y}_t)\)&lt;/span&gt;，其中 &lt;span class="math"&gt;\(\boldsymbol{x}_i\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{y}_i\)&lt;/span&gt; 都是指定维度 &lt;span class="math"&gt;\(d\)&lt;/span&gt; 的向量。&lt;/p&gt;
-&lt;p&gt;那么如何使用 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{Y}\)&lt;/span&gt; 完成翻译任务呢？&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;第一种&lt;/strong&gt;是使用 RNN 方法，使用当前的 source token &lt;span class="math"&gt;\(\boldsymbol{x}_t\)&lt;/span&gt; 与前一步中生成的 token &lt;span class="math"&gt;\(\hat{\boldsymbol{y}}_{t-1}\)&lt;/span&gt; 生成下一个 token，逐个生成直至句子末尾：&lt;/p&gt;
-&lt;div class="math"&gt;$$\hat{\boldsymbol{y}}_t=f(\hat{\boldsymbol{y}}_{t-1},\boldsymbol{x}_t)$$&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;第二种&lt;/strong&gt;是使用卷积的方法，定义一个窗口长度再通过小范围中的几个 &lt;span class="math"&gt;\(\boldsymbol{x}_i\)&lt;/span&gt; 计算输出：&lt;/p&gt;
-&lt;div class="math"&gt;$$\hat{\boldsymbol{y}}_t=f(\boldsymbol{x}_{t-1},\boldsymbol{x}_t,\boldsymbol{x}_{t+1})$$&lt;/div&gt;
-&lt;p&gt;可以看出，&lt;dot&gt;RNN 很难学习到全局的信息&lt;/dot&gt;，而&lt;dot&gt;卷积方法只能学习到小范围的局部信息&lt;/dot&gt;。&lt;/p&gt;
-&lt;p&gt;所以 Transformer 给出了&lt;strong&gt;第三种&lt;/strong&gt;方法，也就是自注意力方法。自注意力机制让模型就当前的 source token &lt;span class="math"&gt;\(\boldsymbol{x}_t\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 中其他 token 的关系给出输出 &lt;span class="math"&gt;\(\hat{\boldsymbol{y}}_t\)&lt;/span&gt;：&lt;/p&gt;
-&lt;div class="math"&gt;$$\hat{\boldsymbol{y}}_t=f(\boldsymbol{x}_t, \boldsymbol{X})$$&lt;/div&gt;
-&lt;h2 id="transformer-jie-gou"&gt;Transformer 结构&lt;/h2&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7721?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7721?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;标准 Transformer 的结构如上图所示，大致分为左侧的 Encoder 与右侧的 Decoder 两个部分。Inputs 与 Outputs 分别是上文所说的 source 与 target，Output Probabilities 是模型输出的各 token 概率，取其中最大概率的 token 就能组织成模型输出结果。&lt;/p&gt;
-&lt;h3 id="wei-zhi-bian-ma"&gt;位置编码&lt;/h3&gt;
-&lt;p&gt;Transformer 并没有采用 RNN 与卷积方法所使用的序列处理 token 的方法，因而能够实现并行计算并且很大程度上缓解了长期依赖问题（顺序处理长序列容易丢失多个步骤前的信息）。文本中多个 token 间显然有前后的顺序关系，Transformer 使用位置编码的方式来处理顺序信息。&lt;/p&gt;
-&lt;p&gt;source 与 target 送入模型，经过常规的词嵌入过程后，还需要在得到的矩阵上加上位置编码，论文将位置编码定义为&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{PE}_{(\mathrm{pos},2i)}=\sin(\mathrm{pos}/10000^{2i/d_\mathrm{model}})$$&lt;/div&gt;
-&lt;div class="math"&gt;$$\mathrm{PE}_{(\mathrm{pos},2i+1)}=\cos(\mathrm{pos}/10000^{2i/d_\mathrm{model}})$$&lt;/div&gt;
-&lt;p&gt;Transformer 将 &lt;span class="math"&gt;\(\mathrm{pos}\)&lt;/span&gt; 位置映射为 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 维的向量，向量中的第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个元素即按上式计算。位置编码的计算公式是构造出的经验公式，不必深究，当然也有许多文章分析了如此构造的原因，这里从略。&lt;/p&gt;
-&lt;h3 id="encoder-yu-decoder"&gt;Encoder 与 Decoder&lt;/h3&gt;
-&lt;p&gt;许多完成 seq2seq 任务的模型都采用了 encoder-decoder 模式，Transformer 也不例外。简单来说，encoder 将输入编码得到一个中间变量，decoder 解码该中间变量得到输出。&lt;/p&gt;
-&lt;p&gt;在 Transformer 中，source 与 target 分别送入 encoder 与 decoder，encoder 计算得到的中间结果再送入 decoder 中与 target 输入进行计算，得到最后的结果，这就是所谓「编码-解码」的工作方式。&lt;/p&gt;
-&lt;p&gt;从 Transformer 的结构图中可以看出，模型具有 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 层 encoder 与 decoder 层。其中，encoder 与 decoder 都具有相同的多头注意力层（Multi-Head Attention）、前馈层（Feed Forward）。encoder 与 decoder 的不同在于 decoder 多了一个多头注意力层，在这一层中，encoder 的输出与 decoder 的输入计算注意力。&lt;/p&gt;
-&lt;p&gt;还可以注意到，在 encoder 与 decoder 中，每一层后都有一个 Add &amp;amp; Norm 层，用于归一化计算结果。Add &amp;amp; Norm 层的计算方式是将前一层的输入与前一层的输出相加，然后归一化，可以表示为 &lt;span class="math"&gt;\(\mathrm{LayerNorm}(\boldsymbol{x}+\mathrm{Sublayer}(\boldsymbol{x}))\)&lt;/span&gt;。&lt;/p&gt;
-&lt;h4&gt;Attention 机制&lt;/h4&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8803?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8803?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;数据进入 encoder 与 decoder 的内部，首先要通过注意力机制进行计算，这也是 Transformer 的核心。&lt;/p&gt;
-&lt;p&gt;文章中将所使用的注意力称为缩放点积注意力（scaled dot-product attention），定义为&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{Attention}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = \mathrm{Softmax}\left(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\right)\boldsymbol{V}$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\boldsymbol{Q}_{n\times d_k}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{K}_{m\times d_k}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{V}_{m\times d_v}\)&lt;/span&gt; 分别是若干向量 &lt;span class="math"&gt;\(\boldsymbol{q}\in\mathbb{R}^{d_k}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{k}\in\mathbb{R}^{d_k}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{v}\in\mathbb{R}^{d_v}\)&lt;/span&gt; 组成的矩阵。&lt;/p&gt;
-&lt;p&gt;单看矩阵的乘法稍显复杂，不妨先用向量说明计算步骤。通过以下方式可以从输入 &lt;span class="math"&gt;\(\boldsymbol{x}\)&lt;/span&gt; 得到向量 &lt;span class="math"&gt;\(\boldsymbol{q}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{k}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{v}\)&lt;/span&gt;：&lt;/p&gt;
-&lt;div class="math"&gt;$$\boldsymbol{q}=\boldsymbol{x}\boldsymbol{W}^Q,\,\boldsymbol{k}=\boldsymbol{x}\boldsymbol{W}^K,\,\boldsymbol{v}=\boldsymbol{x}\boldsymbol{W}^V$$&lt;/div&gt;
-&lt;p&gt;其中，&lt;span class="math"&gt;\(\boldsymbol{W}^Q\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{W}^K\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{W}^V\)&lt;/span&gt; 分别表示相应的权重矩阵。&lt;span class="math"&gt;\(\boldsymbol{q}\)&lt;/span&gt; 代表 query，&lt;span class="math"&gt;\(\boldsymbol{k}\)&lt;/span&gt; 代表 key，&lt;span class="math"&gt;\(\boldsymbol{v}\)&lt;/span&gt; 代表 value，目的是&lt;dot&gt;用 query 去寻找更匹配的 key-value 对&lt;/dot&gt;。&lt;/p&gt;
-&lt;p&gt;因为数量积可以表示两向量的相似程度，一种简单的做法是使用 &lt;span class="math"&gt;\(\boldsymbol{q}\)&lt;/span&gt; 与若干个 &lt;span class="math"&gt;\(\boldsymbol{k}\)&lt;/span&gt; 计算数量积，将其作为匹配分数：&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{score}=\boldsymbol{q}\cdot \boldsymbol{k}_i=\boldsymbol{q}\boldsymbol{k}^\top_i$$&lt;/div&gt;
-&lt;p&gt;但这样的「注意力」太过于简单，Google 从上述的数量积出发，设计了更为可靠的注意力：&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{Attention}(\boldsymbol{q},\boldsymbol{k}_i,\boldsymbol{v}_i)=\frac 1 Z\sum_i\exp\left(\frac{\boldsymbol{q}\boldsymbol{k}^\top_i}{\sqrt{d_k}}\right)\boldsymbol{v}_i$$&lt;/div&gt;
-&lt;p&gt;首先，式中 &lt;span class="math"&gt;\(1/Z\sum_i x_i\)&lt;/span&gt; 形式的部分是 Softmax 函数的简写，Softmax 函数由下式定义：&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{Softmax}(x_i)=\frac{\exp(x_i)}{\sum_j\exp(x_j)}$$&lt;/div&gt;
-&lt;p&gt;Softmax 函数的作用是将若干数值 &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; 归一化，得到的 &lt;span class="math"&gt;\(\mathrm{Softmax}(x_i)\)&lt;/span&gt; 具有&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;span class="math"&gt;\(\sum_i\mathrm{Softmax}(x_i)=1\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class="math"&gt;\(\mathrm{Softmax}(x_i)\in[0, 1]\)&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;两点性质，所以与概率具有相似的特征，可以用作概率处理。&lt;/p&gt;
-&lt;p&gt;其次，式中新增的 &lt;span class="math"&gt;\(\sqrt{d_k}\)&lt;/span&gt; 用于调节内积 &lt;span class="math"&gt;\(\boldsymbol{q}\boldsymbol{k}^\top_i\)&lt;/span&gt; 的大小。当若干内积的大小过于悬殊时，Softmax 函数很容易将其推向 &lt;span class="math"&gt;\(0\)&lt;/span&gt; 或 &lt;span class="math"&gt;\(1\)&lt;/span&gt; 的边界值，这样的数值处理起来没什么意义。&lt;/p&gt;
-&lt;p&gt;最后，再次回忆 Transformer 的注意力机制是用 query 去寻找更匹配的 key-value 对。那么上式的意义就很了然了，就是将 query 与各个 key 的匹配分数转化为各个概率，再按各个概率取各个 key 所对应的 value，组合各 value 分量即得到注意力。&lt;/p&gt;
-&lt;p&gt;以具有两个 value 的情况为例，需要得到的中间量 &lt;span class="math"&gt;\(\boldsymbol{z}\)&lt;/span&gt;（理解为注意力亦可）可以通过下式计算：&lt;/p&gt;
-&lt;div class="math"&gt;$$\begin{align}
-    \boldsymbol{z}_1=\theta_{11}\boldsymbol{v}_1+\theta_{12}\boldsymbol{v}_2\\
-    \boldsymbol{z}_2=\theta_{21}\boldsymbol{v}_1+\theta_{22}\boldsymbol{v}_2
-\end{align}$$&lt;/div&gt;
-&lt;p&gt;权值 &lt;span class="math"&gt;\(\theta_{ij}\)&lt;/span&gt;（即上文所说概率）通过下式得到：&lt;/p&gt;
-&lt;div class="math"&gt;$$\theta_{ij}=\mathrm{Softmax}\left(\frac{\boldsymbol{q}_i\boldsymbol{k}^\top_j}{\sqrt{d_k}}\right)$$&lt;/div&gt;
-&lt;p&gt;将上述运算转为矩阵形式会简洁许多：&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\begin{pmatrix}
-    \boldsymbol{z}_1 \\
-    \boldsymbol{z}_2
-\end{pmatrix}=
-\begin{pmatrix}
-    \theta_{11} &amp;amp; \theta_{12} \\
-    \theta_{21} &amp;amp; \theta_{22}
-\end{pmatrix}
-\begin{pmatrix}
-    \boldsymbol{v}_1 \\
-    \boldsymbol{v}_2
-\end{pmatrix}\\
-$$&lt;/div&gt;
-&lt;p&gt;可以记作 &lt;span class="math"&gt;\(\boldsymbol{Z}=\boldsymbol{\theta}\boldsymbol{V}\)&lt;/span&gt;，也就是&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{Attention}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = \mathrm{Softmax}\left(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\right)\boldsymbol{V}$$&lt;/div&gt;
-&lt;h4&gt;Multi-Head Attention&lt;/h4&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8803?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8803?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;前一节中解释了 Transformer 中的缩放点积注意力，但在模型中实际并非通过上述方式直接计算，而是通过多头注意力的方式计算注意力。&lt;/p&gt;
-&lt;p&gt;如上图所示，多头注意力同样是在计算缩放点积注意力，但与纯粹缩放点积注意力的不同之处在于多头注意力将多个注意力计算步骤叠加了起来。&lt;/p&gt;
-&lt;p&gt;叠加的次数为 &lt;span class="math"&gt;\(h\)&lt;/span&gt;，即代表 head，多少个 head 表示需要进行多少次叠加计算。矩阵 &lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{K}\)&lt;/span&gt;、&lt;span class="math"&gt;\(\boldsymbol{V}\)&lt;/span&gt; 进入多头注意力计算步骤后，首先要分别在第 &lt;span class="math"&gt;\(i\)&lt;/span&gt; 个 head 中进行线性变换并计算注意力：&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{head}_i=\mathrm{Attention}(\boldsymbol{Q}\boldsymbol{W}^Q_i,\boldsymbol{K}\boldsymbol{W}^K_i,\boldsymbol{V}\boldsymbol{W}^V_i)$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\boldsymbol{W}^Q_i\in\mathbb{R}^{d_\mathrm{model}\times d_k}\)&lt;/span&gt;，&lt;span class="math"&gt;\(\boldsymbol{W}^K_i\in\mathbb{R}^{d_\mathrm{model}\times d_k}\)&lt;/span&gt;，&lt;span class="math"&gt;\(\boldsymbol{W}^V_i\in\mathbb{R}^{d_\mathrm{model}\times d_v}\)&lt;/span&gt;，注意不同 head 中的线性变换并不同，输出也不同。然后将所有输出 &lt;span class="math"&gt;\(\mathrm{head}_i\)&lt;/span&gt; 拼合在一起，经线性变换后作为注意力：&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{MultiHead}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V})=\mathrm{Concat}(\mathrm{head}_1,\mathrm{head}_2,\cdots,\mathrm{head}_h)\boldsymbol{W}^O$$&lt;/div&gt;
-&lt;p&gt;其中 &lt;span class="math"&gt;\(\boldsymbol{W}^O\in\mathbb{R}^{hd_v\times d_\mathrm{model}}\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;注意这个过程中数据维数的变化 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 为单头注意力中模型所处理的维数，&lt;span class="math"&gt;\(\boldsymbol{W}^Q_i\)&lt;/span&gt;，&lt;span class="math"&gt;\(\boldsymbol{W}^K_i\)&lt;/span&gt;，&lt;span class="math"&gt;\(\boldsymbol{W}^V_i\)&lt;/span&gt; 的线性变换将 query、key 的维数从 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 提升到 &lt;span class="math"&gt;\(d_v\)&lt;/span&gt;，将 value 的维数从 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 提升至 &lt;span class="math"&gt;\(d_v\)&lt;/span&gt;。最后的 &lt;span class="math"&gt;\(\boldsymbol{W}^O\)&lt;/span&gt; 又将拼合起来维数为 &lt;span class="math"&gt;\(hd_v\)&lt;/span&gt; 的注意力转换为模型所处理的维数 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt;。这些线性变换矩阵 &lt;span class="math"&gt;\(\boldsymbol{W}_i\)&lt;/span&gt; 实际上就是模型训练过程中需要学习的一部分参数。&lt;/p&gt;
-&lt;p&gt;至于为什么要用多头的方式计算注意力，这就是个很复杂的问题了。就我的理解而言，由于每个 head 中的线性变换矩阵 &lt;span class="math"&gt;\(\boldsymbol{W}_i\)&lt;/span&gt;，多头注意力实际上是将 query、key、value 映射到不同的子空间中，在多个不同的子空间中寻找与 query 最匹配的 key-value。由于不同子空间中具有不同方面的信息，最后将其拼接起来作为结果，这样可以更多地从多个方面捕获数据中的信息。&lt;/p&gt;
-&lt;h4&gt;Feed-Forward 层&lt;/h4&gt;
-&lt;p&gt;在多头注意力层之后，就是前馈层，前馈层只在位置方向上计算，所以原文描述其为 position-wise。进入前馈层的数据在该层中先做 1 次线性变换，维度升高，再经过 RELU 激活函数，最后再做 1 次线性变换，维度降低，输入与输出前馈层的维度相同。上述过程可以表示为&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{FFN}(\boldsymbol{x})=\max(0,\boldsymbol{x}\boldsymbol{W}_1+b_1)\boldsymbol{W}_2+b_2$$&lt;/div&gt;
-&lt;p&gt;RELU 激活函数定义为&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{ReLU}(x)=x^+=\max(0,x)$$&lt;/div&gt;
-&lt;p&gt;即式中的 &lt;span class="math"&gt;\(\max\)&lt;/span&gt;，按原文中的例子，&lt;span class="math"&gt;\(\boldsymbol{W}_1\)&lt;/span&gt; 使 &lt;span class="math"&gt;\(\boldsymbol{x}\)&lt;/span&gt; 由 512 维升高到 2048 维，&lt;span class="math"&gt;\(\boldsymbol{W}_2\)&lt;/span&gt; 使 &lt;span class="math"&gt;\(\boldsymbol{x}\)&lt;/span&gt; 计算由 2048 维再降至 512 维，升维与降维的过程也是为了更好地获得数据中的信息。&lt;/p&gt;
-&lt;h3 id="transformer-ji-suan-bu-zou"&gt;Transformer 计算步骤&lt;/h3&gt;
-&lt;p&gt;Transformer 模型大致就由上述的几个层连接在一起构成，但或许还是觉得朦朦胧胧，比如究竟什么才是 query、key、value 等等。不妨再来看看 Transformer 的结构图，这一次已熟知大部分模块的工作原理了，所以只看数据流入与流出各模块的路线。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!7721?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!7721?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;作为 source 的 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 与作为 target 的 &lt;span class="math"&gt;\(\boldsymbol{Y}\)&lt;/span&gt; 分别从下方的左右两侧进入模型。&lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{Y}\)&lt;/span&gt; 都要经过词嵌入并加上位置编码，按以下方式更新：&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\begin{align}
-    \boldsymbol{X}&amp;amp;\leftarrow\mathrm{Embedding}(\boldsymbol{X})+\mathrm{PE}(\boldsymbol{X})\\
-    \boldsymbol{Y}&amp;amp;\leftarrow\mathrm{Embedding}(\boldsymbol{Y})+\mathrm{PE}(\boldsymbol{Y})
-\end{align}
-$$&lt;/div&gt;
-&lt;p&gt;接着 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{Y}\)&lt;/span&gt; 分别进入 encoder 与 decoder，可以注意到数据分作 4 条路线，这意味着将数据复制 4 次。先看进入多头注意力层的 3 条数据，以 encoder 为例，在这一层中就是在计算&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{Attention}(\boldsymbol{X},\boldsymbol{X},\boldsymbol{X})$$&lt;/div&gt;
-&lt;p&gt;不言自明，在这里的 query、key、value 三者都是 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt;，是在 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 内部计算注意力，因此称其为&lt;strong&gt;自注意力&lt;/strong&gt;（self-attention）。&lt;/p&gt;
-&lt;p&gt;在后续的 Add &amp;amp; Norm 层中，计算&lt;/p&gt;
-&lt;div class="math"&gt;$$\boldsymbol{X}\leftarrow\mathrm{LayerNorm}(\boldsymbol{X}+\mathrm{Attention}(\boldsymbol{X},\boldsymbol{X},\boldsymbol{X}))$$&lt;/div&gt;
-&lt;p&gt;在前馈层与后续的 Add &amp;amp; Norm 层输的输出结果也可想而知：&lt;/p&gt;
-&lt;div class="math"&gt;$$\boldsymbol{X}\leftarrow\mathrm{LayerNorm}(\boldsymbol{X}+\max(0,\boldsymbol{X}\boldsymbol{W}_1+b_1)\boldsymbol{W}_2+b_2)$$&lt;/div&gt;
-&lt;p&gt;这里的 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt; 分作两路进入到 decoder 中，在 decoder 的该多头注意力层中，query 与 key 为 &lt;span class="math"&gt;\(\boldsymbol{X}\)&lt;/span&gt;，而 value 为类似步骤得到的 &lt;span class="math"&gt;\(\boldsymbol{Y}\)&lt;/span&gt;，该层的输出为&lt;/p&gt;
-&lt;div class="math"&gt;$$\boldsymbol{Z}=\mathrm{Attention}(\boldsymbol{X},\boldsymbol{X},\boldsymbol{Y})$$&lt;/div&gt;
-&lt;p&gt;这也是 decoder 与 encoder 的关键不同。输出结果 &lt;span class="math"&gt;\(\boldsymbol{Z}\)&lt;/span&gt; 完成后续的计算过程后，就得到各 token 的概率，用各 token 替换即可得到模型输出的文本结果。&lt;/p&gt;
-&lt;p&gt;{note begin}有兴趣的读者不妨根据各矩阵的形状尝试计算一下各个变量的维度在 Transformer 在各步骤中是如何变化的，一定会对 Transformer 的计算过程收获更深的了解。{note end}&lt;/p&gt;
-&lt;h2 id="dai-ma-chai-jie_1"&gt;代码拆解&lt;/h2&gt;
-&lt;p&gt;有了对 Transformer 原理的基本认识，就可以动手实现一个 Transformer 了，通过代码更深入了解 Transformer 的一些细节。这里使用 PyTorch 搭建一个标准的 Transformer，参考代码见 &lt;a href="https://github.com/aladdinpersson/Machine-Learning-Collection/blob/master/ML/Pytorch/more_advanced/transformer_from_scratch/transformer_from_scratch.py" rel="noopener" target="_blank"&gt;&lt;i class="fa-brands fa-github"&gt;&lt;/i&gt; aladdinpersson / Machine-Learning-Collection &lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;代码中的各模块如下图所示，接下来对各模块逐个拆解。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8825?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8825?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;h3 id="positionembedding"&gt;PositionEmbedding&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;import math
-import torch
-import torch.nn as nn
-
-
-class PositionEmbedding(nn.Module):
-    def __init__(self, d_model, max_len=1000):
-        # d_model 为模型处理数据的维数，即公式中 d_k
-        # max_len 表示模型处理的最大 token 数量
-        super(PositionEmbedding, self).__init__()
-
-        # 生成大小为 max_len * d_model 的零矩阵
-        pe = torch.zeros(max_len, d_model)
-        # 生成大小为 max_len * 1 的位置矩阵
-        position = torch.arange(max_len).unsqueeze(1)
-        # 计算位置编码
-        div_term = torch.exp(torch.arange(0, d_model, 2) * - (math.log(10000.0) / d_model))
-        x = position * div_term
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0)
-        self.register_buffer('pe', pe)
-
-    def forward(self, x):
-        x = self.pe[:, :x.size(1)]
-        return x
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;首先实现位置编码模块。在 PyTorch 中，用于搭建神经网络的模块都要继承 &lt;code&gt;nn.Module&lt;/code&gt;，PyTorch 会通过 &lt;code&gt;__call__()&lt;/code&gt; 调用模块的 &lt;code&gt;forward()&lt;/code&gt; 的方法进行前向传播。简单来讲就是，&lt;code&gt;PositionEmbedding(x)&lt;/code&gt; 的功能等同于 &lt;code&gt;PositionEmbedding.forward(x)&lt;/code&gt;，但不能使用 &lt;code&gt;PositionEmbedding.forward(x)&lt;/code&gt;，因为 PyTorch 做了许多条件的判定和优化。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;torch.arange(num)&lt;/code&gt; 的功能类似于 Python 中的 &lt;code&gt;range(num)&lt;/code&gt;，用于生成文本各 token 的顺序位置索引。&lt;code&gt;unsqueeze(dim)&lt;/code&gt; 会令 Tensor 在指定的维度 &lt;code&gt;dim&lt;/code&gt; 上扩张 1 维，这里是为了使 &lt;code&gt;pe&lt;/code&gt; 与 &lt;code&gt;position&lt;/code&gt; 两个矩阵的维度对齐，例如：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; torch.arange(5)
-tensor([0, 1, 2, 3, 4])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(5).unsqueeze(0)
-tensor([[0, 1, 2, 3, 4]])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(5).unsqueeze(1)
-tensor([[0],
-        [1],
-        [2],
-        [3],
-        [4]])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(5).size()
-torch.Size([5])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(5).unsqueeze(0).size()
-torch.Size([1, 5])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(5).unsqueeze(1).size()
-torch.Size([5, 1])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;代码中的位置编码并不是直接按公式计算的，而是做了一些变换，先计算一个中间量 &lt;code&gt;div_term&lt;/code&gt;，其中 &lt;code&gt;torch.arange(0, d_model, 2)&lt;/code&gt; 即为 &lt;span class="math"&gt;\(2i\)&lt;/span&gt;，可以整理出&lt;/p&gt;
-&lt;div class="math"&gt;$$\begin{align}
-    \mathrm{div\_term}_i&amp;amp;=\exp\left[2i\times(-\frac{\ln10000}{d_k})\right]\\
-    &amp;amp;=\left[\exp(-\frac{\ln10000}{d_k})\right]^{2i}\\
-    &amp;amp;=\left[10000^{-\frac{1}{d_k}}\right]^{2i}\\
-    &amp;amp;=10000^{-2i/d_k}
-\end{align}
-$$&lt;/div&gt;
-&lt;p&gt;所以 &lt;code&gt;position * div_term&lt;/code&gt; 就可以得到&lt;/p&gt;
-&lt;div class="math"&gt;$$\mathrm{position}\times \mathrm{div\_term}_i=\mathrm{pos}/10000^{2i/d_k}$$&lt;/div&gt;
-&lt;p&gt;就是位置编码中的一项。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;pe[:, 0::2]&lt;/code&gt; 与 &lt;code&gt;pe[:, 1::2]&lt;/code&gt; 是 Pytorch 中的高级索引操作。索引中用 &lt;code&gt;,&lt;/code&gt; 分隔不同维度，例中以 &lt;code&gt;,&lt;/code&gt; 为分界，前面是对第 1 维的索引，后面是对第 2 维的索引。索引操作也遵守 Python 的规则，即 &lt;code&gt;a:b:c&lt;/code&gt; 中 &lt;code&gt;a&lt;/code&gt; 为起始，&lt;code&gt;b&lt;/code&gt; 为末尾，&lt;code&gt;c&lt;/code&gt; 为步长。&lt;/p&gt;
-&lt;p&gt;所以 &lt;code&gt;pe[:, 0::2]&lt;/code&gt; 与 &lt;code&gt;pe[:, 1::2]&lt;/code&gt; 取出全部第 1 维中的元素，即行方向上不操作，再在第 2 维中分别从 &lt;code&gt;0&lt;/code&gt; 或 &lt;code&gt;1&lt;/code&gt; 开始以步长 &lt;code&gt;2&lt;/code&gt; 取出元素，即取出第 &lt;span class="math"&gt;\(2i\)&lt;/span&gt; 或第 &lt;span class="math"&gt;\(2i+1\)&lt;/span&gt; 列。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8811?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8811?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;在 &lt;code&gt;forward()&lt;/code&gt; 部分，输出的位置编码为 &lt;code&gt;pe[:, :x.size(1)]&lt;/code&gt;，这主要是为了确保矩阵形状在加法过程中不会因非法输入的广播而改变。其实在输入合法的情况下，&lt;code&gt;x.size(1)&lt;/code&gt; 就是 &lt;code&gt;d_model&lt;/code&gt;，等价于 &lt;code&gt;pe[:, :]&lt;/code&gt;，也等价于 &lt;code&gt;pe&lt;/code&gt;。&lt;/p&gt;
-&lt;!-- 指定 `requires_grad_(False)` 是因为 PyTorch 会自动保存 Tensor 的来源，用于更快地计算梯度，而这里的加法计算并不是训练过程，取消保存能节省一部分资源。 --&gt;
-&lt;h3 id="selfattention"&gt;SelfAttention&lt;/h3&gt;
-&lt;p&gt;在进入 Transformer 核心部分之前，我们需要再次明确一下输入模型的数据格式。上文中仅以输入模型一条数据（由若干 token 组成的一条句子）为例，在实际操作中，为了提高训练效率，会同时输入若干条数据，在构建模型时也要考虑到这一点。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8810?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8810?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;如上图所示，一次输入模型的数据条数就称为 batch size，所以模型所处理的其实是一个 &lt;span class="math"&gt;\(\mathrm{batch\_size}\times\mathrm{max\_len}\times\mathrm{d\_model}\)&lt;/span&gt; 的高维矩阵。也就是说，&lt;code&gt;x.size()&lt;/code&gt; 的结果是 &lt;code&gt;[batch_size, max_len, d_model]&lt;/code&gt;，务必注意三者顺序。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class SelfAttention(nn.Module):
-    def __init__(self, embed_size, heads):
-        super(SelfAttention, self).__init__()
-        self.embed_size = embed_size
-        self.heads = heads
-        self.head_dim = embed_size // heads
-        # 确保 embed_size 能被 heads 整除
-        assert (
-            self.head_dim * heads == embed_size
-        ), "Embedding size needs to be divisible by heads"
-
-        self.values = nn.Linear(embed_size, embed_size)
-        self.keys = nn.Linear(embed_size, embed_size)
-        self.queries = nn.Linear(embed_size, embed_size)
-        self.fc_out = nn.Linear(embed_size, embed_size)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;先看 &lt;code&gt;SelfAttention&lt;/code&gt; 的初始化部分，明白了注意力机制的计算过程就不难理解上面的各个属性了。&lt;code&gt;head_dim&lt;/code&gt; 是每一个 head 中注意力的维度，&lt;code&gt;embeds_size&lt;/code&gt; 必须能被 &lt;code&gt;heads&lt;/code&gt; 整除，否则将多头注意力拼接在一起的维数不等于模型处理的维数就会出现问题。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;values&lt;/code&gt;、&lt;code&gt;keys&lt;/code&gt;、&lt;code&gt;queries&lt;/code&gt; 都是计算多头注意力前的线性变换，&lt;code&gt;fc_out&lt;/code&gt; 是拼接多头注意力后的线性变换。线性变换可以直接调用 &lt;code&gt;nn.Linear(in_dim, out_dim)&lt;/code&gt;，只需要指定线性变换前后的维数即可，这里线性变换前后维数没有变化。&lt;/p&gt;
-&lt;p&gt;可能会有读者疑惑为什么这里所设定的线性变换不改变维数，原文中所描述的步骤不是应该将 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 升至 &lt;span class="math"&gt;\(d_v\)&lt;/span&gt; 再计算注意力吗？这是正确的，原文中的计算流程确实如此。如下图所示，在线性变换后复制 &lt;code&gt;h&lt;/code&gt; 份（例中为 2） &lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt;，用若干份 &lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt; 分别计算注意力再拼合起来，得到注意力的维数自然就是 &lt;code&gt;h * d_v&lt;/code&gt; （例中为 2 * 6），再用一个线性变换将其转化回模型所处理的维数 &lt;code&gt;d_model&lt;/code&gt;（例中为 5）。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8812?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8812?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;但代码中优化了一部分比较繁琐的操作，也有其他版本的代码使用了更接近原文的实现方式，如  &lt;a href="https://github.com/jadore801120/attention-is-all-you-need-pytorch/blob/master/transformer/SubLayers.py" rel="noopener" target="_blank"&gt;&lt;i class="fa-brands fa-github"&gt;&lt;/i&gt; jadore801120 / attention-is-all-you-need-pytorch &lt;/a&gt;，流程就如下图所示，勉强称之为「单头注意力变多头注意力」的一种代码实现吧。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8814?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8814?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;例中 &lt;code&gt;d_model&lt;/code&gt; 也就是词嵌入的维数还是 5，&lt;code&gt;heads&lt;/code&gt; 仍为 2，&lt;code&gt;d_value&lt;/code&gt; 仍为 6，但模型不再是将 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 升至 &lt;span class="math"&gt;\(d_v\)&lt;/span&gt;，而是将 &lt;span class="math"&gt;\(d_\mathrm{model}\)&lt;/span&gt; 直接升至 &lt;span class="math"&gt;\(hd_v\)&lt;/span&gt;，然后将 &lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt; 分成 &lt;code&gt;h&lt;/code&gt; 份，每份分别用于计算并拼接为注意力。与上例相比，本质上其实并无区别，区别仅仅是上例先复制多个矩阵再分别做线性变换，而该例只使用了一个更大的矩阵乘法就完成了上述操作，效率上更优。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8815?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8815?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;多头注意力还有一种实现方法，也是这里展示代码所使用的方法。如上图所示，这种方法对词嵌入的维数有要求，在词嵌入的步骤中就将 token 表示为 &lt;code&gt;d_v * h&lt;/code&gt; 维，这也是前文代码在初始化中使用 &lt;code&gt;assert&lt;/code&gt; 语句缘由。后续的线性变换不改变维数，计算多头注意力时直接将 &lt;code&gt;d_v * h&lt;/code&gt; 维切分为 &lt;code&gt;h&lt;/code&gt; 份作为每个 head 计算的对象。拼接各 head 的注意力后，最后的线性变换也不改变维数。&lt;/p&gt;
-&lt;p&gt;在我看来，这种方法应该是对前两种方法的简化，三个例子中用于计算多头注意力的 &lt;code&gt;d_value&lt;/code&gt; 都为 6，计算量相同。第 3 种方法需要更大的 &lt;code&gt;d_model&lt;/code&gt;，而且计算多头注意力时没有使用到全部的 embedding，虽说效果类似，但总觉有些奇怪。这或许是为了计算上的方便，不用做过多的矩阵变换 🤔&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;# class SelfAttention(nn.Module):
-    def forward(self, values, keys, query, mask):
-        # 获取 batch_size
-        N = query.shape[0]
-        # d_v, d_k, d_q
-        value_len, key_len, query_len = values.shape[1], keys.shape[1], query.shape[1]
-
-        # 对 query, key, value 做线性变换
-        values = self.values(values)    # (N, value_len, embed_size)
-        keys = self.keys(keys)          # (N, key_len, embed_size)
-        queries = self.queries(query)   # (N, query_len, embed_size)
-
-        # 将 token 的词嵌入划分为 heads 份
-        # d_model = embed_size = d_v * heads
-        values = values.reshape(N, value_len, self.heads, self.head_dim)
-        keys = keys.reshape(N, key_len, self.heads, self.head_dim)
-        queries = queries.reshape(N, query_len, self.heads, self.head_dim)
-
-        # queries: (N, query_len, heads, heads_dim),
-        # keys: (N, key_len, heads, heads_dim)
-        # energy: (N, heads, query_len, key_len)
-        energy = torch.einsum("nqhd,nkhd-&amp;gt;nhqk", [queries, keys])
-
-        # 将掩码矩阵中为 0 的对应项设为 -inf，不参与计算
-        if mask is not None:
-            energy = energy.masked_fill(mask == 0, float("-1e20"))
-
-        # 得到的点积除以 sqrt(d_k) 并用 Softmax 归一化
-        # attention: (N, heads, query_len, key_len)
-        attention = torch.softmax(energy / (self.embed_size ** (1 / 2)), dim=3)
-
-        # attention: (N, heads, query_len, key_len)
-        # values: (N, value_len, heads, heads_dim)
-        # out after matrix multiply: (N, query_len, heads, head_dim), then
-        # we reshape and flatten the last two dimensions.
-        out = torch.einsum("nhql,nlhd-&amp;gt;nqhd", [attention, values]).reshape(
-            N, query_len, self.heads * self.head_dim
-        )
-
-        # 拼接多头注意力后的线性变换
-        # out: (N, query_len, embed_size)
-        out = self.fc_out(out)
-
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;forward()&lt;/code&gt; 部分描述了上述计算多头重意力的过程。线性变换后，使用 &lt;code&gt;reshape()&lt;/code&gt; 方法将 Tensor 转化化为指定维度，也就是将词嵌入划分为 &lt;code&gt;heads&lt;/code&gt; 份的操作，Tensor 的形状由 &lt;code&gt;[N, query_len, embed_size]&lt;/code&gt; 变为 &lt;code&gt;[N, query_len, self.heads, self.head_dim]&lt;/code&gt;，把 &lt;code&gt;embed_size&lt;/code&gt; 拆成 &lt;code&gt;heads * head_dim&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;接着使用 &lt;code&gt;torch.einsum()&lt;/code&gt; 得到注意力计算的一个中间量 &lt;code&gt;energy&lt;/code&gt;。&lt;code&gt;torch.einsum()&lt;/code&gt; 称为爱因斯坦求和约定，可以非常简洁地进行矩阵乘法、转置待操作，但会有些难以理解。&lt;/p&gt;
-&lt;p&gt;例如矩阵乘法 &lt;span class="math"&gt;\(\boldsymbol{A}_{i\times j}\boldsymbol{B}_{j\times k}=\boldsymbol{C}_{i\times k}\)&lt;/span&gt;，可以表示为 &lt;code&gt;"ij,jk-&amp;gt;ik"&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; A = torch.randn(3, 4)
-&amp;gt;&amp;gt;&amp;gt; B = torch.randn(4, 5)
-&amp;gt;&amp;gt;&amp;gt; C = torch.einsum("ij,jk-&amp;gt;ik", [A, B])
-&amp;gt;&amp;gt;&amp;gt; C.size()
-torch.Size([3, 5])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;例如矩阵转置 &lt;span class="math"&gt;\((\boldsymbol{A}_{i\times j})^\top=\boldsymbol{B}_{j\times i}\)&lt;/span&gt;，可以表示为 &lt;code&gt;"ij-&amp;gt;ji"&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; A = torch.randn(3, 4)
-&amp;gt;&amp;gt;&amp;gt; B = torch.einsum("ij-&amp;gt;ji", [A])
-&amp;gt;&amp;gt;&amp;gt; B.size()
-torch.Size([4, 3])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;定义了矩阵乘法的表示后，相应的数量积与向量积就也能表示了，不再赘述。求和操作将矩阵转化为数值，行与列都会消失，所以 &lt;span class="math"&gt;\(\sum a_{ij}\in\boldsymbol{A}_{i\times j}\)&lt;/span&gt; 可以记作 &lt;code&gt;"ij-&amp;gt;"&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; A = torch.randn(3, 4)
-&amp;gt;&amp;gt;&amp;gt; torch.einsum("ij-&amp;gt;", [A])
-tensor(0.5634)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;此外，爱因斯坦求和约定还可以表示在指定维度上求和、做数量积等一系列的复杂操作，读者可以自行试验。&lt;/p&gt;
-&lt;p&gt;代码中 &lt;code&gt;queries&lt;/code&gt; 的形状为 &lt;code&gt;[N, query_len, heads, heads_dim]&lt;/code&gt;，记作 &lt;span class="math"&gt;\(\boldsymbol{Q}_{N\times q\times h \times d}\)&lt;/span&gt;，&lt;code&gt;keys&lt;/code&gt; 的形状为 &lt;code&gt;[N, key_len, heads, heads_dim]&lt;/code&gt;，记作 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times k\times h \times d}\)&lt;/span&gt;，那么 &lt;code&gt;torch.einsum("nqhd,nkhd-&amp;gt;nhqk", [queries, keys])&lt;/code&gt; 所做的操作就是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;将 &lt;span class="math"&gt;\(\boldsymbol{Q}_{N\times q\times h \times d}\)&lt;/span&gt; 转置为 &lt;span class="math"&gt;\(\boldsymbol{Q}_{N\times h \times q\times d}\)&lt;/span&gt;，将 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times k\times h \times d}\)&lt;/span&gt; 转置为 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times h\times k \times d}\)&lt;/span&gt;；&lt;/li&gt;
-&lt;li&gt;两个矩阵中的 &lt;span class="math"&gt;\(N\times h\)&lt;/span&gt; 是 &lt;code&gt;batch_size&lt;/code&gt; 与 &lt;code&gt;heads&lt;/code&gt; 的乘积，仅仅是表示数量，所以 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times h \times k\times d}\)&lt;/span&gt; 可以视作由 &lt;span class="math"&gt;\(N\times h\)&lt;/span&gt; 个 &lt;span class="math"&gt;\((\boldsymbol{K}_i)_{\ k\times d}\)&lt;/span&gt; 子矩阵构成的大矩阵。那么固定前两维不变，转置后两维，相当于&lt;strong&gt;转置&lt;/strong&gt;所有子矩阵，得到 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times h \times d\times k}\)&lt;/span&gt;；&lt;/li&gt;
-&lt;li&gt;固定前两维，令 &lt;span class="math"&gt;\(\boldsymbol{Q}_{N\times h \times q\times d}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{K}_{N\times h \times d\times k}\)&lt;/span&gt; 在后两维上做乘法，得到 &lt;span class="math"&gt;\((\boldsymbol{QK})_{N\times h \times q \times k}\)&lt;/span&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;仔细思考上述的转置和乘法过程，实际上就是在做多头注意力中的 &lt;span class="math"&gt;\(\boldsymbol{Q}\boldsymbol{K}^\top\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;掩码部分的操作先略过。接着 &lt;code&gt;torch.softmax(energy / (self.embed_size ** (1 / 2)), dim=3)&lt;/code&gt; 先将前一步中得到 &lt;code&gt;energy&lt;/code&gt; 除以 &lt;span class="math"&gt;\(\sqrt{d_k}\)&lt;/span&gt; 再用 Softmax 归一化。指定的 &lt;code&gt;dim=3&lt;/code&gt; 与 &lt;code&gt;dim=-1&lt;/code&gt; 等价，其目的是在最后一维的方向上归一化。&lt;/p&gt;
-&lt;p&gt;以一个简单的 &lt;span class="math"&gt;\(\boldsymbol{Q}\boldsymbol{K}^\top\)&lt;/span&gt; 乘法为例，如下图所示，&lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{K}\)&lt;/span&gt; 的每一行都是一个 token 的词嵌入表示。计算得到 &lt;span class="math"&gt;\(\boldsymbol{Q}\boldsymbol{K}^\top\)&lt;/span&gt; 后需要归一化，&lt;code&gt;softmax(dim=0)&lt;/code&gt; 是在行方向上归一化，在得到的结果中，全部行加起来，各元素为 1；&lt;code&gt;softmax(dim=1)&lt;/code&gt; 是在列方向上归一化，结果中的全部列加起来，各元素为 1。&lt;/p&gt;
-&lt;p&gt;计算注意力还是为了得到更准确的 token 表示，所以归一化的方向应该与原始的 &lt;span class="math"&gt;\(\boldsymbol{Q}\)&lt;/span&gt; 方向相同，即 &lt;code&gt;softmax(dim=1)&lt;/code&gt;。代码中也是一样，&lt;span class="math"&gt;\((\boldsymbol{QK})_{N\times h \times q \times k}\)&lt;/span&gt; 是 &lt;span class="math"&gt;\(N\times h\)&lt;/span&gt; 个 &lt;span class="math"&gt;\((\boldsymbol{Q}\boldsymbol{K}_i)_{q\times k}\)&lt;/span&gt; 子矩阵，要在所有子矩阵的列方向上做归一化，那么就是在第 4 个维度上做 Softmax，即 &lt;code&gt;softmax(dim=3)&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8820?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8820?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;此时，上述过程已经完成了多头注意力中的 &lt;span class="math"&gt;\(\mathrm{Softmax}(\boldsymbol{Q}\boldsymbol{K}^\top/\sqrt{d_k})\)&lt;/span&gt;，将结果记作 &lt;span class="math"&gt;\(\boldsymbol{A}_{N\times h\times q\times k}\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;在下一步中，用 &lt;code&gt;"nhql,nlhd-&amp;gt;nqhd"&lt;/code&gt; 表示了 &lt;span class="math"&gt;\(\boldsymbol{A}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{V}\)&lt;/span&gt; 的乘法，具体操作是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;将 &lt;span class="math"&gt;\(\boldsymbol{V}_{N\times v\times h\times d}\)&lt;/span&gt; 转置为 &lt;span class="math"&gt;\(\boldsymbol{V}_{N\times h\times v\times d}\)&lt;/span&gt;；&lt;/li&gt;
-&lt;li&gt;固定前两维，令 &lt;span class="math"&gt;\(\boldsymbol{A}_{N\times h\times q\times k}\)&lt;/span&gt; 与 &lt;span class="math"&gt;\(\boldsymbol{V}_{N\times h\times v\times d}\)&lt;/span&gt; 在后两维上做乘法，这里有 &lt;span class="math"&gt;\(q=k=v\)&lt;/span&gt;，所以结果为 &lt;span class="math"&gt;\((AV)_{N\times h \times q\times d}\)&lt;/span&gt;，到这一步已经计算了 &lt;span class="math"&gt;\(\mathrm{Softmax}(\boldsymbol{Q}\boldsymbol{K}^\top/\sqrt{d_k})\boldsymbol{V}\)&lt;/span&gt;；&lt;/li&gt;
-&lt;li&gt;将结果转置为 &lt;span class="math"&gt;\((AV)_{N\times q \times h\times d}\)&lt;/span&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;最后代码使用 &lt;code&gt;reshape()&lt;/code&gt; 合并后两维，将结果转化为 &lt;span class="math"&gt;\((AV)_{N\times q \times hd}\)&lt;/span&gt;，很巧妙地拼接了多个 head 的注意力，最后通过线性层再输出结果。&lt;/p&gt;
-&lt;p&gt;至此，Transformer 中的 &lt;code&gt;SelfAttention&lt;/code&gt; 部分已经结束，读者或许会觉得头昏脑胀。不必担心，最为艰涩的一部分已经过去，接下来是一路下坡 🚩&lt;/p&gt;
-&lt;h3 id="transformerblock"&gt;TransformerBlock&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class TransformerBlock(nn.Module):
-    def __init__(self, embed_size, heads, dropout, forward_expansion):
-        super(TransformerBlock, self).__init__()
-        # 前一层的多头注意力
-        self.attention = SelfAttention(embed_size, heads)
-        # Add &amp;amp; Norm 层
-        self.norm1 = nn.LayerNorm(embed_size)
-        self.norm2 = nn.LayerNorm(embed_size)
-        # 前馈层
-        self.feed_forward = nn.Sequential(
-            nn.Linear(embed_size, forward_expansion * embed_size),
-            nn.ReLU(),
-            nn.Linear(forward_expansion * embed_size, embed_size),
-        )
-
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, value, key, query, mask):
-        attention = self.attention(value, key, query, mask)
-
-        x = self.dropout(self.norm1(attention + query))
-        forward = self.feed_forward(x)
-        out = self.dropout(self.norm2(forward + x))
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;TransformerBlock&lt;/code&gt; 模块包括多头注意力与后接的 Add &amp;amp; Norm、Feed Forward、Add &amp;amp; Norm 三层。&lt;/p&gt;
-&lt;p&gt;初始化部分使用 &lt;code&gt;nn.Sequential()&lt;/code&gt; 将 &lt;code&gt;nn.Linear()&lt;/code&gt;、&lt;code&gt;nn.ReLU()&lt;/code&gt;、&lt;code&gt;nn.Linear&lt;/code&gt; 依次连接起来形成前馈层，正如前文所说的，数据进入前馈层先升维再激活，最后再降回原来维度，&lt;code&gt;forward_expansion&lt;/code&gt; 决定升维的倍数。&lt;code&gt;dropout&lt;/code&gt; 用于随机弃用一部分数据防止过拟合，直接调用 &lt;code&gt;nn.Dropout()&lt;/code&gt; 类，接收的数值决定了弃用数据的比例。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;forward()&lt;/code&gt; 部分也很简单，计算的多头注意力依次做 Add &amp;amp; Norm、Feed Forward、Add &amp;amp; Norm 三层后输出数据。&lt;/p&gt;
-&lt;h3 id="encoder"&gt;Encoder&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class Encoder(nn.Module):
-    def __init__(
-        self,
-        src_vocab_size,
-        embed_size,
-        num_layers,
-        heads,
-        device,
-        forward_expansion,
-        dropout,
-        max_length,
-    ):
-
-        super(Encoder, self).__init__()
-        self.embed_size = embed_size
-        # CPU or GPU
-        self.device = device
-        self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
-        self.position_embedding = PositionalEncoding(embed_size, max_length)
-
-        self.layers = nn.ModuleList(
-            [
-                TransformerBlock(
-                    embed_size,
-                    heads,
-                    dropout=dropout,
-                    forward_expansion=forward_expansion,
-                )
-                for _ in range(num_layers)
-            ]
-        )
-
-        self.dropout = nn.Dropout(dropout)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Encoder 是 Transformer 中的左边部分，Transformer 中有 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 个 &lt;code&gt;TransformerBlock&lt;/code&gt; 顺序叠放在一起组成 encoder。所以在初始化部分，使用列表推导式在 &lt;code&gt;layers&lt;/code&gt; 中放置了 &lt;code&gt;num_layers&lt;/code&gt; 层 &lt;code&gt;TransformerBlock&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;# class Encoder(nn.Module):
-    def forward(self, x, mask):
-        # 输入数据的 batch_size 与长度
-        N, seq_length = x.shape
-        # 从输入数据计算位置索引
-        positions = torch.arange(0, seq_length).expand(N, seq_length).to(self.device)
-        # 由位置索引得到位置编码，并 dropout 一部分数据
-        out = self.dropout(
-            (self.word_embedding(x) + self.position_embedding(positions))
-        )
-
-        # 让数据逐层经过 encoder，计算自注意力
-        for layer in self.layers:
-            out = layer(out, out, out, mask)
-
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在 &lt;code&gt;forward()&lt;/code&gt; 部分中，使用 &lt;code&gt;torch.arange()&lt;/code&gt; 得到位置索引，再用 &lt;code&gt;expand()&lt;/code&gt; 方法将位置索引矩阵的形状变为与输入数据相同，&lt;code&gt;expand()&lt;/code&gt; 方法的主要作用是复制，例如：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; torch.arange(0, 5)
-tensor([0, 1, 2, 3, 4])
-&amp;gt;&amp;gt;&amp;gt; torch.arange(0, 5).expand(2, 5)
-tensor([[0, 1, 2, 3, 4],
-        [0, 1, 2, 3, 4]])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;to()&lt;/code&gt; 方法用于指定 Tensor 存储的设备，例如 &lt;code&gt;"CPU"&lt;/code&gt; 或 &lt;code&gt;"GPU"&lt;/code&gt;。将词嵌入加上位置编码得到 &lt;code&gt;out&lt;/code&gt;，再将 &lt;code&gt;out&lt;/code&gt; 送入 encoder 中计算结果。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;layer(out, out, out)&lt;/code&gt; 看起来或许有些奇怪，请留意，前文已经讨论过，在 encoder 中计算的是&lt;strong&gt;自注意力&lt;/strong&gt;，所以此时的 query、key、value 都是相同的，而在 decoder 中就会有所不同了。&lt;/p&gt;
-&lt;h3 id="decoderblock"&gt;DecoderBlock&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class DecoderBlock(nn.Module):
-    def __init__(self, embed_size, heads, forward_expansion, dropout, device):
-        super(DecoderBlock, self).__init__()
-        self.norm = nn.LayerNorm(embed_size)
-        self.attention = SelfAttention(embed_size, heads=heads)
-        self.transformer_block = TransformerBlock(
-            embed_size, heads, dropout, forward_expansion
-        )
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, x, value, key, src_mask, trg_mask):
-        attention = self.attention(x, x, x, trg_mask)
-        query = self.dropout(self.norm(attention + x))
-        out = self.transformer_block(value, key, query, src_mask)
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;类似地，Decoder 是 Transformer 结构图中的右侧部分，也是由 &lt;span class="math"&gt;\(N\)&lt;/span&gt; 层 &lt;code&gt;DecoderBlock&lt;/code&gt; 组成。decoder 只比 encoder 多了一个掩码注意力层，其他结构相同，所以 &lt;code&gt;DecoderBlock&lt;/code&gt; 的初始化中直接调用了先前定义的 &lt;code&gt;TransformerBlock&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;forward()&lt;/code&gt; 中，target 进入 decoder 后，先计算&lt;strong&gt;自注意力&lt;/strong&gt;（&lt;code&gt;attention(x, x, x)&lt;/code&gt;），再经过 Add &amp;amp; Norm 层得到 &lt;code&gt;query&lt;/code&gt;，再与 encoder 中的结果做多头注意力（&lt;code&gt;attention(value, key, query)&lt;/code&gt;），输出结果。留意两种注意力计算的不同，参考 Transformer 结构图理解一下就会很明确。&lt;/p&gt;
-&lt;h3 id="decoder"&gt;Decoder&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class Decoder(nn.Module):
-    def __init__(
-        self,
-        trg_vocab_size,
-        embed_size,
-        num_layers,
-        heads,
-        forward_expansion,
-        dropout,
-        device,
-        max_length,
-    ):
-        super(Decoder, self).__init__()
-        self.device = device
-        self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
-        self.position_embedding = PositionEmbedding(embed_size,max_length)
-
-        self.layers = nn.ModuleList(
-            [
-                DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
-                for _ in range(num_layers)
-            ]
-        )
-        self.fc_out = nn.Linear(embed_size, trg_vocab_size)
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, x, enc_out, src_mask, trg_mask):
-        N, seq_length = x.shape
-        positions = torch.arange(0, seq_length).expand(N, seq_length).to(self.device)
-        x = self.dropout((self.word_embedding(x) + self.position_embedding(positions)))
-
-        for layer in self.layers:
-            x = layer(x, enc_out, enc_out, src_mask, trg_mask)
-
-        out = self.fc_out(x)
-
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;实现了 &lt;code&gt;DecoderBlock&lt;/code&gt; 后，&lt;code&gt;Decoder&lt;/code&gt; 就没有什么内容了，与 encoder 类似，就是将多个 &lt;code&gt;DecoderBlock&lt;/code&gt; 组装起来，按接口传入数据进行计算。&lt;/p&gt;
-&lt;h3 id="transformer"&gt;Transformer&lt;/h3&gt;
-&lt;p&gt;最后的 &lt;code&gt;Transformer&lt;/code&gt; 将各个模块都组合起来：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;class Transformer(nn.Module):
-    def __init__(
-        self,
-        src_vocab_size,
-        trg_vocab_size,
-        src_pad_idx,
-        trg_pad_idx,
-        embed_size=512,
-        num_layers=6,
-        forward_expansion=4,
-        heads=8,
-        dropout=0,
-        device="cpu",
-        max_length=100,
-    ):
-
-        super(Transformer, self).__init__()
-
-        self.encoder = Encoder(
-            src_vocab_size,
-            embed_size,
-            num_layers,
-            heads,
-            device,
-            forward_expansion,
-            dropout,
-            max_length,
-        )
-
-        self.decoder = Decoder(
-            trg_vocab_size,
-            embed_size,
-            num_layers,
-            heads,
-            forward_expansion,
-            dropout,
-            device,
-            max_length,
-        )
-
-        self.src_pad_idx = src_pad_idx
-        self.trg_pad_idx = trg_pad_idx
-        self.device = device
-
-    def make_src_mask(self, src):
-        src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2)
-        # (N, 1, 1, src_len)
-        return src_mask.to(self.device)
-
-    def make_trg_mask(self, trg):
-        N, trg_len = trg.shape
-        trg_mask = torch.tril(torch.ones((trg_len, trg_len))).expand(
-            N, 1, trg_len, trg_len
-        )
-
-        return trg_mask.to(self.device)
-
-    def forward(self, src, trg):
-        src_mask = self.make_src_mask(src)
-        trg_mask = self.make_trg_mask(trg)
-        enc_src = self.encoder(src, src_mask)
-        out = self.decoder(trg, enc_src, src_mask, trg_mask)
-        return out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;初如化部分主要是设定了默认的参数，并引入前面定义好的 &lt;code&gt;Encoder&lt;/code&gt; 与 &lt;code&gt;Decoder&lt;/code&gt; 模块。&lt;code&gt;Transformer&lt;/code&gt; 中还多了 &lt;code&gt;make_src_mask()&lt;/code&gt; 与 &lt;code&gt;make_trg_mask()&lt;/code&gt; 两个函数，这就不得不谈谈 Transformer 中的掩码机制了。&lt;/p&gt;
-&lt;p&gt;考虑一个情境，需要使用 Transformer 翻译一批（若干条）句子，各句子的长度自然是不同的，那么输入模型的数据的形状也是不同的，这在后续步骤中就会出现很多问题。在实际中，通常会找到文本中最长的句子（&lt;code&gt;max_len&lt;/code&gt;），再将所有句子都变为该长度，这种操作称为 padding。&lt;/p&gt;
-&lt;p&gt;具体做法如下图所示，分别用 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 与 &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; 标记句子的起讫，用 &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; 填充 &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; 后的空位，各数据的长度就会一致。然后根据设定的词典，将 token 转化为索引，接着再做词嵌入。&lt;code&gt;make_src_mask()&lt;/code&gt; 就是根据 &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; 的索引，将 &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; 所在位置都标记为 &lt;code&gt;False&lt;/code&gt;，其他位置标记为 &lt;code&gt;True&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;后续 &lt;code&gt;unsqueeze()&lt;/code&gt; 的操作比较费解，其实它是利用了 PyTorch 的广播机制，用于自动匹配矩阵的形状。图中的例子可以看作是将矩阵翻转再在第 3 个方向上拉长。因为代码中的掩码要用于掩盖形状为 &lt;code&gt;[N, heads, query_len, key_len]&lt;/code&gt; 具有 4 个方向的 &lt;code&gt;energy&lt;/code&gt;，所以要额外再做一次 &lt;code&gt;unsqueeze()&lt;/code&gt;。最后将掩码用于掩盖词嵌入数据，掩码就像一个罩子盖在词嵌入数据上，模型只计算 &lt;code&gt;True&lt;/code&gt; 位置上的数据。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8821?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8821?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;使用掩码可以让模型灵活地处理不同长度的数据，数据的长度由掩码决定，改变掩码就相当于改变处理的数据，而不去改变存储在硬件中的数据，这对于计算更有利。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;make_trg_mask()&lt;/code&gt; 函数产生用于 target 数据的掩码，在 target 上使用掩码的原因与 source 不同。在 decoder 中，模型要根据输入数据的计算结果给出新 token，而生成文本的过程是顺序的，依赖于前一步生成的结果。具体来说就是，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;序列以 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 标记起始；&lt;/li&gt;
-&lt;li&gt;根据已有的 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 生成 &lt;code&gt;A&lt;/code&gt;；&lt;/li&gt;
-&lt;li&gt;根据生成的 &lt;code&gt;&amp;lt;s&amp;gt; A&lt;/code&gt; 生成 &lt;code&gt;B&lt;/code&gt;；&lt;/li&gt;
-&lt;li&gt;根据生成的 &lt;code&gt;&amp;lt;s&amp;gt; A B&lt;/code&gt; 生成 &lt;code&gt;C&lt;/code&gt;；&lt;/li&gt;
-&lt;li&gt;以此类推，直至模型生成 &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt;，句子结束。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;前文已经讨论过，这种方法有很多局限性，而 Transformer 的巧妙之处就在于能够并行完成这个过程。&lt;/p&gt;
-&lt;p&gt;我们可以考虑训练过程，实际上与生成过程类似，训练过程就是要根据已经生成的 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 建立与下一个 token &lt;code&gt;A&lt;/code&gt; 的关系，而不能是与后续 &lt;code&gt;B&lt;/code&gt; 或 &lt;code&gt;C&lt;/code&gt; 的关系，将这种关系以参数的形式存储到模型中，推理阶段就能顺利地根据 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 生成 &lt;code&gt;A&lt;/code&gt;。这样的训练过程可以表示为一个下三角矩阵，如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8822?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8822?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Transformer 不需要逐个 token 生成再建立关系，可以通过下三角矩阵一次直接取出 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt;、&lt;code&gt;&amp;lt;s&amp;gt; A&lt;/code&gt;、&lt;code&gt;&amp;lt;s&amp;gt; A B&lt;/code&gt; 等 token 序列，并行地训练模型与对应的下一个 token 建立关系。最后将 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 与每一步骤中新生成 token &lt;code&gt;A&lt;/code&gt;、&lt;code&gt;B&lt;/code&gt;、&lt;code&gt;C&lt;/code&gt;、&lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; 拼合起来，即得到生成的文本。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;make_trg_mask()&lt;/code&gt; 就是在构建这个下三角的掩码。&lt;code&gt;torch.ones()&lt;/code&gt; 用于生成指定大小元素全为 &lt;code&gt;1&lt;/code&gt; 的矩阵，然后用 &lt;code&gt;torch.tril()&lt;/code&gt; 取该矩阵的下三角，再用 &lt;code&gt;expand()&lt;/code&gt; 方法将该矩阵复制到与 &lt;code&gt;batch_size&lt;/code&gt; 匹配。&lt;/p&gt;
-&lt;h3 id="train"&gt;Train&lt;/h3&gt;
-&lt;p&gt;从前面讨论的模型生成过程还可以知道的一点是，模型永远不会生成 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt;，所以 target 中没有 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt;，而 source 则必须由 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 起始。在实际中，一种做法是，用预处理的脚本在原始训练数据（例如 &lt;code&gt;.csv&lt;/code&gt;、&lt;code&gt;.txt&lt;/code&gt; 文件）中标上标记；另一种方法是，在训练代码中加入预处理的功能，读取数据时分别为数据做上相应标记。为了方便起见，本文就不实现这一部分功能，使用 Transformer 可以直接处理的数据。&lt;/p&gt;
-&lt;p&gt;生成训练数据的函数为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;def generate_random_batch(batch_size, max_length=16):
-    src = []
-    for i in range(batch_size):
-        # 随机指定有效数据的长度
-        random_len = random.randint(1, max_length - 2)
-        # 在数据起讫处加上标记，"&amp;lt;s&amp;gt;": 0, "&amp;lt;e&amp;gt;": 1
-        random_nums = [0] + [random.randint(3, 9) for _ in range(random_len)] + [1]
-        # padding 填满数据长度，"&amp;lt;p&amp;gt;": [2]
-        random_nums = random_nums + [2] * (max_length - random_len - 2)
-        src.append(random_nums)
-
-    src = torch.LongTensor(src)
-    # tgt 去除末尾的 token
-    tgt = src[:, :-1]
-    # tgt_y 去除首个 &amp;lt;s&amp;gt;，即模型需要预测的 token，用于计算损失
-    tgt_y = src[:, 1:]
-    # 模型需要预测的 token 数量（不计 &amp;lt;p&amp;gt;），用于计算损失函数
-    n_tokens = (tgt_y != 2).sum()
-
-    return src, tgt, tgt_y, n_tokens
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;generate_random_batch()&lt;/code&gt; 能够生成 Transformer 可以直接计算的相同的 source 与 target，该模型的任务目标就是生成与输入相同的序列。模型不会生成 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt;，所以&lt;code&gt;tgt_y&lt;/code&gt; 去除 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 用于与生成的序列对比计算损失，这很容易理解。但为什么 &lt;code&gt;tgt&lt;/code&gt; 需要去除最后一个 token 呢？这一点我将在后文生成序列的 Predict 一节讨论。训练与测试模型的代码如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(device)
-
-# &amp;lt;p&amp;gt; 索引
-src_pad_idx = 2
-trg_pad_idx = 2
-# 词表大小，即全部 token 数量，包括 &amp;lt;s&amp;gt; &amp;lt;e&amp;gt; &amp;lt;p&amp;gt; 等标记
-src_vocab_size = 10
-trg_vocab_size = 10
-# 文本最大长度
-max_len = 16
-
-model = Transformer(src_vocab_size, trg_vocab_size, src_pad_idx, trg_pad_idx,
-                    embed_size=128, num_layers=2, dropout=0.1, max_length=max_len,
-                    device=device).to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
-criteria = nn.CrossEntropyLoss()
-total_loss = 0
-
-for step in range(2000):
-    src, tgt, tgt_y, n_tokens = generate_random_batch(batch_size=2, max_length=max_len)
-    optimizer.zero_grad()
-    out = model(src, tgt)
-
-    # contiguous() 与 view() 将矩阵在各行首尾相连为一行（即向量）
-    # 在两向量间计算损失函数
-    # tgt_y 中元素的值是索引，除以 n_tokens 将其缩放到 [0, 1]
-    loss = criteria(out.contiguous().view(-1, out.size(-1)),
-                    tgt_y.contiguous().view(-1)) / n_tokens
-    loss.backward()
-    optimizer.step()
-
-    total_loss += loss
-
-    if step != 0 and step % 40 == 0:
-        print(f"Step {step}, total_loss: {total_loss}")
-        total_loss = 0
-
-# Predict
-copy_test(model, max_len)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;PyTorch 使用 &lt;code&gt;torch.optim&lt;/code&gt; 定义模型的训练过程，其中可以选择非常多种的优化过程，这里选择了 &lt;code&gt;Adam()&lt;/code&gt;，&lt;code&gt;lr=3e-4&lt;/code&gt; 指定了训练步骤的学习率。&lt;code&gt;nn.CrossEntropyLoss()&lt;/code&gt; 用于计算两个向量的交叉熵损失，作为训练过程的损失函数。&lt;/p&gt;
-&lt;p&gt;在训练循环中，每一个循环处理 1 个 batch 的数据，在同一个 batch 中 PyTorch 自动计算梯度的反向传播并更新参数。但在新的 batch 中，因为已经更新到参数中了，我们不希望保留上一个 batch 的梯度，所以用 &lt;code&gt;optimizer.zero_grad()&lt;/code&gt; 将梯度清空。&lt;/p&gt;
-&lt;p&gt;将 &lt;code&gt;src&lt;/code&gt; 与 &lt;code&gt;tgt&lt;/code&gt; 传入模型，&lt;code&gt;out&lt;/code&gt; 就是 Transformer 的计算结果。&lt;code&gt;loss.backward()&lt;/code&gt; 与 &lt;code&gt;optimizer.step()&lt;/code&gt; 两行代码就是前面所说的让 PyTorch 自动计算梯度的反向传播并更新参数。&lt;/p&gt;
-&lt;h3 id="predict"&gt;Predict&lt;/h3&gt;
-&lt;p&gt;训练结束后，我用 &lt;code&gt;copy_test()&lt;/code&gt; 函数测试模型的效果，这个测试函数定义为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-py"&gt;def copy_test(model, max_len):
-    model = model.eval()
-    src = torch.LongTensor([[0, 6, 3, 4, 5, 6, 7, 4, 3, 1, 2, 2]])
-    # 模型从 &amp;lt;s&amp;gt; 开始生成序列，但不会生成 &amp;lt;s&amp;gt;，所以指定起始的 &amp;lt;s&amp;gt;
-    tgt = torch.LongTensor([[0]])
-
-    for i in range(max_len):
-        # out： (1, i + 1, 10)
-        # i + 1 模型输出的 token 数量
-        # 10 为 vocab_size，是词表中 token 数量，out 是词表中各 token 在此处出现的概率
-        out = model(src, tgt)
-        # 取输出的 i + 1 个 token 中的最后一个
-        # predict: (1, 10)
-        predict = out[:, -1]
-        # 取得概率最大的 token 索引
-        # y: (1, )
-        y = torch.argmax(predict, dim=1)
-        # 逐个拼合 token 索引
-        # y.unsqueeze(0): (1, 1)
-        # tgt: (1, i + 1 )
-        tgt = torch.concat([tgt, y.unsqueeze(0)], dim=1)
-        # 若生成 token &amp;lt;e&amp;gt;，表示句子结束，退出循环
-        if y == 1:
-            break
-    print(tgt)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;eval()&lt;/code&gt; 方法令模型退出训练模式，会关闭 dropout 等训练过程中才需要的功能。在循环中逐个拼合生成的 token，就能得到生成的句子。循环中的操作如下图所示，在第 1 次循环中，&lt;code&gt;tgt&lt;/code&gt; 为 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt;，通过与 &lt;code&gt;src&lt;/code&gt; 的注意力与下三角矩阵得到计算结果 &lt;code&gt;out&lt;/code&gt; 为 &lt;code&gt;A&lt;/code&gt;，然后将 &lt;code&gt;tgt&lt;/code&gt; 更新为 &lt;code&gt;&amp;lt;s&amp;gt; A&lt;/code&gt;，在第 2 次循环中，得到的 &lt;code&gt;out&lt;/code&gt; 为 &lt;code&gt;A B&lt;/code&gt;，所以在每次循环中都只取新生成的 &lt;code&gt;out[-1]&lt;/code&gt; 更新 &lt;code&gt;tgt&lt;/code&gt;，最后将结果拼接起来得到完整的输出结果。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8824?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8824?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;或许读者会有疑惑，既然使用下三角矩阵并行计算是 Transformer 的优势，为什么这里却是用循环顺序地生成呢？为什么计算上图中最后一个矩阵的 &lt;code&gt;out&lt;/code&gt;，而是要用一个个的 &lt;code&gt;out[-1]&lt;/code&gt; 呢？&lt;/p&gt;
-&lt;p&gt;要注意的是，训练与生成有重要的一个不同，就是生成中的 &lt;code&gt;tgt&lt;/code&gt; 是空白的、模型不可知的，而训练中的 &lt;code&gt;tgt&lt;/code&gt; 是完整的、模型可知的。如上图中，&lt;code&gt;tgt&lt;/code&gt; 在每个循环中都在变长，只有 &lt;code&gt;tgt&lt;/code&gt; 变成了 &lt;code&gt;&amp;lt;s&amp;gt; A B C &amp;hellip;&lt;/code&gt; 才会有最后一个矩阵中的 &lt;code&gt;out&lt;/code&gt;。如果说只要最后一个矩阵中的 &lt;code&gt;out&lt;/code&gt; 而不要前面的步骤，就变成了「吃两个馒头吃饱，所以只吃后一个能吃得饱的馒头」的笑话。&lt;/p&gt;
-&lt;p&gt;所以&lt;dot&gt;生成过程并不是并行的，Transformer 的并行指的是训练过程&lt;/dot&gt;。如下图所示，在训练过程中 Transformer 只需要做一次下三角矩阵的运算就可以建立多个 token 间的关系。这张图还解释了模型永远不会生成 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 但 &lt;code&gt;tgt&lt;/code&gt; 必须以 &lt;code&gt;&amp;lt;s&amp;gt;&lt;/code&gt; 起始的原因。图中还可以很明白的看出为什么先前的训练代码要去除 &lt;code&gt;tgt&lt;/code&gt; 末尾的 token，因为 Transformer 的输出 &lt;code&gt;out&lt;/code&gt; 计算的是 &lt;code&gt;tgt&lt;/code&gt; 下一个 token（及此前）的计算结果，若不去除末位就超出范围了。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8823?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8823?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;最后训练与测试的结果为&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-python-repl"&gt;cpu
-Step 40, total_loss: 4.021485328674316
-Step 80, total_loss: 2.8817126750946045
-&amp;hellip;&amp;hellip;
-Step 1920, total_loss: 0.9760974049568176
-Step 1960, total_loss: 0.8644390106201172
-tensor([[0, 6, 3, 4, 5, 7, 6, 4, 3, 1]])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出的结果没有输出 source &lt;code&gt;[[0, 6, 3, 4, 5, 6, 7, 4, 3, 1, 2, 2]]&lt;/code&gt; 中末尾代表 &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; 的 &lt;code&gt;2&lt;/code&gt;，前面的 token 索引也与 source 相差无几，说明模型正确复制了输入序列，训练是成功的。&lt;/p&gt;
-&lt;h2 id="hou-ji_1"&gt;后记&lt;/h2&gt;
-&lt;p&gt;至此，这篇 Transformer 的介绍终于告一段落了。从起草、绘图再到最后的代码梳理，前后花了一周多的时间。虽名为介绍，其实还是为自己在做梳理，边写边想、边想边查，终于把 Transformer 中的一些细节弄明白了，这篇笔记也能为读者勾勒出一个大致的图景。&lt;/p&gt;
-&lt;p&gt;当然，限于篇幅，限于「从零起步」的初衷，也限于笔力，还有许多更深层次问题都没有探讨，但我相信，在看懂了这篇笔记之后，再去阅读那些文章已经不成问题了，这也符合我的初心。&lt;/p&gt;
-&lt;p&gt;或许读者还很困惑，疑惑为什么数学推导上并不那么严谨的模型居然能有效，甚至具有极好的表现，那就说明需要钻入研究 Transformer 的底层了，不可不再读些更专业的文章。我也把写这篇文章时所参考以及较好的相关资料罗列于后，以飨读者。&lt;/p&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://arxiv.org/abs/1706.03762" rel="noopener" target="_blank"&gt;Vaswani, A. et al. Attention Is All You Need (2017) - arXiv&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://spaces.ac.cn/archives/4765" rel="noopener" target="_blank"&gt;《Attention is All You Need》浅读（简介+代码）- 科学空间&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://spaces.ac.cn/archives/6933" rel="noopener" target="_blank"&gt;从语言模型到 Seq2Seq：Transformer 如戏，全靠 Mask - 科学空间&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://pytorch.org/tutorials/beginner/transformer_tutorial.html" rel="noopener" target="_blank"&gt;Language Modeling with nn.Transformer and torchtext - PyTorch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://jalammar.github.io/illustrated-transformer/" rel="noopener" target="_blank"&gt;The Illustrated Transformer - Jay Alammar&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.cnblogs.com/wevolf/p/12484972.html" rel="noopener" target="_blank"&gt;Transformer 源码中 Mask 机制的实现 - 博客园&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/434232512" rel="noopener" target="_blank"&gt;torch.einsum 详解 - 知乎&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://blog.csdn.net/zhaohongfei_358/article/details/126019181" rel="noopener" target="_blank"&gt;Pytorch 中 nn.Transformer 的使用详解与 Transformer 的黑盒讲解 - CSDN 博客&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width &lt; 768) ? "left" : align;
-        indent = (screen.width &lt; 768) ? "0em" : indent;
-        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Python"></category><category term="PyTorch"></category><category term="Transformer"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry></feed>

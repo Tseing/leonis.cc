@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html" rel="canonical" />
+  <!-- Feed -->
+        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+  <!-- fonts -->
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/hack-font/3.003/web/hack.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+
+
+
+    <meta name="description" content="最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 [Errno 2] No such file or directory...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Linux">
+    <meta name="tags" content="BMS">
+    <meta name="tags" content="EulerOS">
+    <meta name="tags" content="Proxy">
+    <meta name="tags" content="Bug">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo's blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 [Errno 2] No such file or directory..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2024-03-15 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Linux"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="BMS"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="EulerOS"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Proxy"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Bug"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误",
+  "headline": "华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误",
+  "datePublished": "2024-03-15 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html",
+  "description": "最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 [Errno 2] No such file or directory..."
+}
+</script>
+
+<!-- waline comment -->
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
+          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
+          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
+          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
+          <li><a href="https://neodb.social/users/Leo/" role="presentation">破橱簏</a></li>
+          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
+          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
+                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button" aria-label="Menu">
+              <i class="ic ic-menu" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </span>
+        </nav>
+        <h1 class="post-title">华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://leonis.cc/author/leo.html">Leo</a>
+            | <time datetime="2024年 3月15日">2024年 3月15日</time>
+        </span>
+            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+            <div class="toc-nav">
+              <div id="toc"><ul><li><a class="toc-href" href="#geng-huan-yum-yuan" title="更换 yum 源">更换 yum 源</a></li><li><a class="toc-href" href="#errno-2-no-such-file-or-directory" title="[Errno 2] No such file or directory">[Errno 2] No such file or directory</a></li><li><a class="toc-href" href="#xiu-gai-yum-yuan-dai-li" title="修改 yum 源代理">修改 yum 源代理</a></li><li><a class="toc-href" href="#jie-jue-fang-an" title="解决方案">解决方案</a></li><li><a class="toc-href" href="#references" title="References">References</a></li></ul></div>
+            </div>
+        <div class="inner">
+            <section class="post-content">
+                <p>最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了 <code>[Errno 2] No such file or directory</code> 的错误，一层层查找后发现这可能是一个由代理设置引起 URL 编码错误而导致的 bug。由于网络上几乎没有找到任何相关的资料，就把整个过程留下来作为记录。</p>
+<p>首先从安装 Nginx 所需的依赖开始：</p>
+<pre><code class="language-shell">$ sudo yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+...
+Error:
+ Problem: package pcre-devel-8.32-15.1.h6.aarch64 requires libpcre16.so.0()(64bit), but none of the providers can be installed
+  - package pcre-devel-8.32-15.1.h6.aarch64 requires libpcre32.so.0()(64bit), but none of the providers can be installed
+  - package pcre-devel-8.32-15.1.h6.aarch64 requires libpcrecpp.so.0()(64bit), but none of the providers can be installed
+  - cannot install both pcre-8.32-15.1.h1.aarch64 and pcre-8.42-4.h3.eulerosv2r8.aarch64
+  - cannot install both pcre-8.32-15.1.h6.aarch64 and pcre-8.42-4.h3.eulerosv2r8.aarch64
+  - cannot install the best candidate for the job
+</code></pre>
+<p>竟然提示没有找到可用的包，按理来说 BMS 已经配置了华为官方的源，既不会有网络问题也不会缺失 pcre-devel 这样的常见包。于是我开始排查 yum 源的问题，先检查设备的系统和架构：</p>
+<pre><code class="language-shell">$ uname -m
+aarch64
+$ cat /etc/os-release
+NAME="EulerOS"
+VERSION="2.0 (SP8)"
+ID="euleros"
+ID_LIKE="rhel fedora centos"
+VERSION_ID="2.0"
+PRETTY_NAME="EulerOS 2.0 (SP8)"
+ANSI_COLOR="0;31"
+</code></pre>
+<p>可以看到操作系统是华为的 EulerOS 2.0 (SP8)，架构是 aarch64。再检查默认的 yum 源：</p>
+<pre><code class="language-shell">$ sudo cat /etc/yum.repos.d/EulerOS.repo
+[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.3/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.3/os/RPM-GPG-KEY-EulerOS
+</code></pre>
+<p>仔细看默认的 yum 源，系统版本明明是 <code>2.0 (SP8)</code>，URL 却指向了 <code>2.3</code>。测试直接替换后的链接 <code>http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/</code> 可达，那么就尝试改为使用该 yum 源。</p>
+<h2 id="geng-huan-yum-yuan">更换 yum 源</h2>
+<p>这里的修改很简单，我就没有额外备份，使用 vim 直接编辑文件 <code>/etc/yum.repos.d/EulerOS.repo</code> 并保存，修改后的 yum 源信息为</p>
+<pre><code class="language-toml">[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS
+</code></pre>
+<p>通过以下命令更新 yum 源：</p>
+<pre><code class="language-shell">$ sudo yum clean all            # 清除旧 yum 源缓存
+$ sudo yum makecache            # 生成新 yum 源缓存
+$ sudo yum repolist             # 检查 yum 源连接状态
+EulerOS-2.0SP8 local repo for internal use          0.0  B/s |   0  B     00:00
+EulerOS-2.0SP8 base                                 7.4 MB/s |  17 MB     00:02
+Failed to synchronize cache for repo 'base', ignoring this repo.
+Last metadata expiration check: 0:00:06 ago on Fri 15 Mar 2024 09:54:47 AM CST.
+repo id                           repo name                              status
+euler-base                        EulerOS-2.0SP8 base                    16,599
+</code></pre>
+<p>上述信息中的 Fail 指示 <code>EulerOS-2.0SP8 local repo for internal use</code> 这个源不可用，看名字应该是内部使用的 yum 源，在此处没有影响。列举出的 repolist 中有 <code>EulerOS-2.0SP8 base</code> 一项，说明更改后的源已经可用。</p>
+<h2 id="errno-2-no-such-file-or-directory">[Errno 2] No such file or directory</h2>
+<p>再次尝试安装 Nginx 的依赖：</p>
+<pre><code class="language-shell">$ sudo yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+...
+(19/29): gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm         6.2 MB/s | 7.4 MB     00:01
+...
+[Errno 2] No such file or directory: '/var/cache/dnf/euler-base-85cc05102200a8ac/packages/gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm'
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing 'dnf clean packages'.
+</code></pre>
+<p>提示 <code>[Errno 2] No such file or directory</code>，没有找到 <code>gcc-c++</code> 的 RPM 文件，奇怪的是在安装输出的信息中分明提示已经成功下载了 <code>gcc-c++</code>。</p>
+<p>错误信息中指引了一个文件目录 <code>/var/cache/dnf/euler-base-85cc05102200a8ac/packages/</code>，不妨检查一下其中的文件：</p>
+<pre><code class="language-shell">$ sudo ls /var/cache/dnf/euler-base-85cc05102200a8ac/packages/
+cpp-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm                  make-4.2.1-10.h3.eulerosv2r8.aarch64.rpm
+gcc-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm                  openssl-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+gcc-c%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm          openssl-devel-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+gcc-gfortran-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm         openssl-libs-1.1.1-3.h31.eulerosv2r8.aarch64.rpm
+keyutils-libs-devel-1.5.10-8.h4.eulerosv2r8.aarch64.rpm         pcre2-devel-10.32-3.h1.eulerosv2r8.aarch64.rpm
+krb5-devel-1.16.1-21.h1.eulerosv2r8.aarch64.rpm                 pcre2-utf16-10.32-3.h1.eulerosv2r8.aarch64.rpm
+libcom_err-devel-1.44.3-1.h4.eulerosv2r8.aarch64.rpm            pcre2-utf32-10.32-3.h1.eulerosv2r8.aarch64.rpm
+libgfortran-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm          pcre-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libgomp-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm              pcre-cpp-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libkadm5-1.16.1-21.h1.eulerosv2r8.aarch64.rpm                   pcre-devel-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libselinux-devel-2.8-4.h2.eulerosv2r8.aarch64.rpm               pcre-utf16-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libsepol-devel-2.8-2.eulerosv2r8.aarch64.rpm                    pcre-utf32-8.42-4.h3.eulerosv2r8.aarch64.rpm
+libstdc%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm        zlib-1.2.11-14.h4.eulerosv2r8.aarch64.rpm
+libstdc%2b%2b-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm  zlib-devel-1.2.11-14.h4.eulerosv2r8.aarch64.rpm
+libverto-devel-0.3.0-6.h1.eulerosv2r8.aarch64.rpm
+</code></pre>
+<p>可以看到下载的 29 个文件都在其中，从中寻找报错的 <code>gcc-c++</code>，看到文件名时恍然大悟，<code>gcc-c++</code> 被转义成了 <code>gcc-c%2b%2b</code>。同样带有 <code>+</code> 的 <code>libstdc++</code> 和 <code>libstdc++-devel</code> 两个安装文件也都被用 <code>%2b</code> 转义，用未转义前的名称自然无法寻找到这些文件。</p>
+<p>起初以为这是 yum 在处理特殊符号时 URL 编码的 bug，但在互联网上用关键词检索找不到任何相关的信息。仔细一想，yum 是无数 Linux 平台上默认的包管理器，怎么可能犯这么低级的错误，况且在安装这么常见的依赖时就能引发的 bug 理应很快就被修复了。</p>
+<p>在许久漫无目的地寻找后，偶然发现了 GitHub 上的一篇 <a href="https://github.com/tmatilai/vagrant-proxyconf/issues/129" rel="noopener" target="_blank"><i class="fa-brands fa-github"></i> Issue</a>，大意是说代理软件应当支持识别 <code>yum.conf</code> 中的 URL 编码，否则会导致一些问题。这倒提醒了我，会不会是代理导致的问题呢？</p>
+<h2 id="xiu-gai-yum-yuan-dai-li">修改 yum 源代理</h2>
+<p>设备可能带有华为用来日常管理维护设备的内部默认代理，不宜擅自修改，最好是仅修改 yum 源所使用的代理，不影响其他服务的运作。同样用 vim 修改 <code>/etc/yum.repos.d/EulerOS.repo</code> 文件的内容，仅在最后添加一行：</p>
+<pre><code class="language-toml">[euler-base]
+name=EulerOS-2.0SP8 base
+baseurl=http://mirrors.huaweicloud.com/euler/2.8/os/aarch64/
+enabled=1
+gpgcheck=1
+gpgkey=http://mirrors.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS
+proxy=_none_
+</code></pre>
+<p>然后用同样的操作尝试更新 yum 源：</p>
+<pre><code class="language-shell">$ sudo yum clean all
+$ sudo yum makecache
+EulerOS-2.0SP8 local repo for internal use                          0.0  B/s |   0  B     00:00
+EulerOS-2.0SP8 base                                                 0.0  B/s |   0  B     00:01
+Failed to synchronize cache for repo 'base', ignoring this repo.
+Failed to synchronize cache for repo 'euler-base', ignoring this repo.
+Metadata cache created.
+</code></pre>
+<p>发现禁止源 <code>EulerOS-2.0SP8 base</code> 使用代理后，就无法连接上源仓库了。可以确定华为云上的 BMS 确实设置有供 yum 安装所使用的特殊代理，文件名的 URL 编码异常可能由该代理导致，从而引起 <code>[Errno 2] No such file or directory</code> 的错误。</p>
+<h2 id="jie-jue-fang-an">解决方案</h2>
+<p>由于华为云 BMS 获取 yum 源仓库必须通过默认代理，不能通过取消代理解决该问题。那么就只能通过最朴素、最直接的方法解决这个问题了&mdash;&mdash;手动改文件名。注意核对 cache 文件目录，手动将文件名中的 <code>%2b</code> 改回为 <code>+</code>，我这里有 <code>gcc-c%2b%2b</code> <code>libstdc%2b%2b</code> <code>libstdc%2b%2b-devel</code> 三个文件需要修改：</p>
+<pre><code class="language-shell">$ cd /var/cache/dnf/
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/gcc-c%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/gcc-c++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/libstdc++-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+$ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm ./euler-base-85cc05102200a8ac/packages/libstdc++-devel-7.3.0-20190804.h29.eulerosv2r8.aarch64.rpm
+</code></pre>
+<p>然后再尝试原先的安装命令，就发现先前提示无法找到的安装包能够成功安装上了。</p>
+<hr/>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://pshizhsysu.gitbook.io/linux/yum/wei-yum-yuan-pei-zhi-dai-li" rel="noopener" target="_blank">为 yum 源配置代理 - GitBook</a></li>
+<li><a href="https://linux.cn/article-15657-1.html" rel="noopener" target="_blank">如何知道你是否使用了代理服务器？ - Linux 中国</a></li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <!-- <div class="post-share">
+                    <a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误&amp;url=https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                      <i class="ic ic-twitter" aria-hidden="true"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                      <i class="ic ic-facebook" aria-hidden="true"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html&amp;title=华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+                      <i class="ic ic-linkedin" aria-hidden="true"></i><span class="hidden">LinkedIn</span>
+                    </a>
+                    <a title="Email" aria-label="Email" class="email" href="mailto:?subject=华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误&amp;body=https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html">
+                      <i class="ic ic-mail" aria-hidden="true"></i><span class="hidden">Email</span>
+                    </a>
+                    <div class="clear"></div>
+                </div> -->
+
+                <aside class="post-tags">
+<a href="https://leonis.cc/tag/linux.html">Linux</a><a href="https://leonis.cc/tag/bms.html">BMS</a><a href="https://leonis.cc/tag/euleros.html">EulerOS</a><a href="https://leonis.cc/tag/proxy.html">Proxy</a><a href="https://leonis.cc/tag/bug.html">Bug</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                            <p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tientsin</span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-mastodon"><a rel="noopener" target="_blank" href="https://mast.dragon-fly.club/@leonis"><i class="fa-brands fa-mastodon fa-fw"></i></i> @leonis@dragon-fly.club</a></span>
+                            <span class="post-author-github"><a rel="noopener" target="_blank" href="https://github.com/Tseing"><i class="ic ic-github"></i> GitHub</a></span>
+                            <span class="post-author-email"><a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"><i class="ic ic-mail"></i>  im.yczeng@outlook.com</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2023-11-17-deploy-backblaze-image-hosting.html">
+                        <section class="post-nav-teaser">
+                            <i class="ic ic-arrow-right"></i>
+                                <h2 class="post-nav-title">Cloudflare + Backblaze 实现免费的博客图床方案</h2>
+                            <p class="post-nav-excerpt">图床一直是困扰 Markdown 以及静态博客用户的麻烦事，Ln's Blog...</p>
+                        </section>
+                    </a>
+                    <div class="clear"></div>
+                </aside>
+
+                <div id="waline"></div>
+                <script>
+                    Waline.init({
+                      el: '#waline',
+                      serverURL: 'https://waline-1-d9689975.deta.app/',
+                      emoji: false,
+                      imageUploader: false,
+                      locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
+                    });
+                </script>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b> Source</b></a> &bull;
+               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b> Atom</b></a> &bull;
+               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b> Sitemap</b></a></span>
+          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+  <!-- awesome-font icon -->
+  <script src="https://kit.fontawesome.com/d5180ce512.js" crossorigin="anonymous"></script>
+  <!-- code highlight -->
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
+  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/dockerfile.min.js"></script>
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/markdown.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/nginx.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+    <!-- umami analytics -->
+    <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+  <!-- visitor count -->
+  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <!--  -->
+</body>
+</html>
