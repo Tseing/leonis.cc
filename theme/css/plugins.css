@@ -157,11 +157,6 @@ button[title="表情包"] {
     margin: 1em;
 }
 
-/* location icon */
-i.fa-solid.fa-location-dot.fa-stack-1x {
-    bottom: 25%;
-}
-
 .warn-info {
     border: 2px solid;
     background: #fff4e5;
