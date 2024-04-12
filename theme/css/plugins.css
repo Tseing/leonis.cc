@@ -1,7 +1,23 @@
 :root {
-    --waline-font-size: .9em !important;
+    --color-background-note:#e5f7ff;
+    --color-background-warn:#fff4e5;
+    --color-note:#1c7fbb;
+    --color-warn:#f99326;
+    --waline-color: var(--color-content-main) !important;
+    --waline-bgcolor: var(--color-background-main) !important;
+    --waline-info-color: var(--color-content-secondary) !important;
+    --waline-info-bgcolor: var(--color-background-secondary) !important;
+    --waline-font-size: 1em !important;
     --waline-avatar-size: 3.25em !important;
     --waline-badge-font-size: 0.65em !important;
+}
+
+.theme-dark:root {
+    --color-background-note: var(--color-background-contrast);
+    --color-background-warn: var(--color-background-contrast);
+    --color-note: var(--color-content-lead);
+    --color-warn: var(--color-content-lead);
+    --waline-bgcolor: var(--color-background-secondary) !important;
 }
 
 dot {
@@ -20,21 +36,53 @@ dot {
 }
 
 #about-columns img{
-    margin: 2em 0 0 0;
+    margin: 2em 0 1em;
     border-radius: 0;
 }
 
-#search-button {
-    right: 5em;
+#toc ul{
+    margin: 0px;
+    padding-left: 3em;
 }
 
-#waline {
-    padding-bottom: 5em;
+#toc li{
+    padding-left: 0.75em;
 }
 
-.search-button {
-    border: none!important;
-    background: none!important;
+#toc li::marker {
+    content: ">";
+    color: var(--color-content-secondary);
+}
+
+#toc li > a{
+    text-decoration: none;
+    color: var(--color-content-secondary);
+}
+
+#toc li > a:hover,
+#toc li > a:focus{
+    font-weight: 500;
+    padding-left: 5px;
+    border-left: 5px solid var(--color-primary);
+    color: var(--color-content-main);
+    transition: all 0.2s;
+}
+
+.toc-nav{
+    position: absolute;
+    max-width: 17vw;
+    font-size: 1.75em;
+    line-height: 1.5em;
+    margin-right: 1em;
+}
+
+.cover-inactive .toc-nav {
+    position: fixed;
+    top: 4em;
+}
+
+.inner:has(.links) {
+    max-width: calc(70rem + 12vw);
 }
 
 .links {
@@ -82,8 +130,8 @@ dot {
     font-size: 1.2em;
     line-height: 1.5em;
     width: 100%;
-    font-family: "Palatino Linotype", "Palatino", "Advocate Ancient Serif SC", serif;
-    font-weight: 600;
+    font-family: var(--font-secondary);
+    font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -122,16 +170,35 @@ dot {
 
 }
 
+#waline {
+    padding-bottom: 5em;
+    font-size: 2em;
+}
+
+.wl-panel {
+    border-radius: 0.5em !important;
+}
+
+.wl-card {
+    border-bottom: none !important;
+}
+
 .wl-card .wl-admin-actions {
     font-size: 0.8em !important;
 }
 
 .wl-header input {
-    font-size: 0.725em !important;
+    font-size: 0.75em !important;
 }
 
-.wl-editor:focus, .wl-input:focus {
-    background-color: white !important;
+.wl-header-item input:hover,
+.wl-header-item input:focus {
+    font-size: 0.75em !important;
+    background-color: unset !important;
+}
+
+.wl-editor:focus {
+    background-color: var(--color-background-main) !important;
 }
 
 .wl-user > img,
@@ -142,7 +209,7 @@ dot {
 
 button[title="喜欢"],
 button[title="表情包"] {
-    display: none!important;
+    display: none !important;
 }
 
 .wl-content blockquote::before {
@@ -157,32 +224,36 @@ button[title="表情包"] {
     margin: 1em;
 }
 
-.warn-info {
-    border: 2px solid;
-    background: #fff4e5;
-    border-radius: 5px;
-}
-
-.warn-info p{
-    margin: 15px 15px 15px 15px;
-}
-
-.warn-info .fa {
-    color: #ff9100
-}
-
-.note-info {
-    border: 2px solid;
-    background: #e5f7ff;
-    border-radius: 5px;
-}
-
+.warn-info p,
 .note-info p{
     margin: 15px 15px 15px 15px;
 }
 
-.note-info .fa {
-    color: #00b0ff
+.warn-info span,
+.note-info span {
+    font-weight: 500;
+}
+
+.warn-info span {
+    color: var(--color-warn)
+}
+
+.note-info span {
+    color: var(--color-note)
+}
+
+.warn-info {
+    border: 2px solid;
+    background: var(--color-background-warn);
+    border-radius: 5px;
+    margin: 0 0 4rem;
+}
+
+.note-info {
+    border: 2px solid;
+    background: var(--color-background-note);
+    border-radius: 5px;
+    margin: 0 0 4rem;
 }
 
 .note-info pre {
@@ -190,17 +261,15 @@ button[title="表情包"] {
 }
 
 .cite {
-    font-family: "Palatino Linotype", "Palatino", "Advocate Ancient Serif SC", serif;
+    font-family: var(--font-secondary) !important;
+    font-style: normal;
     font-weight: 700;
-    font-size: 1.2em;
 }
 
 .intro {
     font-style: italic;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: -20px;
-    font-size: 90%;
+    margin-top: -2em !important;
+    font-size: 0.9em;
     opacity: 0.8;
     text-align: left;
 }
@@ -215,7 +284,8 @@ button[title="表情包"] {
 
 .prompt {
     user-select: none;
-    font-family: "Fira Code";
+    font-family: var(--font-monospace);
+    font-size: 1.75rem;
     width: 4em;
     display: block;
     text-align: right;
@@ -403,7 +473,7 @@ unicode-range: U+02E5-02E9;
 .highlight .gt { color: #aa0000 } /* Generic.Traceback */
 .highlight .kc { color: #8B008B; font-weight: bold } /* Keyword.Constant */
 .highlight .kd { color: #8B008B; font-weight: bold } /* Keyword.Declaration */
-.highlight .kn { color: #8B008B; font-weight: bold } /* Keyword.Namespace */
+.highlight .kn { color: #8B008B; font-weight: bold; font-style: italic; } /* Keyword.Namespace */
 .highlight .kp { color: #8B008B; font-weight: bold } /* Keyword.Pseudo */
 .highlight .kr { color: #8B008B; font-weight: bold } /* Keyword.Reserved */
 .highlight .kt { color: #00688B; font-weight: bold } /* Keyword.Type */
@@ -447,13 +517,19 @@ unicode-range: U+02E5-02E9;
 .highlight .vm { color: #00688B } /* Name.Variable.Magic */
 .highlight .il { color: #B452CD } /* Literal.Number.Integer.Long */
 
-@media only screen and (min-width: 1000px){
-    #waline {
-        margin: auto 16%;
+@media only screen and (max-width: 1280px) {
+  .toc-nav {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 450px){
+    #about-columns > div{
+        max-width: 100%;
     }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 900px) and (orientation: landscape){
+/*@media only screen and (min-width: 400px) and (max-width: 900px) and (orientation: landscape){
     #waline {
         margin: 0 1.75em;
     }
@@ -547,7 +623,4 @@ unicode-range: U+02E5-02E9;
         position: absolute;
     }
 
-    #about-columns > div{
-        max-width: 100%;
-    }
-}
+} */

@@ -2,33 +2,76 @@ body {
     background: url("https://img.leonis.cc/search-bg.png") no-repeat bottom;
 }
 
-#blog-header::after {
-    display: none;
-}
-
-#blog-header.has-cover {
-    background: none;
+.inner {
+    display: flex;
+    justify-content: center;
 }
 
 #search {
     position: relative;
     max-height: 50vh;
-    max-width: 50vw;
-    margin: -15em auto;
+    width: 100%;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 4px;
     box-shadow: 0 8px 24px -2px rgba(0,0,0,0.4);
-    font-family: 'Fira Sans', Arial, "ChiuKong Gothic CL", sans-serif;;
+    font-family: var(--font-primary);
+    font-size: 2em;
 }
 
-#footer,
-#footer b {
-    color: white!important;
+#search a {
+    color: var(--color-content-main);
+    text-decoration: none;
+}
+
+.nav-header .nav-wrapper-control {
+    color: rgba(255,255,255,0.8);
+}
+
+.nav-header li a,
+.nav-header li button:not(.cta) {
+    color:rgba(255,255,255,0.8);
+    border-color: rgba(255,255,255,0.8)
+}
+
+.nav-header li a:focus,
+.nav-header li a:hover,
+.nav-header li button:not(.cta):focus,
+.nav-header li button:not(.cta):hover,
+.nav-header .nav-wrapper-control a:focus,
+.nav-header .nav-wrapper-control a:hover {
+    color:white;
+    border-color: white
+}
+
+.nav-footer {
+    z-index: unset;
+}
+
+.nav-copy,
+.nav-credits {
+    color: var(--color-background-contrast);
+}
+
+.nav-footer a:focus,
+.nav-footer a:hover {
+    color: var(--color-background-main)
+}
+
+.post-header.has-cover {
+    padding: 12em 0 0 0;
+    margin: 0;
 }
 
 .search-form {
     position: relative;
     padding: .25em 0;
+}
+
+.search-result {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    overflow-y: unset;
+    width: 100%
 }
 
 .search-form .input-field,
@@ -46,7 +89,7 @@ body {
 }
 
 .stork-message {
-    font-family: "Fira Sans", Arial, sans-serif;
+    font-family: var(--font-primary);
     font-style: italic;
     color: #787878;
     font-size: 0.9em;
@@ -76,7 +119,7 @@ body {
     border-top: solid 1px #E1E3E6;
 }
 
-.stork-result:hover {
+.stork-result.selected {
     background-color: rgba(255, 255, 255, 0.65);
     transform: background-color ease-out 0.2s;
 }
@@ -94,32 +137,4 @@ body {
 .stork-close-button,
 .stork-attribution {
     display: none;
-}
-
-@media only screen and (max-width: 1080px) and (orientation: portrait){
-    #search {
-        max-width: 65vw;
-        margin: -20em auto;
-    }
-}
-
-@media only screen and (min-width: 400px) and (max-width: 900px) and (orientation: landscape){
-    body {
-        height: 175vh;
-    }
-    #search {
-        max-height: 75vh;
-        max-width: 70vw;
-        margin: -16em auto;
-    }
-    .stork-results {
-        max-height: 45vh;
-    }
-}
-
-@media only screen and (max-width: 400px){
-    #search {
-        max-width: 80vw;
-        margin: -18em auto;
-    }
 }

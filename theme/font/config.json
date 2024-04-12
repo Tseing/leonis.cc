@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "css_prefix_text": "ic-",
+  "name": "icon",
+  "css_prefix_text": "icon-",
   "css_use_suffix": false,
   "hinting": true,
   "units_per_em": 1000,
@@ -106,6 +106,12 @@
       "uid": "559647a6f430b3aeadbecd67194451dd",
       "css": "menu",
       "code": 59402,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "4c1ef492f1d2c39a2250ae457cee2a6e",
+      "css": "instagram",
+      "code": 61805,
       "src": "fontawesome"
     }
   ]

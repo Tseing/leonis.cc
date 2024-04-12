@@ -17,32 +17,72 @@
 <link href="https://leonis.cc/pages/about.html" rel="canonical" />
 
   <!-- Feed -->
-        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo's blog Full Atom Feed" />
 
   <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
   <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
-  <!-- Code highlight color scheme -->
-      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
-    <!-- CSS specified by the user -->
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
 
-    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
-
-
-    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
-
-  <!-- awesome-font icon -->
+  <!-- font-awesome icons -->
   <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!-- fonts -->
+  <!-- Custom fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
-  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
-  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/hack-font/3.003/web/hack.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
 
 
 
@@ -65,92 +105,86 @@
   "@type" : "Website",
   "name": " Leo's blog ",
   "url" : "https://leonis.cc/",
-  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "image": "https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "description": "A nook to hoard my manuscripts."
 }
 </script>
 
-<!-- waline comment -->
 <link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
-<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
-<!-- TODO : Body class -->
-<body class="home-template">
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
 
-<nav id="menu">
-  <a class="close-button">Close</a>
-  <div class="nav-wrapper">
-    <p class="nav-label">Menu</p>
-    <ul>
-          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
-          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
-          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
-          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
-          <li><a href="https://neodb.social/users/Leo/" role="presentation">破橱簏</a></li>
-          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
-          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+</head>
 
 
-    </ul>
+
+
+
+
+
+
+
+<body class="page-template">
+
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
+
+    <li class="nav-Home " role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 " role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
+
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
   </div>
-</nav>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header id="post-header" class="has-cover">
+    <header class="post-header  has-cover ">
       <div class="inner">
-        <nav id="navigation">
-            <span id="home-button" class="nav-button">
-                <a class="home-button" href="https://leonis.cc/" aria-label="Home" title="Home">
-                  <i class="ic ic-arrow-left" aria-hidden="true"></i>
-                  <span>Home</span>
-                </a>
-            </span>
-          <span id="menu-button" class="nav-button">
-            <a class="menu-button" aria-label="Menu">
-              <i class="ic ic-menu" aria-hidden="true"></i>
-              <span>Menu</span>
-            </a>
-          </span>
-        </nav>
         <h1 class="post-title">About</h1>
-            <div class="post-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content')">
-      </div>
+          <div class="post-cover cover">
+            <img src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content" alt="About" />
+          </div>
     </header>
-
-  <section id="wrapper">
-    <a class="hidden-close"></a>
   <!-- Post content -->
   <main class="content" role="main">
       <article class="post">
       <div class="inner">
           <section class="post-content">
-              <aside class="post-author" style="margin-left: 0px;margin-right: 0px;border-top: none;border-bottom: 1px solid #e5e4e1;">
-<figure class="post-author-avatar">
-<img alt="Leo" src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800"/>
-</figure>
-<div class="post-author-bio">
-<h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
-<p class="post-author-about">A biochemist who doesn't know about classical literature isn't a good programmer. Cool, huh?</p>
-<span class="post-author-location">
-<a href="https://www.bing.com/maps?cp=39.116572%7E117.361669&amp;lvl=10.1" rel="noopener" style="color:inherit" target="_blank" title="Tientsin">
-<i aria-hidden="true" class="fa-solid fa-earth-asia fa-fw"></i></a>
-</span>
-<span class="post-author-mastodon">
-<a href="https://mast.dragon-fly.club/@leonis" rel="noopener" style="color:inherit" target="_blank" title="@leonis@dragon-fly.club">
-<i aria-hidden="true" class="fa-brands fa-mastodon fa-fw"></i></a>
-</span>
-<span class="post-author-github">
-<a href="https://github.com/Tseing" rel="noopener" style="color:inherit" target="_blank" title="@Tseing">
-<i aria-hidden="true" class="fa-brands fa-github fa-fw"></i></a>
-</span>
-<span class="post-author-email">
-<a href="mailto:im.yczeng@outlook.com" rel="noopener" style="color:inherit" target="_blank" title="im.yczeng@outlook.com">
-<i aria-hidden="true" class="fa-solid fa-envelope fa-fw"></i></a>
-</span>
-</div>
-<div class="clear"></div>
-</aside>
-<p><img src="https://cdn.leonis.cc/img/2024/01/115aa797391bf50cf6ca9d087d3e329541d51bcb7522f8c2f5506fd1c4c7583d.jpg" style="width: 100%; box-shadow: none; margin-bottom: 0;"/></p>
-<p>👋 你好，朋友！欢迎来到我的博客！</p>
+              <p>👋 你好，朋友！欢迎来到我的博客！</p>
 <p>这是一个使用 Pelican 生成的静态博客，部署在美国的一台服务器上，如果对博客的设置或结构感兴趣，你可以在网页的左下角找到这个博客的源码。</p>
 <p>站点封面是美国印象派画家 Walter Launt Palmer 的作品 <a href="https://www.artic.edu/artworks/180648/lake-at-appledale" rel="noopener" target="_blank"><em>Lake at Appledale</em></a>，页面上方的画作来自于是我特别喜欢的日本浮世绘大师<a href="https://ja.wikipedia.org/wiki/%E5%B7%9D%E7%80%AC%E5%B7%B4%E6%B0%B4" rel="noopener" target="_blank">川瀬巴水</a>，这幅版画名为《厳島之雪》，其作品恬淡宁静的风格让人一眼就会爱上 &sstarf;⁺₊❅.</p>
 <h2 id="who-am-i">🌈 Who am I</h2>
@@ -217,7 +251,7 @@
 <p>再说说我使用的字体，初次看到鄙站的读者或许会觉得显示的文字有些怪异，这是因为我个人更喜欢传统字形，所以选用思源黑体韩文版作为正文字体，并用思源黑体简体中文版补足缺字。我有时还会引一些古籍中的字句，如果使用简化字就不够妥帖了，所以简繁混用可能会是比较常见的事。以上这些小心思大抵是不太符合出版一类的规范的，但既然这里是我自有的一方天地，那大可不遵守那些规矩而随着我的心意安排了。</p>
 <p>最近遇到一款思源风格的旧字形字体<a href="https://github.com/ChiuMing-Neko/ChiuKongGothic" rel="noopener" target="_blank">秋空󠄁黑體</a>，特别喜欢，正是本站的正文字体。将原来大部分 Google Font 更改换了，在国内的加载速度应该快了不少 🚀</p>
 <p>最后一点是错别字的问题。相比于手写，在电脑上写文章更容易出现别字，也更难找到别字，一则是打字时稍有不慎击错按键就会输错字，二则是在电脑上写文章可以自由驰骋，这段看不顺眼就移到那段后面，移来移去文字不免有所舛驳。另外笔者使用<del>五笔</del>虎码输入法，产生的别字会比一般的别字更加古怪，所以遇到对文字疑惑的地方时，你一定是正确的，希望能提醒我修正。</p>
-<p><div class="note-info"><p><i class="fa-solid fa-note-sticky"></i>&ensp;<b>Note</b>&emsp;有些文章中包含了长公式，在屏幕宽度较小的移动端上可能显示不完整，这时候可以尝试横屏 (&NoBreak;◍&NoBreak;&bull;&NoBreak;ᴗ&NoBreak;&bull;&NoBreak;◍&NoBreak;)</p></div></p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;有些文章中包含了长公式，在屏幕宽度较小的移动端上可能显示不完整，这时候可以尝试横屏 (&NoBreak;◍&NoBreak;&bull;&NoBreak;ᴗ&NoBreak;&bull;&NoBreak;◍&NoBreak;)</p></div></p>
 <h2 id="copyright">🌏 Copyright</h2>
 <p>本站所有文章的原创内容使用知识共享组织（<a href="https://creativecommons.org/" rel="noopener" target="_blank">Creative Commons</a>）的 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank">CC BY-NC-SA 4.0</a> 许可，我将其演绎为</p>
 <ol>
@@ -227,63 +261,54 @@
 </ol>
 <h2 id="chronicle">📜 Chronicle</h2>
 <ul>
-<li>2022.07.13&emsp;在 GitHub Pages 上发布了由 Pelican 生成的静态站点</li>
-<li>2023.02.13&emsp;将站点迁移到 <a href="https://racknerd.com/" rel="noopener" target="_blank">RackNerd</a> 服务器上，通过 Nginx 部署</li>
-<li>2023.02.14&emsp;开始使用域名 <a href="https://leonis.cc" rel="noopener" target="_blank"><em>https://leonis.cc</em></a></li>
-<li>2023.03.03&emsp;站点加入<a href="https://storeweb.cn/" rel="noopener" target="_blank">个站商店</a></li>
-<li>2023.03.11&emsp;站点加入 <a href="https://bf.zzxworld.com/" rel="noopener" target="_blank">BlogFinder</a></li>
-<li>2023.03.16&emsp;站点加入<a href="https://github.com/timqian/chinese-independent-blogs" rel="noopener" target="_blank">中文独立博客列表</a></li>
-<li>2023.07.11&emsp;站点加入<a href="https://www.travellings.cn" rel="noopener" target="_blank">开往-友链接力</a></li>
-<li>2023.10.31&emsp;站点托管至 <a href="https://www.cloudflare.com/" rel="noopener" target="_blank">Cloudflare</a></li>
-<li>2023.11.11&emsp;将站点服务器更换为 <a href="https://cloudcone.com/" rel="noopener" target="_blank">Cloudcone</a></li>
-<li>2023.02.10&emsp;站点加入<a href="https://www.foreverblog.cn/" rel="noopener" target="_blank">十年之约</a></li>
+<li><code>2022.07.13</code>&emsp;在 GitHub Pages 上发布了由 Pelican 生成的静态站点</li>
+<li><code>2023.02.13</code>&emsp;将站点迁移到 <a href="https://racknerd.com/" rel="noopener" target="_blank">RackNerd</a> 服务器上，通过 Nginx 部署</li>
+<li><code>2023.02.14</code>&emsp;开始使用域名 <a href="https://leonis.cc" rel="noopener" target="_blank"><em>https://leonis.cc</em></a></li>
+<li><code>2023.03.03</code>&emsp;站点加入<a href="https://storeweb.cn/" rel="noopener" target="_blank">个站商店</a></li>
+<li><code>2023.03.11</code>&emsp;站点加入 <a href="https://bf.zzxworld.com/" rel="noopener" target="_blank">BlogFinder</a></li>
+<li><code>2023.03.16</code>&emsp;站点加入<a href="https://github.com/timqian/chinese-independent-blogs" rel="noopener" target="_blank">中文独立博客列表</a></li>
+<li><code>2023.07.11</code>&emsp;站点加入<a href="https://www.travellings.cn" rel="noopener" target="_blank">开往-友链接力</a></li>
+<li><code>2023.10.31</code>&emsp;站点托管至 <a href="https://www.cloudflare.com/" rel="noopener" target="_blank">Cloudflare</a></li>
+<li><code>2023.11.11</code>&emsp;将站点服务器更换为 <a href="https://cloudcone.com/" rel="noopener" target="_blank">Cloudcone</a></li>
+<li><code>2023.02.10</code>&emsp;站点加入<a href="https://www.foreverblog.cn/" rel="noopener" target="_blank">十年之约</a></li>
+<li><code>2024.04.12</code>&emsp;博客主题更新到了 <a href="https://github.com/arulrajnet/attila/releases/tag/v2.0" rel="noopener" target="_blank">Attila v2.0</a> 🎉</li>
 </ul>
 <h2 id="tools">🛠️ Tools</h2>
 <ul>
 <li><a href="https://analytics.umami.is/share/ozKnKeg8pJTZVHqe/Leo's%20blog" rel="noopener" target="_blank"><i class="fa-solid fa-chart-line"></i> umami Analytics</a></li>
 </ul>
           </section>
-
-          <div class="clear"></div>
-
-          <div id="waline"></div>
-          <script>
-            Waline.init({
-              el: '#waline',
-              serverURL: 'https://waline-1-d9689975.deta.app/',
-              emoji: false,
-              imageUploader: false,
-              locale: {placeholder: '欢迎评论，填写邮箱支持获取头像和收到回复通知。'},
-            });
-          </script>
-      </div>
+<div id="waline"></div>      </div>
       </article>
   </main>
-      <!-- TODO : Body class -->
-    <div id="body-class" style="display: none;" class=""></div>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo's blog &copy; 2024
+        </span>
+        <span class="nav-credits">
 
-    <footer id="footer">
-      <div class="inner">
-        <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b> Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b> Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b> Sitemap</b></a></span>
-          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
-        </section>
-      </div>
-    </footer>
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
   </section>
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <!-- code highlight -->
-  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/dockerfile.min.js"></script>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/markdown.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/nginx.min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
   <!-- lightbox -->
   <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
@@ -295,8 +320,58 @@
   </script>
     <!-- umami analytics -->
     <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
-  <!-- visitor count -->
-  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  <!--  -->
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
+
+<script>
+  $(document).ready(function () {
+    var viewport = $(window);
+    var post = $('.post-content');
+    // Responsive videos with fitVids
+    post.fitVids();
+    // Format code blocks and add line numbers
+    function codestyling() {
+      $('pre code').each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+        // No lines for plain text blocks
+        if (!$(this).hasClass('language-text')) {
+          var code = $(this);
+          // Calculate amount of lines
+          var lines = code.html().split(/\n(?!$)/g).length;
+          var numbers = [];
+          if (lines > 1) {
+            lines++;
+          }
+          for (i = 1; i < lines; i++) {
+            numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+          }
+          code.parent().append('<div class="lines">' + numbers + '</div>');
+        }
+      });
+    }
+
+    // Format code blocks only
+    function codestylingWithoutLineNumbers() {
+      $("pre code").each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+      });
+    }
+
+    codestylingWithoutLineNumbers();
+  });
+
+  Waline.init({
+      el: '#waline',
+      serverURL: "https://waline-1-d9689975.deta.app/",
+      emoji: false,
+      search: false,
+      imageUploader: false,
+      locale: {placeholder: "欢迎评论，填写邮箱支持获取头像和收到回复通知。"},
+  });
+</script>
 </body>
+
 </html>

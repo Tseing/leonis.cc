@@ -14,34 +14,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://leonis.cc/" rel="canonical" />
+  <link href="https://leonis.cc/" rel="canonical" />
+
   <!-- Feed -->
-        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo's blog Full Atom Feed" />
 
   <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
   <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
-  <!-- Code highlight color scheme -->
-      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
-    <!-- CSS specified by the user -->
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
 
-    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
-
-
-    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
-
-  <!-- awesome-font icon -->
+  <!-- font-awesome icons -->
   <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!-- fonts -->
+  <!-- Custom fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
-  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
-  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/hack-font/3.003/web/hack.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
 
 
 
@@ -64,329 +105,391 @@
   "@type" : "Website",
   "name": " Leo's blog ",
   "url" : "https://leonis.cc/",
-  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "image": "https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "description": "A nook to hoard my manuscripts."
 }
 </script>
 
-<!-- waline comment -->
 <link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
-<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
-<!-- TODO : Body class -->
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
 <body class="home-template">
 
-<nav id="menu">
-  <a class="close-button">Close</a>
-  <div class="nav-wrapper">
-    <p class="nav-label">Menu</p>
-    <ul>
-          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
-          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
-          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
-          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
-          <li><a href="https://neodb.social/users/Leo/" role="presentation">破橱簏</a></li>
-          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
-          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
 
+    <li class="nav-Home active" role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 " role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
 
-    </ul>
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
   </div>
-</nav>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header id="blog-header" class="has-cover">
+    <header class="blog-header  has-cover ">
       <div class="inner">
-        <nav id="navigation">
-          <!--  -->
-          <span class="blog-logo">
-          <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
-            <img src="https://www.travellings.cn/assets/w.png" alt="Travelling">
-          </a>
-          <a href="https://www.foreverblog.cn/go.html" target="_blank" rel="noopener" title="穿梭虫洞-随机访问十年之约友链博客">
-            <img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="Wormhole">
-          </a>
-          </span>
-          <span id="search-button" class="nav-button">
-            <a class="search-button" href="https://leonis.cc/search.html" target="_blank" rel="noopener">
-              <i class="ic ic-search" aria-hidden="true"></i>
-            </a>
-          </span>
-          <span id="menu-button" class="nav-button">
-            <a class="menu-button" aria-label="Menu">
-              <i class="ic ic-menu" aria-hidden="true"></i>
-              <span>Menu</span>
-            </a>
-          </span>
-        </nav>
-        <h1 class="blog-name"><a href="https://leonis.cc/">Leo's blog</a></h1>
-        <span class="blog-description">A nook to hoard my manuscripts.</span>
+        <div class="box blog-box">
+          <h1 class="blog-name">Leo's blog</h1>
+          <span class="blog-description">A nook to hoard my manuscripts.</span>
+        </div>
 
-          <div class="blog-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content')">
+          <div class="blog-cover cover">
+            <img src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content" alt="Leo's blog" />
+          </div>
       </div>
     </header>
 
 
-  <section id="wrapper">
-    <a class="hidden-close"></a>
 <div id="index" class="container">
   <main class="content" role="main">
     <div class="extra-pagination">
-<nav class="pagination" role="pagination">
+<nav class="pagination" aria-label="Pagination" role="pagination">
   <div class="inner">
-    <a class="pagination-next" href="https://leonis.cc/index2.html"><i class="ic ic-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
-    <span class="pagination-info">Page 3 / 8</span>
-    <a class="pagination-prev" href="https://leonis.cc/index4.html"><span class="pagination-label">Older Posts</span> <i class="ic ic-arrow-right"></i></a>
-    <div class="clear"></div>
+    <div class="box pagination-box">
+      <a title="Newer Posts" class="pagination-next" href="https://leonis.cc/index2.html"><i class="icon icon-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
+      <span class="pagination-info">Page 3 of 8</span>
+      <a title="Older Posts" class="pagination-prev" href="https://leonis.cc/index4.html"><span class="pagination-label">Older Posts</span> <i class="icon icon-arrow-right"></i></a>
+    </div>
   </div>
 </nav>
     </div>
 
-        <article class="post">
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-04-21-transformer-from-scratch.html" rel="bookmark" title="Permalink to 从零起步的 Transformer 与代码拆解">从零起步的 Transformer 与代码拆解</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 4月21日">2023年 4月21日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         自 Google 的论文 Attention Is All You Need 发布后，几年内涌现了大量基于 Transformer 的模型，俨然形成了 Transformer 横扫人工智能领域的态势。 网络上也出现了大量解读论文或是讲解 Transformer 的文章，其中也不乏许多高水平人工智能从业者的解读。虽然有些可以称得上是高屋建瓴，但 …
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/python.html"># Python</a><a href="https://leonis.cc/tag/pytorch.html"># PyTorch</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/python.html"># Python</a><a href="https://leonis.cc/tag/pytorch.html"># PyTorch</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-04-15-summary-doi.org/10.1021/acs.jmedchem.2c01787.html" rel="bookmark" title="Permalink to 文献总结｜药物发现中的匹配分子对分析：方法与当前应用">文献总结｜药物发现中的匹配分子对分析：方法与当前应用</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 4月15日">2023年 4月15日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍 2023 年由曹东升与侯廷军研究团队发表在 Journal of Medicinal Chemistry 上的一篇展望，文章原标题为 Matched Molecular Pair Analysis in Drug Discovery: Methods and Recent Applications，文章介绍了主要介绍了匹配分子对分析的理论与目前基于匹配分子对分析的实际应用。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/review.html"># Review</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/review.html"># Review</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/zai-lu-shang/2023-04-11-my-gardening-plan.html" rel="bookmark" title="Permalink to 我的 2023 年春播计划">我的 2023 年春播计划</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 4月11日">2023年 4月11日</time>
-                     | Archived in <a href="https://leonis.cc/category/zai-lu-shang.html">在路上</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/zai-lu-shang.html">在路上</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         过了惊蛰之后，万物萌动，看到园林工人正在整饬路旁的花圃，我的心里也跟着躁动起来，想着非要在阳台上种点什么才好，于是在一番调查与纠结之后确定了这篇春播计划。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/yuan-yi.html"># 园艺</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/yuan-yi.html"># 园艺</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-04-06-summary-doi.org/10.1186/s13321-023-00694-z.html" rel="bookmark" title="Permalink to 文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计">文献总结｜DrugEx v3：使用基于图 Transformer 的强化学习进行以分子骨架为约束的药物设计</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 4月06日">2023年 4月06日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 DrugEx v3: scaffold‑constrained drug design with graph transformer‑based reinforcement learning，文章介绍了使用包括 Transformer 和 LSTM 模型实现以分子骨架为约束的药物设计的方法并对比了使用 SMILES 与图两种方式的分子表示在分子生成中的区别。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-04-01-summary-doi.org/10.1186/s13321-023-00702-2.html" rel="bookmark" title="Permalink to 文献总结｜用于从蛋白序列进行药物设计的深度生成模型">文献总结｜用于从蛋白序列进行药物设计的深度生成模型</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 4月01日">2023年 4月01日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍 2023 年发布在 Journal of Cheminformatics 上的一篇文章，文章原标题为 Deep generative model for drug design from protein target sequence，文章设计了一种基于 GAN 的蛋白配体分子生成模型，该模型只需要获取氨基酸序列的信息就可以生成相应蛋白口袋的配体。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gan.html"># GAN</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gan.html"># GAN</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/gu-zhi-dui/2023-03-30-book-chinese-narratology.html" rel="bookmark" title="Permalink to 在明清小说中索隐：读《中国叙事学》">在明清小说中索隐：读《中国叙事学》</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 3月30日">2023年 3月30日</time>
-                     | Archived in <a href="https://leonis.cc/category/gu-zhi-dui.html">故纸堆</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/gu-zhi-dui.html">故纸堆</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         浦安迪的《中国叙事学》是一本讨论中国叙事传统和明清小说的小书，页数并不多，不消四五天即可翻完。虽然这是一本学术著作，但语言流畅、分析丝丝入扣，读起来时并不觉得枯燥乏味，反而觉得酣畅淋漓。书题虽为《中国叙事学》，但全书中专门论述 …
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/yue-du.html"># 阅读</a><a href="https://leonis.cc/tag/wen-xue.html"># 文学</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/yue-du.html"># 阅读</a><a href="https://leonis.cc/tag/wen-xue.html"># 文学</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-03-25-summary-doi.org/10.48550/arXiv.2302.01129.html" rel="bookmark" title="Permalink to 文献总结｜通过连接感知模版挖掘实现从头生成分子">文献总结｜通过连接感知模版挖掘实现从头生成分子</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 3月25日">2023年 3月25日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍由中科大于 2023 年发布在 ICLR 2023 上的一篇文章，文章原标题为 De Novo Molecular Generation via Connection-aware Motif Mining，文章提出了一种从分子数据集中挖掘模版结构的算法，同时设计了一种通过组合模版结构实现分子生成的模型。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gnn.html"># GNN</a><a href="https://leonis.cc/tag/vae.html"># VAE</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gnn.html"># GNN</a><a href="https://leonis.cc/tag/vae.html"># VAE</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/zai-lu-shang/2023-03-24-spring-trip-in-tianjin.html" rel="bookmark" title="Permalink to 春日漫步小记">春日漫步小记</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 3月24日">2023年 3月24日</time>
-                     | Archived in <a href="https://leonis.cc/category/zai-lu-shang.html">在路上</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/zai-lu-shang.html">在路上</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         五六天前刚起了几阵沙尘暴，入眼的一切都是黄蒙蒙的。黄沙中的行人都拉紧着衣服、戴着口罩，可能是为了防沙，也可能是为了防病毒。唯一不避风沙的只有两旁的行道树，经冬之后满是枯枝，更添了几分萧索。就是在这样一片了无生气之中，竟在 …
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/sui-bi.html"># 随笔</a><a href="https://leonis.cc/tag/you-ji.html"># 游记</a><a href="https://leonis.cc/tag/she-ying.html"># 摄影</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/sui-bi.html"># 随笔</a><a href="https://leonis.cc/tag/you-ji.html"># 游记</a><a href="https://leonis.cc/tag/she-ying.html"># 摄影</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-03-17-summary-doi.org/10.48550/arXiv.2210.13695.html" rel="bookmark" title="Permalink to 文献总结｜使用等变扩散模型进行基于结构的药物设计">文献总结｜使用等变扩散模型进行基于结构的药物设计</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 3月17日">2023年 3月17日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍由洛桑联邦理工学院等研究单位于 2022 年发布在 arXiv 上的一篇文章，文章原标题为 Structure-based Drug Design with Equivariant Diffusion Models，文章首次将等变扩散模型用于基于结构的药物设计，实现针对特定的蛋白靶点生成多样且具有高亲合力的的配体分子。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gnn.html"># GNN</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/gnn.html"># GNN</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-03-14-deploy-pelican-search.html" rel="bookmark" title="Permalink to 为 Pelican 博客加入搜索功能">为 Pelican 博客加入搜索功能</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 3月14日">2023年 3月14日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         博客上的文章越来越多了，靠文章 tag 来检索文章总是有些麻烦，不妨为博客配置一个搜索功能吧。在中文互联网上搜索不到半点配置 Pelican Search 的相关信息，希望这篇文章能帮到后来人。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/blog.html"># Blog</a><a href="https://leonis.cc/tag/pelican.html"># Pelican</a><a href="https://leonis.cc/tag/rust.html"># Rust</a><a href="https://leonis.cc/tag/windows.html"># Windows</a>                </div>
-            </div>
-        </article>
+                </p>
 
-<nav class="pagination" role="pagination">
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/blog.html"># Blog</a><a href="https://leonis.cc/tag/pelican.html"># Pelican</a><a href="https://leonis.cc/tag/rust.html"># Rust</a><a href="https://leonis.cc/tag/windows.html"># Windows</a>                    </aside>
+                </div>
+            </div>
+        </div>
+    </article>
+
+<nav class="pagination" aria-label="Pagination" role="pagination">
   <div class="inner">
-    <a class="pagination-next" href="https://leonis.cc/index2.html"><i class="ic ic-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
-    <span class="pagination-info">Page 3 / 8</span>
-    <a class="pagination-prev" href="https://leonis.cc/index4.html"><span class="pagination-label">Older Posts</span> <i class="ic ic-arrow-right"></i></a>
-    <div class="clear"></div>
+    <div class="box pagination-box">
+      <a title="Newer Posts" class="pagination-next" href="https://leonis.cc/index2.html"><i class="icon icon-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
+      <span class="pagination-info">Page 3 of 8</span>
+      <a title="Older Posts" class="pagination-prev" href="https://leonis.cc/index4.html"><span class="pagination-label">Older Posts</span> <i class="icon icon-arrow-right"></i></a>
+    </div>
   </div>
 </nav>
   </main>
 </div>
-      <!-- TODO : Body class -->
-    <div id="body-class" style="display: none;" class=""></div>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo's blog &copy; 2024
+        </span>
+        <span class="nav-credits">
 
-    <footer id="footer">
-      <div class="inner">
-        <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b> Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b> Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b> Sitemap</b></a></span>
-          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
-        </section>
-      </div>
-    </footer>
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
   </section>
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <!-- code highlight -->
-  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/dockerfile.min.js"></script>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/markdown.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/nginx.min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
   <!-- lightbox -->
   <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
@@ -398,8 +501,9 @@
   </script>
     <!-- umami analytics -->
     <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
-  <!-- visitor count -->
-  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  <!--  -->
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
 </body>
+
 </html>

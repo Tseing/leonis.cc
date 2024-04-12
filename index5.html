@@ -14,34 +14,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-<link href="https://leonis.cc/" rel="canonical" />
+  <link href="https://leonis.cc/" rel="canonical" />
+
   <!-- Feed -->
-        <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate" title="Leo's blog Full Atom Feed" />
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo's blog Full Atom Feed" />
 
   <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
   <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
 
-  <!-- Code highlight color scheme -->
-      <link href="https://leonis.cc/theme/css/code_blocks/atom-one-light.min.css" rel="stylesheet">
 
-    <!-- CSS specified by the user -->
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
 
 
-    <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
-
-
-    <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
-
-  <!-- awesome-font icon -->
+  <!-- font-awesome icons -->
   <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!-- fonts -->
+  <!-- Custom fonts -->
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
-  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
-  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/hack-font/3.003/web/hack.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
   <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
 
 
 
@@ -64,329 +105,391 @@
   "@type" : "Website",
   "name": " Leo's blog ",
   "url" : "https://leonis.cc/",
-  "image": "https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "image": "https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
   "description": "A nook to hoard my manuscripts."
 }
 </script>
 
-<!-- waline comment -->
 <link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
-<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script></head>
-<!-- TODO : Body class -->
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
 <body class="home-template">
 
-<nav id="menu">
-  <a class="close-button">Close</a>
-  <div class="nav-wrapper">
-    <p class="nav-label">Menu</p>
-    <ul>
-          <li><a href="https://leonis.cc/category/sui-sui-nian.html" role="presentation">碎碎念</a></li>
-          <li><a href="https://leonis.cc/category/gu-zhi-dui.html" role="presentation">故纸堆</a></li>
-          <li><a href="https://leonis.cc/category/zai-lu-shang.html" role="presentation">在路上</a></li>
-          <li><a href="https://leonis.cc/pages/shan-qiang-bian.html" role="presentation">山墙边</a></li>
-          <li><a href="https://neodb.social/users/Leo/" role="presentation">破橱簏</a></li>
-          <li><a href="https://leonis.cc/tags.html" role="presentation">Tags</a></li>
-          <li><a href="https://leonis.cc/pages/about.html" role="presentation">About</a></li>
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
 
+    <li class="nav-Home active" role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 " role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
 
-    </ul>
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
   </div>
-</nav>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header id="blog-header" class="has-cover">
+    <header class="blog-header  has-cover ">
       <div class="inner">
-        <nav id="navigation">
-          <!--  -->
-          <span class="blog-logo">
-          <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
-            <img src="https://www.travellings.cn/assets/w.png" alt="Travelling">
-          </a>
-          <a href="https://www.foreverblog.cn/go.html" target="_blank" rel="noopener" title="穿梭虫洞-随机访问十年之约友链博客">
-            <img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="Wormhole">
-          </a>
-          </span>
-          <span id="search-button" class="nav-button">
-            <a class="search-button" href="https://leonis.cc/search.html" target="_blank" rel="noopener">
-              <i class="ic ic-search" aria-hidden="true"></i>
-            </a>
-          </span>
-          <span id="menu-button" class="nav-button">
-            <a class="menu-button" aria-label="Menu">
-              <i class="ic ic-menu" aria-hidden="true"></i>
-              <span>Menu</span>
-            </a>
-          </span>
-        </nav>
-        <h1 class="blog-name"><a href="https://leonis.cc/">Leo's blog</a></h1>
-        <span class="blog-description">A nook to hoard my manuscripts.</span>
+        <div class="box blog-box">
+          <h1 class="blog-name">Leo's blog</h1>
+          <span class="blog-description">A nook to hoard my manuscripts.</span>
+        </div>
 
-          <div class="blog-cover cover" style="background-image: url('https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content')">
+          <div class="blog-cover cover">
+            <img src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNunLc0Y-tTns1SGA5/root/content" alt="Leo's blog" />
+          </div>
       </div>
     </header>
 
 
-  <section id="wrapper">
-    <a class="hidden-close"></a>
 <div id="index" class="container">
   <main class="content" role="main">
     <div class="extra-pagination">
-<nav class="pagination" role="pagination">
+<nav class="pagination" aria-label="Pagination" role="pagination">
   <div class="inner">
-    <a class="pagination-next" href="https://leonis.cc/index4.html"><i class="ic ic-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
-    <span class="pagination-info">Page 5 / 8</span>
-    <a class="pagination-prev" href="https://leonis.cc/index6.html"><span class="pagination-label">Older Posts</span> <i class="ic ic-arrow-right"></i></a>
-    <div class="clear"></div>
+    <div class="box pagination-box">
+      <a title="Newer Posts" class="pagination-next" href="https://leonis.cc/index4.html"><i class="icon icon-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
+      <span class="pagination-info">Page 5 of 8</span>
+      <a title="Older Posts" class="pagination-prev" href="https://leonis.cc/index6.html"><span class="pagination-label">Older Posts</span> <i class="icon icon-arrow-right"></i></a>
+    </div>
   </div>
 </nav>
     </div>
 
-        <article class="post">
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-01-08-summary-doi.org/10.48550/arXiv.1811.12823.html" rel="bookmark" title="Permalink to 文献总结｜Molecular Sets (MOSES)：分子生成模型的评估平台">文献总结｜Molecular Sets (MOSES)：分子生成模型的评估平台</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 1月08日">2023年 1月08日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2020 年发布在 arXiv 上的一篇文章，文章原标题为 Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models，文章介绍了目前在评估分子生成模型方面存在的问题，并且设计了用于衡量模型表现的一套标准指标，目前 MOSES 已经广泛应用于各类分子生成任务。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2023-01-03-rdkit-modify-search-molecule.html" rel="bookmark" title="Permalink to RDKit 入门：修改分子与搜索子结构">RDKit 入门：修改分子与搜索子结构</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2023年 1月03日">2023年 1月03日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         介绍使用 RDKit 修改分子以及在分子中搜索 SMARTS 子结构并高亮绘制子结构的方法。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/rdkit.html"># RDKit</a><a href="https://leonis.cc/tag/python.html"># Python</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/rdkit.html"># RDKit</a><a href="https://leonis.cc/tag/python.html"># Python</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-25-summary-doi.org/10.1016/j.drudis.2021.05.019.html" rel="bookmark" title="Permalink to 文献总结｜从头药物设计和生成模型">文献总结｜从头药物设计和生成模型</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月25日">2022年 12月25日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2021 年发表在 Drug Discovery Today 上的一篇综述，文章原标题为 De novo molecular design and generative models，文章综述了分子生成模型在药物分子设计中的应用，特别介绍了用于从头药物设计的不同分子生成方法以及未来的前景。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/review.html"># Review</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/review.html"># Review</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-21-cs224n-lecture1.html" rel="bookmark" title="Permalink to CS224n 自然语言处理第一节：简介与词向量">CS224n 自然语言处理第一节：简介与词向量</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月21日">2022年 12月21日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         CS224n Lecture 1: Introduction and Word Vectors
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/nlp.html"># NLP</a><a href="https://leonis.cc/tag/cs224n.html"># CS224n</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/nlp.html"># NLP</a><a href="https://leonis.cc/tag/cs224n.html"># CS224n</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-18-summary-doi.org/10.1021/acs.jcim.2c00982.html" rel="bookmark" title="Permalink to 文献总结｜DRlinker：使用深度强化学习优化连接片段设计">文献总结｜DRlinker：使用深度强化学习优化连接片段设计</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月18日">2022年 12月18日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2022 年发表在 Journal of Chemical Information and Modeling 上的一篇文章，文章原标题为 DRlinker: Deep Reinforcement Learning for Optimization in Fragment Linking Design，文章是对 SyntaLinker 的改进，在原有结构的基础上引入了强化学习策略，使模型在完成分子连接的任务以外，还能使模型根据设定的任务生成满足约束的新分子。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a><a href="https://leonis.cc/tag/rl.html"># RL</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/transformer.html"># Transformer</a><a href="https://leonis.cc/tag/rl.html"># RL</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-16-opennmt-tutorial-quickstart.html" rel="bookmark" title="Permalink to 机器翻译框架 OpenNMT 入门：快速上手">机器翻译框架 OpenNMT 入门：快速上手</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月16日">2022年 12月16日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         拆解项目代码的时候发现使用到了 onmt 这个古怪东西，查阅资料后才知道这是一个自然机器翻译的框架，是自然语言处理中常用的工具。但是相关资料又太少，于是不得不照着文档一点一点啃，最后留下了这篇笔记。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/opennmt.html"># OpenNMT</a><a href="https://leonis.cc/tag/nlp.html"># NLP</a><a href="https://leonis.cc/tag/python.html"># Python</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/opennmt.html"># OpenNMT</a><a href="https://leonis.cc/tag/nlp.html"># NLP</a><a href="https://leonis.cc/tag/python.html"># Python</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-11-summary-doi.org/10.1186/s13321-020-00441-8.html" rel="bookmark" title="Permalink to 文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型">文献总结｜基于SMILES用于从头药物设计的深度分子骨架改造模型</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月11日">2022年 12月11日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2020 年发表在 Journal of Cheminformatics 上的一篇文章，文章原标题为 SMILES‑based deep generative scaffold decorator for de‑novo drug design，文章通过 MMP 算法得到训练数据，基于 RNN 模型构建了能对分子骨架进行改造的生成模型，模型能够生成具有指定改造位点的分子骨架，并使用分子片段对其改造从而得到新分子。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/rnn.html"># RNN</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/rnn.html"># RNN</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-03-summary-doi.org/10.1038/s41467-022-34692-w.html" rel="bookmark" title="Permalink to 文献总结｜通过生成深度学习发现 RIPK1 抑制剂">文献总结｜通过生成深度学习发现 RIPK1 抑制剂</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月03日">2022年 12月03日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2022 年发表在 Nature Communications 上的一篇文章，文章原标题为 Generative deep learning enables the discovery of a potent and selective RIPK1 inhibitor，文章通过构建 CRNN 模型，使用迁移学习、正则化强化和取样强化三种策略针对 RIPK1 靶点生成化合物，并从中得到了潜在的 RIPK1 抑制剂。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/crnn.html"># CRNN</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/crnn.html"># CRNN</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-12-01-install-cuda.html" rel="bookmark" title="Permalink to 为深度学习环境配置 CUDA">为深度学习环境配置 CUDA</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 12月01日">2022年 12月01日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         最近在折腾 OpenNMT 框架，CUDA 与 PyTorch 都是需要的依赖。虽然网络上已经有大量的 CUDA 安装教程，相信也比我写得全面且详细，但手头上的服务器正巧没有安装 CUDA，索性记录下来以备不时之需。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/linux.html"># Linux</a><a href="https://leonis.cc/tag/cuda.html"># CUDA</a>                </div>
+                </p>
+
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/linux.html"># Linux</a><a href="https://leonis.cc/tag/cuda.html"># CUDA</a>                    </aside>
+                </div>
             </div>
-        </article>
-        <article class="post">
+        </div>
+    </article>
+
+
+    <article class="post">
         <div class="inner">
-            <header class="post-header">
+            <div class="box post-box">
                 <h2 class="post-title"><a href="https://leonis.cc/sui-sui-nian/2022-11-25-summary-doi.org/10.1038/s42256-022-00494-4.html" rel="bookmark" title="Permalink to 文献总结｜使用课程学习改进从头药物设计">文献总结｜使用课程学习改进从头药物设计</a>
                 </h2>
                 <span class="post-meta">
-                        <a href="https://leonis.cc/author/leo.html">Leo</a>
+                        <a class="post-meta-tag" href="https://leonis.cc/author/leo.html">Leo</a>
                      | <time datetime="2022年 11月25日">2022年 11月25日</time>
-                     | Archived in <a href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
+                     | Archived in 
+                    <a class="post-meta-tag" href="https://leonis.cc/category/sui-sui-nian.html">碎碎念</a>
                 </span>
-                <div class="clear"></div>
-            </header>
-                <section class="post-excerpt">
-                    <p>
+                <p class="post-excerpt">
                         本文介绍于 2022 年发表在 Nature Machine Intelligence 上的一篇文章，文章原标题为 Improving De Novo Molecular Design with Curriculum Learning，文章介绍了深度学习中的课程学习，并将课程学习的策略用于 REINVENT 模型，相比于强化学习的策略，课程学习对解决复杂任务具有更好效果。
-                    </p>
-                </section>
-                <div class="index-tags">
-<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/rnn.html"># RNN</a>                </div>
-            </div>
-        </article>
+                </p>
 
-<nav class="pagination" role="pagination">
+                <div class="post-excerpt">
+
+                    <aside class="post-tags">
+<a href="https://leonis.cc/tag/literature-summary.html"># Literature Summary</a><a href="https://leonis.cc/tag/cadd.html"># CADD</a><a href="https://leonis.cc/tag/rnn.html"># RNN</a>                    </aside>
+                </div>
+            </div>
+        </div>
+    </article>
+
+<nav class="pagination" aria-label="Pagination" role="pagination">
   <div class="inner">
-    <a class="pagination-next" href="https://leonis.cc/index4.html"><i class="ic ic-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
-    <span class="pagination-info">Page 5 / 8</span>
-    <a class="pagination-prev" href="https://leonis.cc/index6.html"><span class="pagination-label">Older Posts</span> <i class="ic ic-arrow-right"></i></a>
-    <div class="clear"></div>
+    <div class="box pagination-box">
+      <a title="Newer Posts" class="pagination-next" href="https://leonis.cc/index4.html"><i class="icon icon-arrow-left"></i> <span class="pagination-label">Newer Posts</span></a>
+      <span class="pagination-info">Page 5 of 8</span>
+      <a title="Older Posts" class="pagination-prev" href="https://leonis.cc/index6.html"><span class="pagination-label">Older Posts</span> <i class="icon icon-arrow-right"></i></a>
+    </div>
   </div>
 </nav>
   </main>
 </div>
-      <!-- TODO : Body class -->
-    <div id="body-class" style="display: none;" class=""></div>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo's blog &copy; 2024
+        </span>
+        <span class="nav-credits">
 
-    <footer id="footer">
-      <div class="inner">
-        <section class="credits">
 
 
-          <span class="credits-theme"><a rel="noopener" target="_blank" href="https://github.com/Tseing/Pelican_blog"><i class="fa-brands fa-github fa-fw"></i><b> Source</b></a> &bull;
-               <a href="https://leonis.cc/feed.xml"><i class="fa-solid fa-rss fa-fw"></i><b> Atom</b></a> &bull;
-               <a href= "https://leonis.cc/sitemap.xml"><i class="fa-solid fa-sitemap fa-fw"></i><b> Sitemap</b></a></span>
-          <span class="credits-software">Theme <a rel="noopener" target="_blank" href="https://github.com/arulrajnet/attila"><b>Attila</b></a> &bull; Published with <a rel="noopener" target="_blank" href="https://github.com/getpelican/pelican"><b>Pelican</b></a></span>
-        </section>
-      </div>
-    </footer>
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
   </section>
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <!-- code highlight -->
-  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js"></script>
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/django.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/dockerfile.min.js"></script>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/markdown.min.js"></script>
-  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/languages/nginx.min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
   <!-- lightbox -->
   <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
   <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
@@ -398,8 +501,9 @@
   </script>
     <!-- umami analytics -->
     <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
-  <!-- visitor count -->
-  <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
-  <!--  -->
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
 </body>
+
 </html>
