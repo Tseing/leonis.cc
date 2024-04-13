@@ -9,7 +9,11 @@
 }
 
 ::selection {
-    background-color: #cce2ff;
+  background-color: #cce2ff;
+}
+
+.theme-dark ::selection {
+  background-color: #5b646f;
 }
 
 .inner {
@@ -140,7 +144,7 @@ samp {
   padding: 0.5em 1em;
 }
 
-.theme-dark .post-content .lightgallery img {
+.theme-dark .post-content img {
   filter: brightness(0.9);
 }
 
