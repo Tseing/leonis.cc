@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/drafts/covert-chembl-id-into-smiles.html" rel="canonical" />
+  <!-- Feed -->
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo’s blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+
+  <!-- font-awesome icons -->
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom fonts -->
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
+
+
+
+
+    <meta name="description" content="ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="Python">
+    <meta name="tags" content="PostgreSQL">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo’s blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/drafts/covert-chembl-id-into-smiles.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2024-03-15 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Python"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="PostgreSQL"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法",
+  "headline": "将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法",
+  "datePublished": "2024-03-15 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://leonis.cc/https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content",
+  "url": "https://leonis.cc/drafts/covert-chembl-id-into-smiles.html",
+  "description": "ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …"
+}
+</script>
+
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
+<body class="category-template">
+
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
+
+    <li class="nav-Home " role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 active" role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
+
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
+    <!-- Progressbar -->
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="post-header  has-cover ">
+      <div class="inner">
+        <span class="post-info">
+          <span class="post-type">Article</span>
+          <span class="post-count">碎碎念</span>
+        </span>
+        <h1 class="post-title">将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</h1>
+        <div class="post-meta">
+          <div class="post-meta-avatars">
+
+
+            <figure class="post-meta-avatar avatar">
+              <a class="author-avatar" href="https://leonis.cc/author/leo.html">
+                <img class="author-profile-image" src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+              </a>
+            </figure>
+          </div>
+
+          <h4 class="post-meta-author">
+            Leo
+          </h4>
+          <time datetime="2024年 3月15日">2024年 3月15日</time>
+        </div>
+          <div class="post-cover cover">
+            <img src="https://api.onedrive.com/v1.0/shares/s!AtseC45rsRhNwFfSnZ1Pc1osKbni/root/content" alt="Category 碎碎念" />
+          </div>
+      </div>
+    </header>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+          <div class="toc-nav">
+            <div id="toc"><ul><li><a class="toc-href" href="#chembl-web-api" title="ChEMBL Web API">ChEMBL Web API</a></li><li><a class="toc-href" href="#postgresql" title="PostgreSQL">PostgreSQL</a></li></ul></div>
+          </div>
+        <div class="inner">
+          <section class="post-content">
+            <p>ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化合物的标识。而为了进一步使用这些数据，通常要将其转换为例如 SMILES 或是 InChI 等更具体的分子表示。</p>
+<p>本文分别介绍使用 ChEMBL 的 Web API 和 PostgreSQL 将 ChEMBL ID 转化为 SMILES 的两种方法，在得到 SMILES 之后，想获得其他的分子表示就也很容易了。</p>
+<h2 id="chembl-web-api">ChEMBL Web API</h2>
+<p>ChEMBL 在其<a href="https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services" rel="noopener" target="_blank">官方接口文档</a>中介绍了多种获取数据库信息的方法，因为完成转化后通常还要额外处理数据，最灵活方便的还是其中的 ChEMBL Web 服务 Python 包 <a href="https://pypi.org/project/chembl-webresource-client/" rel="noopener" target="_blank">chembl-webresource-client</a>，本文也主要介绍它的使用方法。</p>
+<pre><code class="language-shell">$ pip install chembl-webresource-client
+</code></pre>
+<p>通过 pip 安装后，通过 ChEMBL ID 过滤分子并取出其 <code>"molecule_structures"</code> 信息：</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from chembl_webresource_client.new_client import new_client
+&gt;&gt;&gt; molecule = new_client.molecule
+&gt;&gt;&gt; info = molecule.filter(chembl_id="CHEMBL10").only(["molecule_structures"])
+&gt;&gt;&gt; info
+[{'molecule_structures': {'canonical_smiles': 'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1', 'molfile': '\n     RDKit          2D\n\n 27 30  0  0  0  0  0  0  0  0999 V2000\n   10.3778   -8.9759    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.7898   -8.6390    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0\n    9.7877   -7.9612    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    9.0572   -9.0655    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.0585   -9.9128    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.3255  -10.3375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.5911   -9.9151    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.5898   -9.0679    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.3228   -8.6431    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.8577  -10.3401    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.7798  -11.1765    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    5.9511  -11.3526    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6063  -12.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.0503  -12.8454    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6484  -13.5912    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.8016  -13.6161    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4801  -14.2128    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n    4.3566  -12.8952    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.7584  -12.1493    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.5275  -10.6189    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.0943   -9.9893    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    4.6845  -10.5304    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1385  -11.1746    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.3050  -11.0228    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.0196  -10.2251    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    3.5678   -9.5791    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4013   -9.7308    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  2  4  1  0\n  4  5  2  0\n  5  6  1  0\n  6  7  2  0\n  7  8  1  0\n  8  9  2  0\n  9  4  1  0\n  7 10  1  0\n 10 11  2  0\n 11 12  1  0\n 12 13  1  0\n 13 14  2  0\n 14 15  1  0\n 15 16  2  0\n 16 17  1  0\n 16 18  1  0\n 18 19  2  0\n 19 13  1  0\n 12 20  2  0\n 20 21  1  0\n 21 10  1  0\n 20 22  1  0\n 22 23  2  0\n 23 24  1  0\n 24 25  2  0\n 25 26  1  0\n 26 27  2  0\n 27 22  1  0\nM  CHG  2   2   1   3  -1\nM  END\n&gt; &lt;chembl_id&gt;\nNone\n\n&gt; &lt;chembl_pref_name&gt;\nundefined', 'standard_inchi': 'InChI=1S/C21H16FN3OS/c1-27(26)18-8-4-16(5-9-18)21-24-19(14-2-6-17(22)7-3-14)20(25-21)15-10-12-23-13-11-15/h2-13H,1H3,(H,24,25)', 'standard_inchi_key': 'CDMGBJANTYXAIV-UHFFFAOYSA-N'}}]
+</code></pre>
+<p>尽管指定了仅 <code>"molecule_structures"</code> 部分的信息，但还是输出了很长结果，其中包括 InChI 等各种结构数据 ，只有 <code>'canonical_smiles'</code> 字段是目标信息。</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; type(info)
+chembl_webresource_client.query_set.QuerySet
+</code></pre>
+<p>查询结果对象是与 Django <code>QuerySet</code> 相似的 <code>chembl_webresource_client.query_set.QuerySet</code>，支持多种类似的过滤操作，具体内容可以查看<a href="https://github.com/chembl/notebooks/blob/main/ChEMBL_webresource_client_examples.ipynb" rel="noopener" target="_blank">官方案例</a>。<code>QuerySet</code> 同样也兼容列表、字典等 Python 基本数据结构的操作，所以对于单条 ChEMBL ID，我们可以通过以下方法很方便地直接取出查询到的 SMILES 结果：</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; chembl_id = "CHEMBL10"
+&gt;&gt;&gt; molecule.filter(chembl_id=chembl_id).only(["molecule_structures"])[0]["molecule_structures"]["canonical_smiles"]
+'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1'
+</code></pre>
+<p>若要查询多条 ChEMBL ID，只需要把参数 <code>chembl_id</code> 改为 <code>molecule_chembl_id__in</code> 并传入ChEMBL ID 的列表即可。</p>
+<p><div class="warn-info"><p><span><i class="fa-solid fa-circle-exclamation"></i>&ensp;Warning</span>&emsp;输入 ChEMBL ID 列表时，参数名称 <code>molecule_chembl_id__in</code> 中位于 &ldquo;in&rdquo; 前的是<strong>双下划线</strong>。</p></div></p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; chembl_id = ["CHEMBL10", "CHEMBL100", "CHEMBL100"]
+&gt;&gt;&gt; infos = molecule.filter(molecule_chembl_id__in=chembl_id).only(["molecule_chembl_id", "molecule_structures"])
+&gt;&gt;&gt; {info["molecule_chembl_id"]: info["molecule_structures"]["canonical_smiles"] for info in infos}
+{'CHEMBL10': 'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1', 'CHEMBL100': 'CC1(C)Oc2ccc(C#N)cc2[C@@H](N2CCCC2=O)[C@@H]1O', 'CHEMBL1000': 'O=C(O)COCCN1CCN(C(c2ccccc2)c2ccc(Cl)cc2)CC1'}
+</code></pre>
+<p>通过这种方法查询 SMILES 的优点在于方便灵活，可以很容易地将查询代码嵌入处据处理的脚本中。但由于该方法是通过 Web API 查询结果，速度受限于网络，内容大小受限于 memory，无法用于大量数据的转化。经笔者测试，将 1000 条 ChEMBL ID 转化为 SMILES 耗时约 102 秒，用这种方法处理较小规模的数据更加合理。</p>
+<h2 id="postgresql">PostgreSQL</h2>
+<p>若要将大批量的 ChEMBL ID 转化为 SMILES，更推荐将 ChEMBL 数据库下载至本地，查询的速度更快。ChEMBL 提供了MySQL、PostgreSQL 等多种数据库的<a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank">下载方式</a>，读者可以下载熟悉的数据库压缩包，本文选择在 Linux 上使用 PostgreSQL。当然，在安装 ChEMBL 数据库前必须安装相应的数据库软件，很容易就能检索到各种数据的安装方法，这里从略。</p>
+<pre><code class="language-shell">$ wget "https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/chembl_34_postgresql.tar.gz" -O chembl_34_postgresql.tar.gz
+$ tar -zxvf chembl_34_postgresql.tar.gz
+</code></pre>
+<p>在安装好对应的数据库软件后，下载并解压数据库压缩包，得到以下文件：</p>
+<pre><code class="language-shell">
+</code></pre>
+<pre><code class="language-txt">a
+</code></pre>
+<pre><code class="language-pgsql">SELECT *
+FROM
+</code></pre>
+          </section>
+
+
+          <section class="post-footer" style="margin: 12rem 0 0;">
+            <div class="post-share">
+              <span class="post-info-label">Share</span>
+                <a title="复制文章链接" aria-label="Share-link" class="share-link"
+                  href="#" onclick='copyURL(event, "将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法 - Leo’s blog https://leonis.cc/drafts/covert-chembl-id-into-smiles.html");return false;'>
+                  <i class="icon icon-link"
+                  aria-hidden="true"></i><span class="hidden">Share-link</span>
+                </a>
+                <a title="嘟嘟到 Mastodon" aria-label="Mastodon" class="mastodon"
+                  href="https://tootpick.org/#text=将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法 - Leo’s blog https://leonis.cc/drafts/covert-chembl-id-into-smiles.html" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-mastodon"
+                  aria-hidden="true"></i><span class="hidden">Mastodon</span>
+                </a>
+                <a title="分享到微博" aria-label="Weibo" class="weibo"
+                  href="http://service.weibo.com/share/share.php?url=https://leonis.cc/drafts/covert-chembl-id-into-smiles.html&title=将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法&nbsp;-&nbsp;Leo’s blog"
+                  target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-weibo"
+                  aria-hidden="true"></i><span class="hidden">Weibo</span>
+                </a>
+                <a title="通过 Email 转发" aria-label="Email" class="email"
+                  href="mailto:?subject=将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法&amp;body=https://leonis.cc/drafts/covert-chembl-id-into-smiles.html">
+                  <i class="icon icon-mail"
+                  aria-hidden="true"></i><span class="hidden">Email</span>
+                </a>
+              <div class="clear"></div>
+            </div>
+
+            <aside class="post-tags">
+<a href="https://leonis.cc/tag/python.html"># Python</a><a href="https://leonis.cc/tag/postgresql.html"># PostgreSQL</a>            </aside>
+
+            <div class="clear"></div>
+
+            <aside class="post-author">
+
+
+                <figure class="post-author-avatar">
+                  <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                </figure>
+                <div class="post-author-bio">
+                  <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                    <p class="post-author-about">A chemist who doesn’t know about classical literature isn’t a good programmer. Cool, huh?</p>
+                    <span class="post-author-location">
+                      <a rel="noopener" target="_blank" href="https://www.bing.com/maps?cp=39.116572%7E117.361669&lvl=10.1"
+                      title="Tientsin">
+                      <i class="fa-solid fa-earth-asia fa-fw"></i></a>
+                    </span>
+                  <!-- Social linkes in alphabet order. -->
+                    <span class="post-author-mastodon">
+                      <a rel="noopener" target="_blank" href="https://mast.dragon-fly.club/@leonis"
+                      title="@leonis@dragon-fly.club">
+                        <i class="fa-brands fa-mastodon fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-github">
+                      <a rel="noopener" target="_blank" href="https://github.com/Tseing"
+                      title="@Tseing">
+                        <i class="fa-brands fa-github fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-email">
+                      <a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"
+                      title="im.yczeng@outlook.com">
+                        <i class="fa-solid fa-envelope fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-rss">
+                      <a rel="noopener" target="_blank" href="/feed.xml"
+                      title="RSS Feed">
+                        <i class="fa-solid fa-rss fa-fw"></i></a>
+                    </span>
+                </div>
+                <div class="clear"></div>
+            </aside>
+
+          </section>
+
+
+          <aside class="post-nav">
+            <div class="clear"></div>
+          </aside>
+
+<div id="waline"></div>
+        </div>
+      </article>
+    </main>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo’s blog &copy; 2024
+        </span>
+        <span class="nav-credits">
+
+
+
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
+  </section>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- code highlight -->
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+    <!-- umami analytics -->
+    <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
+
+<script>
+  $(document).ready(function () {
+    var viewport = $(window);
+    var post = $('.post-content');
+    // Responsive videos with fitVids
+    post.fitVids();
+
+    var mdSelector="pre code";
+    var rstSelector="pre code";
+    var selector=mdSelector;
+    // Format code blocks and add line numbers
+    function codestyling() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+        // No lines for plain text blocks
+        if (!$(this).hasClass('language-text')) {
+          var code = $(this);
+          // Calculate amount of lines
+          var lines = code.html().split(/\n(?!$)/g).length;
+          var numbers = [];
+          if (lines > 1) {
+            lines++;
+          }
+          for (i = 1; i < lines; i++) {
+            numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+          }
+          code.parent().append('<div class="lines">' + numbers + '</div>');
+        }
+      });
+    }
+
+    // Format code blocks only
+    function codestylingWithoutLineNumbers() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+      });
+    }
+
+    codestylingWithoutLineNumbers();
+    // Reading progress bar on window top
+    function readingProgress() {
+      var postBottom = post.offset().top + post.height();
+      var viewportHeight = viewport.height();
+      var progress = 100 - (((postBottom - (viewport.scrollTop() + viewportHeight) + viewportHeight / 3) / (postBottom - viewportHeight + viewportHeight / 3)) * 100);
+      $('.progress-bar').css('width', progress + '%');
+      (progress > 100) ? $('.progress-container').addClass('complete'): $('.progress-container').removeClass('complete');
+    }
+    readingProgress();
+    // Trigger reading progress
+    viewport.on({
+      'scroll': function() {
+        readingProgress();
+      },
+      'resize': function() {
+        readingProgress();
+      },
+      'orientationchange': function() {
+        readingProgress();
+      }
+    });
+
+  });
+
+</script>
+</body>
+
+</html>

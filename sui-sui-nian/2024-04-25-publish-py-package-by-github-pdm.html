@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="canonical" />
+  <!-- Feed -->
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo’s blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+
+  <!-- font-awesome icons -->
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom fonts -->
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-mononoki/5.0.7/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
+
+
+
+
+    <meta name="description" content="最近换用 PDM 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 pyproject.toml，自动解决...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="GitHub">
+    <meta name="tags" content="Python">
+    <meta name="tags" content="PyPI">
+    <meta name="tags" content="PDM">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo’s blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="最近换用 PDM 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 pyproject.toml，自动解决..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2024-04-25 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="GitHub"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="Python"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="PyPI"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="PDM"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://cdn.leonis.cc/img/2024/04/7a71da7bae3e8ffa04daa0ae2b4bb2e2817f81a8bd0436bfc9aa26019cf426ac.png">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧",
+  "headline": "通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧",
+  "datePublished": "2024-04-25 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://cdn.leonis.cc/img/2024/04/7a71da7bae3e8ffa04daa0ae2b4bb2e2817f81a8bd0436bfc9aa26019cf426ac.png",
+  "url": "https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html",
+  "description": "最近换用 PDM 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 pyproject.toml，自动解决..."
+}
+</script>
+
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
+<body class="category-template">
+
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
+
+    <li class="nav-Home " role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 active" role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
+
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
+    <!-- Progressbar -->
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="post-header  has-cover ">
+      <div class="inner">
+        <span class="post-info">
+          <span class="post-type">Article</span>
+          <span class="post-count">碎碎念</span>
+        </span>
+        <h1 class="post-title">通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</h1>
+        <div class="post-meta">
+          <div class="post-meta-avatars">
+
+
+            <figure class="post-meta-avatar avatar">
+              <a class="author-avatar" href="https://leonis.cc/author/leo.html">
+                <img class="author-profile-image" src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+              </a>
+            </figure>
+          </div>
+
+          <h4 class="post-meta-author">
+            Leo
+          </h4>
+          <time datetime="2024年 4月25日">2024年 4月25日</time>
+        </div>
+          <div class="post-cover cover">
+            <img src="https://cdn.leonis.cc/img/2024/04/7a71da7bae3e8ffa04daa0ae2b4bb2e2817f81a8bd0436bfc9aa26019cf426ac.png" alt="Category 碎碎念" />
+          </div>
+      </div>
+    </header>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+          <div class="toc-nav">
+            <div id="toc"><ul><li><a class="toc-href" href="#chu-shi-hua-xiang-mu" title="初始化项目">初始化项目</a><ul><li><a class="toc-href" href="#cong-ling-kai-shi-de-kai-fa" title="从零开始的开发">从零开始的开发</a></li><li><a class="toc-href" href="#cong-yi-you-xiang-mu-qian-yi" title="从已有项目迁移">从已有项目迁移</a></li></ul></li><li><a class="toc-href" href="#zhun-bei-fa-bu-dao-pypi_1" title="准备发布到 PyPI">准备发布到 PyPI</a></li><li><a class="toc-href" href="#tian-jia-github-actions" title="添加 GitHub Actions">添加 GitHub Actions</a><ul><li><a class="toc-href" href="#geng-fu-za-yi-xie" title="更复杂一些">更复杂一些</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+          </div>
+        <div class="inner">
+          <section class="post-content">
+            <p>最近换用 <a href="https://pdm-project.org/latest/" rel="noopener" target="_blank">PDM</a> 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 <code>pyproject.toml</code>，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png"/></a></div></p>
+<p class="intro"><i class="fa-solid fa-angles-up"></i> PDM 提供的各种功能</p>
+<p>很值得注意的是 PDM 提供了 build 的功能，能够将源码构建为 Python package 并发布到 PyPI，不再需要其他繁琐的工具，我也抱着极大的兴趣探索了结合 PDM 与 GitHub Actions 发布 Python 包的方法。PDM 提供了多平台的<a href="https://github.com/pdm-project/pdm" rel="noopener" target="_blank">多种安装方法</a>，读者可以根据自己的要求安装，本文在 Windows 上使用 <code>pdm==2.15.0</code> 作为演示。</p>
+<h2 id="chu-shi-hua-xiang-mu">初始化项目</h2>
+<p>安装好 PDM 后，新建项目文件夹，用终端进入文件夹并执行 <code>pdm init</code> 初始化项目，在这里我使用的是 PowerShell。PDM 会通过几个问答来指引用户初始化项目：</p>
+<pre><code class="language-powershell">&gt; pdm init
+Creating a pyproject.toml for PDM...
+Please enter the Python interpreter to use
+ 0. cpython@3.9 (F:\Miniconda\python.EXE)
+ 1. cpython@3.12 (C:\Users\Leo\scoop\apps\python\current\python.exe)
+ 2. cpython@3.12 (C:\Users\Leo\scoop\shims\python3.exe)
+ 3. cpython@3.9 (D:\Python39\python.exe)
+ 4. cpython@3.7 (D:\Python37\python37.exe)
+ 5. cpython@3.7 (D:\Python37\python.exe)
+Please select (0): 3
+Virtualenv is created successfully at D:\Code\gh-action-demo\.venv
+Project name (gh-action-demo):leo-gh-action-demo
+Project version (0.1.0):
+Do you want to build this project for distribution(such as wheel)?
+If yes, it will be installed by default when running `pdm install`. [y/n] (n): y
+Project description ():
+Which build backend to use?
+0. pdm-backend
+1. setuptools
+2. flit-core
+3. hatchling
+Please select (0):
+License(SPDX name) (MIT):
+Author name (Leo):
+Author email (im.yczeng@foxmail.com):
+Python requires('*' to allow any) (&gt;=3.9):
+Project is initialized successfully
+</code></pre>
+<p>大部分设置项可以直接回车，选用括号中的默认值即可，比较重要的两项是</p>
+<ul>
+<li>PDM 会自动搜寻设备上的 Python 解释器，需要根据需求选择项目的 Python 版本，如果输出中没有列出目标的 Python，就要检查 PDM 还是 Python 没有正确安装；</li>
+<li>选择项目 build backend 为 pdm-backend，这一点没有特别的原因，只是因为我们在用 PDM 所以就都用 PDM 的 toolkit 好啦。</li>
+</ul>
+<p>以上步骤都完成后，项目文件夹的结构会是</p>
+<pre><code class="language-txt">D:\CODE\GH-ACTION-DEMO
+&boxv;  .gitignore
+&boxv;  .pdm-python
+&boxv;  pyproject.toml
+&boxv;  README.md
+&boxvr;&boxh;.venv
+&boxvr;&boxh;src
+&boxv;  &boxur;&boxh;gh_action_demo
+&boxur;&boxh;tests
+</code></pre>
+<p><code>.venv</code> 是项目的虚拟环境，<code>src</code> 是项目源码目录，<code>tests</code> 用于存放测试文件。<code>pyproject.toml</code> 保存了项目的配置项，也包括 PDM 初始化时的配置，里面的内容也可以根据开发的需求手动修改：</p>
+<pre><code class="language-toml">[project]
+name = "leo-gh-action-demo"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Leo", email = "im.yczeng@foxmail.com"},
+]
+dependencies = []
+requires-python = "&gt;=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+</code></pre>
+<h3 id="cong-ling-kai-shi-de-kai-fa">从零开始的开发</h3>
+<p>如果在项目开始之前就选用了 PDM 管理环境那当然最好不过，直接在 <code>src/&lt;project_name&gt;</code> 目录中写入第一行代码吧。完成后执行 <code>pdm build</code> 开始构建，这个过程中 PDM 会生成以下内容：</p>
+<pre><code class="language-txt">D:\CODE\GH-ACTION-DEMO
+&boxvr;&boxh;.pdm-build
+&boxv;  &boxv;  .gitignore
+&boxv;  &boxur;&boxh;gh_action_demo-0.1.0.dist-info
+&boxv;          METADATA
+&boxv;          WHEEL
+&boxvr;&boxh;dist
+&boxv;      gh_action_demo-0.1.0-py3-none-any.whl
+&boxv;      gh_action_demo-0.1.0.tar.gz
+...
+</code></pre>
+<p><code>.pdm-build</code> 是构建过程产生的中间文件，<code>dist</code> 目录中就是可以用于正式发布的 Python package 压缩包了。让我们查看一下 PDM 帮助打包了项目中的哪些内容：</p>
+<pre><code class="language-powershell">&gt; tar -tf .\dist\gh_action_demo-0.1.0.tar.gz
+gh_action_demo-0.1.0/README.md
+gh_action_demo-0.1.0/pyproject.toml
+gh_action_demo-0.1.0/src/gh_action_demo/__init__.py
+gh_action_demo-0.1.0/src/gh_action_demo/main.py
+gh_action_demo-0.1.0/tests/__init__.py
+gh_action_demo-0.1.0/PKG-INFO
+</code></pre>
+<p>可以看到压缩包是很规范的结构，唯一不太妙的地方在于 PDM 将 <code>tests</code> 目录也打包在内，测试文件中可能会包含体积比较大的数据文件，这对于使用 package 的用户是没有必要的。因此可以在 <code>pyproject.toml</code> 中添加以下的配置项，手动指定不纳入 package 的目录或文件：</p>
+<pre><code class="language-toml">[tool.pdm.build]
+excludes = ["tests/"]
+</code></pre>
+<p>再次运行 <code>pdm build</code>，可以发现新构建的压缩包已经把 <code>tests/</code> 排除在外了。</p>
+<h3 id="cong-yi-you-xiang-mu-qian-yi">从已有项目迁移</h3>
+<p>很多情况下，我们并不是一开始就使用 PDM 的项目结构，例如我的项目也是开发了一半时才换用 PDM 管理。如果项目比较简单，可以调整项目的结构，在 <code>src/</code> 中组织源码，那么构建的方法就和前文一致了。如果项目结构比较复杂或是有特殊需求而不能将源码调整至 <code>src/</code> 中，那么就需要在 <code>pyproject.toml</code> 中手动设置打包的源码目录，例如：</p>
+<pre><code class="language-toml">[tool.pdm.build]
+includes = ["main/", "plugins/"]
+excludes = ["tests/"]
+</code></pre>
+<p>运行 <code>pdm build</code> 即可将 <code>main/</code> 和 <code>plugins/</code> 目录打包。</p>
+<h2 id="zhun-bei-fa-bu-dao-pypi_1">准备发布到 PyPI</h2>
+<p>我们在本地完成了 package 的构建，<code>dist</code> 目录中生成的 <code>*.tar.gz</code> 和 <code>*.whl</code> 就已经可以借助各种工具发布到 PyPI。不过更优的方法是完成开发后直接将代码推送至 GitHub 仓库，借助 GitHub Actions 的功能在云上完成构建并自动发布。</p>
+<p>不论何种方法，在发布之前都要先注册 PyPI 和 TestPyPI 的账号。<a href="https://pypi.org/" rel="noopener" target="_blank">PyPI</a> 是安装 Python package 的常用仓库，不用作多余的介绍。<a href="https://test.pypi.org/" rel="noopener" target="_blank">TestPyPI</a> 是 PyPI 的测试仓库，主要用于测试发布、安装 package 是否正常，可视作在 PyPI 正式发布前的「预览版」。二者的流程完全相同，唯一不同在于数据、账号并不通用，必须分别注册。二者注册过程中包括开启二次验证等操作，步骤稍有些复杂，但很容易能够查找到详尽的教程，在此不再赘述。</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;因为本文用于演示发布的流程，后文主要以 TestPyPI 作为示例，设置项中与 PyPI 的细微区别以提示的方式给出。</p></div></p>
+<p>登录 TestPyPI 账号后进入<a href="https://test.pypi.org/manage/account/publishing/" rel="noopener" target="_blank">发布页面</a>，我们选用 Trusted Publisher 的方式发布。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/27dbfb1b597dfa90fe832c749fbc243686c66cd31106133f87885ec330bb7169.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/27dbfb1b597dfa90fe832c749fbc243686c66cd31106133f87885ec330bb7169.png"/></a></div></p>
+<p>拖动页面至最底部，在「Add a new pending publisher」中选择「GitHub」，按要求填入 Publisher 的信息：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/5031723d0b47f3237677466e36ec0cac592ee32fb5de99e65393c6d52b2f91db.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/5031723d0b47f3237677466e36ec0cac592ee32fb5de99e65393c6d52b2f91db.png"/></a></div></p>
+<p>必填项包括以下 4 项：</p>
+<ul>
+<li>PyPI Project Name：在 TestPyPI（PyPI）中索引的 package 名称，必须与 <code>pyproject.toml</code> 中的 <code>name</code> 一致；</li>
+<li>Owner：GitHub 用户名；</li>
+<li>Repository name：GitHub 仓库名；</li>
+<li>Workflow name：GitHub Actions 文件名，GitHub Actions 通过 YAML 文件配置，所以后缀应为 <code>.yml</code> 或 <code>.yaml</code>。</li>
+</ul>
+<p>完成后选择「Add」，就能看到准备中的 Publisher：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/dd5c521239d061b30d392519a8d5da4f1ed99cfffa9c89c3dbdc53da7a47a9f9.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/dd5c521239d061b30d392519a8d5da4f1ed99cfffa9c89c3dbdc53da7a47a9f9.png"/></a></div></p>
+<h2 id="tian-jia-github-actions">添加 GitHub Actions</h2>
+<p>在 GitHub 中创建仓库，注意仓库名应与 Publisher 中设置的仓库名完全一致。在推送代码之前，我们还需要在项目中添加 GitHub Actions 的配置。</p>
+<p>在项目文件夹中添加 <code>.github/workflows/</code> 文件夹，在其中新建一个 YAML 文件，注意文件名应与 Publisher 中设置的「Workflow name」一致。在 YAML 文件中添加配置，对 <a href="https://pdm-project.org/latest/usage/publish/" rel="noopener" target="_blank">PDM 官方文档</a>提供的模版稍作修改并逐行添加了注释：</p>
+<pre><code class="language-yaml"># 显示在 GitHub UI 中的 workflow 名称
+name: Publish Python distributions to TestPyPI
+
+# 触发条件，在任何分支有 push 时触发该 workflow
+on:
+  push
+
+# workflow 由若干个 job 组成，job 之间并行运行，此处只有 testpypi-publish 1 个 job
+jobs:
+  # job 标识名称
+  testpypi-publish:
+    # 显示在 GitHub UI 中的 job 名称
+    name: upload release to TestPyPI
+    # 运行 job 的计算机平台
+    runs-on: ubuntu-latest
+    # PDM 所需的权限
+    permissions:
+      # This permission is needed for private repositories.
+      contents: read
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    # 每个 job 由若干 step 组成
+    steps:
+      # PDM 所需的环境配置
+      - uses: actions/checkout@v3
+
+      - uses: pdm-project/setup-pdm@v3
+
+      # 运行命令行程序，通过 PDM 发布到 TestPyPI
+      # `pdm publish` 命令先完成 `pdm build` 再将 `dist/` 中的内容发布
+      - name: Publish package distributions to TestPyPI
+        run: pdm publish --repository testpypi
+</code></pre>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;若要将 package 发布到 PyPI 只需要将 workflow 中的 <code>pdm publish --repository testpypi</code> 改为 <code>pdm publish</code>。</p></div></p>
+<p>完成以上步骤后，再检查一下项目的文件结构，应当为</p>
+<pre><code class="language-txt">D:\CODE\GH-ACTION-DEMO
+&boxv;  .gitignore
+&boxv;  .pdm-python
+&boxv;  pyproject.toml
+&boxv;  README.md
+&boxvr;&boxh;.github
+&boxv;  &boxur;&boxh;workflows
+&boxv;          testpypi_publish.yml
+&boxvr;&boxh;.pdm-build
+&boxvr;&boxh;.venv
+&boxvr;&boxh;dist
+&boxvr;&boxh;src
+&boxv;  &boxur;&boxh;gh_action_demo
+&boxv;          main.py
+&boxur;&boxh;tests
+</code></pre>
+<p>确认无误后就可以把项目推送到 GitHub 仓库了。</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;需要推送到 GitHub 仓库的仅有 <code>.gitignore</code> <code>pyproject.toml</code> <code>README.md</code> <code>.github/</code> <code>src/</code> <code>tests/</code> 这几个文件与目录，<code>.pdm-build/</code> <code>.venv</code> <code>dist</code> 都不应当上传，很方便的是 PDM 生成的 <code>.gitignore</code> 已经自动排除了这些留在本地的项目。</p></div></p>
+<p>如果上述配置全部正确，打开 GitHub 的仓库中的「Actions」界面就能看到创建的 workflow 是否成功执行：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/2a7289e9febec1d7a7145fdf21177a9c5080abc1020a6040244d45ee0a98716b.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/2a7289e9febec1d7a7145fdf21177a9c5080abc1020a6040244d45ee0a98716b.png"/></a></div></p>
+<p>如果提示 workflow 全部完成，转至 TestPyPI 的<a href="https://test.pypi.org/manage/projects/" rel="noopener" target="_blank">项目界面</a>就能找到刚发布的 package：</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e90cef983d2f44a19a28cca6d58a0dc868ef1158bfc4efb8910e03a1f6e6378a.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/e90cef983d2f44a19a28cca6d58a0dc868ef1158bfc4efb8910e03a1f6e6378a.png"/></a></div></p>
+<p>根据页面的提示，这时候通过 <code>pip install -i https://test.pypi.org/simple/ leo-gh-action-demo</code> 就能将发布的 package 安装到 Python 坏境中。</p>
+<h3 id="geng-fu-za-yi-xie">更复杂一些</h3>
+<p>好了，经过以上的步骤，我们就完成将 Python package 发布到 PyPI 的基本目标了。不过在实际中会有更复杂的 workflow，考虑这样的开发场景：</p>
+<ol>
+<li>每个分支的每次 push 都要执行 <code>pdm build</code> 检查项目是否能构建；</li>
+<li>每个打上版本号 tag（如 v1.2.1rc1）的 commit 都是准备发布的版本，需要自动创建 pre-release 并将其发布到 TestPyPI，用于测试各种功能；</li>
+<li>确认无误后手动从 tag 创建正式 release，同时自动发布到 PyPI。</li>
+</ol>
+<p>分析以上需求，可以划分为 2 个 workflow 实现:</p>
+<ol>
+<li><strong>测试构建 workflow</strong><ul>
+<li>由 push 触发 <code>pdb build</code>，<ul>
+<li>如果 push 中有版本 tag，则进一步执行 <code>pdm publish</code>，将构建文件发布到 GitHub release 和 TestPyPI；</li>
+<li>若无版本 tag，则结束 workflow。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>正式发布 workflow</strong><ul>
+<li>由手动 release 触发 <code>pdm build</code>，自动下载 release 中的文件并执行 <code>pdm publish</code>，正式发布到 PyPI。</li>
+</ul>
+</li>
+</ol>
+<h4>测试构建 workflow</h4>
+<p>按上文的步骤在 TestPyPI 中创建新的 Publisher，填入 workflow 的文件名，例如 <code>build_py_dist.yml</code>。接着在 <code>.github/workflows</code> 中创建同名文件，写入 workflow 内容：</p>
+<pre><code class="language-yaml">name: Build Python distributions
+
+# 由 push 触发
+on:
+  push
+
+jobs:
+  # 分别在不同平台构建 .whl 安装包
+  build_whl:
+    strategy:
+      # 使用 matrix 组合在多种 OS 平台上完成 wheel 的构建
+      matrix:
+        os: [ubuntu-22.04, windows-2022]
+        # 给对应的 OS 添加一个新变量 plat_name
+        # Linux plat_name 中的 2_35 来自于 GNU libc 版本
+        include:
+          - os: ubuntu-22.04
+            plat_name: manylinux_2_35_x86_64
+          - os: windows-2022
+            plat_name: win_amd64
+
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pdm-project/setup-pdm@v3
+        with:
+          architecture: x64
+
+      # 查看 GNU libc 版本
+      - run: ldd --version
+      # 通过 PDM 构建 wheel
+      - name: PDM build wheels
+        # 指定 `--no-sdist` 参数时只生成二进制 wheel 文件
+        run: pdm build --no-sdist --config-setting="--plat-name=${{ matrix.plat_name }}"
+
+      # 将 dist/ 目录中的所有 .whl 文件上传暂存
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdm-build-wheel-${{ matrix.plat_name }}
+          path: dist/*.whl
+
+  # 将源码打包为 tar.gz
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pdm-project/setup-pdm@v3
+
+      # 通过 PDM 打包源码
+      - name: PDM build source dist
+        # 指定 `--no-wheel` 参数时只生成打包的源码
+        run: pdm build --no-wheel
+
+      # 将 dist/ 目录中的打包的源码上传暂存
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdm-build-sdist
+          path: dist/*.tar.gz
+
+  # 使用构建文件完成 pre-release
+  pre_release:
+    name: Pre-release package distributions to GitHub
+    # 只有 push 的 tag 以 "v" 起始时才运行该 job
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    # 且在 build_whl 和 build_sdist 两个 job 完成的情况下执行
+    needs: [build_whl, build_sdist]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+    # 每个 job 都会使用新的容器，需要将上传暂存的构件下载到 dist/ 目录
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: pdm-build-*
+        path: dist
+        merge-multiple: true
+    # 使用 dist/ 目录中的文件创建一个 pre-release
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "dist/*"
+        prerelease: true
+
+  # 将构建文件发布到 TestPyPI
+  publish_pkg:
+    name: Publish package to TestPyPI
+    # 只有 push 的 tag 以 "v" 起始时才运行该 job
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    needs: [build_whl, build_sdist]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+    # 使用 PDM 发布已构建的文件
+    - uses: actions/checkout@v3
+    - uses: pdm-project/setup-pdm@v3
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: pdm-build-*
+        path: dist
+        merge-multiple: true
+    # `pdm publish --no-build` 会自动发布 `dist` 中预先构建好的文件
+    - name: Publish package distributions to TestPyPI
+      run: pdm publish --no-build --repository testpypi
+</code></pre>
+<p>这个 workflow 需要执行的任务比较多，而且涉及了逻辑判断，看起来就比较复杂。各个步骤的介绍已经放在注释中，我想再简单介绍一下其中用到有意思的功能和要注意的细节。</p>
+<p><code>strategy.matrix</code> 可以对 <em>n</em> 组变量做笛卡尔积，组合变量创建出子任务；使用 <code>include</code> 可以为特定条件下的子任务引入新变量。将二者放在一起使用，就能实现一个简单的字典，通过键值对来指定变量。在上面的 workflow 中使用它们就是为了得到 <code>{"ubuntu-22.04": "manylinux_2_35_x86_64", "windows-2022": "win_amd64"}</code>，根据不同的平台为 wheel 文件分配不同的后缀。</p>
+<p>前文提过，每个 job 并行执行，所以需要使用 <code>needs</code> 来设定执行先决的 job，就能按需组织成任务序列。此外，每个 job 都会使用新的容器，也就是不同 job 间生成的文件是不互通的，因此我通过 <code>upload-artifact</code> 和 <code>download-artifact</code> 两个 action 上传和下载文件，实现不同容器间文件的传输。</p>
+<p>测试一下构建的情景，具体的步骤是：</p>
+<ol>
+<li>修改 <code>pyproject.toml</code> 中的 <code>version</code>，例如 <code>0.1.1b1</code>;</li>
+<li>通过 <code>git push</code> 推送 commit 到远端仓库。</li>
+</ol>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png"/></a></div></p>
+<p class="intro"><i class="fa-solid fa-angles-up"></i> 每次的 push 都会自动检查是否能构成功构建，因为没有 tag 条件并不执行 publish 任务</p>
+<p>测试发布具体的步骤是：</p>
+<ol>
+<li>修改 <code>pyproject.toml</code> 中的 <code>version</code>，例如 <code>0.1.1b1</code>;</li>
+<li>通过 <code>git tag v0.1.1b1</code> 为当前分支最新 commit 打上版本 tag；</li>
+<li>通过 <code>git push origin v0.1.1b1</code> 推送 tag 到远端仓库。</li>
+</ol>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png"/></a></div></p>
+<p class="intro"><i class="fa-solid fa-angles-up"></i> 每次的 push tag 都会在构建完成后自动发布到 pre-release</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png"/></a></div></p>
+<p class="intro"><i class="fa-solid fa-angles-up"></i> 同时也会自动发布到 TestPyPI</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;<a href="https://peps.python.org/pep-0440/" rel="noopener" target="_blank">PEP 440</a> 制定了 Python package 的版本号规范，在 PyPI 上发布自己的 package 时理应也要按该规范设定版本。</p></div></p>
+<h4>正式发布 workflow</h4>
+<p>相比之下，正式发布的工作流程就简单了许多，就不作过多介绍了。同样需要在 PyPI 中添加 Publisher，在 <code>.github/workflows</code> 中创建 <code>publish_pypi.yml</code>，写入以下内容：</p>
+<pre><code class="language-yaml">name: Publish distributions to PyPI
+
+# 由正式 release 触发
+on:
+  release:
+    types: [released]
+jobs:
+  # 将构建文件发布到 PyPI
+  publish_pkg:
+    name: Publish package to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pdm-project/setup-pdm@v3
+    # 从 release 中下载所有文件到 dist/ 目录
+    - uses: robinraju/release-downloader@v1.10
+      with:
+        latest: true
+        fileName: "*"
+        out-file-path: "dist"
+    # 使用 PDM 将下载的文件发布到 PyPI
+    - name: Publish package distributions to PyPI
+      run: pdm publish --no-build
+</code></pre>
+<p>正式发布的具体步骤就是：</p>
+<ol>
+<li>在 GitHub 仓库的 release 中找到正式版本的 pre-release；</li>
+<li>编辑 pre-release，将其改为 release，提交后就会自动发布到 PyPI。</li>
+</ol>
+<hr/>
+<h2 id="references_1">References</h2>
+<ul>
+<li><a href="https://docs.github.com/zh/actions" rel="noopener" target="_blank">GitHub Actions 文档 - GitHub 文档</a></li>
+<li><a href="https://docs.pypi.org/trusted-publishers/" rel="noopener" target="_blank">Publishing with a Trusted Publisher - PyPI Docs</a></li>
+<li><a href="http://fancyerii.github.io/2024/03/11/pdm-tutorial/" rel="noopener" target="_blank">使用PDM来管理Python项目 - 李理的博客</a></li>
+</ul>
+          </section>
+
+
+          <section class="post-footer" style="margin: 12rem 0 0;">
+            <div class="post-share">
+              <span class="post-info-label">Share</span>
+                <a title="复制文章链接" aria-label="Share-link" class="share-link"
+                  href="#" onclick='copyURL(event, "通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧 - Leo’s blog https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html");return false;'>
+                  <i class="icon icon-link"
+                  aria-hidden="true"></i><span class="hidden">Share-link</span>
+                </a>
+                <a title="嘟嘟到 Mastodon" aria-label="Mastodon" class="mastodon"
+                  href="https://tootpick.org/#text=通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧 - Leo’s blog https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-mastodon"
+                  aria-hidden="true"></i><span class="hidden">Mastodon</span>
+                </a>
+                <a title="分享到微博" aria-label="Weibo" class="weibo"
+                  href="http://service.weibo.com/share/share.php?url=https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html&title=通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧&nbsp;-&nbsp;Leo’s blog"
+                  target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-weibo"
+                  aria-hidden="true"></i><span class="hidden">Weibo</span>
+                </a>
+                <a title="通过 Email 转发" aria-label="Email" class="email"
+                  href="mailto:?subject=通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧&amp;body=https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html">
+                  <i class="icon icon-mail"
+                  aria-hidden="true"></i><span class="hidden">Email</span>
+                </a>
+              <div class="clear"></div>
+            </div>
+
+            <aside class="post-tags">
+<a href="https://leonis.cc/tag/github.html"># GitHub</a><a href="https://leonis.cc/tag/python.html"># Python</a><a href="https://leonis.cc/tag/pypi.html"># PyPI</a><a href="https://leonis.cc/tag/pdm.html"># PDM</a>            </aside>
+
+            <div class="clear"></div>
+
+            <aside class="post-author">
+
+
+                <figure class="post-author-avatar">
+                  <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                </figure>
+                <div class="post-author-bio">
+                  <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                    <p class="post-author-about">A chemist who doesn’t know about classical literature isn’t a good programmer. Cool, huh?</p>
+                    <span class="post-author-location">
+                      <a rel="noopener" target="_blank" href="https://www.bing.com/maps?cp=39.116572%7E117.361669&lvl=10.1"
+                      title="Tientsin">
+                      <i class="fa-solid fa-earth-asia fa-fw"></i></a>
+                    </span>
+                  <!-- Social linkes in alphabet order. -->
+                    <span class="post-author-mastodon">
+                      <a rel="noopener" target="_blank" href="https://mast.dragon-fly.club/@leonis"
+                      title="@leonis@dragon-fly.club">
+                        <i class="fa-brands fa-mastodon fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-github">
+                      <a rel="noopener" target="_blank" href="https://github.com/Tseing"
+                      title="@Tseing">
+                        <i class="fa-brands fa-github fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-email">
+                      <a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"
+                      title="im.yczeng@outlook.com">
+                        <i class="fa-solid fa-envelope fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-rss">
+                      <a rel="noopener" target="_blank" href="/feed.xml"
+                      title="RSS Feed">
+                        <i class="fa-solid fa-rss fa-fw"></i></a>
+                    </span>
+                </div>
+                <div class="clear"></div>
+            </aside>
+
+          </section>
+
+
+          <aside class="post-nav">
+            <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html">
+              <section class="post-nav-teaser">
+                <i class="icon icon-arrow-right"></i>
+                  <h2 class="post-nav-title">华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误</h2>
+                <p class="post-nav-excerpt">最近想要在华为云的 BMS 上部署一个 Web 应用，咨询了华为的工程师后，得到了可行的明确答复。那么首先就需要安装 Nginx，在安装 Nginx 所需的依赖遇到了...</p>
+                <p class="post-nav-meta"><time datetime="2024年 3月15日">2024年 3月15日</time></p>
+              </section>
+            </a>
+            <div class="clear"></div>
+          </aside>
+
+<div id="waline"></div>
+        </div>
+      </article>
+    </main>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo’s blog &copy; 2024
+        </span>
+        <span class="nav-credits">
+
+
+
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
+  </section>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- code highlight -->
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+    <!-- umami analytics -->
+    <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
+
+<script>
+  $(document).ready(function () {
+    var viewport = $(window);
+    var post = $('.post-content');
+    // Responsive videos with fitVids
+    post.fitVids();
+
+    var mdSelector="pre code";
+    var rstSelector="pre code";
+    var selector=mdSelector;
+    // Format code blocks and add line numbers
+    function codestyling() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+        // No lines for plain text blocks
+        if (!$(this).hasClass('language-text')) {
+          var code = $(this);
+          // Calculate amount of lines
+          var lines = code.html().split(/\n(?!$)/g).length;
+          var numbers = [];
+          if (lines > 1) {
+            lines++;
+          }
+          for (i = 1; i < lines; i++) {
+            numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+          }
+          code.parent().append('<div class="lines">' + numbers + '</div>');
+        }
+      });
+    }
+
+    // Format code blocks only
+    function codestylingWithoutLineNumbers() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+      });
+    }
+
+    codestylingWithoutLineNumbers();
+    // Reading progress bar on window top
+    function readingProgress() {
+      var postBottom = post.offset().top + post.height();
+      var viewportHeight = viewport.height();
+      var progress = 100 - (((postBottom - (viewport.scrollTop() + viewportHeight) + viewportHeight / 3) / (postBottom - viewportHeight + viewportHeight / 3)) * 100);
+      $('.progress-bar').css('width', progress + '%');
+      (progress > 100) ? $('.progress-container').addClass('complete'): $('.progress-container').removeClass('complete');
+    }
+    readingProgress();
+    // Trigger reading progress
+    viewport.on({
+      'scroll': function() {
+        readingProgress();
+      },
+      'resize': function() {
+        readingProgress();
+      },
+      'orientationchange': function() {
+        readingProgress();
+      }
+    });
+
+  });
+
+  Waline.init({
+      el: '#waline',
+      serverURL: "https://waline-1-d9689975.deta.app/",
+      emoji: false,
+      search: false,
+      imageUploader: false,
+      locale: {placeholder: "欢迎评论，填写邮箱可以获取头像和收到回复通知～"},
+  });
+</script>
+</body>
+
+</html>

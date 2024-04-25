@@ -21,7 +21,7 @@
 }
 
 dot {
-    text-decoration: underline dotted 2px #f26a3d;
+    text-decoration: underline dotted 2px var(--color-primary);
     text-underline-offset: 3px;
 }
 

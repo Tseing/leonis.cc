@@ -10,6 +10,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html"
+url = "/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html"
+title = "通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧"
+
+[[input.files]]
 path = "sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html"
 url = "/sui-sui-nian/2024-03-15-yum-install-name-error-caused-by-url-encode.html"
 title = "华为云踩坑：由 URL 编码导致 yum 安装时的 No such file or directory 错误"

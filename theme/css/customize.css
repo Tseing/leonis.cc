@@ -144,8 +144,16 @@ samp {
   padding: 0.5em 1em;
 }
 
+.post-content img {
+  margin: 0 auto 4rem;
+}
+
 .theme-dark .post-content img {
   filter: brightness(0.9);
+}
+
+.content:has(#waline) + .nav-footer {
+  padding-top: 0;
 }
 
 /* css for summary tags */
