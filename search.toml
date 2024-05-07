@@ -10,6 +10,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html"
+url = "/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html"
+title = "将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法"
+
+[[input.files]]
 path = "sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html"
 url = "/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html"
 title = "通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧"

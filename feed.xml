@@ -1,5 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo’s blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-04-25T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title><link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="alternate"></link><published>2024-04-25T00:00:00+08:00</published><updated>2024-04-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-04-25:/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html</id><summary type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo’s blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-05-07T00:00:00+08:00</updated><subtitle>Leo’s blog</subtitle><entry><title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</title><link href="https://leonis.cc/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html" rel="alternate"></link><published>2024-05-07T00:00:00+08:00</published><updated>2024-05-07T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-05-07:/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html</id><summary type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化合物的标识。而为了进一步使用这些数据，通常要将其转换为例如 SMILES 或是 InChI 等更具体的分子表示。&lt;/p&gt;
+&lt;p&gt;本文分别介绍使用 ChEMBL 的 Web API 和 PostgreSQL 将 ChEMBL ID 转化为 SMILES 的两种方法，在得到 SMILES 之后，想获得其他的分子表示就也很容易了。&lt;/p&gt;
+&lt;h2 id="chembl-web-api"&gt;ChEMBL Web API&lt;/h2&gt;
+&lt;p&gt;ChEMBL 在其&lt;a href="https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services" rel="noopener" target="_blank"&gt;官方接口文档&lt;/a&gt;中介绍了多种获取数据库信息的方法，因为完成转化后通常还要额外处理数据，最灵活方便的还是其中的 ChEMBL Web 服务 Python 包 &lt;a href="https://pypi.org/project/chembl-webresource-client/" rel="noopener" target="_blank"&gt;chembl-webresource-client&lt;/a&gt;，本文也主要介绍它的使用方法。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ pip install chembl-webresource-client
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过 pip 安装后，通过 ChEMBL ID 过滤分子并取出其 &lt;code&gt;"molecule_structures"&lt;/code&gt; 信息：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; from chembl_webresource_client.new_client import new_client
+&amp;gt;&amp;gt;&amp;gt; molecule = new_client.molecule
+&amp;gt;&amp;gt;&amp;gt; info = molecule.filter(chembl_id="CHEMBL10").only(["molecule_structures"])
+&amp;gt;&amp;gt;&amp;gt; info
+[{'molecule_structures': {'canonical_smiles': 'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1', 'molfile': '\n     RDKit          2D\n\n 27 30  0  0  0  0  0  0  0  0999 V2000\n   10.3778   -8.9759    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.7898   -8.6390    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0\n    9.7877   -7.9612    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    9.0572   -9.0655    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.0585   -9.9128    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.3255  -10.3375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.5911   -9.9151    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.5898   -9.0679    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.3228   -8.6431    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.8577  -10.3401    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.7798  -11.1765    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    5.9511  -11.3526    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6063  -12.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.0503  -12.8454    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6484  -13.5912    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.8016  -13.6161    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4801  -14.2128    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n    4.3566  -12.8952    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.7584  -12.1493    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.5275  -10.6189    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.0943   -9.9893    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    4.6845  -10.5304    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1385  -11.1746    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.3050  -11.0228    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.0196  -10.2251    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    3.5678   -9.5791    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4013   -9.7308    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  2  4  1  0\n  4  5  2  0\n  5  6  1  0\n  6  7  2  0\n  7  8  1  0\n  8  9  2  0\n  9  4  1  0\n  7 10  1  0\n 10 11  2  0\n 11 12  1  0\n 12 13  1  0\n 13 14  2  0\n 14 15  1  0\n 15 16  2  0\n 16 17  1  0\n 16 18  1  0\n 18 19  2  0\n 19 13  1  0\n 12 20  2  0\n 20 21  1  0\n 21 10  1  0\n 20 22  1  0\n 22 23  2  0\n 23 24  1  0\n 24 25  2  0\n 25 26  1  0\n 26 27  2  0\n 27 22  1  0\nM  CHG  2   2   1   3  -1\nM  END\n&amp;gt; &amp;lt;chembl_id&amp;gt;\nNone\n\n&amp;gt; &amp;lt;chembl_pref_name&amp;gt;\nundefined', 'standard_inchi': 'InChI=1S/C21H16FN3OS/c1-27(26)18-8-4-16(5-9-18)21-24-19(14-2-6-17(22)7-3-14)20(25-21)15-10-12-23-13-11-15/h2-13H,1H3,(H,24,25)', 'standard_inchi_key': 'CDMGBJANTYXAIV-UHFFFAOYSA-N'}}]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;尽管指定了仅 &lt;code&gt;"molecule_structures"&lt;/code&gt; 部分的信息，但还是输出了很长结果，其中包括 InChI 等各种结构数据 ，只有 &lt;code&gt;'canonical_smiles'&lt;/code&gt; 字段是目标信息。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; type(info)
+chembl_webresource_client.query_set.QuerySet
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查询结果对象是与 Django &lt;code&gt;QuerySet&lt;/code&gt; 相似的 &lt;code&gt;chembl_webresource_client.query_set.QuerySet&lt;/code&gt;，支持多种类似的过滤操作，具体内容可以查看&lt;a href="https://github.com/chembl/notebooks/blob/main/ChEMBL_webresource_client_examples.ipynb" rel="noopener" target="_blank"&gt;官方案例&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id="chu-li-dan-tiao-shu-ju"&gt;处理单条数据&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;QuerySet&lt;/code&gt; 同样也兼容列表、字典等 Python 基本数据结构的操作，所以对于单条 ChEMBL ID，我们可以通过以下方法很方便地直接取出查询到的 SMILES 结果：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; chembl_id = "CHEMBL10"
+&amp;gt;&amp;gt;&amp;gt; molecule.filter(chembl_id=chembl_id).only(["molecule_structures"])[0]["molecule_structures"]["canonical_smiles"]
+'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="chu-li-duo-tiao-shu-ju"&gt;处理多条数据&lt;/h3&gt;
+&lt;p&gt;若要查询多条 ChEMBL ID，只需要把参数 &lt;code&gt;chembl_id&lt;/code&gt; 改为 &lt;code&gt;molecule_chembl_id__in&lt;/code&gt; 并传入ChEMBL ID 的列表即可。&lt;/p&gt;
+&lt;p&gt;{warn begin}输入 ChEMBL ID 列表时，参数名称 &lt;code&gt;molecule_chembl_id__in&lt;/code&gt; 中位于 &amp;ldquo;in&amp;rdquo; 前的是&lt;strong&gt;双下划线&lt;/strong&gt;。{warn end}&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; chembl_id = ["CHEMBL10", "CHEMBL100", "CHEMBL100"]
+&amp;gt;&amp;gt;&amp;gt; infos = molecule.filter(molecule_chembl_id__in=chembl_id).only(["molecule_chembl_id", "molecule_structures"])
+&amp;gt;&amp;gt;&amp;gt; {info["molecule_chembl_id"]: info["molecule_structures"]["canonical_smiles"] for info in infos}
+{'CHEMBL10': 'C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1', 'CHEMBL100': 'CC1(C)Oc2ccc(C#N)cc2[C@@H](N2CCCC2=O)[C@@H]1O', 'CHEMBL1000': 'O=C(O)COCCN1CCN(C(c2ccccc2)c2ccc(Cl)cc2)CC1'}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过这种方法查询 SMILES 的优点在于方便灵活，可以很容易地将查询代码嵌入处据处理的脚本中。但由于该方法是通过 Web API 查询结果，速度受限于网络，内容大小受限于 memory，无法用于大量数据的转化。经笔者测试，将 1000 条 ChEMBL ID 转化为 SMILES 耗时约 102 秒，用这种方法处理较小规模的数据更加合理。&lt;/p&gt;
+&lt;h2 id="postgresql_1"&gt;PostgreSQL&lt;/h2&gt;
+&lt;p&gt;若要将大批量的 ChEMBL ID 转化为 SMILES，更推荐将 ChEMBL 数据库下载至本地，查询的速度更快。ChEMBL 提供了MySQL、PostgreSQL 等多种数据库的&lt;a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank"&gt;下载方式&lt;/a&gt;，读者可以下载熟悉的数据库压缩包，本文选择在 Linux 上使用 PostgreSQL。当然，在安装 ChEMBL 数据库前必须安装相应的数据库软件，很容易就能检索到各种数据的安装方法，这里从略。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ wget "https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/chembl_34_postgresql.tar.gz" -O chembl_34_postgresql.tar.gz
+$ tar -zxvf chembl_34_postgresql.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在安装好对应的数据库软件后，下载并解压数据库压缩包，得到 &lt;code&gt;chembl_34_postgresql.dmp&lt;/code&gt; 和 &lt;code&gt;INSTALL_postgresql&lt;/code&gt; 两个文件，先来看看安装指导：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ cat INSTALL_postgresql
+...
+Instructions
+------------
+
+1. Log into PostgreSQL database server where you intend to load chembl data
+   and run the following command to create new database:
+
+    pgdb=# create database chembl_34;
+
+2. Logout of database and run the following command to load data. You will
+   need to replace USERNAME, HOST and PORT with local settings.
+   Depending on your database setup you may not need the host and port
+   arguments.
+
+    $&amp;gt; pg_restore --no-owner -h HOST -p PORT -U USERNAME -d chembl_34 chembl_34_postgresql.dmp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="chuang-jian-shu-ju-ku"&gt;创建数据库&lt;/h3&gt;
+&lt;p&gt;按照安装指引，先通过 &lt;code&gt;psql&lt;/code&gt; 进入 PostgreSQL 终端，进入终端后会显示 &lt;code&gt;=#&lt;/code&gt; 提示符：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ psql
+psql (12.15 (Ubuntu 12.15-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{note begin}正确安装 PostgreSQL 却无法通过 &lt;code&gt;psql&lt;/code&gt; 进入数据库终端可能是用户问题，可以尝试通过 &lt;code&gt;sudo -i -u postgres&lt;/code&gt; 切换到 PostgreSQL 的默认管理账号再进入。{note end}&lt;/p&gt;
+&lt;p&gt;使用指引提供的命令创建名为 &lt;code&gt;chembl_34&lt;/code&gt; 的数据库，创建完成后使用 &lt;code&gt;\l&lt;/code&gt; 可以看到新创建的数据库，最后用 &lt;code&gt;exit&lt;/code&gt; 退出数据库终端：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;postgres=# CREATE DATABASE chembl_34;
+CREATE DATABASE
+postgres=# \l
+                                  List of databases
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+-----------+----------+----------+-------------+-------------+-----------------------
+ chembl_34 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+postgres=# \q
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="dao-ru-shu-ju-ku"&gt;导入数据库&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ pg_restore --no-owner -h HOST -p PORT -U USERNAME -d chembl_34 chembl_34_postgresql.dmp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;pg_restore&lt;/code&gt; 命令用于从数据库文件恢复（导入）数据库，使用到了以下几个参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--no-owner&lt;/code&gt;：不与最初创建数据库的用户匹配；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-h&lt;/code&gt;：PostgreSQL 服务主机地址；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;：PostgreSQL 服务端口号；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-U&lt;/code&gt;：PostgreSQL 用户名，与上文创建数据库所使用的用户一致；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-d&lt;/code&gt;：数据库名称，与上文中创建的数据库名保持一致；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;path&amp;gt;&lt;/code&gt;：数据库文件的路径，也就是解压得到的 &lt;code&gt;.dmp&lt;/code&gt; 文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果忘记了 PostgreSQL 服务的端口号，可以使用以下命令查询本机的 PostgreSQL 监听端口：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo netstat -plunt|grep postgres
+tcp     0       0   127.0.0.1:5432      0.0.0.0:*       LISTEN      3887/postgres
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;因此我就使用以下命令导入数据库：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ pg_restore --no-owner -h 127.0.0.1 -p 5432 -U postgres -d chembl_34 chembl_34_postgresql.dmp
+Password:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输入 PostgreSQL 用户的密码后没有输出，就已经开始导入数据库了，大约耗时 30 分钟。&lt;/p&gt;
+&lt;h3 id="ti-qu-smiles"&gt;提取 SMILES&lt;/h3&gt;
+&lt;p&gt;导入完成后进入数据库查看其结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;postgres=# \c chembl_34
+You are now connected to database "chembl_34" as user "postgres".
+chembl_34=#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;进入 &lt;code&gt;chembl_34&lt;/code&gt; 数据库后可以使用 &lt;code&gt;\dt&lt;/code&gt; 列出所有的表，使用 &lt;code&gt;\d &amp;lt;table_name&amp;gt;&lt;/code&gt; 查看表信息。但是这样一个个查看实在太费事，好在 ChEMBL 提供了更直观的图示和文档。&lt;/p&gt;
+&lt;p&gt;打开&lt;a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank"&gt;下载页面&lt;/a&gt;中名为 &lt;code&gt;chembl_34_schema.png&lt;/code&gt; 的文件，图片展示了 ChEMBL 数据库中的所有表、表字段以及表之间的关系，&lt;code&gt;schema_documentation.html&lt;/code&gt; 对字段信息做了详细价绍。&lt;/p&gt;
+&lt;p&gt;我们的目标是将 ChEMBL ID 转换为 SMILES，所以要寻找一条由 &lt;code&gt;CHEMBL_ID&lt;/code&gt; 字段起始到达 &lt;code&gt;CANONICAL_SMILES&lt;/code&gt; 字段的连线：&lt;/p&gt;
+&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 整张图片太大，因此对图片裁剪拼贴，该部分位于原图的左上角和右上角&lt;/p&gt;
+&lt;p&gt;其中需要注意的是，文档中说明了 &lt;code&gt;entity_id&lt;/code&gt; 与 &lt;code&gt;molregno&lt;/code&gt; 字段的值相同，因此图中二者可以连结起来，图中的关系也可以用文字描述成&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;chembl_id_lookup: chembl_id &amp;rarr; entity_id
+|
+molecule_dictionary： molregno
+|
+compound_structures: molregno &amp;rarr; canonical_smiles
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;理清了关系后暂时先放在一边，接下来处理需要转换的 ChEMBL ID。将 ChEMBL ID 存储为 CSV 文件，类似于&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-txt"&gt;chembl_id
+CHEMBL10
+CHEMBL100
+CHEMBL1000
+CHEMBL10000
+CHEMBL100004
+CHEMBL100005
+CHEMBL100006
+CHEMBL100007
+CHEMBL100008
+CHEMBL100009
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后准备将 ChEMBL ID 导入为数据库中的一张新表，进入 &lt;code&gt;chembl_34&lt;/code&gt; 数据库后，替换相应路径并执行命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-postgresql"&gt;CREATE TABLE input_chembl_id (
+   id SERIAL PRIMARY KEY,
+   chembl_id VARCHAR(20)
+);
+
+COPY input_chembl_id(chembl_id)
+FROM '/path/to/input_chembl_id.csv'
+CSV HEADER;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;成功导入 CSV 后理应能够通过以下方法输出表中数据：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;chembl_34=# SELECT * FROM input_chembl_id;
+ id |  chembl_id
+----+--------------
+  1 | CHEMBL10
+  2 | CHEMBL100
+  3 | CHEMBL1000
+  4 | CHEMBL10000
+  5 | CHEMBL100004
+  6 | CHEMBL100005
+  7 | CHEMBL100006
+  8 | CHEMBL100007
+  9 | CHEMBL100008
+ 10 | CHEMBL100009
+(10 rows)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;根据上文得到的 &lt;code&gt;chembl_id&lt;/code&gt; 与 &lt;code&gt;canonical_smiles&lt;/code&gt; 字段间关系，可以编写 SQL 语句获取对应的 SMILES：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-postgresql"&gt;SELECT input_chembl_id.chembl_id, compound_structures.canonical_smiles
+FROM (((input_chembl_id
+LEFT JOIN chembl_id_lookup
+ON input_chembl_id.chembl_id = chembl_id_lookup.chembl_id)
+LEFT JOIN molecule_dictionary
+ON molecule_dictionary.molregno = chembl_id_lookup.entity_id)
+LEFT JOIN compound_structures
+ON molecule_dictionary.molregno = compound_structures.molregno);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;执行上述 SQL 即可输出 ChEMBL ID 对应的 SMILES：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;  chembl_id   |                     canonical_smiles
+--------------+-----------------------------------------------------------
+ CHEMBL10     | C[S+]([O-])c1ccc(-c2nc(-c3ccc(F)cc3)c(-c3ccncc3)[nH]2)cc1
+ CHEMBL100    | CC1(C)Oc2ccc(C#N)cc2[C@@H](N2CCCC2=O)[C@@H]1O
+ CHEMBL1000   | O=C(O)COCCN1CCN(C(c2ccccc2)c2ccc(Cl)cc2)CC1
+ CHEMBL10000  | O=c1oc(Nc2ccc(I)cc2)nc2ccccc12
+ CHEMBL100004 | CCO/C(O)=C1/C(C)=NC(C)=C(C(=O)OCCSc2ccccc2)C1C
+ CHEMBL100005 | COC(=O)C(Cc1ccc2c(c1)OCO2)c1c2ccccc2nc2ccccc12
+ CHEMBL100006 | COc1cc(C)c(OC)c(CC(C)N)c1
+ CHEMBL100007 | CNC(Cc1cc(Br)ccc1N)c1sccc1C
+ CHEMBL100008 | CN(C)C(=O)Cn1c(-c2ccc(Br)cc2)nc2cccnc21
+ CHEMBL100009 | CC1=NS(=O)(=O)c2ncccc2N1
+(10 rows)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;对于大规模的转换，通常需要查将询结果导出为 CSV 文件，那么查询并保存结果的完整 SQL 语句就为：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-postgresql"&gt;COPY (SELECT input_chembl_id.chembl_id, compound_structures.canonical_smiles
+FROM (((input_chembl_id
+LEFT JOIN chembl_id_lookup
+ON input_chembl_id.chembl_id = chembl_id_lookup.chembl_id)
+LEFT JOIN molecule_dictionary
+ON molecule_dictionary.molregno = chembl_id_lookup.entity_id)
+LEFT JOIN compound_structures
+ON molecule_dictionary.molregno = compound_structures.molregno))
+TO '/path/to/chembl_id_smiles.csv'
+WITH (FORMAT csv, HEADER);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。如果后续有另一批 ChEMBL ID 数据需要转换为 SMILES，可以直接通过 &lt;code&gt;DROP TABLE input_chembl_id;&lt;/code&gt; 删除表后再按上文步骤转换。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Python"></category><category term="PostgreSQL"></category></entry><entry><title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title><link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="alternate"></link><published>2024-04-25T00:00:00+08:00</published><updated>2024-04-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-04-25:/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html</id><summary type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; PDM 提供的各种功能&lt;/p&gt;
 &lt;p&gt;很值得注意的是 PDM 提供了 build 的功能，能够将源码构建为 Python package 并发布到 PyPI，不再需要其他繁琐的工具，我也抱着极大的兴趣探索了结合 PDM 与 GitHub Actions 发布 Python 包的方法。PDM 提供了多平台的&lt;a href="https://github.com/pdm-project/pdm" rel="noopener" target="_blank"&gt;多种安装方法&lt;/a&gt;，读者可以根据自己的要求安装，本文在 Windows 上使用 &lt;code&gt;pdm==2.15.0&lt;/code&gt; 作为演示。&lt;/p&gt;
@@ -2146,27 +2336,4 @@ $$&lt;/div&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry><entry><title>津城海棠</title><link href="https://leonis.cc/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html" rel="alternate"></link><published>2023-04-27T00:00:00+08:00</published><updated>2023-04-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-04-27:/zai-lu-shang/2023-04-27-crabapple-of-tianjin.html</id><summary type="html">&lt;p&gt;五大道的海棠花开了，天津又到了最美的时候。&lt;/p&gt;
-&lt;p&gt;几年前初到天津时，给我印象最深刻的就是城中随处可见的海棠花。天津遍植海棠，却不是密密地栽种为若干排。而是漫步在街头时，走过几个街道，转过几个巷口，蓦地发现几枝洁白而间杂洋红的海 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;五大道的海棠花开了，天津又到了最美的时候。&lt;/p&gt;
-&lt;p&gt;几年前初到天津时，给我印象最深刻的就是城中随处可见的海棠花。天津遍植海棠，却不是密密地栽种为若干排。而是漫步在街头时，走过几个街道，转过几个巷口，蓦地发现几枝洁白而间杂洋红的海棠花在那静静地开放，而无意间的拜访者也成了唯一的赏花者，独享这春光。至于如庆王府的几处，大概是因为人们喜爱海棠，几代经营之下竟植海棠如林。阳春三月，津城就被海棠花环抱，绝不是一句虚言。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8898?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8898?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;我在故乡不曾见过这样的景象，倒不是没有海棠，却没有天津的海棠这般而引人重视。我一度误把海棠当作天津的市花，我愿意把这一切都推作是天津与海棠有缘。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8906?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8906?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 向着窗口盛开的海棠&lt;/p&gt;
-&lt;p&gt;我与朋友晃悠悠地骑着单车往五大道拜访海棠，过桂林路至大理道&amp;mdash;&amp;mdash;好一趟西南之行。天津与上海相似，在收回各国租界后便以国内诸大小城市为道路名，因而也成了一大特色。想必不少来天津的游人都玩过寻找家乡路牌的游戏，冥冥之中建立起了一种远跨大半个中国的联系。看着大理道旁盛开的海棠，万里之遥的大理也为这春景增色不少吧。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8900?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8900?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 大理道上的海棠花&lt;/p&gt;
-&lt;p&gt;不及步入五大道，已经能望见一批批游人往前走去。天津市也乐于营造海棠的氛围，工作人员用围挡临时封闭了路段，仅允游人入内。但这并不意味着五大道内有多少宽敞余裕的空间，也休想从容地漫步海棠花下。汹涌的人潮占满了可及之处，我甚至难以看清路面，却能依人群铺开的形状分辨出街道巷衢来。盛放的海棠也不愿与赏花者示弱，两列海棠一字排开，树冠张得极大，好似擎不起满树的海棠花，一树压着一树；树上的海棠也开得极密，一簇压着一簇，全开的压着半开的，半开的压着未开的，组成了繁盛的花群。人群中的人伸着脖子望花群，花群中的花也伸着叶梗看人群。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8899?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8899?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 游人熙熙攘攘地往五大道走去&lt;/p&gt;
-&lt;p&gt;可花枝柔弱，阵风吹过，花瓣就零落而被阵风裹至空中，引起人群中阵阵讶叹声&amp;mdash;&amp;mdash;看来这场对决还是人群占了上风。摇落的花瓣混入风中，风顿时有了形状，它们翻腾、盘旋，又扶摇而上，在高处击散而化作花雨，洒向一个个抬头瞪大着眼、惊异得还不及合拢嘴的游人身边。风顿时也有了色彩，大片的雪白与点点嫣红在空中交织，它不像颜料盘中两种颜色相混时那样柔和得出现游丝，而是随着花瓣的翻飞，白红两种颜色相互变换，像极了文人所用的花草笺纸。在阳光的照耀下，空中的花瓣闪出熠熠的光芒，看来这笺纸还多了一道洒金的工艺。风顿时还有了气味，风摘落的花瓣被送至每个人的鼻前，不似桃花那样甜腻，芬芳中更多了几分清爽，虽说海棠将所有芳华都留给了春季，但这种气味总能让我想起初夏的时节。据佛经上说，维摩诘讲经讲到妙处时，有天女散花，赞叹其智慧。这花决计不是海棠，这样色、香、味齐全的海棠岂不正犯佛家所说的「五贼」。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8901?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8901?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 来不及拍下风吹下的海棠花雨，捕捉到几点如霰般翻飞的花瓣&lt;/p&gt;
-&lt;p&gt;花雨过后，地上自然也铺满了海棠。明人张岱曾描述他书屋中的海棠「花时积三尺香雪」，诚不诬也，果然处处都积满了如雪般的海棠花瓣。有些店家自然不愿意放过这样的景色，径在店门外摆出桌子招徕顾客。更有好事者撤去桌上的阳伞，恣意在花雨之中，任那些海棠落在盘中的糕点之上，落入茶水之中。虽说道上行人熙熙攘攘，但啜茶人亦可闹中取静，其风雅也如此，丝毫不下于古人。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8909?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8909?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 道上也有卖各种物件的小摊，也落满了海棠花&lt;/p&gt;
-&lt;p&gt;我被裹挟在人群中，亦步亦趋地穿过海棠花海，流连的景色如万花筒般绚丽，而正所谓兴尽悲来，又深令人感慨春光易逝。天津人自小便生活在海棠之中，求学于海棠花下，他们是惯看了秋月春风而变得更为冷峻，还是年年见证着花朝花暮，相比他人更多了几分细心肠呢？传闻天津人大多缱绻于故乡，而他们的确是如浮萍一般的移民，终于定居在此，与繁茂的海棠杂处而居，其念兹在兹的心情亦可想而知。我不禁想象，奔走于异乡的游子是否会种下一株海棠，欣赏着它与津城的海棠同样开谢，正与记忆中同。&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8908?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8908?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 俨然是粉红色的世界&lt;/p&gt;
-&lt;p&gt;归来搦管撰写此文时，已经将近立夏，海棠或许早已落尽。清少纳言曾盛赞落花之后赏花为风雅之事，我虽未有此意，奈何已蹈古人之迹。寓居天津多年，我同样遥望着津城海棠的开谢，正与我的记忆同！&lt;/p&gt;
-&lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://storage.live.com/items/4D18B16B8E0B1EDB!8907?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://storage.live.com/items/4D18B16B8E0B1EDB!8907?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="摄影"></category></entry></feed>
+&lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="Transformer"></category></entry></feed>
