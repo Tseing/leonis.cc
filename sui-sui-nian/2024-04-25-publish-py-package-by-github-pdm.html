@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title>
+  <title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧 - Leo’s blog</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -242,7 +242,7 @@
           <section class="post-content">
             <p>最近换用 <a href="https://pdm-project.org/latest/" rel="noopener" target="_blank">PDM</a> 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 <code>pyproject.toml</code>，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png"/></a></div></p>
-<p class="intro"><i class="fa-solid fa-angles-up"></i> PDM 提供的各种功能</p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp; PDM 提供的各种功能</p></p>
 <p>很值得注意的是 PDM 提供了 build 的功能，能够将源码构建为 Python package 并发布到 PyPI，不再需要其他繁琐的工具，我也抱着极大的兴趣探索了结合 PDM 与 GitHub Actions 发布 Python 包的方法。PDM 提供了多平台的<a href="https://github.com/pdm-project/pdm" rel="noopener" target="_blank">多种安装方法</a>，读者可以根据自己的要求安装，本文在 Windows 上使用 <code>pdm==2.15.0</code> 作为演示。</p>
 <h2 id="chu-shi-hua-xiang-mu">初始化项目</h2>
 <p>安装好 PDM 后，新建项目文件夹，用终端进入文件夹并执行 <code>pdm init</code> 初始化项目，在这里我使用的是 PowerShell。PDM 会通过几个问答来指引用户初始化项目：</p>
@@ -567,7 +567,7 @@ jobs:
 <li>通过 <code>git push</code> 推送 commit 到远端仓库。</li>
 </ol>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png"/></a></div></p>
-<p class="intro"><i class="fa-solid fa-angles-up"></i> 每次的 push 都会自动检查是否能构成功构建，因为没有 tag 条件并不执行 publish 任务</p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp; 每次的 push 都会自动检查是否能构成功构建，因为没有 tag 条件并不执行 publish 任务</p></p>
 <p>测试发布具体的步骤是：</p>
 <ol>
 <li>修改 <code>pyproject.toml</code> 中的 <code>version</code>，例如 <code>0.1.1b1</code>;</li>
@@ -575,9 +575,9 @@ jobs:
 <li>通过 <code>git push origin v0.1.1b1</code> 推送 tag 到远端仓库。</li>
 </ol>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png"/></a></div></p>
-<p class="intro"><i class="fa-solid fa-angles-up"></i> 每次的 push tag 都会在构建完成后自动发布到 pre-release</p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp; 每次的 push tag 都会在构建完成后自动发布到 pre-release</p></p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png"/></a></div></p>
-<p class="intro"><i class="fa-solid fa-angles-up"></i> 同时也会自动发布到 TestPyPI</p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp; 同时也会自动发布到 TestPyPI</p></p>
 <p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;<a href="https://peps.python.org/pep-0440/" rel="noopener" target="_blank">PEP 440</a> 制定了 Python package 的版本号规范，在 PyPI 上发布自己的 package 时理应也要按该规范设定版本。</p></div></p>
 <h4>正式发布 workflow</h4>
 <p>相比之下，正式发布的工作流程就简单了许多，就不作过多介绍了。同样需要在 PyPI 中添加 Publisher，在 <code>.github/workflows</code> 中创建 <code>publish_pypi.yml</code>，写入以下内容：</p>

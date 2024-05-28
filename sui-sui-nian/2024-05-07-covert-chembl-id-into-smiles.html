@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</title>
+  <title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法 - Leo’s blog</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -339,10 +339,10 @@ You are now connected to database "chembl_34" as user "postgres".
 chembl_34=#
 </code></pre>
 <p>进入 <code>chembl_34</code> 数据库后可以使用 <code>\dt</code> 列出所有的表，使用 <code>\d &lt;table_name&gt;</code> 查看表信息。但是这样一个个查看实在太费事，好在 ChEMBL 提供了更直观的图示和文档。</p>
-<p>打开<a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank">下载页面</a>中名为 <code>chembl_34_schema.png</code> 的文件，图片展示了 ChEMBL 数据库中的所有表、表字段以及表之间的关系，<code>schema_documentation.html</code> 对字段信息做了详细价绍。</p>
+<p>打开<a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank">下载页面</a>中名为 <code>chembl_34_schema.png</code> 的文件，图片展示了 ChEMBL 数据库中的所有表、表字段以及表之间的关系，<a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/schema_documentation.html" rel="noopener" target="_blank">Schema Documentation</a> 页面对字段信息做了详细介绍。</p>
 <p>我们的目标是将 ChEMBL ID 转换为 SMILES，所以要寻找一条由 <code>CHEMBL_ID</code> 字段起始到达 <code>CANONICAL_SMILES</code> 字段的连线：</p>
 <p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png"/></a></div></p>
-<p class="intro"><i class="fa-solid fa-angles-up"></i> 整张图片太大，因此对图片裁剪拼贴，该部分位于原图的左上角和右上角</p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp; 整张图片太大，因此对图片裁剪拼贴，该部分位于原图的左上角和右上角</p></p>
 <p>其中需要注意的是，文档中说明了 <code>entity_id</code> 与 <code>molregno</code> 字段的值相同，因此图中二者可以连结起来，图中的关系也可以用文字描述成</p>
 <pre><code class="language-txt">chembl_id_lookup: chembl_id &rarr; entity_id
 |

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo’s blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-05-07T00:00:00+08:00</updated><subtitle>Leo’s blog</subtitle><entry><title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</title><link href="https://leonis.cc/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html" rel="alternate"></link><published>2024-05-07T00:00:00+08:00</published><updated>2024-05-07T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-05-07:/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html</id><summary type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化合物的标识。而为了进一步使用这些数据，通常要将其转换为例如 SMILES 或是 InChI 等更具体的分子表示。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo’s blog</title><link href="https://leonis.cc/" rel="alternate"></link><link href="https://leonis.cc/feed.xml" rel="self"></link><id>https://leonis.cc/</id><updated>2024-05-07T00:00:00+08:00</updated><subtitle>A nook to hoard my manuscripts.</subtitle><entry><title>将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</title><link href="https://leonis.cc/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html" rel="alternate"></link><published>2024-05-07T00:00:00+08:00</published><updated>2024-05-07T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-05-07:/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html</id><summary type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从 ChEMBL 中提取出的指定数据，还是从文章中下载的原始数据都是使用 ChEMBL ID 作为化合物的标识。而为了进一步使用这些数据，通常要将其转换为例如 SMILES 或是 InChI 等更具体的分子表示。&lt;/p&gt;
 &lt;p&gt;本文分别介绍使用 ChEMBL 的 Web API 和 PostgreSQL 将 ChEMBL ID 转化为 SMILES 的两种方法，在得到 SMILES 之后，想获得其他的分子表示就也很容易了。&lt;/p&gt;
 &lt;h2 id="chembl-web-api"&gt;ChEMBL Web API&lt;/h2&gt;
 &lt;p&gt;ChEMBL 在其&lt;a href="https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services" rel="noopener" target="_blank"&gt;官方接口文档&lt;/a&gt;中介绍了多种获取数据库信息的方法，因为完成转化后通常还要额外处理数据，最灵活方便的还是其中的 ChEMBL Web 服务 Python 包 &lt;a href="https://pypi.org/project/chembl-webresource-client/" rel="noopener" target="_blank"&gt;chembl-webresource-client&lt;/a&gt;，本文也主要介绍它的使用方法。&lt;/p&gt;
@@ -25,7 +25,7 @@ chembl_webresource_client.query_set.QuerySet
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="chu-li-duo-tiao-shu-ju"&gt;处理多条数据&lt;/h3&gt;
 &lt;p&gt;若要查询多条 ChEMBL ID，只需要把参数 &lt;code&gt;chembl_id&lt;/code&gt; 改为 &lt;code&gt;molecule_chembl_id__in&lt;/code&gt; 并传入ChEMBL ID 的列表即可。&lt;/p&gt;
-&lt;p&gt;{warn begin}输入 ChEMBL ID 列表时，参数名称 &lt;code&gt;molecule_chembl_id__in&lt;/code&gt; 中位于 &amp;ldquo;in&amp;rdquo; 前的是&lt;strong&gt;双下划线&lt;/strong&gt;。{warn end}&lt;/p&gt;
+&lt;p&gt;{warn}输入 ChEMBL ID 列表时，参数名称 &lt;code&gt;molecule_chembl_id__in&lt;/code&gt; 中位于 &amp;ldquo;in&amp;rdquo; 前的是&lt;strong&gt;双下划线&lt;/strong&gt;。{end warn}&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-python-repl"&gt;&amp;gt;&amp;gt;&amp;gt; chembl_id = ["CHEMBL10", "CHEMBL100", "CHEMBL100"]
 &amp;gt;&amp;gt;&amp;gt; infos = molecule.filter(molecule_chembl_id__in=chembl_id).only(["molecule_chembl_id", "molecule_structures"])
 &amp;gt;&amp;gt;&amp;gt; {info["molecule_chembl_id"]: info["molecule_structures"]["canonical_smiles"] for info in infos}
@@ -63,7 +63,7 @@ Type "help" for help.
 
 postgres=#
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note begin}正确安装 PostgreSQL 却无法通过 &lt;code&gt;psql&lt;/code&gt; 进入数据库终端可能是用户问题，可以尝试通过 &lt;code&gt;sudo -i -u postgres&lt;/code&gt; 切换到 PostgreSQL 的默认管理账号再进入。{note end}&lt;/p&gt;
+&lt;p&gt;{note}正确安装 PostgreSQL 却无法通过 &lt;code&gt;psql&lt;/code&gt; 进入数据库终端可能是用户问题，可以尝试通过 &lt;code&gt;sudo -i -u postgres&lt;/code&gt; 切换到 PostgreSQL 的默认管理账号再进入。{end note}&lt;/p&gt;
 &lt;p&gt;使用指引提供的命令创建名为 &lt;code&gt;chembl_34&lt;/code&gt; 的数据库，创建完成后使用 &lt;code&gt;\l&lt;/code&gt; 可以看到新创建的数据库，最后用 &lt;code&gt;exit&lt;/code&gt; 退出数据库终端：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;postgres=# CREATE DATABASE chembl_34;
 CREATE DATABASE
@@ -102,10 +102,10 @@ You are now connected to database "chembl_34" as user "postgres".
 chembl_34=#
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;进入 &lt;code&gt;chembl_34&lt;/code&gt; 数据库后可以使用 &lt;code&gt;\dt&lt;/code&gt; 列出所有的表，使用 &lt;code&gt;\d &amp;lt;table_name&amp;gt;&lt;/code&gt; 查看表信息。但是这样一个个查看实在太费事，好在 ChEMBL 提供了更直观的图示和文档。&lt;/p&gt;
-&lt;p&gt;打开&lt;a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank"&gt;下载页面&lt;/a&gt;中名为 &lt;code&gt;chembl_34_schema.png&lt;/code&gt; 的文件，图片展示了 ChEMBL 数据库中的所有表、表字段以及表之间的关系，&lt;code&gt;schema_documentation.html&lt;/code&gt; 对字段信息做了详细价绍。&lt;/p&gt;
+&lt;p&gt;打开&lt;a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/" rel="noopener" target="_blank"&gt;下载页面&lt;/a&gt;中名为 &lt;code&gt;chembl_34_schema.png&lt;/code&gt; 的文件，图片展示了 ChEMBL 数据库中的所有表、表字段以及表之间的关系，&lt;a href="https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/schema_documentation.html" rel="noopener" target="_blank"&gt;Schema Documentation&lt;/a&gt; 页面对字段信息做了详细介绍。&lt;/p&gt;
 &lt;p&gt;我们的目标是将 ChEMBL ID 转换为 SMILES，所以要寻找一条由 &lt;code&gt;CHEMBL_ID&lt;/code&gt; 字段起始到达 &lt;code&gt;CANONICAL_SMILES&lt;/code&gt; 字段的连线：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/fe59be2cf4e62dce89de123c6d34506bca4c8cd78c7c77f2fc10efabcdb79370.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 整张图片太大，因此对图片裁剪拼贴，该部分位于原图的左上角和右上角&lt;/p&gt;
+&lt;p&gt;{caption} 整张图片太大，因此对图片裁剪拼贴，该部分位于原图的左上角和右上角{end caption}&lt;/p&gt;
 &lt;p&gt;其中需要注意的是，文档中说明了 &lt;code&gt;entity_id&lt;/code&gt; 与 &lt;code&gt;molregno&lt;/code&gt; 字段的值相同，因此图中二者可以连结起来，图中的关系也可以用文字描述成&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-txt"&gt;chembl_id_lookup: chembl_id &amp;rarr; entity_id
 |
@@ -191,7 +191,7 @@ WITH (FORMAT csv, HEADER);
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。如果后续有另一批 ChEMBL ID 数据需要转换为 SMILES，可以直接通过 &lt;code&gt;DROP TABLE input_chembl_id;&lt;/code&gt; 删除表后再按上文步骤转换。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Python"></category><category term="PostgreSQL"></category></entry><entry><title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title><link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="alternate"></link><published>2024-04-25T00:00:00+08:00</published><updated>2024-04-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-04-25:/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html</id><summary type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; PDM 提供的各种功能&lt;/p&gt;
+&lt;p&gt;{caption} PDM 提供的各种功能{end caption}&lt;/p&gt;
 &lt;p&gt;很值得注意的是 PDM 提供了 build 的功能，能够将源码构建为 Python package 并发布到 PyPI，不再需要其他繁琐的工具，我也抱着极大的兴趣探索了结合 PDM 与 GitHub Actions 发布 Python 包的方法。PDM 提供了多平台的&lt;a href="https://github.com/pdm-project/pdm" rel="noopener" target="_blank"&gt;多种安装方法&lt;/a&gt;，读者可以根据自己的要求安装，本文在 Windows 上使用 &lt;code&gt;pdm==2.15.0&lt;/code&gt; 作为演示。&lt;/p&gt;
 &lt;h2 id="chu-shi-hua-xiang-mu"&gt;初始化项目&lt;/h2&gt;
 &lt;p&gt;安装好 PDM 后，新建项目文件夹，用终端进入文件夹并执行 &lt;code&gt;pdm init&lt;/code&gt; 初始化项目，在这里我使用的是 PowerShell。PDM 会通过几个问答来指引用户初始化项目：&lt;/p&gt;
@@ -296,7 +296,7 @@ excludes = ["tests/"]
 &lt;h2 id="zhun-bei-fa-bu-dao-pypi_1"&gt;准备发布到 PyPI&lt;/h2&gt;
 &lt;p&gt;我们在本地完成了 package 的构建，&lt;code&gt;dist&lt;/code&gt; 目录中生成的 &lt;code&gt;*.tar.gz&lt;/code&gt; 和 &lt;code&gt;*.whl&lt;/code&gt; 就已经可以借助各种工具发布到 PyPI。不过更优的方法是完成开发后直接将代码推送至 GitHub 仓库，借助 GitHub Actions 的功能在云上完成构建并自动发布。&lt;/p&gt;
 &lt;p&gt;不论何种方法，在发布之前都要先注册 PyPI 和 TestPyPI 的账号。&lt;a href="https://pypi.org/" rel="noopener" target="_blank"&gt;PyPI&lt;/a&gt; 是安装 Python package 的常用仓库，不用作多余的介绍。&lt;a href="https://test.pypi.org/" rel="noopener" target="_blank"&gt;TestPyPI&lt;/a&gt; 是 PyPI 的测试仓库，主要用于测试发布、安装 package 是否正常，可视作在 PyPI 正式发布前的「预览版」。二者的流程完全相同，唯一不同在于数据、账号并不通用，必须分别注册。二者注册过程中包括开启二次验证等操作，步骤稍有些复杂，但很容易能够查找到详尽的教程，在此不再赘述。&lt;/p&gt;
-&lt;p&gt;{note begin}因为本文用于演示发布的流程，后文主要以 TestPyPI 作为示例，设置项中与 PyPI 的细微区别以提示的方式给出。{note end}&lt;/p&gt;
+&lt;p&gt;{note}因为本文用于演示发布的流程，后文主要以 TestPyPI 作为示例，设置项中与 PyPI 的细微区别以提示的方式给出。{end note}&lt;/p&gt;
 &lt;p&gt;登录 TestPyPI 账号后进入&lt;a href="https://test.pypi.org/manage/account/publishing/" rel="noopener" target="_blank"&gt;发布页面&lt;/a&gt;，我们选用 Trusted Publisher 的方式发布。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/27dbfb1b597dfa90fe832c749fbc243686c66cd31106133f87885ec330bb7169.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/27dbfb1b597dfa90fe832c749fbc243686c66cd31106133f87885ec330bb7169.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;拖动页面至最底部，在「Add a new pending publisher」中选择「GitHub」，按要求填入 Publisher 的信息：&lt;/p&gt;
@@ -346,7 +346,7 @@ jobs:
       - name: Publish package distributions to TestPyPI
         run: pdm publish --repository testpypi
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note begin}若要将 package 发布到 PyPI 只需要将 workflow 中的 &lt;code&gt;pdm publish --repository testpypi&lt;/code&gt; 改为 &lt;code&gt;pdm publish&lt;/code&gt;。{note end}&lt;/p&gt;
+&lt;p&gt;{note}若要将 package 发布到 PyPI 只需要将 workflow 中的 &lt;code&gt;pdm publish --repository testpypi&lt;/code&gt; 改为 &lt;code&gt;pdm publish&lt;/code&gt;。{end note}&lt;/p&gt;
 &lt;p&gt;完成以上步骤后，再检查一下项目的文件结构，应当为&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-txt"&gt;D:\CODE\GH-ACTION-DEMO
 &amp;boxv;  .gitignore
@@ -365,7 +365,7 @@ jobs:
 &amp;boxur;&amp;boxh;tests
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;确认无误后就可以把项目推送到 GitHub 仓库了。&lt;/p&gt;
-&lt;p&gt;{note begin}需要推送到 GitHub 仓库的仅有 &lt;code&gt;.gitignore&lt;/code&gt; &lt;code&gt;pyproject.toml&lt;/code&gt; &lt;code&gt;README.md&lt;/code&gt; &lt;code&gt;.github/&lt;/code&gt; &lt;code&gt;src/&lt;/code&gt; &lt;code&gt;tests/&lt;/code&gt; 这几个文件与目录，&lt;code&gt;.pdm-build/&lt;/code&gt; &lt;code&gt;.venv&lt;/code&gt; &lt;code&gt;dist&lt;/code&gt; 都不应当上传，很方便的是 PDM 生成的 &lt;code&gt;.gitignore&lt;/code&gt; 已经自动排除了这些留在本地的项目。{note end}&lt;/p&gt;
+&lt;p&gt;{note}需要推送到 GitHub 仓库的仅有 &lt;code&gt;.gitignore&lt;/code&gt; &lt;code&gt;pyproject.toml&lt;/code&gt; &lt;code&gt;README.md&lt;/code&gt; &lt;code&gt;.github/&lt;/code&gt; &lt;code&gt;src/&lt;/code&gt; &lt;code&gt;tests/&lt;/code&gt; 这几个文件与目录，&lt;code&gt;.pdm-build/&lt;/code&gt; &lt;code&gt;.venv&lt;/code&gt; &lt;code&gt;dist&lt;/code&gt; 都不应当上传，很方便的是 PDM 生成的 &lt;code&gt;.gitignore&lt;/code&gt; 已经自动排除了这些留在本地的项目。{end note}&lt;/p&gt;
 &lt;p&gt;如果上述配置全部正确，打开 GitHub 的仓库中的「Actions」界面就能看到创建的 workflow 是否成功执行：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/2a7289e9febec1d7a7145fdf21177a9c5080abc1020a6040244d45ee0a98716b.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/2a7289e9febec1d7a7145fdf21177a9c5080abc1020a6040244d45ee0a98716b.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;如果提示 workflow 全部完成，转至 TestPyPI 的&lt;a href="https://test.pypi.org/manage/projects/" rel="noopener" target="_blank"&gt;项目界面&lt;/a&gt;就能找到刚发布的 package：&lt;/p&gt;
@@ -516,7 +516,7 @@ jobs:
 &lt;li&gt;通过 &lt;code&gt;git push&lt;/code&gt; 推送 commit 到远端仓库。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/e89dfc1bfc8adb5fc190e3b6b046b4361d606ead204d1c5c1075fe19eed22a92.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 每次的 push 都会自动检查是否能构成功构建，因为没有 tag 条件并不执行 publish 任务&lt;/p&gt;
+&lt;p&gt;{caption} 每次的 push 都会自动检查是否能构成功构建，因为没有 tag 条件并不执行 publish 任务{end caption}&lt;/p&gt;
 &lt;p&gt;测试发布具体的步骤是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;修改 &lt;code&gt;pyproject.toml&lt;/code&gt; 中的 &lt;code&gt;version&lt;/code&gt;，例如 &lt;code&gt;0.1.1b1&lt;/code&gt;;&lt;/li&gt;
@@ -524,10 +524,10 @@ jobs:
 &lt;li&gt;通过 &lt;code&gt;git push origin v0.1.1b1&lt;/code&gt; 推送 tag 到远端仓库。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/e07d89f3f55bcab08d3eb7a0aafc75eaa5109f07e8cf099e55fe6716d6f9d6d1.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 每次的 push tag 都会在构建完成后自动发布到 pre-release&lt;/p&gt;
+&lt;p&gt;{caption} 每次的 push tag 都会在构建完成后自动发布到 pre-release{end caption}&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/c9340c4b49d05353184a0a5c754e85b0dafbdb9beffdd18f7c54618b193d0b3a.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 同时也会自动发布到 TestPyPI&lt;/p&gt;
-&lt;p&gt;{note begin}&lt;a href="https://peps.python.org/pep-0440/" rel="noopener" target="_blank"&gt;PEP 440&lt;/a&gt; 制定了 Python package 的版本号规范，在 PyPI 上发布自己的 package 时理应也要按该规范设定版本。{note end}&lt;/p&gt;
+&lt;p&gt;{caption} 同时也会自动发布到 TestPyPI{end caption}&lt;/p&gt;
+&lt;p&gt;{note}&lt;a href="https://peps.python.org/pep-0440/" rel="noopener" target="_blank"&gt;PEP 440&lt;/a&gt; 制定了 Python package 的版本号规范，在 PyPI 上发布自己的 package 时理应也要按该规范设定版本。{end note}&lt;/p&gt;
 &lt;h4&gt;正式发布 workflow&lt;/h4&gt;
 &lt;p&gt;相比之下，正式发布的工作流程就简单了许多，就不作过多介绍了。同样需要在 PyPI 中添加 Publisher，在 &lt;code&gt;.github/workflows&lt;/code&gt; 中创建 &lt;code&gt;publish_pypi.yml&lt;/code&gt;，写入以下内容：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-yaml"&gt;name: Publish distributions to PyPI
@@ -696,7 +696,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/01/36da5273cc494dc98611c24fdc305d4bea7a36929618509b440eb60f10efab48.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/01/36da5273cc494dc98611c24fdc305d4bea7a36929618509b440eb60f10efab48.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/01/9889fd8ed9b89126b2fe24e930c55dec205526642d2fee7b377abf0339214459.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/01/9889fd8ed9b89126b2fe24e930c55dec205526642d2fee7b377abf0339214459.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="金石"></category></entry><entry><title>忙忙碌碌中匆匆过眼我的 2023 年</title><link href="https://leonis.cc/zai-lu-shang/2023-12-31-2023-summary.html" rel="alternate"></link><published>2023-12-31T00:00:00+08:00</published><updated>2023-12-31T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-12-31:/zai-lu-shang/2023-12-31-2023-summary.html</id><summary type="html">&lt;p&gt;弹指一挥间，2023 年已经接近尾声了。在 2023 年元旦的时候，我发了一条微博，大意是祝世界和平。事与愿违，今年是不太平的一年，大大小小的战事在世界各地又起。在大家谈论「这是未来最好一年」的氛围里回望这一年，令人最值得庆幸的是新冠肺炎这场「战争」结束了。&lt;/p&gt;</summary><content type="html">&lt;p&gt;弹指一挥间，2023 年已经接近尾声了。在 2023 年元旦的时候，我发了一条微博，大意是祝世界和平。事与愿违，今年是不太平的一年，大大小小的战事在世界各地又起。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/99c4d97f501bedfc93d6e8b8a5fbec695243ddb547743f8caae58884f58948c5.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/99c4d97f501bedfc93d6e8b8a5fbec695243ddb547743f8caae58884f58948c5.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 2023 年元旦发的微博&lt;/p&gt;
+&lt;p&gt;{caption} 2023 年元旦发的微博{end caption}&lt;/p&gt;
 &lt;p&gt;在大家谈论「这是未来最好一年」的氛围里回望这一年，令人最值得庆幸的是新冠肺炎这场「战争」结束了。路口的活动板房上垂挂着两条渐褪色的条幅，标识着这里曾经是核酸检测亭。透过路旁小区的铁栅栏门，在宣传黑板上，依稀还能看到写有「外地返乡人员」一类字样的告示。这些痕迹依约记述着没有过去很久却已经渐行渐远的「疫情时代」，3 年的疫情草草地画上了一个句号。&lt;/p&gt;
 &lt;p&gt;「疫情时代」重塑了每一个人的生活，或许有了常备药物的习惯，或者把戴口罩作为了稀松平常的事，又或是学会了一个人独处很长时间。这不能说不是在一次次的惶恐、担忧、焦虑之中的额外收获。&lt;/p&gt;
 &lt;p&gt;新冠的馀波不仅仅在生活习惯上显现，同样也冲击着每个人的生活。今年很明显地就能感受到，经济的低迷伴随着就业市场的不景气，行业的冷气向下传到了每个人的身上。想到未来一段时间内，可能要持续顶着下行的压力，不由地收紧了手头的开支，很多人讨论的「消费降级」大概就是这么回事。&lt;/p&gt;
@@ -725,7 +725,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;很偶然的一次，在书集漫步而正觉无有「书获」时，它竟又出现在了我的眼前！我作镇定状上前询价，卖家曰：「三十。」强忍心中欣喜与嘴角笑意，与卖家一阵交谈，终以 20 元收入囊中。见我有意，卖家另赠一本《红楼梦》残帙，聊以插架。&lt;/p&gt;
 &lt;p&gt;这得而复失、失而复得的周折，真恍若邯郸道上的一梦。悠游于书市的乐趣，尽在其中了。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/63a205c3884a75077d4d72eee0bd5e7ef03e184d721d83982956f2d58825ba83.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/63a205c3884a75077d4d72eee0bd5e7ef03e184d721d83982956f2d58825ba83.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 所购得《新旧约全书》的内页&lt;/p&gt;
+&lt;p&gt;{caption} 所购得《新旧约全书》的内页{end caption}&lt;/p&gt;
 &lt;h2 id="yu-t-jun-de-er-san-shi"&gt;与 T 君的二三事&lt;/h2&gt;
 &lt;p&gt;T 君主修中国哲学，平时显得有些讷言。而若是谈及他的所知，他就会具有非凡的精神，带着听者在极广博繁杂的层层密网中游走，显示出深邃的思维和游刃有馀的学术功底。我与 T 君在今年因读书和初相识，一来二去间，也渐渐熟络了起来。因为志趣相投，经常一起消遣周末的时间。譬如 T 君对佛教哲学研究深，我则喜欢逛寺庙，我们一拍即合，逛完天津的寺庙又往北京去寻找。&lt;/p&gt;
 &lt;p&gt;今冬寒潮来临前，气象预报指出会有一场大降雪，身为南方人还从未体验过踏雪寻景，心中雀跃得很。我也知绝少有人愿冒严寒，周转数趟公交，到罕人迹的地方赏不知为何物的景。抱着兴许一试的态度，我给 T 君发送了消息。&lt;/p&gt;
@@ -737,7 +737,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;看着已经上冻的河面，T 君静静地说：「我们从冰面上过去吧。」时常听闻冬日坠河的新闻，我大为惶恐：「这恐怕冻不牢，还是别走了。」不知继续向前走了多远，始终没有看见过河处，我的内心也有些动摇。说是小河，倒不如说是水沟，水面仅二三米宽。眼巴巴望着咫尺的对岸，再走下去要离目的越来越远了。&lt;/p&gt;
 &lt;p&gt;T 君跃跃欲试准备渡河。我仍觉不放心，拾来砖块砸了砸冰面，的确很结实。T 君拄一根木棍一脚踏下，咔嚓一声冰面应声而裂，右足陷入冰窟，水没至胫。T 君尝试脱身，左足踏而发力，又是咔嚓一声，整个人直楞楞站在了冷风冰水之中。我赶忙伸手拉他上岸，二人相抚大笑，这真正是重演「公无渡河，公竟渡河」的乐府古题。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/0b1d43ee8c5f2a768936a00bd7f5b2c702780b2201aa1c0994e848947607cfaf.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/0b1d43ee8c5f2a768936a00bd7f5b2c702780b2201aa1c0994e848947607cfaf.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 事故现场之还原&lt;/p&gt;
+&lt;p&gt;{caption} 事故现场之还原{end caption}&lt;/p&gt;
 &lt;p&gt;观罢寂寥开阔的海河，天色尚早，见地图上指示附近有一处名人坟墓，我们又前往一探究竟。说是名人坟墓，其实不过是近代史上的一条人名，不是什么大人物，最后长眠在一个荒僻的小村庄里。驱散了前来叫阵的野狗，又绕过窄窄弯弯的村路，没有任何指引标识，到了一片榛榛草莽之中，终于见到了一座很是高大的馒头坟。墓地破败得很，墓碑似乎遗失了，碑上的条石凿有双龙戏珠的样式，碎成了两截。立碑处用红砖封堵，显然曾经有盗洞从这里发开封土。唯有墓前的神道碑留存较好，除了少数字被凿去，内容都还可辨。&lt;/p&gt;
 &lt;p&gt;扑去碑面的污物，我与 T 君就开始辨识碑文，朗声读了起来。与检索到的资料一对照，暗笑执笔者傅粉过多、文过饰非。读罢，在墓前咄之：「这也不是什么好人呐。」&lt;/p&gt;
 &lt;h2 id="sui-shou-fan-shu"&gt;随手翻书&lt;/h2&gt;
@@ -753,7 +753,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;其实在以前，我是不太喜欢《峄山碑》这一路的篆书的，总觉得过于板正，更偏好生动的清篆。也是在一年的临习里，逐渐领悟到秦篆点画中的流利婉转之美，甚至打算推翻原来的练习安排，在《峄山碑》完了后直接跟进具相似风格的《三坟记》。秦篆是一个很好的学书切入点，打好基础后可以向后找李阳冰，攻铁线篆一路，也可以再向后找到清代，学大家蜂出的清篆，还可以上溯三代，写各种钟鼎彝器。在我以前的概念中，篆书是一种内容不多的书体，而到真正钻进去了之后，才识乾坤之大。随之而来的一个问题就是，最初的目的是以篆书作为基础，那么我应该换下一种书体还是随喜好继续在篆书上下功夫呢？这个问题可能还会困扰我很长一段时间。&lt;/p&gt;
 &lt;p&gt;识篆、写篆，自然还不能漏了篆刻。一方青石，两只刻刀，今年我在这上面也花了些时间。从梳理印学史、识别各个流派的风格，到操刀临摹，再到尝试创作。不得不说，金石的质感完全不同于纸墨，对理解「碑」很有帮助，诸碑学大家也从中取法很多。但篆刻的步骤毕竟更繁琐，花费时间更多，在时间有限的情况下，还是将时间让渡给了写字。友人求印，却之不恭，成了我后半年中少许动刀的时候。我也有临摹百方汉印的大愿望，不知来年是否有机会。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/9241ea029d9f7cbc8b95ee839be5cc8153caa916aea8e661950ea1cf7d035505.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/9241ea029d9f7cbc8b95ee839be5cc8153caa916aea8e661950ea1cf7d035505.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 朋友再三索求后为其治印一方&lt;/p&gt;
+&lt;p&gt;{caption} 朋友再三索求后为其治印一方{end caption}&lt;/p&gt;
 &lt;h2 id="yang-tai-shang-de-nong-fu"&gt;阳台上的农夫&lt;/h2&gt;
 &lt;p&gt;开春的时候准备了一些种子，做起了阳台上的农夫。种下的品种很多，包括番茄、向日葵、菊花等等，但在回忆一整年的打理时，只有番茄和向日葵的结果让我觉得不至于白费工夫。&lt;/p&gt;
 &lt;p&gt;初春时播种后，满怀期待等待种子萌发就是极有趣的过程。再至小苗抽条时，无论何人都会惊异于一天一变的生长速度。也是在这时，看着一丛丛绿叶，便能将人从每日近重复的碌碌工作中抽离出来，得到一种踏实度过一天的感觉。四五月里植物的生长很快，在番茄长至近一米高时，我就开始着手搭构爬架好让藤蔓有所攀附了。碍于阳台逼仄，我将绳子的一头系在阳台顶晾衣的横杆上，另一头系在根部附近的铁栅栏上，就这样立起了四根竖直的爬绳。&lt;/p&gt;
@@ -763,7 +763,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/a9f9c9cbd9973c9db492a9526126b8abcbba29b27912c80451dd9b0d6f93830a.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/a9f9c9cbd9973c9db492a9526126b8abcbba29b27912c80451dd9b0d6f93830a.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/16c8dd2e72683b6daf65778e5745af22bea10464528e8dcbd3514b01a4e74f1b.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/16c8dd2e72683b6daf65778e5745af22bea10464528e8dcbd3514b01a4e74f1b.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2023/12/b1e81555cd9d06808ee9d235d3e35ecc8cacf00e42e3b10b04f7be40518d4714.jpg" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2023/12/b1e81555cd9d06808ee9d235d3e35ecc8cacf00e42e3b10b04f7be40518d4714.jpg"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 四株番茄、两个品种、一年的收成&lt;/p&gt;
+&lt;p&gt;{caption} 四株番茄、两个品种、一年的收成{end caption}&lt;/p&gt;
 &lt;h2 id="xie-xu-xiao-shou-cang"&gt;些许小收藏&lt;/h2&gt;
 &lt;p&gt;交换明信片、收集各地的邮戳也一直是我的爱好。我无法亲身走遍全国乃至世界，各地的明信片、邮戳能给我带来中一种正在周游世界的慰藉，对方亲手投递的郑重心意也让我很是感怀。&lt;/p&gt;
 &lt;p&gt;在今年的「邮获」中，特别喜欢从芬兰寄来的两张邮票，很有艺术感，符合一些对芬兰的「刻板印象」。白俄罗斯的邮戳很有特色，上面带有一些图案，不太好辨认，似乎是丰收的作物。粘贴的邮票也都是蔬果一类，大概白俄罗斯也是以农业为本的国家。从立陶宛寄来的这一张明信片是在年初抵达的，这位朋友在信上自哂现在身处俄乌战区，不知道能不能顺利投递，祝愿平安。&lt;/p&gt;
@@ -786,7 +786,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;打开 &lt;a href="https://www.backblaze.com/" rel="noopener" target="_blank"&gt;Backblaze 官网&lt;/a&gt;很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Create Bucket" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Create Bucket" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12726?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{note begin}Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。{note end}&lt;/p&gt;
+&lt;p&gt;{note}Backblaze 提供的部分机翻中文根本看不懂，建议在网站的右下角切换语言为英文。{end note}&lt;/p&gt;
 &lt;p&gt;选择 &lt;code&gt;Create a Bucket&lt;/code&gt;，在 Bucket Unique Name 一栏填入桶名称，桶名决定了源站的 URL，应尽可能复杂避免被他人猜测到。若源站 URL 泄露，绕过 Cloudflare 的直接访问就会产生额外流量了。其余项如下图保持默认即可：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Bucket config" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Bucket config" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12727?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;创建完成后，选择 &lt;code&gt;Upload / Download&lt;/code&gt; 尝试在桶中上传一张图片，查看图片的详细信息，其中 Friendly URL 一项就是生成的图片链接。&lt;/p&gt;
@@ -795,18 +795,18 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style="text-align: center;"&gt;主机名&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;后缀&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;桶名&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;图片路径&lt;/th&gt;
+&lt;th align="center"&gt;主机名&lt;/th&gt;
+&lt;th align="center"&gt;后缀&lt;/th&gt;
+&lt;th align="center"&gt;桶名&lt;/th&gt;
+&lt;th align="center"&gt;图片路径&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;f000.backblze.com&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;file&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;a-complicated-name&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;hokciu.jpg&lt;/code&gt;&lt;/td&gt;
+&lt;td align="center"&gt;&lt;code&gt;f000.backblze.com&lt;/code&gt;&lt;/td&gt;
+&lt;td align="center"&gt;&lt;code&gt;file&lt;/code&gt;&lt;/td&gt;
+&lt;td align="center"&gt;&lt;code&gt;a-complicated-name&lt;/code&gt;&lt;/td&gt;
+&lt;td align="center"&gt;&lt;code&gt;hokciu.jpg&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -834,7 +834,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Bucket cache" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Bucket cache" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12732?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;在 Cloudflare 中打开 &lt;code&gt;规则&lt;/code&gt; - &lt;code&gt;页面规则&lt;/code&gt;，新建一条页面规则，在 URL 一栏中填入 &lt;code&gt;img.leonis.cc/*&lt;/code&gt;，按下图设置设置缓存和 HTTPS 即可。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Page rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Page rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12733?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{note begin}暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。{note end}&lt;/p&gt;
+&lt;p&gt;{note}暂时不确定边缘缓存 TTL 和缓存级别两个设置项有什么作用，发现在未设置时图片就能命中缓存。不过既然官方文档提到了这两项配置就先给开启了，回头找找有没有详细些的资料。{end note}&lt;/p&gt;
 &lt;p&gt;再打开样例图片的链接，查看浏览器的开发者工具，在响应头中有一项 &lt;code&gt;cd-cache-status&lt;/code&gt;，其值若为 &lt;code&gt;HIT&lt;/code&gt;，则表示 Cloudflare 命中了缓存，该图片是由缓存中取出的。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Cache response" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Cache response" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12734?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;至此关于 Backblaze + Cloudflare 的图床就设置完了，接下来还可以借助 PicGo 等第三方工具更方便地上传图片并获取图片链接，这部分内容可以根据章节标题向后文寻找。&lt;/p&gt;
@@ -857,12 +857,12 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;为了不影响正常使用，我使用的防盗链规则是&lt;dot&gt;允许无 Referer 与白名单站点访问&lt;/dot&gt;。很棘手的是，Cloudflare 没有提供判断有无 Referer 的功能，所以我使用了比较曲折的方法实现该方案。&lt;/p&gt;
 &lt;p&gt;首先新建一条防火墙规则，对于静态资源的 URL，阻止所有 Referer 中包含 &lt;code&gt;"http"&lt;/code&gt; 的请求：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="WAF rule" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="WAF rule" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12738?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{note begin}该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 &lt;code&gt;"http"&lt;/code&gt; 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。{note end}&lt;/p&gt;
+&lt;p&gt;{note}该规则实际上阻止了所有具有 Referer 的请求，由于无法使用通配符才用 &lt;code&gt;"http"&lt;/code&gt; 作为匹配内容。需要注意的是，没有 Referer 的请求不在该匹配范围内，设置后仍可访问。{end note}&lt;/p&gt;
 &lt;p&gt;再新建一条规则，这条规则用于根据 Referer 放行请求，作用等同于白名单，设置项如下：&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Whitelist" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Whitelist" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12739?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;设置生效后可以发现，先前的图片链接可以直接打开，却不能在其他网站上引用了。Cloudflare 阻止了白名单以外站点的引用请求，在防火墙事件中还可以查看阻止请求的来源 IP 等具体信息。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Blocking" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Blocking" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12740?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;{note begin}后来发现在 Cloudflare 控制台中的 &lt;code&gt;Scrape Shield&lt;/code&gt; 页面中有一项 &lt;strong&gt;Hotlink 保护&lt;/strong&gt;功能，一键即可开启防盗链，在 &lt;code&gt;Configuration Rules&lt;/code&gt; 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。{note end}&lt;/p&gt;
+&lt;p&gt;{note}后来发现在 Cloudflare 控制台中的 &lt;code&gt;Scrape Shield&lt;/code&gt; 页面中有一项 &lt;strong&gt;Hotlink 保护&lt;/strong&gt;功能，一键即可开启防盗链，在 &lt;code&gt;Configuration Rules&lt;/code&gt; 中添加规则即为白名单，该配置方案更简单，以上 WAF 方案也留作参考。{end note}&lt;/p&gt;
 &lt;h2 id="picgo-she-zhi"&gt;PicGo 设置&lt;/h2&gt;
 &lt;p&gt;若每次上传图片都要打开 Backblaze 网站终归还是很麻烦，好在 PicGo 能够让整个过程自动化。PicGo 还提供了丰富的插件，可以实现自定义文件路径、文件名哈希化等功能。&lt;/p&gt;
 &lt;p&gt;设置 PicGo 作为 Backblaze 的图片上传工具，需要先打开 Backblaze Buckets 页面，在桶信息中记录下 &lt;code&gt;Endpoint&lt;/code&gt; 的内容：&lt;/p&gt;
@@ -976,7 +976,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;查询一下 IP 的归属就能知道，去程数据先往北京，走寻常不过的 &lt;code&gt;221.183.*.*&lt;/code&gt; 的 AS9808 路由再跨过大洋。&lt;/p&gt;
 &lt;p&gt;在服务器端可以查看回程线路，使用 mtr 命令向本地 IP 传递数据：&lt;/p&gt;
-&lt;p&gt;{note begin}有的服务器厂商可能没有在 OS 里预装 mtr 工具，可以通过 &lt;code&gt;apt-get install mtr-tiny&lt;/code&gt; 安装。{note end}&lt;/p&gt;
+&lt;p&gt;{note}有的服务器厂商可能没有在 OS 里预装 mtr 工具，可以通过 &lt;code&gt;apt-get install mtr-tiny&lt;/code&gt; 安装。{end note}&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;# mtr 1.1.1.1 -r
 HOST: cc.server                   Loss%   Snt   Last   Avg  Best  Wrst StDev
   1.|-- undefined.hostname.localh  0.0%    10    9.1   5.3   0.7  15.1   6.1
@@ -993,7 +993,7 @@ HOST: cc.server                   Loss%   Snt   Last   Avg  Best  Wrst StDev
  12.|-- ???                       100.0    10    0.0   0.0   0.0   0.0   0.0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;线路中的路由主要是 &lt;code&gt;202.97.*.*&lt;/code&gt;，也就是传统的 163 骨干网。据说在网络较空闲时，该款服务器线路会动态切换为 CN2，我对此也不是很在意就是了。&lt;/p&gt;
-&lt;p&gt;{warn begin}测试结果中的路由 IP 地址会暴露设备所处的地理位置，在社交平台上公开前务必三思。{warn end}&lt;/p&gt;
+&lt;p&gt;{warn}测试结果中的路由 IP 地址会暴露设备所处的地理位置，在社交平台上公开前务必三思。{end warn}&lt;/p&gt;
 &lt;h2 id="chuang-jian-xin-yong-hu_1"&gt;创建新用户&lt;/h2&gt;
 &lt;p&gt;在购买服务器后，除了服务器 IP 地址外，供应商还会提供 root 用户的密码，用户可以通过 SSH 连接服务器。但 root 用户的权限太高，误操作容易造成不可逆的结果。在 Linux 的使用中，不论是服务器还是本地 PC，通常都是新建普通用户供日常使用，在权限不足时通过 &lt;code&gt;sudo&lt;/code&gt; 命令提权，完成操作后自动「尽早」地退出 root 模式。&lt;/p&gt;
 &lt;p&gt;首先是使用 &lt;code&gt;adduser 用户名&lt;/code&gt; 新建用户，创建用户的过程中会提示设定并确认密码，按提示输入即可：&lt;/p&gt;
@@ -1071,7 +1071,7 @@ $ chmod 700 ~/.ssh
 &lt;p&gt;使用 &lt;code&gt;cat /home/leo/.ssh/id_rsa&lt;/code&gt; 在终端中输出私钥内容，将其复制后写入到本地的记事本中，将文件保存为 &lt;code&gt;id_rsa&lt;/code&gt;，存放在自定义的目录下。接着在本地打开终端，尝试使用私钥连接服务器：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-sh"&gt;ssh -p 端口号 -i "私钥路径" 用户名@主机名
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{note begin}相信许多读者使用的是 PuTTY 等更为便捷的 SSH 客户端，在设置项中一定也可以使用私钥的方式完成登录，各种客户端的设置方式不尽相同，就不在此罗列了。 {note end}&lt;/p&gt;
+&lt;p&gt;{note}相信许多读者使用的是 PuTTY 等更为便捷的 SSH 客户端，在设置项中一定也可以使用私钥的方式完成登录，各种客户端的设置方式不尽相同，就不在此罗列了。 {end note}&lt;/p&gt;
 &lt;p&gt;成功登录后，SSH 的公私钥设置就没有问题了。再次打开 SSH 配置文件：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;$ sudo vim /etc/ssh/sshd_config
 &lt;/code&gt;&lt;/pre&gt;
@@ -1245,30 +1245,30 @@ server {
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style="text-align: center;"&gt;0&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;1&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;2&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;3&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;4&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;5&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;6&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;7&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;8&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;9&lt;/th&gt;
+&lt;th align="center"&gt;0&lt;/th&gt;
+&lt;th align="center"&gt;1&lt;/th&gt;
+&lt;th align="center"&gt;2&lt;/th&gt;
+&lt;th align="center"&gt;3&lt;/th&gt;
+&lt;th align="center"&gt;4&lt;/th&gt;
+&lt;th align="center"&gt;5&lt;/th&gt;
+&lt;th align="center"&gt;6&lt;/th&gt;
+&lt;th align="center"&gt;7&lt;/th&gt;
+&lt;th align="center"&gt;8&lt;/th&gt;
+&lt;th align="center"&gt;9&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style="text-align: center;"&gt;〇&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〡&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〢&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〣&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〤&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〥&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〦&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〧&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〨&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;〩&lt;/td&gt;
+&lt;td align="center"&gt;〇&lt;/td&gt;
+&lt;td align="center"&gt;〡&lt;/td&gt;
+&lt;td align="center"&gt;〢&lt;/td&gt;
+&lt;td align="center"&gt;〣&lt;/td&gt;
+&lt;td align="center"&gt;〤&lt;/td&gt;
+&lt;td align="center"&gt;〥&lt;/td&gt;
+&lt;td align="center"&gt;〦&lt;/td&gt;
+&lt;td align="center"&gt;〧&lt;/td&gt;
+&lt;td align="center"&gt;〨&lt;/td&gt;
+&lt;td align="center"&gt;〩&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1314,7 +1314,7 @@ server {
   - script_translator
   - lua_translator@number_translator
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{warn begin}YAML 文件对缩进敏感，一定要检查缩进是否正确。{warn end}&lt;/p&gt;
+&lt;p&gt;{warn}YAML 文件对缩进敏感，一定要检查缩进是否正确。{end warn}&lt;/p&gt;
 &lt;h3 id="lua-jiao-ben"&gt;Lua 脚本&lt;/h3&gt;
 &lt;p&gt;接着在用户文件夹，即 &lt;code&gt;*.schema.yaml&lt;/code&gt; 所在文件夹中新建一个名为 &lt;code&gt;rime.lua&lt;/code&gt; 的文件，写入&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-lua"&gt;number_translator = require("number")
@@ -1497,7 +1497,7 @@ RUN mkdir -p /var/run/sshd
 # 将 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf 命令作为容器启动的入口，即让 supervisor 启动 SSH
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;{warn begin}在 Ubuntu 系统下，使用 &lt;code&gt;/usr/sbin/sshd -D&lt;/code&gt; 命令启动 SSH 服务会出现错误，提示找不到文件夹 &lt;code&gt;Missing privilege separation directory: /var/run/sshd&lt;/code&gt;，我检索到的解决方法是用 &lt;code&gt;mkdir -p /var/run/sshd&lt;/code&gt; 创建该文件夹，所以在 Dockerfile 中加上了这行命令。我不确定其他系统是否有这个错误，文末附上了关于这个错误的两个链接。{warn end}&lt;/p&gt;
+&lt;p&gt;{warn}在 Ubuntu 系统下，使用 &lt;code&gt;/usr/sbin/sshd -D&lt;/code&gt; 命令启动 SSH 服务会出现错误，提示找不到文件夹 &lt;code&gt;Missing privilege separation directory: /var/run/sshd&lt;/code&gt;，我检索到的解决方法是用 &lt;code&gt;mkdir -p /var/run/sshd&lt;/code&gt; 创建该文件夹，所以在 Dockerfile 中加上了这行命令。我不确定其他系统是否有这个错误，文末附上了关于这个错误的两个链接。{end warn}&lt;/p&gt;
 &lt;p&gt;用终端进入 Dockerfile 所在文件夹，用下列命令构建镜像：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-sh"&gt;$ docker build -t ms:200a-cu116 .
 &lt;/code&gt;&lt;/pre&gt;
@@ -1527,7 +1527,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 &lt;p&gt;确保容器一切正常后，打开 Gateway，选择 &lt;code&gt;New Connection&lt;/code&gt;，输入用户名、IP 地址和端口号，选择 &lt;code&gt;Check Connection and Continue&lt;/code&gt;，Gateway 使用 SHH 成功连接后就可以选择需要的 IDE。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="选择 IDE" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="选择 IDE" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9930?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;不知道为什么 Linux 上可选择的 IDE 这么少，好在可以通过从官网手动下载安装包的方式安装。例如&lt;a href="https://www.jetbrains.com/pycharm/download/?section=linux" rel="noopener" target="_blank"&gt;下载 Pycharm&lt;/a&gt; 的安装包后，选择 &lt;code&gt;Installation options&lt;/code&gt; - &lt;code&gt;Upload installer file&lt;/code&gt;，Gateway 就会在远端（容器中）安装指定的 IDE。&lt;/p&gt;
-&lt;p&gt;{warn begin}目前 Gateway 的远端只支持 Linux 系统，所以下载的 IDE 安装包也应为 Linux 版本，这与上文构建的 Linux 镜像匹配。{warn end}&lt;/p&gt;
+&lt;p&gt;{warn}目前 Gateway 的远端只支持 Linux 系统，所以下载的 IDE 安装包也应为 Linux 版本，这与上文构建的 Linux 镜像匹配。{end warn}&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="解释器" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9931?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="解释器" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9931?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;进入 IDE 后需要选择 Python 解释器，注意此时 Gateway 已经连接到容器，local 指的也是容器内，所以要选择的解释器正是本地解释器。Gateway 检测到的 Python 路径可能不正确，需要额外确认一下。在 Docker 中一般直接使用系统的 Python，不需要使用 Anaconda 一类的虚拟环境，可以通过以下命设查找系统 Python 路径：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-sh"&gt;$ which python
@@ -1885,10 +1885,10 @@ $$&lt;/div&gt;
 }
 &lt;/script&gt;</content><category term="碎碎念"></category><category term="Literature Summary"></category><category term="CADD"></category><category term="GNN"></category></entry><entry><title>四月十二奉新纸一试</title><link href="https://leonis.cc/zai-lu-shang/2023-05-30-new-calligraphy-paper.html" rel="alternate"></link><published>2023-05-30T00:00:00+08:00</published><updated>2023-05-30T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-30:/zai-lu-shang/2023-05-30-new-calligraphy-paper.html</id><summary type="html">&lt;p&gt;常常划拉大字，练字的毛边纸用得很快，加之想多试试不同品种的纸，于是日前购买了一批新纸。从古至今，宣纸的价格都不算便宜，也少有人负担得起用宣纸练字，我所购买的纸也大多是毛边纸。新纸亦属于毛边纸，但与以前所买的毛边纸大不相 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;常常划拉大字，练字的毛边纸用得很快，加之想多试试不同品种的纸，于是日前购买了一批新纸。从古至今，宣纸的价格都不算便宜，也少有人负担得起用宣纸练字，我所购买的纸也大多是毛边纸。新纸亦属于毛边纸，但与以前所买的毛边纸大不相同，欣然提笔一试，果然令人惊喜。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="浓墨试纸" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9191?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="浓墨试纸" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9191?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 左为旧竹纸，单面粗糙且无帘纹，右为新纸&lt;/p&gt;
+&lt;p&gt;{caption} 左为旧竹纸，单面粗糙且无帘纹，右为新纸{end caption}&lt;/p&gt;
 &lt;p&gt;新购之纸明显更为厚实，且颜色偏白，不像竹纸那样黄。取纸在灯下观之，帘纹新晰，料不是机器所制，人工捞纸才有这样的痕迹。向者识别毛边纸的方法是「若纸单面糙，则为机制纸；若双面糙，则为手工纸」，我也尝试用手指轻捻，发现竟两面粗糙。可我购买的的确是价廉的机制纸，取发货单审阅，上面也分明写着「机制」二字。疑惑这余，仔细摩挲再三，才发觉的确一面更滑，两面仅差毫厘。从这几点上看，虽说买的是毛边纸，却有下宣纸一等的做工了。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="淡墨试纸" href="https://storage.live.com/items/4D18B16B8E0B1EDB!9192?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="淡墨试纸" src="https://storage.live.com/items/4D18B16B8E0B1EDB!9192?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;p class="intro"&gt;&lt;i class="fa-solid fa-angles-up"&gt;&lt;/i&gt; 淡墨在新纸上晕开的痕迹，纸面上的帘纹清晰可见&lt;/p&gt;
+&lt;p&gt;{caption} 淡墨在新纸上晕开的痕迹，纸面上的帘纹清晰可见{end caption}&lt;/p&gt;
 &lt;p&gt;竹纸不吸墨，就算使用较稀的墨我也喜欢再加些水。在新纸上一试，墨水骤然晕开，分出浓淡的墨色，竹纸决没有这样的表现力，这种水汽氤氲之感特别适合用来写邓石如的篆书。我又兑上浓墨，虽然纸面抚摸着似乎并没有竹纸粗糙，行笔却要用更大的力气，也就是所谓「吃」得住笔。从浓淡墨的线条来看，新纸干湿两宜，行笔之间的迟滞顺滑又全然不同于竹纸，这种妙趣是在竹纸上完全找不到的。最重要的是这新纸仅比以前用的竹纸贵少许，但仍比宣纸便宜得多，很适合用来日常练字。&lt;/p&gt;
 &lt;p&gt;在发现好物的欣喜之余，我不由地又惊异于科技的发展。旧时认为宣纸必须借由人工制作，制作过程还需要制纸师傅具有高超的捞纸技术，这些观点似乎正在被改写。费孝通先生在《乡土中国》一书中提到，在人们生于斯而长于斯的「乡土社会」中，一切都是那么的自然，一切生活中行之有效的法则都可以由口耳相传的经验得到，而当进入到原子化的「现代社会」后，无数人在世界范围发生着巨大规模的迁徙，在面对新事物时，那些法则就失效了。我自诩为年轻一代，在科技昌明的环境中成长，对那些流传下来的陋习也是弃如敝履，毫不惋惜，并自矜于终于能与老大帝国的积习切割。当我摩挲纸背发现我的经验失效时，内心竟也划过了一丝惶恐，原来我曾以为的法则也正在失效，我正迷惘地处在乡土社会与现代社会的间隙。一切都在改变，一切又都似也没变，似距离跨出乡土社会还甚遥远。这种种又何尝不是对我趋于「保守」的一种警醒？&lt;/p&gt;</content><category term="在路上"></category><category term="随笔"></category><category term="书法"></category></entry><entry><title>文献总结｜可以同时完成分子语言序列回归和生成的 Regression Transformer</title><link href="https://leonis.cc/sui-sui-nian/2023-05-27-summary-doi.org/10.1038/s42256-023-00639-z.html" rel="alternate"></link><published>2023-05-27T00:00:00+08:00</published><updated>2023-05-27T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2023-05-27:/sui-sui-nian/2023-05-27-summary-doi.org/10.1038/s42256-023-00639-z.html</id><summary type="html">&lt;p&gt;本文介绍于 2023 年 IBM 研究团队发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Regression Transformer enables concurrent sequence regression and generation for molecular language modelling，文章提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务的 Transformer 模型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;i class="fa-solid fa-arrow-up-right-from-square"&gt;&lt;/i&gt; &lt;a href="https://doi.org/10.1038/s42256-023-00639-z" rel="noopener" target="_blank"&gt;doi.org/10.1038/s42256-023-00639-z&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文介绍于 2023 年 IBM 研究团队发表在 &lt;em&gt;Nature Machine Intelligence&lt;/em&gt; 上的一篇文章，文章原标题为 Regression Transformer enables concurrent sequence regression and generation for molecular language modelling，文章提出了一种可以同时处理序列中的数值与文本并完成回归与生成的多任务的 Transformer 模型。&lt;/p&gt;
