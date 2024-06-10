@@ -364,7 +364,7 @@ CHEMBL100008
 CHEMBL100009
 </code></pre>
 <p>然后准备将 ChEMBL ID 导入为数据库中的一张新表，进入 <code>chembl_34</code> 数据库后，替换相应路径并执行命令：</p>
-<pre><code class="language-postgresql">CREATE TABLE input_chembl_id (
+<pre><code class="language-postgresql">CREATE TEMPLATE TABLE input_chembl_id (
    id SERIAL PRIMARY KEY,
    chembl_id VARCHAR(20)
 );
@@ -374,7 +374,7 @@ FROM '/path/to/input_chembl_id.csv'
 CSV HEADER;
 </code></pre>
 <p>成功导入 CSV 后理应能够通过以下方法输出表中数据：</p>
-<pre><code class="language-shell">chembl_34=# SELECT * FROM input_chembl_id;
+<pre><code class="language-shell">chembl_34=# SELECT * FROM input_chembl_id LIMIT 10;
  id |  chembl_id
 ----+--------------
   1 | CHEMBL10
@@ -397,7 +397,8 @@ ON input_chembl_id.chembl_id = chembl_id_lookup.chembl_id)
 LEFT JOIN molecule_dictionary
 ON molecule_dictionary.molregno = chembl_id_lookup.entity_id)
 LEFT JOIN compound_structures
-ON molecule_dictionary.molregno = compound_structures.molregno);
+ON molecule_dictionary.molregno = compound_structures.molregno)
+LIMIT 10;
 </code></pre>
 <p>执行上述 SQL 即可输出 ChEMBL ID 对应的 SMILES：</p>
 <pre><code class="language-shell">  chembl_id   |                     canonical_smiles
@@ -426,7 +427,7 @@ ON molecule_dictionary.molregno = compound_structures.molregno))
 TO '/path/to/chembl_id_smiles.csv'
 WITH (FORMAT csv, HEADER);
 </code></pre>
-<p>替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。如果后续有另一批 ChEMBL ID 数据需要转换为 SMILES，可以直接通过 <code>DROP TABLE input_chembl_id;</code> 删除表后再按上文步骤转换。</p>
+<p>替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。</p>
           </section>
 
 

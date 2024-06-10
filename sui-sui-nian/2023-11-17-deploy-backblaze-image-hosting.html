@@ -240,6 +240,7 @@
 <p>我对图床的要求只有访问速度可靠、数据受控几点，遗憾的是尝试过的众多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。</p>
 <p>辗转之下我发现了 Backblaze 提供的存储服务，B2 云存储提供 10 GB 的免费空间，同时 Cloudflare 与 Backblaze 之间的流量不计费，用作为图床是完全足够了，就算超出免费额度，$0.006 GB/Month 的价格也很合适。</p>
 <p>使用 Backblaze B2 作为图床的唯一要求就是拥有一条托管在 Cloudflare 上的域名。若不知道如何将域名转移到 Cloudflare 上，可以参考先前写的<a href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="noopener" target="_blank">迁移教程</a>，完成后就可以按照本文的步骤操作了。</p>
+<p><div class="warn-info"><p><span><i class="fa-solid fa-circle-exclamation"></i>&ensp;Warning</span>&emsp;经网友提醒，目前在 Backblaze 创建公开桶需要充值 $1 用于激活账号，尽管<dot>后续的功能仍然免费</dot>，但额外需要具有国际支付功能的银行卡已经使这个方案变得尤其繁琐了。读者如若愿意支付费用，仍可按本文的步骤配置。</p></div></p>
 <h2 id="chuang-jian-tong">创建桶</h2>
 <p><div class="lightgallery"><a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"><img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/></a></div></p>
 <p>打开 <a href="https://www.backblaze.com/" rel="noopener" target="_blank">Backblaze 官网</a>很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。</p>

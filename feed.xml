@@ -127,7 +127,7 @@ CHEMBL100008
 CHEMBL100009
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;然后准备将 ChEMBL ID 导入为数据库中的一张新表，进入 &lt;code&gt;chembl_34&lt;/code&gt; 数据库后，替换相应路径并执行命令：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-postgresql"&gt;CREATE TABLE input_chembl_id (
+&lt;pre&gt;&lt;code class="language-postgresql"&gt;CREATE TEMPLATE TABLE input_chembl_id (
    id SERIAL PRIMARY KEY,
    chembl_id VARCHAR(20)
 );
@@ -137,7 +137,7 @@ FROM '/path/to/input_chembl_id.csv'
 CSV HEADER;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;成功导入 CSV 后理应能够通过以下方法输出表中数据：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;chembl_34=# SELECT * FROM input_chembl_id;
+&lt;pre&gt;&lt;code class="language-shell"&gt;chembl_34=# SELECT * FROM input_chembl_id LIMIT 10;
  id |  chembl_id
 ----+--------------
   1 | CHEMBL10
@@ -160,7 +160,8 @@ ON input_chembl_id.chembl_id = chembl_id_lookup.chembl_id)
 LEFT JOIN molecule_dictionary
 ON molecule_dictionary.molregno = chembl_id_lookup.entity_id)
 LEFT JOIN compound_structures
-ON molecule_dictionary.molregno = compound_structures.molregno);
+ON molecule_dictionary.molregno = compound_structures.molregno)
+LIMIT 10;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;执行上述 SQL 即可输出 ChEMBL ID 对应的 SMILES：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;  chembl_id   |                     canonical_smiles
@@ -189,7 +190,7 @@ ON molecule_dictionary.molregno = compound_structures.molregno))
 TO '/path/to/chembl_id_smiles.csv'
 WITH (FORMAT csv, HEADER);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。如果后续有另一批 ChEMBL ID 数据需要转换为 SMILES，可以直接通过 &lt;code&gt;DROP TABLE input_chembl_id;&lt;/code&gt; 删除表后再按上文步骤转换。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Python"></category><category term="PostgreSQL"></category></entry><entry><title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title><link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="alternate"></link><published>2024-04-25T00:00:00+08:00</published><updated>2024-04-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-04-25:/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html</id><summary type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。&lt;/p&gt;
+&lt;p&gt;替换其中的输出路径并执行即可得到结果。经测试，将 300 万条 ChEMBL ID 转化为 SMILES 耗时不到 30 秒，非常适合大规模数据的场景。&lt;/p&gt;</content><category term="碎碎念"></category><category term="Python"></category><category term="PostgreSQL"></category></entry><entry><title>通过 PDM 和 GitHub Actions 在 PyPI 上自动化发布你的 Python 包吧</title><link href="https://leonis.cc/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html" rel="alternate"></link><published>2024-04-25T00:00:00+08:00</published><updated>2024-04-25T00:00:00+08:00</updated><author><name>Leo</name></author><id>tag:leonis.cc,2024-04-25:/sui-sui-nian/2024-04-25-publish-py-package-by-github-pdm.html</id><summary type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近换用 &lt;a href="https://pdm-project.org/latest/" rel="noopener" target="_blank"&gt;PDM&lt;/a&gt; 作为主要的 Python 环境管理工具，虽然使用细节上还不太熟悉，但终究是搭配着 Anaconda 用起来了。PDM 是一款轻巧的工具，但它却涵盖了 Python 开发中的各种场景，例如自动生成项目的 &lt;code&gt;pyproject.toml&lt;/code&gt;，自动解决 package 的版本依赖问题，就算我还未使用很久，也已经为之着迷了。&lt;/p&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png" rel="noopener" target="_blank"&gt;&lt;img alt="n" src="https://cdn.leonis.cc/img/2024/04/0b52a4eeb7c588d3f963f304b10575cccfd0802c1032b1cc1342dd4ca162d583.png"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;{caption} PDM 提供的各种功能{end caption}&lt;/p&gt;
 &lt;p&gt;很值得注意的是 PDM 提供了 build 的功能，能够将源码构建为 Python package 并发布到 PyPI，不再需要其他繁琐的工具，我也抱着极大的兴趣探索了结合 PDM 与 GitHub Actions 发布 Python 包的方法。PDM 提供了多平台的&lt;a href="https://github.com/pdm-project/pdm" rel="noopener" target="_blank"&gt;多种安装方法&lt;/a&gt;，读者可以根据自己的要求安装，本文在 Windows 上使用 &lt;code&gt;pdm==2.15.0&lt;/code&gt; 作为演示。&lt;/p&gt;
@@ -782,6 +783,7 @@ $ sudo mv ./euler-base-85cc05102200a8ac/packages/libstdc%2b%2b-devel-7.3.0-20190
 &lt;p&gt;我对图床的要求只有访问速度可靠、数据受控几点，遗憾的是尝试过的众多图床服务都不能满足我的要求，唯一适合我的方案只能是使用 OSS 搭建图床。于是我调查了阿里、腾迅等多家厂商提供的 OSS 服务，极复杂的收费规则首先就劝退了我。&lt;/p&gt;
 &lt;p&gt;辗转之下我发现了 Backblaze 提供的存储服务，B2 云存储提供 10 GB 的免费空间，同时 Cloudflare 与 Backblaze 之间的流量不计费，用作为图床是完全足够了，就算超出免费额度，$0.006 GB/Month 的价格也很合适。&lt;/p&gt;
 &lt;p&gt;使用 Backblaze B2 作为图床的唯一要求就是拥有一条托管在 Cloudflare 上的域名。若不知道如何将域名转移到 Cloudflare 上，可以参考先前写的&lt;a href="https://leonis.cc/sui-sui-nian/2023-10-31-cloudflare-dns-of-blog.html" rel="noopener" target="_blank"&gt;迁移教程&lt;/a&gt;，完成后就可以按照本文的步骤操作了。&lt;/p&gt;
+&lt;p&gt;{warn}经网友提醒，目前在 Backblaze 创建公开桶需要充值 $1 用于激活账号，尽管&lt;dot&gt;后续的功能仍然免费&lt;/dot&gt;，但额外需要具有国际支付功能的银行卡已经使这个方案变得尤其繁琐了。读者如若愿意支付费用，仍可按本文的步骤配置。{end warn}&lt;/p&gt;
 &lt;h2 id="chuang-jian-tong"&gt;创建桶&lt;/h2&gt;
 &lt;p&gt;&lt;div class="lightgallery"&gt;&lt;a data-sub-html="Backblaze homepage" href="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU" rel="noopener" target="_blank"&gt;&lt;img alt="Backblaze homepage" src="https://storage.live.com/items/4D18B16B8E0B1EDB!12725?authkey=ALYpzW-ZQ_VBXTU"/&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;打开 &lt;a href="https://www.backblaze.com/" rel="noopener" target="_blank"&gt;Backblaze 官网&lt;/a&gt;很容易就能找到 B2 Cloud Storage 产品，完成注册与邮箱验证后，登录即可免费创建 B2 云存储的桶。&lt;/p&gt;
