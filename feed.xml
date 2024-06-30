@@ -127,7 +127,7 @@ CHEMBL100008
 CHEMBL100009
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;然后准备将 ChEMBL ID 导入为数据库中的一张新表，进入 &lt;code&gt;chembl_34&lt;/code&gt; 数据库后，替换相应路径并执行命令：&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-postgresql"&gt;CREATE TEMPLATE TABLE input_chembl_id (
+&lt;pre&gt;&lt;code class="language-postgresql"&gt;CREATE TEMPORARY TABLE input_chembl_id (
    id SERIAL PRIMARY KEY,
    chembl_id VARCHAR(20)
 );
