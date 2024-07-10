@@ -4,7 +4,8 @@
   --color-content-darkcyan: #4b6780;
 
   --font-primary: "Fira Sans", Arial, "ChiuKong Gothic CL", sans-serif;
-  --font-secondary: "Palatino Linotype", "Palatino", "Advocate Ancient Serif SC", serif;;
+  --font-secondary: "Palatino Linotype", "Palatino", "Advocate Ancient Serif SC",
+    serif;
   --font-monospace: "Mononoki", "ChiuKong Gothic CL", monospace;
 }
 
@@ -61,9 +62,9 @@ samp {
 }
 
 .post-content pre {
-    font-family: var(--font-monospace);
-    font-size: 0.9em;
-    line-height: 1.5em;
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+  line-height: 1.5em;
 }
 
 .post-content {
@@ -133,7 +134,7 @@ samp {
 }
 
 .post-content pre {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .post-content table th,
@@ -219,12 +220,12 @@ samp {
 .post-author-bio span i:hover {
   transform: rotate(15deg) scale(1.3);
   color: var(--color-content-lead);
-  transition: all 0.2s
+  transition: all 0.2s;
 }
 
 .about-page.archive-links span i:hover {
   transform: rotate(15deg) scale(1.3);
-  transition: all 0.2s
+  transition: all 0.2s;
 }
 
 .archive .archive-links {
@@ -236,7 +237,7 @@ samp {
 }
 
 .post-content span i {
-  font-style: initial!important;
+  font-style: initial !important;
 }
 
 .nav-meta img {
@@ -259,37 +260,72 @@ samp {
 }
 
 .post-share .share-link {
-    background-color: #4999a7;
+  background-color: #4999a7;
 }
 
 .post-share .mastodon {
-    background-color: #368bce;
+  background-color: #368bce;
 }
 
 .post-share .weibo {
-    background-color: #d36666;
+  background-color: #d36666;
 }
 
 /* highlight.js style */
 .hljs-keyword {
   font-style: italic;
-  color: #8B008B;
+  color: #8b008b;
 }
 
 hljs-literal {
-    color: #009926
+  color: #009926;
 }
 
 .theme-dark hljs-literal {
-    color:#61D27C
+  color: #61d27c;
 }
 
 .hljs-meta {
   color: #dc3958;
 }
 
+@font-face {
+  font-family: "Mononoki";
+  src: local("Fira Code"),
+    url("../font/mononoki-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mononoki";
+  src: local("Fira Code"),
+    url("../font/mononoki-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mononoki";
+  src: local("Fira Code"),
+    url("../font/mononoki-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mononoki";
+  src: local("Fira Code"),
+    url("../font/mononoki-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 @media only screen and (max-width: 640px) {
-  .nav-foreverblog, .nav-travellings {
-  display: none;
+  .nav-foreverblog,
+  .nav-travellings {
+    display: none;
   }
 }
