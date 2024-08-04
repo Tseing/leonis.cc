@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>[译] Understanding Incremental Decoding in fairseq - Leo’s blog</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html" rel="canonical" />
+  <!-- Feed -->
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo’s blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+
+  <!-- font-awesome icons -->
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom fonts -->
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://ik.imagekit.io/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
+
+
+
+
+    <meta name="description" content="近来一直在使用 fairseq 做项目，因为其功能较多而源码也比较复杂，光靠官方文档也难以完全理解。ankur6ue 的一篇文章对 fairseq 中的增量解码（Incremental...">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="PyTorch">
+    <meta name="tags" content="NLP">
+    <meta name="tags" content="faireseq">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo’s blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="[译] Understanding Incremental Decoding in fairseq"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="近来一直在使用 fairseq 做项目，因为其功能较多而源码也比较复杂，光靠官方文档也难以完全理解。ankur6ue 的一篇文章对 fairseq 中的增量解码（Incremental..."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2024-08-04 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="PyTorch"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="NLP"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="faireseq"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://img.leonis.cc/bg/header.webp">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "[译] Understanding Incremental Decoding in fairseq",
+  "headline": "[译] Understanding Incremental Decoding in fairseq",
+  "datePublished": "2024-08-04 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://leonis.cc/https://img.leonis.cc/bg/header.webp",
+  "url": "https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html",
+  "description": "近来一直在使用 fairseq 做项目，因为其功能较多而源码也比较复杂，光靠官方文档也难以完全理解。ankur6ue 的一篇文章对 fairseq 中的增量解码（Incremental..."
+}
+</script>
+
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
+<body class="category-template">
+
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
+
+    <li class="nav-Home " role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 active" role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
+
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
+    <!-- Progressbar -->
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="post-header  has-cover ">
+      <div class="inner">
+        <span class="post-info">
+          <span class="post-type">Article</span>
+          <span class="post-count">碎碎念</span>
+        </span>
+        <h1 class="post-title">[译] Understanding Incremental Decoding in fairseq</h1>
+        <div class="post-meta">
+          <div class="post-meta-avatars">
+
+
+            <figure class="post-meta-avatar avatar">
+              <a class="author-avatar" href="https://leonis.cc/author/leo.html">
+                <img class="author-profile-image" src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+              </a>
+            </figure>
+          </div>
+
+          <h4 class="post-meta-author">
+            Leo
+          </h4>
+          <time datetime="2024年 8月04日">2024年 8月04日</time>
+        </div>
+          <div class="post-cover cover">
+            <img src="https://img.leonis.cc/bg/header.webp" alt="Category 碎碎念" />
+          </div>
+      </div>
+    </header>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+          <div class="toc-nav">
+            <div id="toc"><ul><li><a class="toc-href" href="#tui-li-guo-cheng-zhong-de-zeng-liang-jie-ma" title="推理过程中的增量解码">推理过程中的增量解码</a></li><li><a class="toc-href" href="#zeng-liang-jie-ma-ru-he-jie-sheng-ji-suan-kai-xiao" title="增量解码如何节省计算开销？">增量解码如何节省计算开销？</a></li><li><a class="toc-href" href="#wei-shi-yao-xu-yao-zhong-pai-zeng-liang-zhuang-tai" title="为什么需要重排增量状态？">为什么需要重排增量状态？</a></li><li><a class="toc-href" href="#wei-shi-yao-ji-shu-sou-suo-fan-hui-de-token-shu-liang-shi-ji-shu-shu-liang-de-liang-bei" title="为什么集束搜索返回的 token 数量是集束数量的两倍？">为什么集束搜索返回的 token 数量是集束数量的两倍？</a></li></ul></div>
+          </div>
+        <div class="inner">
+          <section class="post-content">
+            <p>近来一直在使用 fairseq 做项目，因为其功能较多而源码也比较复杂，光靠官方文档也难以完全理解。ankur6ue 的一篇<a href="https://www.telesens.co/2019/04/21/understanding-incremental-decoding-in-fairseq/" rel="noopener" target="_blank">文章</a>对 fairseq 中的增量解码（Incremental Decoding）操作做了详尽的介绍，于是我节选了其中的一部分，将其译为中文，希望对和我一样在读源码的朋友有所帮助。</p>
+<h3 id="tui-li-guo-cheng-zhong-de-zeng-liang-jie-ma">推理过程中的增量解码</h3>
+<p>在语言翻译任务的推理过程，解码器逐步地输出目标语言词汇的概率分布。最简单的翻译算法通过贪心策略直接选择概率最高的目标词，这个方法和训练过程中计算损失函数的方式一致。另一种方法则是保存所有可能的目标序列，再从中选出最小化对数似然的的结果。但这种方法需要基于似然搜索所有的可能序列，同时由于词表大小通常在数百上千的规模，导致计算开销随着序列长度指数上升。</p>
+<p>集束搜索（Beam Search）在两种极端策略间取得了平衡，由于网络上已经有许多<a href="http://nlp.seas.harvard.edu/seq2seq-talk/slidescmu.pdf" rel="noopener" target="_blank">非常好的教程</a>，本文不在此展开介绍集束搜索的工作原理。因为集束搜索在每个步骤只考虑 <span class="math">\(B\)</span> 个前缀序列，搜索空间就由 <span class="math">\(V\times V\)</span> 下降至 <span class="math">\(B\times V\)</span>（其中 <span class="math">\(B\)</span> 为集束宽度，<span class="math">\(V\)</span> 为目标词表的大小），所以相比暴力搜索的方法显著高效。解码结果缺乏多样性是集束搜索的一项缺陷，因为一条输入序列可能具有多条正确翻译，这项缺陷就会影响翻译任务。针对该问题也提出了许多解决方法，例如 <a href="https://arxiv.org/abs/1610.02424" rel="noopener" target="_blank">Diverse Beam Search</a> 在标准的集束分数中添加了一个差异项，通过对先前步骤已使用过的词施加惩罚并使用 top-k 随机取样在下一步的生成中随机选出前 k 个最有可能的备选项（代替了集束搜索中永远选择前 <span class="math">\(B\)</span> 个备选项的取样方式），从而产生更多样的结果。</p>
+<p>尽管集束搜索比蛮力搜索更高效，但由于每个步骤都要重新计算所有前缀 token（prefix tokens），其计算开销会随着解码序列长度的增加而线性增长。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/b8f3cdc201f569b7e3500c4e0fb57d8cda5d8b6a8f2a509c83823082c391b7fa.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/b8f3cdc201f569b7e3500c4e0fb57d8cda5d8b6a8f2a509c83823082c391b7fa.png"/></a></div></p>
+<p>在这个例子中，用 A、B、C 等字母表示 token，在推理时，集束会扩展成由翻译出句子所构成的 batch。如果输入 batch 由 2 个句子构成，同时将集束宽度设置为 3，最终得到 batch 的大小就为 6。在计算过程中，每个集束都作为 batch 中的元素并行计算。</p>
+<p>当模型完成前面一部分的 token 的解码计算后，我们就会思考：是否可以重复利用这些计算结果？其实增量解码正是这个思路的实现。增量解码使用名为增量状态（incremental state）的数据结构保存先前计算结果，用于后续的卷积计算。在每个计算步骤中，解码器只需对当前 token 做计算，若是模型中的某些层需要先前 token 的信息（例如卷积层），则从增量状态中取出所需结果。而在编码器的计算过程中，编码器与解码出的目标序列无关，它只在一开始时计算输入序列并产生每个输入字词的编码，这些编码本就会被解码器重复使用。</p>
+<h3 id="zeng-liang-jie-ma-ru-he-jie-sheng-ji-suan-kai-xiao">增量解码如何节省计算开销？</h3>
+<p>增量解码的具体实现稍有些复杂，希望下图能够帮助读者更好地理解整个过程。我推荐读者尝试使用 Python Debugger 在以下代码中设置断点，相信能够更容易理解每一步所做的操作。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/e317977def25ba55ad532fe28e675ed8724c735d2204dfa5ee722fa38800710d.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/e317977def25ba55ad532fe28e675ed8724c735d2204dfa5ee722fa38800710d.png"/></a></div></p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp;在第（1）步中，<code>input_buffer</code> 中每个卷积模块对应的值都是 <code>None</code>，其内存大小由 <code>beam_size</code> (3)、<code>conv_kernel_width</code> (3) 和 <code>conv_kernel_input_dimension</code> (512) 分配，初始化为 0。</p></p>
+<p>我们假设输入 1 条句子，那么 batch 的大小与集束宽度相等（该样例中为 3）。首先，每个集束都由开始标记构成（BOS），因而输入卷积层的嵌入向量相等。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/d7d6c9698f6e3027be71e3b3f2df8c66f81f08c34e28d04c985f3e748823c9b9.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/d7d6c9698f6e3027be71e3b3f2df8c66f81f08c34e28d04c985f3e748823c9b9.png"/></a></div></p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp;在完成创建和初始化后，<code>input_buffer</code> 如上图所示</p></p>
+<p>然后 <code>input_buffer</code> 左移 1 个位置并将输入添加到最后一列。由于 <code>input_buffer</code> 全由 0 填充，左移后并没有明显的变化，不过我们在下一步就会看到它的作用。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/ed98ce09d050b5ea629c7df88866151d1b8f065801a3c020652807d13b2806d1.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/ed98ce09d050b5ea629c7df88866151d1b8f065801a3c020652807d13b2806d1.png"/></a></div></p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp;在最右侧填入输入列后的 <code>incremental_state</code> 如上图所示，因为在第（1）步中的所有输入 token 都是 BOS token，填入每个集束的输入向量也都相同。</p></p>
+<p>接着，输入数据与卷积滤波器做计算，将计算结果传递给后续层&mdash;&mdash;即 GLU 和注意力层。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/49f09363fd57b006c2b37e73bd8417635b239542fa15bcaebb666a1e7dff9ec7.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/49f09363fd57b006c2b37e73bd8417635b239542fa15bcaebb666a1e7dff9ec7.png"/></a></div></p>
+<p>现在我们考虑下一个线性卷积层模块，进入该层的输入来源于前一个模块。正如前一个部分中的卷积层，该卷积层也有自己的增量状态，同样由 0 初始化并填入输入数据。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/55d0965081747cdb001ff6dd0b426e8d51957c60d967ace200e83608a9ddf9e4.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/55d0965081747cdb001ff6dd0b426e8d51957c60d967ace200e83608a9ddf9e4.png"/></a></div></p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/2430b8679336507c0bc03d9f8a0455ad8d6b1a70c17fa83e856c007d047832f7.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/2430b8679336507c0bc03d9f8a0455ad8d6b1a70c17fa83e856c007d047832f7.png"/></a></div></p>
+<p>和先前一样，输入数据与卷积核做计算并传入 GLU 和注意力层，解码器中的所有结构都重复这一过程，最后的输出就为每个集束的词表概率分布向量。集束搜索算法从该结果中得到最优的 token，用于下一步的计算，在这里用 A、B、C 表示解码结果。</p>
+<p>接下来我们考虑在步骤（2）所做的操作，我们目前的集束为</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/11009dbdb64e4853a9b84fe550e27f298dc8dd8379e1b1dc7a00b2a19bc294f4.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/11009dbdb64e4853a9b84fe550e27f298dc8dd8379e1b1dc7a00b2a19bc294f4.png"/></a></div></p>
+<p>再一次重复第一层的卷积操作，由于每个集束的输入 token 不同（A、B 和 C），其嵌入向量也不再相等。此外，由于步骤（1）中的初始化过程，<code>input_buffer</code> 也不再全为 0。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/0200380ed37ace3ca3dd3448e7556e46025e0b89dc815c92a5710b5347bb73c7.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/0200380ed37ace3ca3dd3448e7556e46025e0b89dc815c92a5710b5347bb73c7.png"/></a></div></p>
+<p>接着，<code>input_buffer</code> 左移并将新的输入添加至最后一列。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/5b87b97be2a1b5ef580e124b7b417b2dcc775d82678778bac2fdeeda0993d60b.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/5b87b97be2a1b5ef580e124b7b417b2dcc775d82678778bac2fdeeda0993d60b.png"/></a></div></p>
+<p>每个集束的 <code>input_buffer</code> 与卷积核做计算后传入到后续层中，与先前步骤中相同。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/ae7b62a48fef4a799545db240631709e03a84727e2eb498e12acf9cc1970ba92.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/ae7b62a48fef4a799545db240631709e03a84727e2eb498e12acf9cc1970ba92.png"/></a></div></p>
+<p>整个过程中，<code>input_buffer</code> 作为内存记录先前步骤给出的结果，用于计算卷积结果。<code>input_buffer</code> 同时节省了计算开销，这一点可以在下一个卷积操作中看出。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/c083538e6eec75c58c478f5de4cd68ced387af8ea3a7ec75c073d2fc8e33e79e.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/c083538e6eec75c58c478f5de4cd68ced387af8ea3a7ec75c073d2fc8e33e79e.png"/></a></div></p>
+<p>由于 <code>input_buffer</code> 中保存了先前步骤的输入，在当前步骤中可以直接用于完成卷积计算。最重要的是，先前步骤的输入是再前一个步骤的计算结果，保存的计算结果就避免了解码过程中的重复计算，从而节省计算开销。后续过程与前文所述一样，左移并填入输入，完成卷积计算。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/adc16e97f6887595e6de0563280614d517df6b11ac75fdce8c394e0b994a28e3.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/adc16e97f6887595e6de0563280614d517df6b11ac75fdce8c394e0b994a28e3.png"/></a></div></p>
+<h3 id="wei-shi-yao-xu-yao-zhong-pai-zeng-liang-zhuang-tai">为什么需要重排增量状态？</h3>
+<p>在每一步开始前，<code>generator</code> 都会重新排列解码器和编码器的 <code>incremental_state</code>。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/fa8dcf305b19dd02439351b77ec98aa761fb7ce121ac0b6844dcbeee7adc9d8b.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/fa8dcf305b19dd02439351b77ec98aa761fb7ce121ac0b6844dcbeee7adc9d8b.png"/></a></div></p>
+<p>这是由于集束搜索会导致每个集束中前缀 token 的顺序发生改变，通过一个简单的样例描述这个过程。假设下图是步骤（2）得到的集束状态，其中展示了每个步骤得到的 token 和预测分数。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/453fb3bb95c824768bf0fb7500801b4e059ac0c0b58608333435d63d4f2c55a6.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/453fb3bb95c824768bf0fb7500801b4e059ac0c0b58608333435d63d4f2c55a6.png"/></a></div></p>
+<p>到了步骤（3）时，通过预测分数得到 N、P 和 S，箭头表示了每个结果 token 的来源。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/6b53b818ead6187115662c8ef4ebc6f4bf0b3e0ee4182e0badd0c8edfe4117ab.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/6b53b818ead6187115662c8ef4ebc6f4bf0b3e0ee4182e0badd0c8edfe4117ab.png"/></a></div></p>
+<p>（译者案：作者在这里描述得不是很清晰，需要额外补充一些说明。集束搜索过程如下图示意，其主要操作是在每一步中只取 top-k 个预测分数最高的结果作为下一步的前缀 token，其他分支中止不再计算。在该例中，输入 BOS token 后，在若干结果中取 top-3 分数最高的结果，分别为 A、B 和 C。那么下一步的输入就为 [BOS A]、[BOS B] 和 [BOS C]，再取 top-3 分数最高的结果。由 A 生成的结果分数无法位于 top-3，A token 所属的分支就被中止，后续不会再计算，在 buffer 中存储其状态也是无用的了，因此要将其替换为有效的前缀 token。）</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/5cdd85824f7ff4dc4c501bde86a1c543175b2455aad6d0e07a4ec56bdd9659bc.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/5cdd85824f7ff4dc4c501bde86a1c543175b2455aad6d0e07a4ec56bdd9659bc.png"/></a></div></p>
+<p>于是就如下图所示，重新排列每个集束。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/a69ac909ec5ae868bdc00d3d510ff537bd4068be835969fc76629675acf6569c.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/a69ac909ec5ae868bdc00d3d510ff537bd4068be835969fc76629675acf6569c.png"/></a></div></p>
+<p>当对当前 token N、P 和 S 执行解码操作（预测下一个 token）时，我们必须重排 <code>incremental_state</code> 使卷积操作能够使用正确的前缀 token。这个操作可能不能马上明白，需要花些时间仔细理解。</p>
+<p>另外还有一点，fairseq 的代码也重新排列了编码器的状态，然而由于编码器状态只取决于输入 token，并不会随集束状态改变，其重排也就不是必需的，至少在本文的例子中不需要这样的操作。</p>
+<h3 id="wei-shi-yao-ji-shu-sou-suo-fan-hui-de-token-shu-liang-shi-ji-shu-shu-liang-de-liang-bei">为什么集束搜索返回的 token 数量是集束数量的两倍？</h3>
+<p>在 fairseq 中，集束搜索返回输出 token 的数量是集束数量的两倍。这是由于集束搜索中的部分集束可能会返回表示句子结束的 EOS token，而我们不想要集束搜索太早就停止。当 EOS token 出现在结果的前半部分时，可以将预测总分与其他已有结果的分数相比较从而完成句子。下图展示了相关代码并附上了一些注释，希望能有助读者理解。</p>
+<p><div class="lightgallery"><a data-sub-html="n" href="https://cdn.leonis.cc/img/2024/08/46627e65ae778a037dc169a61ff288ff19bd78d8fbcc27e551604abddcd8fd5f.png" rel="noopener" target="_blank"><img alt="n" src="https://cdn.leonis.cc/img/2024/08/46627e65ae778a037dc169a61ff288ff19bd78d8fbcc27e551604abddcd8fd5f.png"/></a></div></p>
+<p><p class="intro"><i class="fa-solid fa-angles-up"></i>&nbsp;（a）返回表示集束中具有 EOS token 的掩码；（b）具有 EOS token 集束对应的索引，只有在 EOS 出现在前半部分的情况下（<code>:beam_size</code>）。注意集束搜索返回 <code>2 * beam_size</code> 个结果；（c）对于前 <code>beam_size</code> 个具有 EOS 的集束，组合预测结果并判断是否完成句子。如果是，减少剩余句子的数量，注意我们处理的是一整个 batch 的输入句子；（d）如果剩余句子的数量是 0，完成；（e）如果能够完成一整个 batch 的目标句子，从 batch 中移除元素并调整 batch 索引。</p></p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+          </section>
+
+
+          <section class="post-footer" style="margin: 12rem 0 0;">
+            <div class="post-share">
+              <span class="post-info-label">Share</span>
+                <a title="复制文章链接" aria-label="Share-link" class="share-link"
+                  href="#" onclick='copyURL(event, "[译] Understanding Incremental Decoding in fairseq - Leo’s blog https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html");return false;'>
+                  <i class="icon icon-link"
+                  aria-hidden="true"></i><span class="hidden">Share-link</span>
+                </a>
+                <a title="嘟嘟到 Mastodon" aria-label="Mastodon" class="mastodon"
+                  href="https://tootpick.org/#text=[译] Understanding Incremental Decoding in fairseq - Leo’s blog https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-mastodon"
+                  aria-hidden="true"></i><span class="hidden">Mastodon</span>
+                </a>
+                <a title="分享到微博" aria-label="Weibo" class="weibo"
+                  href="http://service.weibo.com/share/share.php?url=https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html&title=[译] Understanding Incremental Decoding in fairseq&nbsp;-&nbsp;Leo’s blog"
+                  target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-weibo"
+                  aria-hidden="true"></i><span class="hidden">Weibo</span>
+                </a>
+                <a title="通过 Email 转发" aria-label="Email" class="email"
+                  href="mailto:?subject=[译] Understanding Incremental Decoding in fairseq&amp;body=https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html">
+                  <i class="icon icon-mail"
+                  aria-hidden="true"></i><span class="hidden">Email</span>
+                </a>
+              <div class="clear"></div>
+            </div>
+
+            <aside class="post-tags">
+<a href="https://leonis.cc/tag/pytorch.html"># PyTorch</a><a href="https://leonis.cc/tag/nlp.html"># NLP</a><a href="https://leonis.cc/tag/faireseq.html"># faireseq</a>            </aside>
+
+            <div class="clear"></div>
+
+            <aside class="post-author">
+
+
+                <figure class="post-author-avatar">
+                  <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                </figure>
+                <div class="post-author-bio">
+                  <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                    <p class="post-author-about">A chemist who doesn’t know about classical literature isn’t a good programmer. Cool, huh?</p>
+                    <span class="post-author-location">
+                      <a rel="noopener" target="_blank" href="https://www.bing.com/maps?cp=39.116572%7E117.361669&lvl=10.1"
+                      title="Tientsin">
+                      <i class="fa-solid fa-earth-asia fa-fw"></i></a>
+                    </span>
+                  <!-- Social linkes in alphabet order. -->
+                    <span class="post-author-mastodon">
+                      <a rel="noopener" target="_blank" href="https://mast.dragon-fly.club/@leonis"
+                      title="@leonis@dragon-fly.club">
+                        <i class="fa-brands fa-mastodon fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-github">
+                      <a rel="noopener" target="_blank" href="https://github.com/Tseing"
+                      title="@Tseing">
+                        <i class="fa-brands fa-github fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-email">
+                      <a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"
+                      title="im.yczeng@outlook.com">
+                        <i class="fa-solid fa-envelope fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-rss">
+                      <a rel="noopener" target="_blank" href="/feed.xml"
+                      title="RSS Feed">
+                        <i class="fa-solid fa-rss fa-fw"></i></a>
+                    </span>
+                </div>
+                <div class="clear"></div>
+            </aside>
+
+          </section>
+
+
+          <aside class="post-nav">
+            <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2024-05-07-covert-chembl-id-into-smiles.html">
+              <section class="post-nav-teaser">
+                <i class="icon icon-arrow-right"></i>
+                  <h2 class="post-nav-title">将化学分子的 ChEMBL ID 转化为 SMILES 的两种方法</h2>
+                <p class="post-nav-excerpt">ChEMBL 是一个大型的化学分子数据库，其中收集了大量化合物的化学、生物学数据，也是化学信息学、生物信息学领域中许多研究的数据来源。很多情况下，不管是按需求从...</p>
+                <p class="post-nav-meta"><time datetime="2024年 5月07日">2024年 5月07日</time></p>
+              </section>
+            </a>
+            <div class="clear"></div>
+          </aside>
+
+<div id="waline"></div>
+        </div>
+      </article>
+    </main>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo’s blog &copy; 2024
+        </span>
+        <span class="nav-credits">
+
+
+
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
+  </section>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- code highlight -->
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/pgsql.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+    <!-- umami analytics -->
+    <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
+
+<script>
+  $(document).ready(function () {
+    var viewport = $(window);
+    var post = $('.post-content');
+    // Responsive videos with fitVids
+    post.fitVids();
+
+    var mdSelector="pre code";
+    var rstSelector="pre code";
+    var selector=mdSelector;
+    // Format code blocks and add line numbers
+    function codestyling() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+        // No lines for plain text blocks
+        if (!$(this).hasClass('language-text')) {
+          var code = $(this);
+          // Calculate amount of lines
+          var lines = code.html().split(/\n(?!$)/g).length;
+          var numbers = [];
+          if (lines > 1) {
+            lines++;
+          }
+          for (i = 1; i < lines; i++) {
+            numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+          }
+          code.parent().append('<div class="lines">' + numbers + '</div>');
+        }
+      });
+    }
+
+    // Format code blocks only
+    function codestylingWithoutLineNumbers() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+      });
+    }
+
+    codestylingWithoutLineNumbers();
+    // Reading progress bar on window top
+    function readingProgress() {
+      var postBottom = post.offset().top + post.height();
+      var viewportHeight = viewport.height();
+      var progress = 100 - (((postBottom - (viewport.scrollTop() + viewportHeight) + viewportHeight / 3) / (postBottom - viewportHeight + viewportHeight / 3)) * 100);
+      $('.progress-bar').css('width', progress + '%');
+      (progress > 100) ? $('.progress-container').addClass('complete'): $('.progress-container').removeClass('complete');
+    }
+    readingProgress();
+    // Trigger reading progress
+    viewport.on({
+      'scroll': function() {
+        readingProgress();
+      },
+      'resize': function() {
+        readingProgress();
+      },
+      'orientationchange': function() {
+        readingProgress();
+      }
+    });
+
+  });
+
+  Waline.init({
+      el: '#waline',
+      serverURL: "https://waline-1-d9689975.deta.app/",
+      emoji: false,
+      search: false,
+      imageUploader: false,
+      locale: {placeholder: "欢迎评论，填写邮箱可以获取头像和收到回复通知～"},
+  });
+</script>
+</body>
+
+</html>
