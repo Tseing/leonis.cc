@@ -1207,7 +1207,7 @@ $ chmod 700 ~/.ssh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;在文件中写入针对 SSH 服务的封禁规则：&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-ini"&gt;[sshd]
-enabled = ture
+enabled = true
 filter = sshd
 port = 2222                     # SSH 服务对应的端口
 logpath = /var/log/auth.log     # 日志路径
