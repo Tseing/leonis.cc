@@ -192,3 +192,11 @@ function popInfo(event, info) {
     "swing",
     function(){$(this).remove()});
 };
+
+/* ==========================================================================
+Images lazy loading
+========================================================================== */
+function setImagesLazyLoading() {
+  $('.lightgallery img').attr("loading", "lazy");
+}
+setImagesLazyLoading();
