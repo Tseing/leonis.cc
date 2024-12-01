@@ -10,6 +10,11 @@ url = "/pages/shan-qiang-bian.html"
 title = "山墙边"
 
 [[input.files]]
+path = "sui-sui-nian/2024-12-01-riscv-calling-convention.html"
+url = "/sui-sui-nian/2024-12-01-riscv-calling-convention.html"
+title = "RISC-V 函数调用约定"
+
+[[input.files]]
 path = "sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html"
 url = "/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html"
 title = "[译] Understanding Incremental Decoding in fairseq"

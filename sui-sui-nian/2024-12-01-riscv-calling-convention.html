@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>RISC-V 函数调用约定 - Leo’s blog</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+<link href="https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html" rel="canonical" />
+  <!-- Feed -->
+  <link href="https://leonis.cc/feed.xml" type="application/atom+xml" rel="alternate"
+    title="Leo’s blog Full Atom Feed" />
+
+  <link href="https://leonis.cc/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- CSS specified by the user -->
+
+
+  <link href="https://leonis.cc/theme/css/customize.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/plugins.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/lightgallery.min.css" type="text/css" rel="stylesheet" />
+
+
+  <link href="https://leonis.cc/theme/css/bookshelf.css" type="text/css" rel="stylesheet" />
+
+
+  <!-- font-awesome icons -->
+  <link href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom fonts -->
+  <link href="https://leonis-fonts.deno.dev/leonis/ChiuKongGothic-CL-w4/result.css?updatedAt=1700222744424" rel="stylesheet" />
+  <link href="https://leonis-fonts.deno.dev/leonis/ChiuKongGothic-CL-w5/result.css?updatedAt=1700275749020" rel="stylesheet" />
+  <link href="https://leonis-fonts.deno.dev/leonis/ChiuKongGothic-CL-w7/result.css?updatedAt=1700275854743" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/400-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/500-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-fira-sans/5.0.19/700-italic.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.loli.net/ajax/libs/fontsource-lato/5.0.19/400.min.css" rel="stylesheet" />
+  <link href="https://leonis-fonts.deno.dev/leonis/AdvocateAncientSerifSC-Bold/result.css?updatedAt=1700289637334" rel="stylesheet" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+    var siteUrl = 'https://leonis.cc';
+  </script>
+
+  <script>
+    var localTheme = localStorage.getItem('attila_theme');
+    switch (localTheme) {
+      case 'dark':
+        document.documentElement.classList.add('theme-dark');
+        break;
+      case 'light':
+        document.documentElement.classList.add('theme-light');
+        break;
+      default:
+        break;
+    }
+  </script>
+
+
+
+
+
+
+
+    <meta name="description" content="调用函数前后存在旧数据与新数据两种状态，RISC-V 对使用哪些寄存器存储前后状态做了人为规定，这样的一系列规定称为调用约定（Calling Convention）。CS 61C 的补充资料在这方面描述得最为明了，本文主要根据这篇文章对 RISC-V 调用约定的要点做了总结。 基本定 …">
+
+    <meta name="author" content="Leo">
+
+    <meta name="tags" content="汇编">
+    <meta name="tags" content="RISC-V">
+
+
+
+
+<!-- Open Graph -->
+<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Leo’s blog"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="RISC-V 函数调用约定"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="调用函数前后存在旧数据与新数据两种状态，RISC-V 对使用哪些寄存器存储前后状态做了人为规定，这样的一系列规定称为调用约定（Calling Convention）。CS 61C 的补充资料在这方面描述得最为明了，本文主要根据这篇文章对 RISC-V 调用约定的要点做了总结。 基本定 …"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_US"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="article"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:published_time" content="2024-12-01 00:00:00+08:00"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:modified_time" content=""/>
+<meta prefix="og: http://ogp.me/ns#" property="article:author" content="https://leonis.cc/author/leo.html">
+<meta prefix="og: http://ogp.me/ns#" property="article:section" content="碎碎念"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="汇编"/>
+<meta prefix="og: http://ogp.me/ns#" property="article:tag" content="RISC-V"/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://cdn.leonis.cc/img/2024/12/9d46ad68fabede1f6e9b6b06a77b3a95022b616ab017b1c0e03cc5cf1f18e0bd.png">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "RISC-V 函数调用约定",
+  "headline": "RISC-V 函数调用约定",
+  "datePublished": "2024-12-01 00:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Leo",
+    "url": "https://leonis.cc/author/leo.html"
+  },
+  "image": "https://cdn.leonis.cc/img/2024/12/9d46ad68fabede1f6e9b6b06a77b3a95022b616ab017b1c0e03cc5cf1f18e0bd.png",
+  "url": "https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html",
+  "description": "调用函数前后存在旧数据与新数据两种状态，RISC-V 对使用哪些寄存器存储前后状态做了人为规定，这样的一系列规定称为调用约定（Calling Convention）。CS 61C 的补充资料在这方面描述得最为明了，本文主要根据这篇文章对 RISC-V 调用约定的要点做了总结。 基本定 …"
+}
+</script>
+
+<link href="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.css" rel="stylesheet" />
+<script src="https://npm.elemecdn.com/@waline/client@2.14.9/dist/waline.js"></script>
+
+</head>
+
+
+
+
+
+
+
+
+
+<body class="category-template">
+
+<div class="nav-header">
+  <nav class="nav-wrapper" aria-label="Main">
+<ul>
+
+    <li class="nav-Home " role="presentation"><a href="/"><span>Home</span></a></li>
+    <li class="nav-碎碎唸 active" role="presentation"><a href="/category/sui-sui-nian.html"><span>碎碎唸</span></a></li>
+    <li class="nav-故紙堆 " role="presentation"><a href="/category/gu-zhi-dui.html"><span>故紙堆</span></a></li>
+    <li class="nav-在路上 " role="presentation"><a href="/category/zai-lu-shang.html"><span>在路上</span></a></li>
+    <li class="nav-山牆邊 " role="presentation"><a href="/pages/shan-qiang-bian.html"><span>山牆邊</span></a></li>
+    <li class="nav-破櫥簏 " role="presentation"><a href="https://neodb.social/users/Leo/"><span>破櫥簏</span></a></li>
+    <li class="nav-Archives " role="presentation"><a href="/archives.html"><span>Archives</span></a></li>
+    <li class="nav-Tags " role="presentation"><a href="/tags.html"><span>Tags</span></a></li>
+    <li class="nav-About " role="presentation"><a href="/about.html"><span>About</span></a></li>
+
+</ul>
+<ul class="nav-meta">
+    <li class="nav-search">
+      <a aria-label="Search" href="/search.html" target="_blank">
+        <i class="icon icon-search" aria-hidden="true"></i>
+    <span>search</span></a></li>
+    <li class="nav-foreverblog">
+      <a aria-label="Foreverblog" href="https://www.foreverblog.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://img.foreverblog.cn/wormhole_2_tp.gif" alt="foreverblog" title="穿梭虫洞-随机访问十年之约友链博客"></i>
+    <span>foreverblog</span></a></li>
+    <li class="nav-travellings">
+      <a aria-label="Travellings" href="https://www.travellings.cn/go.html" target="_blank">
+        <i aria-hidden="true"><img src="https://www.travellings.cn/assets/w.png" alt="travellings" title="开往-友链接力" aria-hidden="true"></i>
+    <span>travellings</span></a></li>
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+</ul>  </nav>
+
+  <div class="nav-wrapper-control">
+    <div class="inner">
+      <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+      <a class="nav-search" title="Search" role="button" style="display: none;"><i class="icon icon-search" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
+<div class="nav-close" role="button" aria-label="Close"></div>
+  <section id="wrapper" class="page-wrapper">
+    <!-- Progressbar -->
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="post-header  has-cover ">
+      <div class="inner">
+        <span class="post-info">
+          <span class="post-type">Article</span>
+          <span class="post-count">碎碎念</span>
+        </span>
+        <h1 class="post-title">RISC-V 函数调用约定</h1>
+        <div class="post-meta">
+          <div class="post-meta-avatars">
+
+
+            <figure class="post-meta-avatar avatar">
+              <a class="author-avatar" href="https://leonis.cc/author/leo.html">
+                <img class="author-profile-image" src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+              </a>
+            </figure>
+          </div>
+
+          <h4 class="post-meta-author">
+            Leo
+          </h4>
+          <time datetime="2024年 12月01日">2024年 12月01日</time>
+        </div>
+          <div class="post-cover cover">
+            <img src="https://cdn.leonis.cc/img/2024/12/9d46ad68fabede1f6e9b6b06a77b3a95022b616ab017b1c0e03cc5cf1f18e0bd.png" alt="Category 碎碎念" />
+          </div>
+      </div>
+    </header>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+          <div class="toc-nav">
+            <div id="toc"><ul><li><a class="toc-href" href="#ji-ben-ding-yi" title="基本定义">基本定义</a></li><li><a class="toc-href" href="#shi-ji-an-li" title="实际案例">实际案例</a><ul><li><a class="toc-href" href="#diao-yong-zhe-de-shi-jiao" title="调用者的视角">调用者的视角</a></li><li><a class="toc-href" href="#bei-diao-yong-zhe-shi-jiao" title="被调用者视角">被调用者视角</a></li></ul></li><li><a class="toc-href" href="#references_1" title="References">References</a></li></ul></div>
+          </div>
+        <div class="inner">
+          <section class="post-content">
+            <p>调用函数前后存在旧数据与新数据两种状态，RISC-V 对使用哪些寄存器存储前后状态做了人为规定，这样的一系列规定称为调用约定（Calling Convention）。<a href="https://cs61c.org/fa24/projects/proj2/calling-convention/" rel="noopener" target="_blank">CS 61C 的补充资料</a>在这方面描述得最为明了，本文主要根据这篇文章对 RISC-V 调用约定的要点做了总结。</p>
+<h2 id="ji-ben-ding-yi">基本定义</h2>
+<p>首先将发起调用的函数称为<strong>调用者（caller）</strong>，将被调用的函数称为<strong>被调用者（callee）</strong>。注意，一个函数是调用者或被调用者是由其行为决定，当它被其他函数调用时是被调用者，当它调用其他函数时是调用者，两个身份可以先后存在。</p>
+<p>其次 RISC-V 约定在一部分寄存器中的内容在调用函数后不会被改变，称为<strong>由被调用者保存的寄存器（callee-saved registers）</strong>，包括 <code>s0</code> - <code>s11</code>（保存寄存器，saved registers）和 <code>sp</code>。调用函数可能更改另一部分寄存器中的内容，这些寄存器称为<strong>由调用者保存的寄存器（caller-saved registers ）</strong>，包括 <code>a0</code> - <code>a7</code>（参数寄存器，argument registers）、<code>t0</code> - <code>t6</code>（临时寄存器，temporary registers）和 <code>ra</code>（返回地址，return address）。</p>
+<p>寄存器的功能和约定可以总结如下表：</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>寄存器</th>
+<th>ABI 名称</th>
+<th>描述</th>
+<th>保存方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>x0</code></td>
+<td><code>zero</code></td>
+<td>常数 0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>x1</code></td>
+<td><code>ra</code></td>
+<td>返回地址</td>
+<td>caller</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>x2</code></td>
+<td><code>sp</code></td>
+<td>栈指针</td>
+<td>callee</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>x3</code></td>
+<td><code>gp</code></td>
+<td>全局指针</td>
+<td>-</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>x4</code></td>
+<td><code>tp</code></td>
+<td>线程指针</td>
+<td>-</td>
+</tr>
+<tr>
+<td>5 ~ 7</td>
+<td><code>x6</code> ~ <code>x7</code></td>
+<td><code>t0</code> ~ <code>t2</code></td>
+<td>临时</td>
+<td>caller</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>x8</code></td>
+<td><code>s0</code> / <code>fp</code></td>
+<td>保存 / 帧指针</td>
+<td>callee</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>x9</code></td>
+<td><code>s1</code></td>
+<td>保存</td>
+<td>callee</td>
+</tr>
+<tr>
+<td>10 ~ 11</td>
+<td><code>x10</code> ~ <code>x11</code></td>
+<td><code>a0</code> ~ <code>a1</code></td>
+<td>函数参数 / 返回值</td>
+<td>caller</td>
+</tr>
+<tr>
+<td>12 ~ 17</td>
+<td><code>x12</code> ~ <code>x17</code></td>
+<td><code>a2</code> ~ <code>a7</code></td>
+<td>函数参数</td>
+<td>caller</td>
+</tr>
+<tr>
+<td>18 ~ 27</td>
+<td><code>x18</code> ~ <code>x27</code></td>
+<td><code>s2</code> ~ <code>s11</code></td>
+<td>保存</td>
+<td>callee</td>
+</tr>
+<tr>
+<td>28 ~ 31</td>
+<td><code>x28</code> ~ <code>x31</code></td>
+<td><code>t3</code> ~ <code>t6</code></td>
+<td>临时</td>
+<td>caller</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shi-ji-an-li">实际案例</h2>
+<p>从抽象的概念来看比较难以理解，接下来将以上概念代入到几个具体的案例中理解 RISC-V 的调用约定。</p>
+<h3 id="diao-yong-zhe-de-shi-jiao">调用者的视角</h3>
+<p>当我们调用一个函数时，被调用的函数对由其保存的寄存器负责，也就是说由被调用者保存的寄存器内容在该函数调用前后不变。但「不变」并不是指该函数无法使用这些寄存器，实际上函数可以使用任何一个寄存器，RISC-V 中的寄存器并没有「使用权限」的概念，只是在函数结束前必须将修改值恢复原状&mdash;&mdash;这个过程我形象地称其为对寄存器中的值负责（preserve）。</p>
+<p>将以上过程抽象为黑盒，从调用者的视角来看，当然可以认为被调用的函数不会修改由被调用者保存寄存器中的值。</p>
+<p>上述过程可以通过以下代码理解：</p>
+<pre><code class="language-riscv">addi s0, x0, 5     # 寄存器 s0 的值为 5
+jal ra, func       # 调用 func
+addi s0, s0, 0     # 不论 func 是什么，s0 的值还是 5
+</code></pre>
+<p>从反面来思考，就会意识到被调用的函数不对由调用者保存的寄存器负责，也就是说在该函数结束后，由调用者保存寄存器中的值是不可靠的垃圾值：</p>
+<pre><code class="language-riscv">addi t0, x0, 5     # 寄存器 s0 的值为 5
+jal ra, func       # 调用 func
+addi t0, t0, 0     # t0 中的值是垃圾值！
+</code></pre>
+<p><div class="warn-info"><p><span><i class="fa-solid fa-circle-exclamation"></i>&ensp;Warning</span>&emsp;在调用函数后，不由被调用者负责寄存器中的值是否发生改变，实际取决于函数的实现，但作为负责编码的工程师，理应将这些寄存器中的值都视为垃圾，不应当依赖垃圾值执行程序。</p></div></p>
+<p>规避垃圾值问题的技巧是，在寄存器中的值变得不可靠前，预先将其中值保存下来：</p>
+<pre><code class="language-riscv">addi t0, x0, 5     # t0 中的值为 5
+addi a0, t0, 10    # a0 中的值为 15，a0 是函数参数
+
+# 调用函数前，调用者需要做的事
+addi sp, sp, -8    # 栈指针向下移动
+sw t0, 0(sp)       # 将 t0 的值压入栈帧
+sw a0, 4(sp)       # 将 a0 的值压入栈帧
+
+jal ra, func       # 调用函数 func
+mv s0, a0          # 将函数返回值 a0 中的值存入 s0
+mv s1, a1          # 将函数返回值 a1 中的值存入 s1
+
+# 调用函数后，调用者需要做的事
+lw t0, 0(sp)       # 从栈帧中弹出原先 t0 的值，并把值写入 t0
+lw a0, 4(sp)       # 从栈帧中弹出原先 a0 的值，并把值写入 a0
+addi sp, sp, 8     # 栈指针向上移动
+
+# 目前 t0 与 a0 的值都是可靠的，因为它们的值是预先存入栈帧并从中还原的
+</code></pre>
+<p>从上面的代码中可以观察出 2 点，也是调用者视角下的调用约定：</p>
+<ol>
+<li>在<strong>调用者</strong>函数内，在调用函数前后，必须通过栈内存手动维护由<strong>调用者</strong>保存的寄存器前后一致（如 <code>a0</code> 和 <code>t0</code>）；</li>
+<li>在<strong>调用者</strong>函数内，可以任意修改由<strong>被调用者</strong>保存寄存器而不用担心副作用（如 <code>s0</code> 和 <code>s1</code>）。</li>
+</ol>
+<h3 id="bei-diao-yong-zhe-shi-jiao">被调用者视角</h3>
+<p>理解调用者视角下的调用约定后，就不难理解被调用者视角下的操作了。直接观察下例：</p>
+<pre><code class="language-riscv"># 函数正式操作前，被调用者需要做的事
+addi sp, sp, -12   # 栈指针向下移动
+sw ra, 0(sp)       # 将 ra 的值压入栈帧
+sw s0, 4(sp)       # 将 s0 的值压入栈帧
+sw s1, 8(sp)       # 将 s1 的值压入栈帧
+
+# 函数正式操作
+
+# 函数正式操作后，被调用者需要做的事
+lw ra, 0(sp)       # 从栈帧中弹出原先 ra 的值，并把值写入 ra
+lw s0, 4(sp)       # 从栈帧中弹出原先 s0 的值，并把值写入 s0
+lw s1, 8(sp)       # 从栈帧中弹出原先 s1 的值，并把值写入 s1
+addi sp, sp, 12    # 栈指针向上移动
+
+ret                # 从函数中返回
+</code></pre>
+<p>可以得出类似的 2 点调用约定：</p>
+<ol>
+<li>在<strong>被调用者</strong>函数内，在函数正式操作前后，必须通过栈内存手动维护由<strong>被调用者</strong>保存的寄存器前后一致（如 <code>ra</code>、<code>s0</code> 和 <code>s1</code>）；</li>
+<li>在<strong>被调用者</strong>函数内，可以任意修改由<strong>调用者</strong>保存寄存器而不用担心副作用。</li>
+</ol>
+<p>总而言之，RISC-V 的调用约定中规定了寄存器的保存方（saver），函数（caller / callee）对其相应寄存器中的内容负责，caller 维护 caller-saved 寄存器，callee 维护 callee-saved 寄存器。因为需要维护寄存器内容，在函数正式操作前都要把需要维护的内容存入栈内存，并在函数操作结束后从中还原。</p>
+<hr/>
+<h2 id="references_1">References</h2>
+<ul>
+<li><a href="https://cs61c.org/fa24/projects/proj2/calling-convention/" rel="noopener" target="_blank">Calling Convention - CS 61C Fall 2024</a></li>
+<li><a href="https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf" rel="noopener" target="_blank">Calling Convention - RISC-V</a></li>
+</ul>
+          </section>
+
+
+          <section class="post-footer" style="margin: 12rem 0 0;">
+            <div class="post-share">
+              <span class="post-info-label">Share</span>
+                <a title="复制文章链接" aria-label="Share-link" class="share-link"
+                  href="#" onclick='copyURL(event, "RISC-V 函数调用约定 - Leo’s blog https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html");return false;'>
+                  <i class="icon icon-link"
+                  aria-hidden="true"></i><span class="hidden">Share-link</span>
+                </a>
+                <a title="嘟嘟到 Mastodon" aria-label="Mastodon" class="mastodon"
+                  href="https://tootpick.org/#text=RISC-V 函数调用约定 - Leo’s blog https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-mastodon"
+                  aria-hidden="true"></i><span class="hidden">Mastodon</span>
+                </a>
+                <a title="分享到微博" aria-label="Weibo" class="weibo"
+                  href="http://service.weibo.com/share/share.php?url=https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html&title=RISC-V 函数调用约定&nbsp;-&nbsp;Leo’s blog"
+                  target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-weibo"
+                  aria-hidden="true"></i><span class="hidden">Weibo</span>
+                </a>
+                <a title="通过 Email 转发" aria-label="Email" class="email"
+                  href="mailto:?subject=RISC-V 函数调用约定&amp;body=https://leonis.cc/sui-sui-nian/2024-12-01-riscv-calling-convention.html">
+                  <i class="icon icon-mail"
+                  aria-hidden="true"></i><span class="hidden">Email</span>
+                </a>
+              <div class="clear"></div>
+            </div>
+
+            <aside class="post-tags">
+<a href="https://leonis.cc/tag/hui-bian.html"># 汇编</a><a href="https://leonis.cc/tag/risc-v.html"># RISC-V</a>            </aside>
+
+            <div class="clear"></div>
+
+            <aside class="post-author">
+
+
+                <figure class="post-author-avatar">
+                  <img src="https://cravatar.cn/avatar/95e31f6808fafa1f8ef3313b6f0b10e6?s=800" alt="Leo" />
+                </figure>
+                <div class="post-author-bio">
+                  <h4 class="post-author-name"><a href="https://leonis.cc/author/leo.html">Leo</a></h4>
+                    <p class="post-author-about">A chemist who doesn’t know about classical literature isn’t a good programmer. Cool, huh?</p>
+                    <span class="post-author-location">
+                      <a rel="noopener" target="_blank" href="https://www.bing.com/maps?cp=39.116572%7E117.361669&lvl=10.1"
+                      title="Tientsin">
+                      <i class="fa-solid fa-earth-asia fa-fw"></i></a>
+                    </span>
+                  <!-- Social linkes in alphabet order. -->
+                    <span class="post-author-mastodon">
+                      <a rel="noopener" target="_blank" href="https://mast.dragon-fly.club/@leonis"
+                      title="@leonis@dragon-fly.club">
+                        <i class="fa-brands fa-mastodon fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-github">
+                      <a rel="noopener" target="_blank" href="https://github.com/Tseing"
+                      title="@Tseing">
+                        <i class="fa-brands fa-github fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-email">
+                      <a rel="noopener" target="_blank" href="mailto:im.yczeng@outlook.com"
+                      title="im.yczeng@outlook.com">
+                        <i class="fa-solid fa-envelope fa-fw"></i></a>
+                    </span>
+                    <span class="post-author-rss">
+                      <a rel="noopener" target="_blank" href="/feed.xml"
+                      title="RSS Feed">
+                        <i class="fa-solid fa-rss fa-fw"></i></a>
+                    </span>
+                </div>
+                <div class="clear"></div>
+            </aside>
+
+          </section>
+
+
+          <aside class="post-nav">
+            <a class="post-nav-prev" href="https://leonis.cc/sui-sui-nian/2024-08-04-understanding-incremental-decoding-in-fairseq.html">
+              <section class="post-nav-teaser">
+                <i class="icon icon-arrow-right"></i>
+                  <h2 class="post-nav-title">[译] Understanding Incremental Decoding in fairseq</h2>
+                <p class="post-nav-excerpt">近来一直在使用 fairseq 做项目，因为其功能较多而源码也比较复杂，光靠官方文档也难以完全理解。ankur6ue 的一篇文章对 fairseq...</p>
+                <p class="post-nav-meta"><time datetime="2024年 8月04日">2024年 8月04日</time></p>
+              </section>
+            </a>
+            <div class="clear"></div>
+          </aside>
+
+<div id="waline"></div>
+        </div>
+      </article>
+    </main>
+    <div class="nav-footer">
+      <nav class="nav-wrapper" aria-label="Footer">
+        <span class="nav-copy">Leo’s blog &copy; 2024
+        </span>
+        <span class="nav-credits">
+
+
+
+          Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a> &bull; Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a> &bull;
+          <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <span class="theme-icon"></span><span class="theme-text">System theme</span>
+          </a>
+        </span>
+      </nav>
+    </div>
+
+  </section>
+
+  <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- code highlight -->
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/django.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/nginx.min.js"></script>
+  <script src="https://cdnjs.loli.net/ajax/libs/highlight.js/11.7.0/languages/pgsql.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/jquery.fitvids.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/script.js"></script>
+
+  <!-- lightbox -->
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lightgallery.min.js"></script>
+  <script type="text/javascript" src="https://leonis.cc/theme/js/lg-zoom.min.js"></script>
+  <script>
+    var elements = document.getElementsByClassName("lightgallery");
+    for(var i=0; i<elements.length; i++) {
+       lightGallery(elements[i]);
+    }
+  </script>
+    <!-- umami analytics -->
+    <script async defer src="https://analytics.umami.is/script.js" data-website-id="b508982a-f7bf-4c24-a948-8de93b0cb81d"></script>
+
+
+  <!-- 	The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in article.html, but it needs to be included down here, after jQuery has already loaded. -->
+
+<script>
+  $(document).ready(function () {
+    var viewport = $(window);
+    var post = $('.post-content');
+    // Responsive videos with fitVids
+    post.fitVids();
+
+    var mdSelector="pre code";
+    var rstSelector="pre code";
+    var selector=mdSelector;
+    // Format code blocks and add line numbers
+    function codestyling() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+        // No lines for plain text blocks
+        if (!$(this).hasClass('language-text')) {
+          var code = $(this);
+          // Calculate amount of lines
+          var lines = code.html().split(/\n(?!$)/g).length;
+          var numbers = [];
+          if (lines > 1) {
+            lines++;
+          }
+          for (i = 1; i < lines; i++) {
+            numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+          }
+          code.parent().append('<div class="lines">' + numbers + '</div>');
+        }
+      });
+    }
+
+    // Format code blocks only
+    function codestylingWithoutLineNumbers() {
+      $(selector).each(function(i, e) {
+        // Code highlight
+        hljs.highlightElement(e);
+      });
+    }
+
+    codestylingWithoutLineNumbers();
+    // Reading progress bar on window top
+    function readingProgress() {
+      var postBottom = post.offset().top + post.height();
+      var viewportHeight = viewport.height();
+      var progress = 100 - (((postBottom - (viewport.scrollTop() + viewportHeight) + viewportHeight / 3) / (postBottom - viewportHeight + viewportHeight / 3)) * 100);
+      $('.progress-bar').css('width', progress + '%');
+      (progress > 100) ? $('.progress-container').addClass('complete'): $('.progress-container').removeClass('complete');
+    }
+    readingProgress();
+    // Trigger reading progress
+    viewport.on({
+      'scroll': function() {
+        readingProgress();
+      },
+      'resize': function() {
+        readingProgress();
+      },
+      'orientationchange': function() {
+        readingProgress();
+      }
+    });
+
+  });
+
+  Waline.init({
+      el: '#waline',
+      serverURL: "https://waline.leonis.cc/",
+      emoji: false,
+      search: false,
+      imageUploader: false,
+      locale: {placeholder: "欢迎评论，填写邮箱可以获取头像和收到回复通知～"},
+  });
+</script>
+</body>
+
+</html>

@@ -340,7 +340,7 @@
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>含有两个碳的侧链被删去，分子仅剩下母核，需要注意在侧链与母核的连接处没有留下 <code>[*]</code> 标记的断点，这是删除与切割操作不同的地方。</p>
-<p>{note begin}原分子未被修改，<code>DeleteSubstructs()</code> 返回一个新分子。{note end}</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;原分子未被修改，<code>DeleteSubstructs()</code> 返回一个新分子。</p></div></p>
 </div>
 </div>
 </div>
@@ -439,9 +439,9 @@
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{note begin}原分子同样未被修改，<code>ReplaceSubstructs()</code> 返回一个新分子的列表。{note end}</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;原分子同样未被修改，<code>ReplaceSubstructs()</code> 返回一个新分子的列表。</p></div></p>
 <h2 id="切割子结构">切割子结构<a class="anchor-link" href="#切割子结构">&para;</a></h2><h3 id="切除侧链">切除侧链<a class="anchor-link" href="#切除侧链">&para;</a></h3><p>从分子中切除侧链，剩下分子母核，需要知道母核的 SMILES 序列，即在知道分子剩余部分 SMILES 序列的情况下，使用 <code>replaceSidechains(m, core)</code> 函数。</p>
-<p>{note begin}勿被函数名中的「侧链」与「母核」迷惑，这里说的「侧链」与「母核」只是指代不同的两个部分，称其为「甲」与「乙」亦可，与化学概念上的「侧链」「母核」不同。使用 <code>replaceSidechains()</code> 可以切除「甲」部分，当然也可以切除「乙」部分。{note end}</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;勿被函数名中的「侧链」与「母核」迷惑，这里说的「侧链」与「母核」只是指代不同的两个部分，称其为「甲」与「乙」亦可，与化学概念上的「侧链」「母核」不同。使用 <code>replaceSidechains()</code> 可以切除「甲」部分，当然也可以切除「乙」部分。</p></div></p>
 </div>
 </div>
 </div>
@@ -743,7 +743,7 @@
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>指定 <code>requireDummyMatch=True</code> 后，原分子上相应位置必须也为虚拟原子（与搜索对象完全匹配）后才能进行切除。</p>
-<p>{note begin}<code>replaceSidechains()</code> 与 <code>ReplaceCore()</code> 也不修改原分子，仅返回新的分子。{note end}</p>
+<p><div class="note-info"><p><span><i class="fa-solid fa-note-sticky"></i>&ensp;Note</span>&emsp;<code>replaceSidechains()</code> 与 <code>ReplaceCore()</code> 也不修改原分子，仅返回新的分子。</p></div></p>
 <p>回到切除吡咯环的例子，切除吡咯环后得到两个分子片段，形如 <code>C.C</code> 的分子片段可以用 <code>GetMolFrags(mol)</code> 函数转化为包含若干单个分子的列表，该函数的可选操作包括</p>
 <ul>
 <li><code>asMols=False</code>：是否以分子形式存储片段，默认为原子索引</li>
